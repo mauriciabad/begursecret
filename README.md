@@ -20,20 +20,8 @@ Fullstack [Next.js](https://nextjs.org/) project template using App Router.
 
 The database is required for persistence of app data and NextAuth.js sessions.
 
-1. Set up a [PostgreSQL](https://www.postgresql.org/) installation.
-2. Create a database with a `public` schema.
-
-```sh
-sudo apt update
-sudo apt install postgresql postgresql-contrib
-sudo service postgresql start
-
-# Create password
-sudo passwd postgres
-
-# Check it works
-sudo -u postgres psql
-```
+1. Install Docker.
+2. Run `pnpm db:run` to run the database
 
 ### Prepare GitHub OAuth Client
 
