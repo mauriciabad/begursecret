@@ -23,6 +23,18 @@ The database is required for persistence of app data and NextAuth.js sessions.
 1. Set up a [PostgreSQL](https://www.postgresql.org/) installation.
 2. Create a database with a `public` schema.
 
+```sh
+sudo apt update
+sudo apt install postgresql postgresql-contrib
+sudo service postgresql start
+
+# Create password
+sudo passwd postgres
+
+# Check it works
+sudo -u postgres psql
+```
+
 ### Prepare GitHub OAuth Client
 
 The OAuth client is required to sign in with GitHub account. You can swap providers in `src/server/auth.ts` if you want to use different identity providers.
