@@ -1,0 +1,45 @@
+{
+  "common": {
+    "userLogin": {
+      "signInText": "Inicia la sessió",
+      "signOutText": "Tanca la sessió {userName}"
+    },
+    "home": {
+      "linkText": "Torna a la pàgina d'inici"
+    }
+  },
+  "home": {
+    "meta": {
+      "title": "Aplicació de Tasques",
+      "description": "Aplicació de Tasques creada amb Next.js"
+    },
+    "heading": "Benvingut/da a l'Aplicació de Tasques amb Next",
+    "todos": {
+      "linkText": "Vés a la llista de tasques"
+    }
+  },
+  "signIn": {
+    "meta": {
+      "title": "Inicia la sessió",
+      "description": "Inicia la sessió per a una experiència personalitzada"
+    },
+    "heading": "Inicia la sessió",
+    "providerButtonText": "Inicia la sessió amb {name}"
+  },
+  "todos": {
+    "meta": {
+      "title": "Les Teves Tasques",
+      "description": "Llista de les teves tasques personals"
+    },
+    "heading": "Les Teves Tasques",
+    "signIn": "Si us plau, <link>inicia la sessió</link> per veure les teves tasques.",
+    "input": {
+      "placeholder": "Introduïu un títol",
+      "submitButtonText": "Afegeix a la llista"
+    },
+    "list": {
+      "loading": "Carregant tasques...",
+      "createdDate": "Creada el {createdDate, date, ::yyyyMMddHHmmss}"
+    }
+  }
+}
