@@ -9,8 +9,7 @@ on:
 jobs:
     auto-assign:
         runs-on: ubuntu-latest
-        permissions:
-            issues: write
+        permissions: write-all
         steps:
             - name: 'Auto-assign issue or PR'
               uses: pozil/auto-assign-issue@v1
