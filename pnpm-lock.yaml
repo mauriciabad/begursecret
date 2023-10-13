@@ -20,6 +20,9 @@ dependencies:
   '@planetscale/database':
     specifier: 1.11.0
     version: 1.11.0
+  '@tabler/icons-react':
+    specifier: 2.39.0
+    version: 2.39.0(react@18.2.0)
   '@tanstack/react-query':
     specifier: 4.32.6
     version: 4.32.6(react-dom@18.2.0)(react@18.2.0)
@@ -2823,6 +2826,20 @@ packages:
     resolution: {integrity: sha512-sJ902EfIzn1Fa+qYmjdQqh8tPsoxyBz+8yBKC2HKUxyezKJFwPGOn7pv4WY6QuQW//ySQi5lJjA/ZT9sNWWNTg==}
     dependencies:
       tslib: 2.6.1
+    dev: false
+
+  /@tabler/icons-react@2.39.0(react@18.2.0):
+    resolution: {integrity: sha512-MyUK1jqtmHPZBnDXqIc1Y5OnfoqG+tGaSB1/gcl0mlY462fJ5f3QB0ZIZzAHMAGYb6K2iJSdFIFavhcgpDDZ7Q==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@tabler/icons': 2.39.0
+      prop-types: 15.8.1
+      react: 18.2.0
+    dev: false
+
+  /@tabler/icons@2.39.0:
+    resolution: {integrity: sha512-iK3j2jIEGIUaJcbYYg5iwyG1Y/m4lzUxAUbxRpvgeXCWP29jvZaH5hajZmU3KaSealddHuJg7PSQislPHpCsoQ==}
     dev: false
 
   /@tanstack/query-core@4.32.6:
