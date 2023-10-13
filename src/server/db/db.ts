@@ -14,7 +14,7 @@ export const db =
           host: '127.0.0.1',
           user: 'root',
           password: 'unsafePaswordOnlyForLocalhost',
-          database: 'descobreixbegurapp',
+          database: 'descobreix-begur-app',
         }),
         {
           schema,

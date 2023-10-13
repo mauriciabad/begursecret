@@ -35,6 +35,7 @@ const server = z.object({
   DATABASE_HOST: z.string().min(1),
   DATABASE_USERNAME: z.string().min(1),
   DATABASE_PASSWORD: z.string().min(1),
+  DATABASE_NAME: z.string().min(1),
 })
 
 /**
@@ -62,6 +63,7 @@ const processEnv = {
   DATABASE_HOST: process.env.DATABASE_HOST,
   DATABASE_USERNAME: process.env.DATABASE_USERNAME,
   DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
+  DATABASE_NAME: process.env.DATABASE_NAME,
 }
 
 // Don't touch the part below
