@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "format": "prettier . --write",
     "db:generate": "drizzle-kit generate:pg",
     "db:migrate": "node ./src/server/db/migrate.mjs",
     "db:run": "docker run --name basic-postgres --rm -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=unsafeLocalhostPassword -e PGDATA=/var/lib/postgresql/data/pgdata -v /tmp:/var/lib/postgresql/data -p 5432:5432 -it postgres:16rc1-alpine"
@@ -44,6 +45,9 @@
   "devDependencies": {
     "dotenv": "16.3.1",
     "drizzle-kit": "0.19.12",
+    "eslint-config-prettier": "9.0.0",
+    "prettier": "3.0.3",
+    "prettier-plugin-tailwindcss": "0.5.5",
     "server-only": "0.0.1"
   }
 }
