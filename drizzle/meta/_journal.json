@@ -1,12 +1,12 @@
 {
   "version": "5",
-  "dialect": "pg",
+  "dialect": "mysql",
   "entries": [
     {
       "idx": 0,
       "version": "5",
-      "when": 1697164213899,
-      "tag": "0000_narrow_captain_marvel",
+      "when": 1697195502306,
+      "tag": "0000_goofy_iron_lad",
       "breakpoints": true
     }
   ]

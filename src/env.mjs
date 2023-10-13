@@ -1,3 +1,4 @@
+// @ts-check
 import { z } from 'zod'
 
 /**
@@ -7,8 +8,10 @@ import { z } from 'zod'
 const server = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']),
   PORT: z.preprocess((str) => {
+    if (typeof str !== 'string') return undefined
     const port = parseInt(str, 10)
-    return isNaN(port) ? undefined : port
+    if (isNaN(port)) return undefined
+    return port
   }, z.number().positive().optional()),
   NEXTAUTH_SECRET:
     process.env.NODE_ENV === 'production'
@@ -21,14 +24,17 @@ const server = z.object({
     // VERCEL_URL doesn't include `https` so it cant be validated as a URL
     process.env.VERCEL ? z.string().min(1) : z.string().url()
   ),
-  /** Database connection string */
-  DB_URL: z.string().url(),
   /** GitHub client ID */
   GITHUB_CLIENT_ID: z.string().min(1),
   /** GitHub client secret */
   GITHUB_CLIENT_SECRET: z.string().min(1),
   /** App URL when deployed on Vercel */
   VERCEL_URL: z.string().url().optional(),
+
+  USE_LOCAL_DB: z.union([z.literal('true'), z.literal('false')]).optional(),
+  DATABASE_HOST: z.string().min(1),
+  DATABASE_USERNAME: z.string().min(1),
+  DATABASE_PASSWORD: z.string().min(1),
 })
 
 /**
@@ -49,10 +55,13 @@ const processEnv = {
   PORT: process.env.PORT,
   NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
   NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-  DB_URL: process.env.DB_URL,
   GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
   GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
   VERCEL_URL: process.env.VERCEL_URL,
+  USE_LOCAL_DB: process.env.USE_LOCAL_DB,
+  DATABASE_HOST: process.env.DATABASE_HOST,
+  DATABASE_USERNAME: process.env.DATABASE_USERNAME,
+  DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
 }
 
 // Don't touch the part below

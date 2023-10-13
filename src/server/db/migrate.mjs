@@ -1,21 +1,16 @@
 // @ts-check
-import dotenv from 'dotenv'
-import { drizzle } from 'drizzle-orm/postgres-js'
-import { migrate } from 'drizzle-orm/postgres-js/migrator'
-import path from 'node:path'
-import postgres from 'postgres'
+import { migrate } from 'drizzle-orm/mysql2/migrator'
+import { drizzle as drizzleMysql } from 'drizzle-orm/mysql2'
+import { createConnection } from 'mysql2'
 
-dotenv.config({ path: path.resolve(process.cwd(), '.env.local') })
-dotenv.config({ path: path.resolve(process.cwd(), '.env') })
-
-if (!process.env.DB_MIGRATE_URL) {
-  throw new Error(
-    'Missing database connection string. Please set environment variable DB_MIGRATE_URL. Example: postgres://username:password@localhost:5432/database'
-  )
-}
-
-const client = postgres(process.env.DB_MIGRATE_URL, { max: 1 })
-const db = drizzle(client)
+const db = drizzleMysql(
+  createConnection({
+    host: '127.0.0.1',
+    user: 'root',
+    password: 'unsafePaswordOnlyForLocalhost',
+    database: 'descobreixbegurapp',
+  })
+)
 
 const main = async () => {
   await migrate(db, { migrationsFolder: 'drizzle' })

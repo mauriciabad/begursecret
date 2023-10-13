@@ -39,18 +39,20 @@ The OAuth client is required to sign in with GitHub account. You can swap provid
 1. Create a file `.env.local` in the project directory with the following variables.
 
    ```bash
-   # Database connection string for Next.js app
-   DB_URL=postgres://username:password@localhost:5432/database
-   # Database connection string for database migration
-   DB_MIGRATE_URL=postgres://username:password@localhost:5432/database
    # Client ID of GitHub app
-   GITHUB_CLIENT_ID=12345
+   GITHUB_CLIENT_ID=tobechanged
    # Client secret of GitHub app
-   GITHUB_CLIENT_SECRET=23456
+   GITHUB_CLIENT_SECRET=tobechanged
    # Absolute base URL of Next.js app
    NEXTAUTH_URL=http://localhost:3000
    # NextAuth.js secret, e.g. generate with "openssl rand -hex 32"
-   NEXTAUTH_SECRET=34567
+   NEXTAUTH_SECRET=tobechanged
+
+   USE_LOCAL_DB=false
+   # Planetscale DB connection settings
+   DATABASE_HOST=tobechanged
+   DATABASE_USERNAME=tobechanged
+   DATABASE_PASSWORD=tobechanged
    ```
 
 2. Install [pnpm](https://pnpm.io/) package manager.
@@ -132,7 +134,7 @@ Open <http://localhost:3000> with your browser.
 - `src/server/api/todos/router.ts`: Partial tRPC router for todos procedures.
 - `src/server/db`: Contains Drizzle ORM database client, schema definition and migration script.
 - `src/server/db/db.ts`: Drizzle ORM database client used to perform database operations in the app.
-- `src/server/db/migrate.mjs`: Node.js script to run database migrations.
+- `src/server/db/migrate.ts`: Node.js script to run database migrations.
 - `src/server/db/schema.ts`: Drizzle ORM database schema defining tables and its relations.
 - `src/server/auth-i18n-middleware.ts`: Partial middleware function to handle i18n on sign-in page. See below for more details.
 - `src/server/auth.ts`: NextAuth.js configuration defining identity providers, database adapter and more settings.

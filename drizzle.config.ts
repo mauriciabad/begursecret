@@ -1,15 +1,13 @@
 import type { Config } from 'drizzle-kit'
-import dotenv from 'dotenv'
-import path from 'node:path'
-
-dotenv.config({ path: path.resolve(process.cwd(), '.env.local') })
-dotenv.config({ path: path.resolve(process.cwd(), '.env') })
 
 export default {
   schema: './src/server/db/schema/*',
   out: './drizzle',
-  driver: 'pg',
+  driver: 'mysql2',
   dbCredentials: {
-    connectionString: process.env.DB_URL ?? '',
+    host: '127.0.0.1',
+    user: 'root',
+    password: 'unsafePaswordOnlyForLocalhost',
+    database: 'descobreixbegurapp',
   },
 } satisfies Config
