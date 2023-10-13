@@ -1,10 +1,10 @@
 import 'server-only'
 
 import { router } from '~/server/trpc'
-import { todosRouter } from './todos/router'
+import { placesRouter } from './places/router'
 
 export const apiRouter = router({
-  todos: todosRouter,
+  places: placesRouter,
 })
 
 export type ApiRouter = typeof apiRouter

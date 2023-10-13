@@ -10,12 +10,12 @@
   },
   "home": {
     "meta": {
-      "title": "Aplicació de Tasques",
-      "description": "Aplicació de Tasques creada amb Next.js"
+      "title": "Aplicació de Llocs",
+      "description": "Aplicació de Llocs creada amb Next.js"
     },
-    "heading": "Benvingut/da a l'Aplicació de Tasques amb Next",
-    "todos": {
-      "linkText": "Vés a la llista de tasques"
+    "heading": "Benvingut/da a l'Aplicació de Llocs amb Next",
+    "places": {
+      "linkText": "Vés a la llista de llocs"
     }
   },
   "signIn": {
@@ -26,19 +26,15 @@
     "heading": "Inicia la sessió",
     "providerButtonText": "Inicia la sessió amb {name}"
   },
-  "todos": {
+  "places": {
     "meta": {
-      "title": "Les Teves Tasques",
-      "description": "Llista de les teves tasques personals"
+      "title": "Llistat de llocs",
+      "description": "Llista de llocs"
     },
-    "heading": "Les Teves Tasques",
-    "signIn": "Si us plau, <link>inicia la sessió</link> per veure les teves tasques.",
-    "input": {
-      "placeholder": "Introduïu un títol",
-      "submitButtonText": "Afegeix a la llista"
-    },
+    "heading": "Llistat de llocs",
+    "signIn": "Si vols, <link>inicia la sessió</link>.",
     "list": {
-      "loading": "Carregant tasques...",
+      "loading": "Carregant llocs...",
       "createdDate": "Creada el {createdDate, date, ::yyyyMMddHHmmss}"
     }
   }

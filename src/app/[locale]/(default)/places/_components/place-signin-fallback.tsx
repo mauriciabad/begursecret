@@ -3,8 +3,8 @@ import type { FC } from 'react'
 
 import { SigninLink } from '~/components/signin-link'
 
-export const ToDoSigninFallback: FC = () => {
-  const t = useTranslations('todos')
+export const PlaceSigninFallback: FC = () => {
+  const t = useTranslations('places')
   return (
     <div>
       {t.rich('signIn', {

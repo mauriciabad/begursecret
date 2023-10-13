@@ -6,29 +6,28 @@ import type { FC } from 'react'
 import { AuthRequired } from '~/components/auth-required'
 import { HomeLink } from '~/components/home-link'
 import type { LocaleRouteParams } from '../../types'
-import { ToDoInput } from './_components/todo-input'
-import { ToDoList } from './_components/todo-list'
-import { ToDoSigninFallback } from './_components/todo-signin-fallback'
+import { PlaceList } from './_components/place-list'
+import { PlaceSigninFallback } from './_components/place-signin-fallback'
 
 export async function generateMetadata({
   params,
 }: LocaleRouteParams): Promise<Metadata> {
-  const t = await getTranslator(params.locale, 'todos')
+  const t = await getTranslator(params.locale, 'places')
   return {
     title: t('meta.title'),
     description: t('meta.description'),
   }
 }
 
-const ToDosPage: FC<LocaleRouteParams> = () => {
-  const t = useTranslations('todos')
+const PlacesPage: FC<LocaleRouteParams> = () => {
+  const t = useTranslations('places')
   return (
     <>
       <h1 className="mb-8 text-2xl">{t('heading')}</h1>
-      <AuthRequired fallback={<ToDoSigninFallback />}>
-        <ToDoInput className="mb-4" />
-        <ToDoList />
+      <AuthRequired fallback={<PlaceSigninFallback />}>
+        <p>You are authenticated and can see this content. </p>
       </AuthRequired>
+      <PlaceList />
       <div className="mt-8">
         <HomeLink />
       </div>
@@ -36,4 +35,4 @@ const ToDosPage: FC<LocaleRouteParams> = () => {
   )
 }
 
-export default ToDosPage
+export default PlacesPage

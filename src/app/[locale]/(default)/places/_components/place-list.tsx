@@ -6,12 +6,12 @@ import type { FC, HTMLAttributes } from 'react'
 
 import { trpc } from '~/trpc'
 
-export const ToDoList: FC<Omit<HTMLAttributes<HTMLElement>, 'children'>> = ({
+export const PlaceList: FC<Omit<HTMLAttributes<HTMLElement>, 'children'>> = ({
   className,
   ...props
 }) => {
-  const t = useTranslations('todos.list')
-  const { data: todos, isInitialLoading } = trpc.todos.list.useQuery()
+  const t = useTranslations('places.list')
+  const { data: places, isInitialLoading } = trpc.places.list.useQuery()
 
   if (isInitialLoading) {
     return (
@@ -29,14 +29,14 @@ export const ToDoList: FC<Omit<HTMLAttributes<HTMLElement>, 'children'>> = ({
 
   return (
     <ul className={clsx('grid gap-4', className)} {...props}>
-      {todos?.map((todo) => (
+      {places?.map((place) => (
         <li
-          key={todo.id}
+          key={place.id}
           className="flex items-center justify-between rounded border border-gray-500 px-4 py-2"
         >
-          <span className="text-lg">{todo.title}</span>
+          <span className="text-lg">{place.title}</span>
           <span className="text-sm text-gray-500">
-            {t('createdDate', { createdDate: todo.createdAt })}
+            {t('createdDate', { createdDate: place.createdAt })}
           </span>
         </li>
       ))}

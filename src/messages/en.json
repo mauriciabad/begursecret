@@ -10,12 +10,12 @@
   },
   "home": {
     "meta": {
-      "title": "ToDo App",
-      "description": "ToDo App built with Next.js"
+      "title": "Places App",
+      "description": "Places App built with Next.js"
     },
-    "heading": "Welcome to Next ToDo App",
-    "todos": {
-      "linkText": "Go to ToDo list"
+    "heading": "Welcome to Next Places App",
+    "places": {
+      "linkText": "Go to Places list"
     }
   },
   "signIn": {
@@ -26,19 +26,15 @@
     "heading": "Sign In",
     "providerButtonText": "Sign in with {name}"
   },
-  "todos": {
+  "places": {
     "meta": {
-      "title": "Your ToDos",
-      "description": "List of your personal todos"
+      "title": "Places",
+      "description": "List of places"
     },
-    "heading": "Your ToDos",
-    "signIn": "Please <link>sign in</link> to view your todos.",
-    "input": {
-      "placeholder": "Enter a title",
-      "submitButtonText": "Add to list"
-    },
+    "heading": "Places",
+    "signIn": "In you want, <link>sign in</link>.",
     "list": {
-      "loading": "Loading todos...",
+      "loading": "Loading places...",
       "createdDate": "Created on {createdDate, date, ::yyyyMMddHHmmss}"
     }
   }

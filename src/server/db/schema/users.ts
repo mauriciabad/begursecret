@@ -1,10 +1,9 @@
 import type { AdapterAccount } from '@auth/core/adapters'
-import { relations, type InferModel } from 'drizzle-orm'
+import { type InferModel } from 'drizzle-orm'
 import {
   integer,
   pgTable,
   primaryKey,
-  serial,
   text,
   timestamp,
 } from 'drizzle-orm/pg-core'
@@ -20,10 +19,6 @@ export const users = pgTable('user', {
   emailVerified: timestamp('emailVerified', { mode: 'date' }),
   image: text('image'),
 })
-
-export const usersRelations = relations(users, ({ many }) => ({
-  todos: many(todos),
-}))
 
 export type User = InferModel<typeof users>
 
@@ -74,27 +69,3 @@ export const verificationTokens = pgTable(
 )
 
 export type VerificationToken = InferModel<typeof verificationTokens>
-
-/*
- * Application tables
- */
-
-export const todos = pgTable('todo', {
-  id: serial('id').primaryKey(),
-  title: text('title').notNull(),
-  createdAt: timestamp('createdAt', { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-  userId: text('userId')
-    .notNull()
-    .references(() => users.id, { onDelete: 'cascade' }),
-})
-
-export const todosRelations = relations(todos, ({ one }) => ({
-  user: one(users, {
-    fields: [todos.userId],
-    references: [users.id],
-  }),
-}))
-
-export type Todo = InferModel<typeof todos>
