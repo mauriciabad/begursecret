@@ -1,17 +1,17 @@
-import clsx from "clsx";
-import type { FC, HTMLAttributes } from "react";
+import clsx from 'clsx'
+import type { FC, HTMLAttributes } from 'react'
 
-import { LanguageSwitcher } from "./language-switcher";
-import { UserLogin } from "./user-login";
+import { LanguageSwitcher } from './language-switcher'
+import { UserLogin } from './user-login'
 
-export const Header: FC<Omit<HTMLAttributes<HTMLElement>, "children">> = ({
+export const Header: FC<Omit<HTMLAttributes<HTMLElement>, 'children'>> = ({
   className,
   ...props
 }) => {
   return (
     <header
       className={clsx(
-        "flex justify-between items-center container mx-auto p-4",
+        'container mx-auto flex items-center justify-between p-4',
         className
       )}
       {...props}
@@ -19,5 +19,5 @@ export const Header: FC<Omit<HTMLAttributes<HTMLElement>, "children">> = ({
       <LanguageSwitcher />
       <UserLogin />
     </header>
-  );
-};
+  )
+}

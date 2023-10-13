@@ -1,18 +1,18 @@
-"use client";
+'use client'
 
-import clsx from "clsx";
-import { useLocale } from "next-intl";
-import { usePathname } from "next-intl/client";
-import Link from "next-intl/link";
-import type { FC, HTMLAttributes } from "react";
+import clsx from 'clsx'
+import { useLocale } from 'next-intl'
+import { usePathname } from 'next-intl/client'
+import Link from 'next-intl/link'
+import type { FC, HTMLAttributes } from 'react'
 
-import { locales } from "~/i18n";
+import { locales } from '~/i18n'
 
 export const LanguageSwitcher: FC<
-  Omit<HTMLAttributes<HTMLElement>, "children">
+  Omit<HTMLAttributes<HTMLElement>, 'children'>
 > = (props) => {
-  const pathname = usePathname();
-  const currentLocale = useLocale();
+  const pathname = usePathname()
+  const currentLocale = useLocale()
 
   return (
     <nav {...props}>
@@ -23,8 +23,8 @@ export const LanguageSwitcher: FC<
               href={pathname}
               locale={locale}
               prefetch={false}
-              className={clsx("hover:underline", {
-                "font-bold": currentLocale === locale,
+              className={clsx('hover:underline', {
+                'font-bold': currentLocale === locale,
               })}
             >
               {locale.toUpperCase()}
@@ -33,5 +33,5 @@ export const LanguageSwitcher: FC<
         ))}
       </ul>
     </nav>
-  );
-};
+  )
+}

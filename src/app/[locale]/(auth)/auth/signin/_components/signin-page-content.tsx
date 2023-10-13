@@ -1,21 +1,21 @@
-import type { getProviders } from "next-auth/react";
-import { useTranslations } from "next-intl";
-import type { FC } from "react";
+import type { getProviders } from 'next-auth/react'
+import { useTranslations } from 'next-intl'
+import type { FC } from 'react'
 
-import { HomeLink } from "~/components/home-link";
-import { ProviderButton } from "./provider-button";
+import { HomeLink } from '~/components/home-link'
+import { ProviderButton } from './provider-button'
 
 type SignInPageContentProps = {
-  providers: Exclude<Awaited<ReturnType<typeof getProviders>>, null>;
-};
+  providers: Exclude<Awaited<ReturnType<typeof getProviders>>, null>
+}
 
 export const SignInPageContent: FC<SignInPageContentProps> = ({
   providers,
 }) => {
-  const t = useTranslations("signIn");
+  const t = useTranslations('signIn')
   return (
     <>
-      <h1 className="mb-8 text-2xl">{t("heading")}</h1>
+      <h1 className="mb-8 text-2xl">{t('heading')}</h1>
       <ul className="grid gap-4">
         {Object.values(providers).map((provider) => (
           <li key={provider.name}>
@@ -27,5 +27,5 @@ export const SignInPageContent: FC<SignInPageContentProps> = ({
         <HomeLink />
       </div>
     </>
-  );
-};
+  )
+}

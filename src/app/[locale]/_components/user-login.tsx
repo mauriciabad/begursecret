@@ -1,21 +1,21 @@
-"use client";
+'use client'
 
-import { signIn, signOut, useSession } from "next-auth/react";
-import { useTranslations } from "next-intl";
-import type { ButtonHTMLAttributes, FC } from "react";
+import { signIn, signOut, useSession } from 'next-auth/react'
+import { useTranslations } from 'next-intl'
+import type { ButtonHTMLAttributes, FC } from 'react'
 
-import { ActionButton } from "~/components/action-button";
+import { ActionButton } from '~/components/action-button'
 
 export const UserLogin: FC<
-  Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children" | "type" | "onClick">
+  Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'type' | 'onClick'>
 > = (props) => {
-  const t = useTranslations("common.userLogin");
-  const { data: session } = useSession();
+  const t = useTranslations('common.userLogin')
+  const { data: session } = useSession()
 
   const handleClick = () => {
-    if (session) signOut({ callbackUrl: "/" });
-    else signIn();
-  };
+    if (session) signOut({ callbackUrl: '/' })
+    else signIn()
+  }
 
   return (
     <ActionButton
@@ -25,8 +25,8 @@ export const UserLogin: FC<
       {...props}
     >
       {session
-        ? t("signOutText", { userName: session.user?.name })
-        : t("signInText")}
+        ? t('signOutText', { userName: session.user?.name })
+        : t('signInText')}
     </ActionButton>
-  );
-};
+  )
+}

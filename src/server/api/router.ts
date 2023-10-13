@@ -1,10 +1,10 @@
-import "server-only";
+import 'server-only'
 
-import { router } from "~/server/trpc";
-import { todosRouter } from "./todos/router";
+import { router } from '~/server/trpc'
+import { todosRouter } from './todos/router'
 
 export const apiRouter = router({
   todos: todosRouter,
-});
+})
 
-export type ApiRouter = typeof apiRouter;
+export type ApiRouter = typeof apiRouter

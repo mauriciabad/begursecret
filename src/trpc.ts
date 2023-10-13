@@ -1,5 +1,5 @@
-import { createTRPCReact } from "@trpc/react-query";
+import { createTRPCReact } from '@trpc/react-query'
 
-import type { ApiRouter } from "~/server/api/router";
+import type { ApiRouter } from '~/server/api/router'
 
-export const trpc = createTRPCReact<ApiRouter>();
+export const trpc = createTRPCReact<ApiRouter>()

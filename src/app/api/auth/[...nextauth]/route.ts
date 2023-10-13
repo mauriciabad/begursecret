@@ -1,8 +1,8 @@
-import NextAuth from "next-auth";
-import "server-only";
+import NextAuth from 'next-auth'
+import 'server-only'
 
-import { authOptions } from "~/server/auth";
+import { authOptions } from '~/server/auth'
 
-const handler = NextAuth(authOptions);
+const handler = NextAuth(authOptions)
 
-export { handler as GET, handler as POST };
+export { handler as GET, handler as POST }

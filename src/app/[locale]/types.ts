@@ -1,1 +1,1 @@
-export type LocaleRouteParams = { params: { locale: string } };
+export type LocaleRouteParams = { params: { locale: string } }
