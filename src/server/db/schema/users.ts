@@ -1,4 +1,5 @@
 import type { AdapterAccount } from '@auth/core/adapters'
+import { relations } from 'drizzle-orm'
 import {
   int,
   mysqlTable,
@@ -25,9 +26,7 @@ export const users = mysqlTable('user', {
 export const accounts = mysqlTable(
   'account',
   {
-    userId: varchar('userId', { length: 255 })
-      .notNull()
-      .references(() => users.id, { onDelete: 'cascade' }),
+    userId: varchar('userId', { length: 255 }).notNull(),
     type: varchar('type', { length: 255 })
       .$type<AdapterAccount['type']>()
       .notNull(),
@@ -46,13 +45,25 @@ export const accounts = mysqlTable(
   })
 )
 
+export const accountsRelations = relations(accounts, ({ one }) => ({
+  user: one(users, {
+    fields: [accounts.userId],
+    references: [users.id],
+  }),
+}))
+
 export const sessions = mysqlTable('session', {
   sessionToken: varchar('sessionToken', { length: 255 }).notNull().primaryKey(),
-  userId: varchar('userId', { length: 255 })
-    .notNull()
-    .references(() => users.id, { onDelete: 'cascade' }),
+  userId: varchar('userId', { length: 255 }).notNull(),
   expires: timestamp('expires', { mode: 'date' }).notNull(),
 })
+
+export const sessionsRelations = relations(sessions, ({ one }) => ({
+  user: one(users, {
+    fields: [sessions.userId],
+    references: [users.id],
+  }),
+}))
 
 export const verificationTokens = mysqlTable(
   'verificationToken',
