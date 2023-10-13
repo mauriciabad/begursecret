@@ -1,0 +1,41 @@
+{
+  "common": {
+    "userLogin": {
+      "signInText": "Sign in",
+      "signOutText": "Sign out {userName}"
+    },
+    "home": {
+      "linkText": "Back to Homepage"
+    }
+  },
+  "home": {
+    "meta": {
+      "title": "Places App",
+      "description": "Places App built with Next.js"
+    },
+    "heading": "Welcome to Next Places App",
+    "places": {
+      "linkText": "Go to Places list"
+    }
+  },
+  "signIn": {
+    "meta": {
+      "title": "Sign In",
+      "description": "Sign in for a personalized experience"
+    },
+    "heading": "Sign In",
+    "providerButtonText": "Sign in with {name}"
+  },
+  "places": {
+    "meta": {
+      "title": "Places",
+      "description": "List of places"
+    },
+    "heading": "Places",
+    "signIn": "In you want, <link>sign in</link>.",
+    "list": {
+      "loading": "Loading places...",
+      "createdDate": "Created on {createdDate, date, ::yyyyMMddHHmmss}"
+    }
+  }
+}
