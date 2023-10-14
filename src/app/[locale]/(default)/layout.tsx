@@ -6,6 +6,7 @@ import '~/globals.css'
 import { Header } from '../_components/header'
 import { PageLayout } from '../_components/page-layout'
 import type { LocaleRouteParams } from '../types'
+import { BottomNavbar } from '../_components/bottom-navbar'
 
 export async function generateMetadata({
   params,
@@ -23,8 +24,10 @@ type DefaultRootLayoutProps = PropsWithChildren<LocaleRouteParams>
 
 const DefaultRootLayout: FC<DefaultRootLayoutProps> = ({ children }) => {
   return (
-    <PageLayout header={<Header className="mb-8" />}>
+    <PageLayout>
+      <Header className="mb-8" />
       <main className="container mx-auto px-4">{children}</main>
+      <BottomNavbar />
     </PageLayout>
   )
 }
