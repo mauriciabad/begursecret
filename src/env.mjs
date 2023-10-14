@@ -18,7 +18,10 @@ const server = z.object({
   /** GitHub client secret */
   GITHUB_CLIENT_SECRET: z.string().min(1),
   /** App URL when deployed on Vercel */
-  BASE_URL: z.string().url().optional(),
+  BASE_URL: z
+    .string()
+    .regex(/\w+(\.\w+)+(:\d{4})?/)
+    .optional(),
 
   USE_LOCAL_DB: z.union([z.literal('true'), z.literal('false')]).optional(),
   DATABASE_HOST: z.string().min(1),
