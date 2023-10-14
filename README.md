@@ -44,7 +44,7 @@ The OAuth client is required to sign in with GitHub account. You can swap provid
    # Client secret of GitHub app
    GITHUB_CLIENT_SECRET=tobechanged
    # Absolute base URL of Next.js app
-   BASE_URL=http://localhost:3000
+   BASE_URL=localhost:3000
    # NextAuth.js secret, e.g. generate with "openssl rand -hex 32"
    NEXTAUTH_SECRET=tobechanged
 
