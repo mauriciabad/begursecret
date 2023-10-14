@@ -5,7 +5,8 @@ import superjson from 'superjson'
 
 import { authOptions } from './auth'
 
-export const createContext = async () => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const createContext = async (_req: Request) => {
   const session = await getServerSession(authOptions)
   return { session }
 }
