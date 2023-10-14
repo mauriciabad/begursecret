@@ -13,17 +13,6 @@ const server = z.object({
     if (isNaN(port)) return undefined
     return port
   }, z.number().positive().optional()),
-  NEXTAUTH_SECRET:
-    process.env.NODE_ENV === 'production'
-      ? z.string().min(1)
-      : z.string().min(1).optional(),
-  NEXTAUTH_URL: z.preprocess(
-    // This makes Vercel deployments not fail if you don't set NEXTAUTH_URL
-    // Since NextAuth.js automatically uses the BASE_URL if present.
-    (str) => process.env.BASE_URL ?? str,
-    // BASE_URL doesn't include `https` so it cant be validated as a URL
-    process.env.VERCEL ? z.string().min(1) : z.string().url()
-  ),
   /** GitHub client ID */
   GITHUB_CLIENT_ID: z.string().min(1),
   /** GitHub client secret */
@@ -54,8 +43,6 @@ const client = z.object({})
 const processEnv = {
   NODE_ENV: process.env.NODE_ENV,
   PORT: process.env.PORT,
-  NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-  NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
   GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
   BASE_URL: process.env.BASE_URL,
