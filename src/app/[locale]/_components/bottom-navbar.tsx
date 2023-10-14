@@ -4,7 +4,7 @@ import { FC, PropsWithChildren } from 'react'
 
 export const BottomNavbar = () => {
   return (
-    <nav className="fixed inset-x-0 bottom-0 bg-white shadow-xl">
+    <nav className="fixed inset-x-0 bottom-0 border-t border-stone-200 bg-white shadow-xl">
       <ul className="grid h-12 grid-cols-4">
         <Item url="/explore">
           <IconCompass />
