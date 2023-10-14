@@ -65,7 +65,8 @@ const merged = server.merge(client)
 /** @typedef {z.infer<typeof merged>} MergedOutput */
 /** @typedef {z.SafeParseReturnType<MergedInput, MergedOutput>} MergedSafeParseReturn */
 
-let env = /** @type {MergedOutput} */ (process.env)
+// let env = /** @type {MergedOutput} */ (process.env)
+let env = process.env
 
 if (!!process.env.SKIP_ENV_VALIDATION == false) {
   const isServer = typeof window === 'undefined'
@@ -84,6 +85,8 @@ if (!!process.env.SKIP_ENV_VALIDATION == false) {
     throw new Error('Invalid environment variables')
   }
 
+  // eslint-disable-next-line no-undef, @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   env = new Proxy(parsed.data, {
     get(target, prop) {
       if (typeof prop !== 'string') return undefined
