@@ -7,7 +7,7 @@ import { TextLink } from './text-link'
 
 export const HomeLink: FC<
   Omit<ComponentPropsWithoutRef<typeof TextLink>, 'href'>
-> = ({ className, children, ...props }) => {
+> = ({ children, ...props }) => {
   const t = useTranslations('common.home')
 
   return (

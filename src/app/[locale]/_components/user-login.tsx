@@ -1,14 +1,13 @@
 'use client'
 
+import { Button } from '@nextui-org/react'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 import type { ButtonHTMLAttributes, FC } from 'react'
 
-import { ActionButton } from '~/components/action-button'
-
 export const UserLogin: FC<
-  Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'type' | 'onClick'>
-> = (props) => {
+  Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'>
+> = () => {
   const t = useTranslations('common.userLogin')
   const { data: session } = useSession()
 
@@ -18,15 +17,10 @@ export const UserLogin: FC<
   }
 
   return (
-    <ActionButton
-      type="button"
-      variant="small"
-      onClick={handleClick}
-      {...props}
-    >
+    <Button onClick={handleClick}>
       {session
         ? t('signOutText', { userName: session.user?.name })
         : t('signInText')}
-    </ActionButton>
+    </Button>
   )
 }

@@ -4,8 +4,7 @@ import { env } from '~/env.mjs'
 
 const getBaseUrl = () => {
   if (typeof window !== 'undefined') return ''
-  if (env.VERCEL_URL) return `https://${env.VERCEL_URL}`
-  return `http://localhost:${env.PORT ?? 3000}`
+  return `https://${env.BASE_URL}`
 }
 
 export const createLink = () =>
