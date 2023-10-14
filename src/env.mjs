@@ -19,9 +19,9 @@ const server = z.object({
       : z.string().min(1).optional(),
   NEXTAUTH_URL: z.preprocess(
     // This makes Vercel deployments not fail if you don't set NEXTAUTH_URL
-    // Since NextAuth.js automatically uses the VERCEL_URL if present.
-    (str) => process.env.VERCEL_URL ?? str,
-    // VERCEL_URL doesn't include `https` so it cant be validated as a URL
+    // Since NextAuth.js automatically uses the BASE_URL if present.
+    (str) => process.env.BASE_URL ?? str,
+    // BASE_URL doesn't include `https` so it cant be validated as a URL
     process.env.VERCEL ? z.string().min(1) : z.string().url()
   ),
   /** GitHub client ID */
@@ -29,7 +29,7 @@ const server = z.object({
   /** GitHub client secret */
   GITHUB_CLIENT_SECRET: z.string().min(1),
   /** App URL when deployed on Vercel */
-  VERCEL_URL: z.string().url().optional(),
+  BASE_URL: z.string().url().optional(),
 
   USE_LOCAL_DB: z.union([z.literal('true'), z.literal('false')]).optional(),
   DATABASE_HOST: z.string().min(1),
@@ -58,7 +58,7 @@ const processEnv = {
   NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
   GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
-  VERCEL_URL: process.env.VERCEL_URL,
+  BASE_URL: process.env.BASE_URL,
   USE_LOCAL_DB: process.env.USE_LOCAL_DB,
   DATABASE_HOST: process.env.DATABASE_HOST,
   DATABASE_USERNAME: process.env.DATABASE_USERNAME,

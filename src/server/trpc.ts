@@ -5,7 +5,7 @@ import superjson from 'superjson'
 
 import { authOptions } from './auth'
 
-export const createContext = async (_req: Request) => {
+export const createContext = async () => {
   const session = await getServerSession(authOptions)
   return { session }
 }

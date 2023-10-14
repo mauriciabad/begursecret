@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { signInPagePath } from '~/auth'
 import { defaultLocale, getLocale } from '~/i18n'
 
-const signInPagePathPattern = /^\/[^\/\s]+\/auth\/signin/
+const signInPagePathPattern = /^\/[^/\s]+\/auth\/signin/
 
 export const authI18nMiddleware = (request: NextRequest) => {
   if (!signInPagePathPattern.test(request.nextUrl.pathname)) return

@@ -4,7 +4,7 @@ import { env } from '~/env.mjs'
 
 const getBaseUrl = () => {
   if (typeof window !== 'undefined') return ''
-  if (env.VERCEL_URL) return `https://${env.VERCEL_URL}`
+  if (env.BASE_URL) return `https://${env.BASE_URL}`
   return `http://localhost:${env.PORT ?? 3000}`
 }
 
