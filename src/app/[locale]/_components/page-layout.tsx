@@ -4,9 +4,9 @@ import { getMessages } from 'next-intl/server'
 import type { FC, PropsWithChildren, ReactNode } from 'react'
 
 import { authOptions } from '~/server/auth'
-import { AuthProvider } from '../_providers/auth-provider'
-import { TrpcProvider } from '../_providers/trpc-provider'
-import { NextuiProvider } from '../_providers/nextui-provider'
+import { AuthProvider } from '~/components/providers/auth-provider'
+import { TrpcProvider } from '~/components/providers/trpc-provider'
+import { NextuiProvider } from '~/components/providers/nextui-provider'
 import { BottomNavbar } from './bottom-navbar'
 
 type PageLayoutProps = PropsWithChildren<{ header?: ReactNode }>
