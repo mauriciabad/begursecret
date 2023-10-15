@@ -5,7 +5,7 @@ import type { FC, PropsWithChildren } from 'react'
 import '~/globals.css'
 import { PageLayout } from '../../../components/layouts/page-layout'
 import type { LocaleRouteParams } from '~/i18n'
-import { BottomNavbar } from '../../../components/bottom-navbar'
+import { BottomNavbar } from '../../../components/navbar/bottom-navbar'
 
 export async function generateMetadata({
   params,
