@@ -10,8 +10,12 @@ import {
 } from '@tabler/icons-react'
 import { DbEnvironmentTag } from '../db-environment-tag'
 import { BottomNavbarItem } from './bottom-navbar-item'
+import { getServerSession } from 'next-auth/next'
+import { authOptions } from '~/server/auth'
 
-export const BottomNavbar = () => {
+export const BottomNavbar = async () => {
+  const session = await getServerSession(authOptions)
+
   return (
     <nav className="fixed inset-x-0 bottom-0 border-t border-stone-200 bg-white shadow-xl">
       <ul className="grid h-12 grid-cols-4">
@@ -32,8 +36,30 @@ export const BottomNavbar = () => {
         />
         <BottomNavbarItem
           url="/profile"
-          icon={<IconUser />}
-          iconActive={<IconUserFilled />}
+          icon={
+            session?.user?.image ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={session.user.image}
+                alt=""
+                className="h-6 w-6 rounded-full border-2 border-transparent"
+              />
+            ) : (
+              <IconUser />
+            )
+          }
+          iconActive={
+            session?.user?.image ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={session.user.image}
+                alt=""
+                className="h-6 w-6 rounded-full border-2 border-current"
+              />
+            ) : (
+              <IconUserFilled />
+            )
+          }
         />
       </ul>
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
