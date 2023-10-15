@@ -24,7 +24,7 @@ type DefaultRootLayoutProps = PropsWithChildren<LocaleRouteParams>
 const DefaultRootLayout: FC<DefaultRootLayoutProps> = ({ children }) => {
   return (
     <PageLayout>
-      <main className="container mx-auto px-4">{children}</main>
+      <main className="mx-auto max-w-2xl px-4">{children}</main>
       <BottomNavbar />
     </PageLayout>
   )

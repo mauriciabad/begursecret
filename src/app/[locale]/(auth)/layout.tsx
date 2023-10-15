@@ -23,7 +23,7 @@ type AuthRootLayoutProps = PropsWithChildren<LocaleRouteParams>
 const AuthRootLayout: FC<AuthRootLayoutProps> = async ({ children }) => {
   return (
     <PageLayout>
-      <main className="container mx-auto px-4 py-8">{children}</main>
+      <main className="mx-auto max-w-2xl px-4 py-8">{children}</main>
     </PageLayout>
   )
 }

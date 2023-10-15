@@ -42,7 +42,7 @@ export const BottomNavbar = async () => {
               <img
                 src={session.user.image}
                 alt=""
-                className="h-6 w-6 rounded-full border-2 border-transparent"
+                className="box-content h-6 w-6 rounded-full border-2 border-transparent"
               />
             ) : (
               <IconUser />
@@ -54,7 +54,7 @@ export const BottomNavbar = async () => {
               <img
                 src={session.user.image}
                 alt=""
-                className="h-6 w-6 rounded-full border-2 border-current"
+                className="box-content h-6 w-6 rounded-full border-2 border-current"
               />
             ) : (
               <IconUserFilled />
