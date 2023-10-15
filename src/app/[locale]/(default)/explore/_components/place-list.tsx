@@ -10,7 +10,7 @@ export const PlaceList: FC<Omit<HTMLAttributes<HTMLElement>, 'children'>> = ({
   className,
   ...props
 }) => {
-  const t = useTranslations('places.list')
+  const t = useTranslations('explore.list')
   const { data: places, isInitialLoading } = trpc.places.list.useQuery()
 
   if (isInitialLoading) {

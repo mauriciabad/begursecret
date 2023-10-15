@@ -14,6 +14,7 @@
       "description": "Places App built with Next.js"
     },
     "heading": "Welcome to Next Places App",
+    "signIn": "In you want, <link>sign in</link>.",
     "lunchApp": "Lunch App"
   },
   "signIn": {
@@ -22,9 +23,10 @@
       "description": "Sign in for a personalized experience"
     },
     "heading": "Sign In",
+    "goHome": "Go to home",
     "providerButtonText": "Sign in with {name}"
   },
-  "places": {
+  "explore": {
     "meta": {
       "title": "Places",
       "description": "List of places"

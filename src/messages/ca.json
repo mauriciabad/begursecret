@@ -14,6 +14,7 @@
       "description": "Aplicació de Llocs creada amb Next.js"
     },
     "heading": "Benvingut/da a l'Aplicació de Llocs amb Next",
+    "signIn": "Si vols, <link>inicia la sessió</link>.",
     "lunchApp": "Obrir App"
   },
   "signIn": {
@@ -22,9 +23,10 @@
       "description": "Inicia la sessió per a una experiència personalitzada"
     },
     "heading": "Inicia la sessió",
+    "goHome": "Anar a l'inici",
     "providerButtonText": "Inicia la sessió amb {name}"
   },
-  "places": {
+  "explore": {
     "meta": {
       "title": "Llistat de llocs",
       "description": "Llista de llocs"
