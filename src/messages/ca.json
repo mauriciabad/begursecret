@@ -33,6 +33,31 @@
     "list": {
       "loading": "Carregant llocs...",
       "createdDate": "Creada el {createdDate, date, ::yyyyMMddHHmmss}"
-    }
+    },
+    "content": "Pàgina en construcció..."
+  },
+  "missions": {
+    "meta": {
+      "title": "Missions",
+      "description": "Llista de missions"
+    },
+    "heading": "Missions",
+    "content": "Pàgina en construcció..."
+  },
+  "hub": {
+    "meta": {
+      "title": "Oficina virtual",
+      "description": "Oficina virtual"
+    },
+    "heading": "Oficina virtual",
+    "content": "Pàgina en construcció..."
+  },
+  "profile": {
+    "meta": {
+      "title": "Perfil",
+      "description": "Perfil de l'usuari"
+    },
+    "heading": "Perfil",
+    "content": "Pàgina en construcció..."
   }
 }

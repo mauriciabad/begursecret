@@ -33,6 +33,31 @@
     "list": {
       "loading": "Loading places...",
       "createdDate": "Created on {createdDate, date, ::yyyyMMddHHmmss}"
-    }
+    },
+    "content": "Page under construction..."
+  },
+  "missions": {
+    "meta": {
+      "title": "Missions",
+      "description": "List of missions"
+    },
+    "heading": "Missions",
+    "content": "Page under construction..."
+  },
+  "hub": {
+    "meta": {
+      "title": "Hub",
+      "description": "Social hub"
+    },
+    "heading": "Hub",
+    "content": "Page under construction..."
+  },
+  "profile": {
+    "meta": {
+      "title": "Profile",
+      "description": "User's profile"
+    },
+    "heading": "Profile",
+    "content": "Page under construction..."
   }
 }
