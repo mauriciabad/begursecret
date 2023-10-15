@@ -22,7 +22,7 @@ const HomePage: FC<LocaleRouteParams> = () => {
     <>
       <h1 className="mb-8 text-2xl">{t('heading')}</h1>
       <div>
-        <TextLink href="/places">{t('places.linkText')}</TextLink>
+        <TextLink href="/explore">{t('lunchApp')}</TextLink>
       </div>
     </>
   )

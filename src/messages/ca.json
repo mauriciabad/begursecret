@@ -14,9 +14,7 @@
       "description": "Aplicació de Llocs creada amb Next.js"
     },
     "heading": "Benvingut/da a l'Aplicació de Llocs amb Next",
-    "places": {
-      "linkText": "Vés a la llista de llocs"
-    }
+    "lunchApp": "Obrir App"
   },
   "signIn": {
     "meta": {

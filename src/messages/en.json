@@ -14,9 +14,7 @@
       "description": "Places App built with Next.js"
     },
     "heading": "Welcome to Next Places App",
-    "places": {
-      "linkText": "Go to Places list"
-    }
+    "lunchApp": "Lunch App"
   },
   "signIn": {
     "meta": {
