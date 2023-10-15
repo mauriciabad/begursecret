@@ -7,10 +7,10 @@
   },
   "home": {
     "meta": {
-      "title": "Places App",
-      "description": "Places App built with Next.js"
+      "title": "Descobreix Begur App",
+      "description": "Explore your town."
     },
-    "heading": "Welcome to Next Places App",
+    "heading": "Welcome to Descobreix Begur App",
     "signIn": "In you want, <link>sign in</link>.",
     "lunchApp": "Lunch App"
   },

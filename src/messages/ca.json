@@ -7,10 +7,10 @@
   },
   "home": {
     "meta": {
-      "title": "Aplicació de Llocs",
-      "description": "Aplicació de Llocs creada amb Next.js"
+      "title": "Descobreix Begur App",
+      "description": "Descobreix llocs d'es teu poble."
     },
-    "heading": "Benvingut/da a l'Aplicació de Llocs amb Next",
+    "heading": "Benvingut/da a Descobreix Begur App",
     "signIn": "Si vols, <link>inicia la sessió</link>.",
     "lunchApp": "Obrir App"
   },
