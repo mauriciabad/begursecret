@@ -20,8 +20,8 @@ export const BottomNavbar = () => {
           <IconUser />
         </Item>
       </ul>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <DbEnvironmentTag className="pointer-events-none" />
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+        <DbEnvironmentTag />
       </div>
     </nav>
   )

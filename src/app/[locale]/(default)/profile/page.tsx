@@ -3,6 +3,7 @@ import { useTranslations } from 'next-intl'
 import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
 import { AuthRequired } from '~/components/auth-required'
+import { LanguageSwitcher } from '~/components/language-switcher'
 import { SigninLink } from '~/components/signin-link'
 import { UserLogin } from '~/components/user-login'
 
@@ -36,6 +37,8 @@ const ProfilePage: FC<LocaleRouteParams> = () => {
         <p>{t('authenticated')}</p>
       </AuthRequired>
       <UserLogin />
+
+      <LanguageSwitcher />
     </>
   )
 }

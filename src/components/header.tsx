@@ -1,9 +1,6 @@
 import { cn } from '~/helpers/cn'
 import type { FC, HTMLAttributes } from 'react'
 
-import { LanguageSwitcher } from './language-switcher'
-import { DbEnvironmentTag } from './db-environment-tag'
-
 export const Header: FC<Omit<HTMLAttributes<HTMLElement>, 'children'>> = ({
   className,
   ...props
@@ -16,7 +13,7 @@ export const Header: FC<Omit<HTMLAttributes<HTMLElement>, 'children'>> = ({
       )}
       {...props}
     >
-      <LanguageSwitcher />
+      
     </header>
   )
 }
