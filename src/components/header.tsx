@@ -2,7 +2,6 @@ import clsx from 'clsx'
 import type { FC, HTMLAttributes } from 'react'
 
 import { LanguageSwitcher } from './language-switcher'
-import { UserLogin } from './user-login'
 import { DbEnvironmentTag } from './db-environment-tag'
 
 export const Header: FC<Omit<HTMLAttributes<HTMLElement>, 'children'>> = ({
@@ -20,7 +19,6 @@ export const Header: FC<Omit<HTMLAttributes<HTMLElement>, 'children'>> = ({
       <LanguageSwitcher />
       <div className="inline-flex items-center gap-4">
         <DbEnvironmentTag />
-        <UserLogin />
       </div>
     </header>
   )

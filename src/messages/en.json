@@ -29,7 +29,6 @@
       "description": "List of places"
     },
     "heading": "Explore",
-    "signIn": "In you want, <link>sign in</link>.",
     "list": {
       "loading": "Loading places...",
       "createdDate": "Created on {createdDate, date, ::yyyyMMddHHmmss}"
@@ -58,6 +57,8 @@
       "description": "User's profile"
     },
     "heading": "Profile",
-    "content": "Page under construction..."
+    "content": "Page under construction...",
+    "signIn": "In you want, <link>sign in</link>.",
+    "authenticated": "You are authenticated and can see this content."
   }
 }

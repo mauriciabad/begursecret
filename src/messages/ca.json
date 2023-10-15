@@ -29,7 +29,6 @@
       "description": "Llista de llocs"
     },
     "heading": "Explorar",
-    "signIn": "Si vols, <link>inicia la sessió</link>.",
     "list": {
       "loading": "Carregant llocs...",
       "createdDate": "Creada el {createdDate, date, ::yyyyMMddHHmmss}"
@@ -58,6 +57,8 @@
       "description": "Perfil de l'usuari"
     },
     "heading": "Perfil",
-    "content": "Pàgina en construcció..."
+    "content": "Pàgina en construcció...",
+    "signIn": "Si vols, <link>inicia la sessió</link>.",
+    "authenticated": "Estàs autenticat/da i pots veure aquest contingut."
   }
 }
