@@ -1,4 +1,4 @@
-export const locales = ['en', 'ca'] as const
+export const locales = ['en', 'ca']
 export const defaultLocale = 'ca'
 
 const localePathPattern = /^\/(?<locale>[^/\s]+)/
