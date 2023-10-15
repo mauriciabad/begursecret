@@ -5,7 +5,7 @@ import type { FC } from 'react'
 
 import { AuthRequired } from '~/components/auth-required'
 import { HomeLink } from '~/components/home-link'
-import type { LocaleRouteParams } from '../../types'
+import type { LocaleRouteParams } from '~/i18n'
 import { PlaceList } from './_components/place-list'
 import { PlaceSigninFallback } from './_components/place-signin-fallback'
 

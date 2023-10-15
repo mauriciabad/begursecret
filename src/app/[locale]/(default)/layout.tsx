@@ -3,10 +3,10 @@ import { getTranslator } from 'next-intl/server'
 import type { FC, PropsWithChildren } from 'react'
 
 import '~/globals.css'
-import { Header } from '../_components/header'
-import { PageLayout } from '../_components/page-layout'
-import type { LocaleRouteParams } from '../types'
-import { BottomNavbar } from '../_components/bottom-navbar'
+import { Header } from '../../../components/header'
+import { PageLayout } from '../../../components/layouts/page-layout'
+import type { LocaleRouteParams } from '~/i18n'
+import { BottomNavbar } from '../../../components/bottom-navbar'
 
 export async function generateMetadata({
   params,

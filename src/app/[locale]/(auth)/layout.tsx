@@ -3,8 +3,8 @@ import { getTranslator } from 'next-intl/server'
 import type { FC, PropsWithChildren } from 'react'
 
 import '~/globals.css'
-import { PageLayout } from '../_components/page-layout'
-import type { LocaleRouteParams } from '../types'
+import { PageLayout } from '../../../components/layouts/page-layout'
+import type { LocaleRouteParams } from '~/i18n'
 
 export async function generateMetadata({
   params,

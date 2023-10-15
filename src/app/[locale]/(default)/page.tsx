@@ -4,7 +4,7 @@ import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
 
 import { TextLink } from '~/components/text-link'
-import type { LocaleRouteParams } from '../types'
+import type { LocaleRouteParams } from '~/i18n'
 
 export async function generateMetadata({
   params,
