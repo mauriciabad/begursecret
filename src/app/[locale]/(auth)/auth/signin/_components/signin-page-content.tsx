@@ -2,8 +2,8 @@ import type { getProviders } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 import type { FC } from 'react'
 
-import { HomeLink } from '~/components/home-link'
 import { ProviderButton } from './provider-button'
+import { TextLink } from '~/components/text-link'
 
 type SignInPageContentProps = {
   providers: Exclude<Awaited<ReturnType<typeof getProviders>>, null>
@@ -24,7 +24,7 @@ export const SignInPageContent: FC<SignInPageContentProps> = ({
         ))}
       </ul>
       <div className="mt-8">
-        <HomeLink />
+        <TextLink href="/">{t('goHome')}</TextLink>
       </div>
     </>
   )

@@ -3,9 +3,9 @@ import { getTranslator } from 'next-intl/server'
 import type { FC, PropsWithChildren } from 'react'
 
 import '~/globals.css'
-import { Header } from '../_components/header'
-import { PageLayout } from '../_components/page-layout'
-import type { LocaleRouteParams } from '../types'
+import { PageLayout } from '../../../components/layouts/page-layout'
+import type { LocaleRouteParams } from '~/i18n'
+import { BottomNavbar } from '../../../components/navbar/bottom-navbar'
 
 export async function generateMetadata({
   params,
@@ -23,8 +23,9 @@ type DefaultRootLayoutProps = PropsWithChildren<LocaleRouteParams>
 
 const DefaultRootLayout: FC<DefaultRootLayoutProps> = ({ children }) => {
   return (
-    <PageLayout header={<Header className="mb-8" />}>
+    <PageLayout>
       <main className="container mx-auto px-4">{children}</main>
+      <BottomNavbar />
     </PageLayout>
   )
 }

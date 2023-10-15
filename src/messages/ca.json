@@ -3,20 +3,16 @@
     "userLogin": {
       "signInText": "Inicia la sessió",
       "signOutText": "Tanca la sessió {userName}"
-    },
-    "home": {
-      "linkText": "Torna a la pàgina d'inici"
     }
   },
   "home": {
     "meta": {
-      "title": "Aplicació de Llocs",
-      "description": "Aplicació de Llocs creada amb Next.js"
+      "title": "Descobreix Begur App",
+      "description": "Descobreix llocs d'es teu poble."
     },
-    "heading": "Benvingut/da a l'Aplicació de Llocs amb Next",
-    "places": {
-      "linkText": "Vés a la llista de llocs"
-    }
+    "heading": "Benvingut/da a Descobreix Begur App",
+    "signIn": "Si vols, <link>inicia la sessió</link>.",
+    "lunchApp": "Obrir App"
   },
   "signIn": {
     "meta": {
@@ -24,18 +20,45 @@
       "description": "Inicia la sessió per a una experiència personalitzada"
     },
     "heading": "Inicia la sessió",
+    "goHome": "Anar a l'inici",
     "providerButtonText": "Inicia la sessió amb {name}"
   },
-  "places": {
+  "explore": {
     "meta": {
-      "title": "Llistat de llocs",
+      "title": "Explorar",
       "description": "Llista de llocs"
     },
-    "heading": "Llistat de llocs",
-    "signIn": "Si vols, <link>inicia la sessió</link>.",
+    "heading": "Explorar",
     "list": {
       "loading": "Carregant llocs...",
       "createdDate": "Creada el {createdDate, date, ::yyyyMMddHHmmss}"
-    }
+    },
+    "content": "Pàgina en construcció..."
+  },
+  "missions": {
+    "meta": {
+      "title": "Missions",
+      "description": "Llista de missions"
+    },
+    "heading": "Missions",
+    "content": "Pàgina en construcció..."
+  },
+  "hub": {
+    "meta": {
+      "title": "Oficina virtual",
+      "description": "Oficina virtual"
+    },
+    "heading": "Oficina virtual",
+    "content": "Pàgina en construcció..."
+  },
+  "profile": {
+    "meta": {
+      "title": "Perfil",
+      "description": "Perfil de l'usuari"
+    },
+    "heading": "Perfil",
+    "content": "Pàgina en construcció...",
+    "signIn": "Si vols, <link>inicia la sessió</link>.",
+    "authenticated": "Estàs autenticat/da i pots veure aquest contingut."
   }
 }

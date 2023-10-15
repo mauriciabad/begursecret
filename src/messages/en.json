@@ -3,20 +3,16 @@
     "userLogin": {
       "signInText": "Sign in",
       "signOutText": "Sign out {userName}"
-    },
-    "home": {
-      "linkText": "Back to Homepage"
     }
   },
   "home": {
     "meta": {
-      "title": "Places App",
-      "description": "Places App built with Next.js"
+      "title": "Descobreix Begur App",
+      "description": "Explore your town."
     },
-    "heading": "Welcome to Next Places App",
-    "places": {
-      "linkText": "Go to Places list"
-    }
+    "heading": "Welcome to Descobreix Begur App",
+    "signIn": "In you want, <link>sign in</link>.",
+    "lunchApp": "Lunch App"
   },
   "signIn": {
     "meta": {
@@ -24,18 +20,45 @@
       "description": "Sign in for a personalized experience"
     },
     "heading": "Sign In",
+    "goHome": "Go to home",
     "providerButtonText": "Sign in with {name}"
   },
-  "places": {
+  "explore": {
     "meta": {
-      "title": "Places",
+      "title": "Explore",
       "description": "List of places"
     },
-    "heading": "Places",
-    "signIn": "In you want, <link>sign in</link>.",
+    "heading": "Explore",
     "list": {
       "loading": "Loading places...",
       "createdDate": "Created on {createdDate, date, ::yyyyMMddHHmmss}"
-    }
+    },
+    "content": "Page under construction..."
+  },
+  "missions": {
+    "meta": {
+      "title": "Missions",
+      "description": "List of missions"
+    },
+    "heading": "Missions",
+    "content": "Page under construction..."
+  },
+  "hub": {
+    "meta": {
+      "title": "Hub",
+      "description": "Social hub"
+    },
+    "heading": "Hub",
+    "content": "Page under construction..."
+  },
+  "profile": {
+    "meta": {
+      "title": "Profile",
+      "description": "User's profile"
+    },
+    "heading": "Profile",
+    "content": "Page under construction...",
+    "signIn": "In you want, <link>sign in</link>.",
+    "authenticated": "You are authenticated and can see this content."
   }
 }

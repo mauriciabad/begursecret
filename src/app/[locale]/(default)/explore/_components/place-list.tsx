@@ -1,6 +1,6 @@
 'use client'
 
-import clsx from 'clsx'
+import { cn } from '~/helpers/cn'
 import { useTranslations } from 'next-intl'
 import type { FC, HTMLAttributes } from 'react'
 
@@ -10,13 +10,13 @@ export const PlaceList: FC<Omit<HTMLAttributes<HTMLElement>, 'children'>> = ({
   className,
   ...props
 }) => {
-  const t = useTranslations('places.list')
+  const t = useTranslations('explore.list')
   const { data: places, isInitialLoading } = trpc.places.list.useQuery()
 
   if (isInitialLoading) {
     return (
       <div
-        className={clsx(
+        className={cn(
           'rounded border border-gray-200 bg-gray-200 px-4 py-2 text-lg',
           className
         )}
@@ -28,7 +28,7 @@ export const PlaceList: FC<Omit<HTMLAttributes<HTMLElement>, 'children'>> = ({
   }
 
   return (
-    <ul className={clsx('grid gap-4', className)} {...props}>
+    <ul className={cn('grid gap-4', className)} {...props}>
       {places?.map((place) => (
         <li
           key={place.id}

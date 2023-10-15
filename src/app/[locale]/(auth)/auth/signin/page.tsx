@@ -3,7 +3,7 @@ import { getProviders } from 'next-auth/react'
 import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
 
-import type { LocaleRouteParams } from '../../../types'
+import type { LocaleRouteParams } from '~/i18n'
 import { SignInPageContent } from './_components/signin-page-content'
 
 export async function generateMetadata({
