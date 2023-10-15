@@ -3,7 +3,6 @@ import { getTranslator } from 'next-intl/server'
 import type { FC, PropsWithChildren } from 'react'
 
 import '~/globals.css'
-import { Header } from '../../../components/header'
 import { PageLayout } from '../../../components/layouts/page-layout'
 import type { LocaleRouteParams } from '~/i18n'
 import { BottomNavbar } from '../../../components/bottom-navbar'
@@ -25,7 +24,6 @@ type DefaultRootLayoutProps = PropsWithChildren<LocaleRouteParams>
 const DefaultRootLayout: FC<DefaultRootLayoutProps> = ({ children }) => {
   return (
     <PageLayout>
-      <Header className="mb-8" />
       <main className="container mx-auto px-4">{children}</main>
       <BottomNavbar />
     </PageLayout>
