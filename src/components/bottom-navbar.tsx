@@ -1,6 +1,7 @@
 import Link from 'next-intl/link'
 import { IconCompass, IconAward, IconGift, IconUser } from '@tabler/icons-react'
 import { FC, PropsWithChildren } from 'react'
+import { DbEnvironmentTag } from './db-environment-tag'
 
 export const BottomNavbar = () => {
   return (
@@ -19,6 +20,9 @@ export const BottomNavbar = () => {
           <IconUser />
         </Item>
       </ul>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <DbEnvironmentTag className="pointer-events-none" />
+      </div>
     </nav>
   )
 }

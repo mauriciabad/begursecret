@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import { cn } from '~/helpers/cn'
 import type { FC, HTMLAttributes } from 'react'
 
 import { LanguageSwitcher } from './language-switcher'
@@ -10,16 +10,13 @@ export const Header: FC<Omit<HTMLAttributes<HTMLElement>, 'children'>> = ({
 }) => {
   return (
     <header
-      className={clsx(
+      className={cn(
         'container mx-auto flex items-center justify-between p-4',
         className
       )}
       {...props}
     >
       <LanguageSwitcher />
-      <div className="inline-flex items-center gap-4">
-        <DbEnvironmentTag />
-      </div>
     </header>
   )
 }

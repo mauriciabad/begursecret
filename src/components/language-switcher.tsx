@@ -1,6 +1,6 @@
 'use client'
 
-import clsx from 'clsx'
+import { cn } from '~/helpers/cn'
 import { useLocale } from 'next-intl'
 import { usePathname } from 'next-intl/client'
 import Link from 'next-intl/link'
@@ -23,7 +23,7 @@ export const LanguageSwitcher: FC<
               href={pathname}
               locale={locale}
               prefetch={false}
-              className={clsx('hover:underline', {
+              className={cn('hover:underline', {
                 'font-bold': currentLocale === locale,
               })}
             >
