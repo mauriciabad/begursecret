@@ -16,7 +16,7 @@ export async function generateMetadata({
   }
 }
 
-const PlacesPage: FC<LocaleRouteParams> = () => {
+const ExplorePage: FC<LocaleRouteParams> = () => {
   const t = useTranslations('explore')
   return (
     <>
@@ -26,4 +26,4 @@ const PlacesPage: FC<LocaleRouteParams> = () => {
   )
 }
 
-export default PlacesPage
+export default ExplorePage

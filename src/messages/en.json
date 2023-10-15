@@ -3,9 +3,6 @@
     "userLogin": {
       "signInText": "Sign in",
       "signOutText": "Sign out {userName}"
-    },
-    "home": {
-      "linkText": "Back to Homepage"
     }
   },
   "home": {
@@ -28,10 +25,10 @@
   },
   "explore": {
     "meta": {
-      "title": "Places",
+      "title": "Explore",
       "description": "List of places"
     },
-    "heading": "Places",
+    "heading": "Explore",
     "signIn": "In you want, <link>sign in</link>.",
     "list": {
       "loading": "Loading places...",
