@@ -18,7 +18,7 @@ export const BottomNavbar = async () => {
 
   return (
     <nav className="fixed inset-x-0 bottom-0 border-t border-stone-200 bg-white shadow-xl">
-      <ul className="grid h-12 grid-cols-4">
+      <ul className="mx-auto grid h-12 max-w-2xl grid-cols-4">
         <BottomNavbarItem
           url="/explore"
           icon={<IconCompass />}
@@ -62,7 +62,7 @@ export const BottomNavbar = async () => {
           }
         />
       </ul>
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+      <div className="-z-1 pointer-events-none absolute inset-0 flex items-center justify-center">
         <DbEnvironmentTag />
       </div>
     </nav>
