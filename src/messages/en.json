@@ -1,17 +1,11 @@
 {
-  "common": {
-    "userLogin": {
-      "signInText": "Sign in",
-      "signOutText": "Sign out {userName}"
-    }
-  },
+  "common": {},
   "home": {
     "meta": {
       "title": "Descobreix Begur App",
       "description": "Explore your town."
     },
     "heading": "Welcome to Descobreix Begur App",
-    "signIn": "In you want, <link>sign in</link>.",
     "lunchApp": "Lunch App"
   },
   "signIn": {
@@ -49,7 +43,8 @@
       "description": "Social hub"
     },
     "heading": "Hub",
-    "content": "Page under construction..."
+    "content": "Page under construction...",
+    "support": "Support"
   },
   "profile": {
     "meta": {
@@ -58,8 +53,7 @@
     },
     "heading": "Profile",
     "content": "Page under construction...",
-    "signIn": "In you want, <link>sign in</link>.",
-    "authenticated": "You are authenticated and can see this content.",
+    "notifications": "Notifications",
     "more-options": {
       "title": "More options",
       "preferences": "Preferences",

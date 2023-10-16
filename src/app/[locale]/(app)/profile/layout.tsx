@@ -1,14 +1,10 @@
-import '~/globals.css'
-
 import { Navbar, NavbarContent, NavbarItem } from '@nextui-org/navbar'
 import { IconBell } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import type { FC, PropsWithChildren } from 'react'
-import { PageLayout } from '~/components/layouts/page-layout'
-import { BottomNavbar } from '~/components/navbar/bottom-navbar'
 import type { LocaleRouteParams } from '~/i18n'
-import Link from 'next-intl/link'
 import { MoreOptionsModal } from './_components/more-options-modal'
+import { LinkIconButton } from '~/components/link-icon-button'
 
 type ProfileLayoutProps = PropsWithChildren<LocaleRouteParams>
 
@@ -16,7 +12,7 @@ const ProfileLayout: FC<ProfileLayoutProps> = ({ children }) => {
   const t = useTranslations('profile')
 
   return (
-    <PageLayout>
+    <>
       <Navbar
         shouldHideOnScroll
         isBlurred={false}
@@ -30,9 +26,12 @@ const ProfileLayout: FC<ProfileLayoutProps> = ({ children }) => {
         </NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem>
-            <Link color="foreground" href="/profile/notifications">
+            <LinkIconButton
+              label={t('notifications')}
+              url="/profile/notifications"
+            >
               <IconBell />
-            </Link>
+            </LinkIconButton>
           </NavbarItem>
           <NavbarItem>
             <MoreOptionsModal />
@@ -41,9 +40,7 @@ const ProfileLayout: FC<ProfileLayoutProps> = ({ children }) => {
       </Navbar>
 
       <main className="mx-auto max-w-2xl px-6 py-3">{children}</main>
-
-      <BottomNavbar />
-    </PageLayout>
+    </>
   )
 }
 

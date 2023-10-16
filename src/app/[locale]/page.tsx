@@ -12,6 +12,10 @@ export async function generateMetadata({
   const t = await getTranslator(params.locale, 'home')
   return {
     description: t('meta.description'),
+    title: {
+      default: t('meta.title'),
+      template: `%s | ${t('meta.title')}`,
+    },
   }
 }
 
@@ -20,9 +24,13 @@ const HomePage: FC<LocaleRouteParams> = () => {
 
   return (
     <>
-      <h1 className="mb-8 text-2xl">{t('heading')}</h1>
+      <main className="mx-auto max-w-2xl px-4">
+        <h1 className="mb-8 text-2xl">{t('heading')}</h1>
 
-      <TextLink href="/explore">{t('lunchApp')}</TextLink>
+        <TextLink href="/explore" className="text-center">
+          {t('lunchApp')}
+        </TextLink>
+      </main>
     </>
   )
 }
