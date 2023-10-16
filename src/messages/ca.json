@@ -1,17 +1,11 @@
 {
-  "common": {
-    "userLogin": {
-      "signInText": "Inicia la sessió",
-      "signOutText": "Tanca la sessió {userName}"
-    }
-  },
+  "common": {},
   "home": {
     "meta": {
       "title": "Descobreix Begur App",
       "description": "Descobreix llocs d'es teu poble."
     },
     "heading": "Benvingut/da a Descobreix Begur App",
-    "signIn": "Si vols, <link>inicia la sessió</link>.",
     "lunchApp": "Obrir App"
   },
   "signIn": {
@@ -49,7 +43,8 @@
       "description": "Oficina virtual"
     },
     "heading": "Oficina virtual",
-    "content": "Pàgina en construcció..."
+    "content": "Pàgina en construcció...",
+    "support": "Suport"
   },
   "profile": {
     "meta": {
@@ -58,7 +53,16 @@
     },
     "heading": "Perfil",
     "content": "Pàgina en construcció...",
-    "signIn": "Si vols, <link>inicia la sessió</link>.",
-    "authenticated": "Estàs autenticat/da i pots veure aquest contingut."
+    "notifications": "Notificacions",
+    "more-options": {
+      "title": "Més opcions",
+      "preferences": "Preferències",
+      "edit": "Editar perfil",
+      "app-settings": "Configuració de l'aplicació",
+      "logout": "Tanca la sessió",
+      "login": "Iniciar la sessió",
+      "support": "Suport",
+      "feedback": "Suggerencies i errors"
+    }
   }
 }

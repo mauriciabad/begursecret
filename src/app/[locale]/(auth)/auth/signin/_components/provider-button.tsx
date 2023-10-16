@@ -1,11 +1,10 @@
 'use client'
 
-import { Button } from '@nextui-org/react'
+import { Button } from '@nextui-org/button'
 import { signIn, type ClientSafeProvider } from 'next-auth/react'
 import { useLocale, useTranslations } from 'next-intl'
 import { useSearchParams } from 'next/navigation'
 import type { FC } from 'react'
-
 
 type ProviderButtonProps = {
   provider: ClientSafeProvider

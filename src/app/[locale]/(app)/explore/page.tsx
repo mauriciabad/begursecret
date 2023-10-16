@@ -4,25 +4,28 @@ import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
 
 import type { LocaleRouteParams } from '~/i18n'
+import { PlaceList } from './_components/place-list'
+import { UnderConstruction } from '~/components/under-construction'
 
 export async function generateMetadata({
   params,
 }: LocaleRouteParams): Promise<Metadata> {
-  const t = await getTranslator(params.locale, 'hub')
+  const t = await getTranslator(params.locale, 'explore')
   return {
     title: t('meta.title'),
     description: t('meta.description'),
   }
 }
 
-const HubPage: FC<LocaleRouteParams> = () => {
-  const t = useTranslations('hub')
+const ExplorePage: FC<LocaleRouteParams> = () => {
+  const t = useTranslations('explore')
   return (
     <>
-      <h1 className="mb-8 text-2xl">{t('heading')}</h1>
-      <p>{t('content')}</p>
+      <PlaceList />
+      <UnderConstruction />
+      <p className="text-center">{t('content')}</p>
     </>
   )
 }
 
-export default HubPage
+export default ExplorePage
