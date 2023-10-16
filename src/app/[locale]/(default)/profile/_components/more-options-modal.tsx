@@ -14,11 +14,13 @@ import {
   IconEdit,
   IconExternalLink,
   IconHelpCircle,
+  IconLogin,
   IconLogout,
   IconMenu2,
   IconMessage,
   IconSettings,
 } from '@tabler/icons-react'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 import Link from 'next-intl/link'
 import { FC, ReactNode } from 'react'
@@ -26,6 +28,7 @@ import { FC, ReactNode } from 'react'
 export const MoreOptionsModal: FC = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const t = useTranslations('profile.more-options')
+  const { data: session } = useSession()
 
   return (
     <>
@@ -72,11 +75,19 @@ export const MoreOptionsModal: FC = () => {
                   text={t('app-settings')}
                   icon={<IconSettings />}
                 />
-                <MoreOptionsButton
-                  url="/profile/logout"
-                  text={t('logout')}
-                  icon={<IconLogout />}
-                />
+                {session ? (
+                  <MoreOptionsButton
+                    onClick={() => signOut({ callbackUrl: '/' })}
+                    text={t('logout')}
+                    icon={<IconLogout />}
+                  />
+                ) : (
+                  <MoreOptionsButton
+                    onClick={() => signIn()}
+                    text={t('login')}
+                    icon={<IconLogin />}
+                  />
+                )}
 
                 <div className="px-4 py-2">
                   <Divider />
@@ -104,23 +115,29 @@ export const MoreOptionsModal: FC = () => {
 }
 
 const MoreOptionsButton: FC<{
-  url: string
+  url?: string
+  onClick?: () => void
   text: string
   icon: ReactNode
   isExternal?: boolean
-}> = ({ url, icon, text, isExternal }) => (
-  <Button
-    as={Link}
-    href={url}
-    variant="light"
-    fullWidth
-    startContent={icon}
-    endContent={
-      isExternal && (
-        <IconExternalLink className="text-stone-400 transition-colors group-hover:text-stone-800" />
-      )
-    }
-  >
-    <span className="flex-grow">{text}</span>
-  </Button>
-)
+}> = ({ url, icon, text, isExternal, onClick }) => {
+  if (url && onClick) throw new Error('You can only use one of url or onClick')
+
+  return (
+    <Button
+      as={url ? Link : undefined}
+      href={url}
+      onClick={onClick}
+      variant="light"
+      fullWidth
+      startContent={icon}
+      endContent={
+        isExternal && (
+          <IconExternalLink className="text-stone-400 transition-colors group-hover:text-stone-800" />
+        )
+      }
+    >
+      <span className="flex-grow text-left">{text}</span>
+    </Button>
+  )
+}
