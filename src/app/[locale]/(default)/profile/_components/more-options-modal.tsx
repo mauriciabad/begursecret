@@ -115,9 +115,12 @@ const MoreOptionsButton: FC<{
     variant="light"
     fullWidth
     startContent={icon}
-    className="justify-start"
-    endContent={isExternal && <IconExternalLink />}
+    endContent={
+      isExternal && (
+        <IconExternalLink className="text-stone-400 transition-colors group-hover:text-stone-800" />
+      )
+    }
   >
-    {text}
+    <span className="flex-grow">{text}</span>
   </Button>
 )
