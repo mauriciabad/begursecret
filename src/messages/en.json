@@ -59,6 +59,15 @@
     "heading": "Profile",
     "content": "Page under construction...",
     "signIn": "In you want, <link>sign in</link>.",
-    "authenticated": "You are authenticated and can see this content."
+    "authenticated": "You are authenticated and can see this content.",
+    "more-options": {
+      "title": "More options",
+      "preferences": "Preferences",
+      "edit": "Edit profile",
+      "app-settings": "App settings",
+      "logout": "Logout",
+      "support": "Support",
+      "feedback": "Feedback and errors"
+    }
   }
 }

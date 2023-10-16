@@ -1,13 +1,14 @@
 import '~/globals.css'
 
 import { Navbar, NavbarContent, NavbarItem } from '@nextui-org/navbar'
-import { IconMenu2, IconBell } from '@tabler/icons-react'
+import { IconBell } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import type { FC, PropsWithChildren } from 'react'
 import { PageLayout } from '~/components/layouts/page-layout'
 import { BottomNavbar } from '~/components/navbar/bottom-navbar'
 import type { LocaleRouteParams } from '~/i18n'
 import Link from 'next-intl/link'
+import { MoreOptionsModal } from './_components/more-options-modal'
 
 type ProfileLayoutProps = PropsWithChildren<LocaleRouteParams>
 
@@ -34,7 +35,7 @@ const ProfileLayout: FC<ProfileLayoutProps> = ({ children }) => {
             </Link>
           </NavbarItem>
           <NavbarItem>
-            <IconMenu2 />
+            <MoreOptionsModal />
           </NavbarItem>
         </NavbarContent>
       </Navbar>

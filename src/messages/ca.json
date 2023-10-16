@@ -59,6 +59,15 @@
     "heading": "Perfil",
     "content": "Pàgina en construcció...",
     "signIn": "Si vols, <link>inicia la sessió</link>.",
-    "authenticated": "Estàs autenticat/da i pots veure aquest contingut."
+    "authenticated": "Estàs autenticat/da i pots veure aquest contingut.",
+    "more-options": {
+      "title": "Més opcions",
+      "preferences": "Preferències",
+      "edit": "Editar perfil",
+      "app-settings": "Configuració de l'aplicació",
+      "logout": "Tanca la sessió",
+      "support": "Suport",
+      "feedback": "Suggerencies i errors"
+    }
   }
 }
