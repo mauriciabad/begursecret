@@ -1,5 +1,8 @@
+import { Navbar, NavbarContent, NavbarItem } from '@nextui-org/navbar'
+import { IconMenu2 } from '@tabler/icons-react'
 import type { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
+import Link from 'next-intl/link'
 import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
 import { AuthRequired } from '~/components/auth-required'
@@ -23,7 +26,16 @@ const ProfilePage: FC<LocaleRouteParams> = () => {
   const t = useTranslations('profile')
   return (
     <>
-      <h1 className="mb-8 text-2xl">{t('heading')}</h1>
+      <Navbar shouldHideOnScroll>
+        <NavbarContent className="hidden gap-4 sm:flex" justify="center">
+          <NavbarItem>
+            <h1>{t('heading')}</h1>
+            <Link color="foreground" href="#">
+              <IconMenu2 />
+            </Link>
+          </NavbarItem>
+        </NavbarContent>
+      </Navbar>
       <p>{t('content')}</p>
       <AuthRequired
         fallback={

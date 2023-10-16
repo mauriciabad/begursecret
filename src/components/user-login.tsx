@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@nextui-org/react'
+import { Button } from '@nextui-org/button'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 import type { ButtonHTMLAttributes, FC } from 'react'
