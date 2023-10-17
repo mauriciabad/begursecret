@@ -21,7 +21,7 @@ const ProfilePage: FC<LocaleRouteParams> = () => {
   return (
     <>
       <UnderConstruction />
-      <p className='text-center'>{t('content')}</p>
+      <p className="text-center">{t('content')}</p>
       <LanguageSwitcher />
     </>
   )

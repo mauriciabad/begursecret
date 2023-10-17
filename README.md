@@ -18,6 +18,7 @@ Source code for the app.
    ```
 
 1. If you want to use a **local database**:
+
    1. Install [docker](https://www.docker.com/products/docker-desktop/).
    1. Run the database in another console:
 
