@@ -51,7 +51,6 @@ jobs:
       - name: 🖌️ Run format
         run: pnpm format
 
-
       - name: 🍾 Commit changes
         run: |
           git config --local user.email "56104765+github-actions[bot]@users.noreply.github.com"
