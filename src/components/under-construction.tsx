@@ -2,10 +2,7 @@ import type { FC } from 'react'
 
 export const UnderConstruction: FC = () => {
   return (
-    <svg
-    className='m-full max-w-xs mx-auto xy-4'
-      viewBox='0 0 900 900'
-    >
+    <svg className="m-full xy-4 mx-auto max-w-xs" viewBox="0 0 900 900">
       <linearGradient
         id="a"
         x1="343.956"
