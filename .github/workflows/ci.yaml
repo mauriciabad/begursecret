@@ -1,9 +1,7 @@
 name: CI
 on: push
 
-permissions:
-  pull-requests: write
-  contents: write
+permissions: write-all
 
 jobs:
   lintfix:
