@@ -3,6 +3,7 @@ on: push
 
 permissions:
   contents: write
+  workflows: write
 
 jobs:
   lintfix:
@@ -51,14 +52,9 @@ jobs:
       - name: 🖌️ Run format
         run: pnpm format
 
-      - name: 🍾 Commit changes
-        run: |
-          git config --local user.email "56104765+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git commit -a -m "chore: Auto-fix lint errors"
-
-      - name: 🍾 Push changes
+      - name: 🍾 Commit & Push changes
         uses: ad-m/github-push-action@master
         with:
+          message: 'chore: Auto-fix lint errors'
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
