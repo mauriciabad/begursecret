@@ -2,16 +2,15 @@ name: Tests E2E
 
 on: deployment_status
 
-concurrency:
-  group: 'e2e-tests'
-  cancel-in-progress: true
-
 jobs:
   tests:
     name: Tests
     timeout-minutes: 60
     runs-on: ubuntu-latest
     if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
+    concurrency:
+      group: 'e2e-tests'
+      cancel-in-progress: true
     steps:
       - name: 🚀 Checkout
         uses: actions/checkout@v3

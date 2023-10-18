@@ -2,9 +2,19 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "next/core-web-vitals",
+    "plugin:@next/next/recommended",
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"]
+  "plugins": ["@typescript-eslint"],
+  "overrides": [
+    {
+      "files": ["src/**/*.{spec,test}.{mjs,cjs,js,ts,jsx,tsx}"],
+      "extends": ["plugin:jest-dom/recommended", "plugin:testing-library/react"]
+    },
+    {
+      "files": ["e2e-tests/**/*.{spec,test}.{mjs,cjs,js,ts,jsx,tsx}"],
+      "extends": ["plugin:playwright/recommended"]
+    }
+  ]
 }
