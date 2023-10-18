@@ -1,3 +1,4 @@
+/* eslint-env node */
 // @ts-check
 import { z } from 'zod'
 
