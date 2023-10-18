@@ -1,10 +1,11 @@
-name: Playwright Tests
+name: Tests
 
 on:
   deployment_status:
 
 jobs:
   test:
+    name: Tests E2E
     timeout-minutes: 60
     runs-on: ubuntu-latest
     if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
