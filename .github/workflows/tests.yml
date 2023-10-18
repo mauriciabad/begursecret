@@ -67,9 +67,11 @@ jobs:
     needs: tests
     if: always()
     permissions:
-      contents: read
       pages: write
       id-token: write
+    environment:
+      name: e2e-tests-report
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: 📥 Get artifact
         uses: actions/download-artifact@v3
