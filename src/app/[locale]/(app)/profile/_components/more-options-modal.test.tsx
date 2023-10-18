@@ -11,4 +11,15 @@ describe('MoreOptionsModal', () => {
 
     expect(screen.getByRole('heading', { name: 'More options' })).toBeVisible()
   })
+
+  it('closes the modal when the close button is clicked', async () => {
+    render(<MoreOptionsModal />)
+
+    await userEvent.click(screen.getByRole('button', { name: 'More options' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Close' }))
+
+    expect(
+      screen.queryByRole('heading', { name: 'More options' })
+    ).not.toBeInTheDocument()
+  })
 })
