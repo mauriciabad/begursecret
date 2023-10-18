@@ -59,7 +59,12 @@
     },
     "login": {
       "register": "Register",
-      "login": "Login"
+      "login": "Login",
+      "banner": {
+        "subtitle": "Sign up in",
+        "title": "Descobreix Begur App",
+        "text": "Win prices, save places, and complete missions"
+      }
     },
     "more-options": {
       "title": "More options",

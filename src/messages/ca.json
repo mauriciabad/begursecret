@@ -58,7 +58,12 @@
     },
     "login": {
       "register": "Registrar-se",
-      "login": "Iniciar la sessió"
+      "login": "Iniciar la sessió",
+      "banner": {
+        "subtitle": "Registra't a",
+        "title": "Descobreix Begur App",
+        "text": "Guanya premis, guarda llocs i completa missions"
+      }
     },
     "more-options": {
       "title": "Més opcions",
