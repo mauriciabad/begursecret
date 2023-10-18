@@ -1,13 +1,12 @@
 name: CI
 on: push
 
-permissions:
-  contents: write
-
 jobs:
   lintfix:
     name: Lint and fix
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: 🚀 Checkout
         uses: actions/checkout@v3
