@@ -8,6 +8,7 @@
     "lint": "SKIP_ENV_VALIDATION=true next lint",
     "format": "prettier . --write",
     "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "db:generate": "drizzle-kit generate:mysql",
     "db:push": "drizzle-kit push:mysql",
     "db-local:studio": "drizzle-kit studio",
