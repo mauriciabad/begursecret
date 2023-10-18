@@ -70,7 +70,7 @@ jobs:
       pages: write
       id-token: write
     environment:
-      name: e2e-tests-report
+      name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: 🚀 Deploy to GitHub Pages
