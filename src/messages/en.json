@@ -77,7 +77,7 @@
       "feedback": "Feedback and errors"
     }
   },
-  "language-switcher":{
+  "language-switcher": {
     "label": "Change language",
     "options": {
       "en": "English",
