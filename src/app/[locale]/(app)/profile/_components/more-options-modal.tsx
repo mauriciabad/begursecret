@@ -24,6 +24,7 @@ import { signIn, signOut, useSession } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 import Link from 'next-intl/link'
 import { FC, ReactNode } from 'react'
+import { LanguageSwitcher } from '~/components/language-switcher'
 
 export const MoreOptionsModal: FC = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
@@ -92,6 +93,8 @@ export const MoreOptionsModal: FC = () => {
                 <div className="px-4 py-2">
                   <Divider />
                 </div>
+
+                <LanguageSwitcher className="mb-1 w-full max-w-none px-4" />
 
                 <MoreOptionsButton
                   url="/support"

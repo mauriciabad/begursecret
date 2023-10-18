@@ -76,5 +76,13 @@
       "support": "Support",
       "feedback": "Feedback and errors"
     }
+  },
+  "language-switcher":{
+    "label": "Change language",
+    "options": {
+      "en": "English",
+      "es": "Español",
+      "ca": "Català"
+    }
   }
 }

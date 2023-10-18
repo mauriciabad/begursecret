@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
-import { LanguageSwitcher } from '~/components/language-switcher'
 import type { LocaleRouteParams } from '~/i18n'
 import { UserPreview } from './_components/user-preview'
 import { getServerSession } from 'next-auth'
@@ -26,12 +25,10 @@ const ProfilePage: FC<LocaleRouteParams> = async () => {
       {session ? (
         <>
           <UserPreview user={session.user} />
-          <LanguageSwitcher />
         </>
       ) : (
         <>
           <ProfileLogin />
-          <LanguageSwitcher />
         </>
       )}
     </>

@@ -75,5 +75,13 @@
       "support": "Suport",
       "feedback": "Suggerencies i errors"
     }
+  },
+  "language-switcher": {
+    "label": "Canviar idioma",
+    "options": {
+      "en": "English",
+      "es": "Español",
+      "ca": "Català"
+    }
   }
 }
