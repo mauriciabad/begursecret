@@ -52,8 +52,14 @@
       "description": "Perfil de l'usuari"
     },
     "heading": "Perfil",
-    "content": "Pàgina en construcció...",
     "notifications": "Notificacions",
+    "preview": {
+      "anonymous": "Anònim"
+    },
+    "login": {
+      "register": "Registrar-se",
+      "login": "Iniciar la sessió"
+    },
     "more-options": {
       "title": "Més opcions",
       "preferences": "Preferències",

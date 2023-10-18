@@ -54,6 +54,13 @@
     "heading": "Profile",
     "content": "Page under construction...",
     "notifications": "Notifications",
+    "preview": {
+      "anonymous": "Anonymous"
+    },
+    "login": {
+      "register": "Register",
+      "login": "Login"
+    },
     "more-options": {
       "title": "More options",
       "preferences": "Preferences",

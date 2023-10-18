@@ -1,10 +1,12 @@
 import type { Metadata } from 'next'
-import { useTranslations } from 'next-intl'
 import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
 import { LanguageSwitcher } from '~/components/language-switcher'
-import { UnderConstruction } from '~/components/under-construction'
 import type { LocaleRouteParams } from '~/i18n'
+import { UserPreview } from './_components/user-preview'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '~/server/auth'
+import { ProfileLogin } from './_components/profile-login'
 
 export async function generateMetadata({
   params,
@@ -16,13 +18,22 @@ export async function generateMetadata({
   }
 }
 
-const ProfilePage: FC<LocaleRouteParams> = () => {
-  const t = useTranslations('profile')
+const ProfilePage: FC<LocaleRouteParams> = async () => {
+  const session = await getServerSession(authOptions)
+
   return (
     <>
-      <UnderConstruction />
-      <p className="text-center">{t('content')}</p>
-      <LanguageSwitcher />
+      {session ? (
+        <>
+          <UserPreview user={session.user} />
+          <LanguageSwitcher />
+        </>
+      ) : (
+        <>
+          <ProfileLogin />
+          <LanguageSwitcher />
+        </>
+      )}
     </>
   )
 }
