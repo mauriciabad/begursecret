@@ -3,9 +3,10 @@
   "home": {
     "meta": {
       "title": "Descobreix Begur App",
-      "description": "Explore your town."
+      "description": "Discover incredible places in this beautiful town."
     },
-    "heading": "Welcome to Descobreix Begur App",
+    "heading": "Descobreix Begur App",
+    "subtitle": "Discover incredible places in this beautiful town.",
     "lunchApp": "Lunch App"
   },
   "signIn": {

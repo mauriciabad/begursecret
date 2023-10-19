@@ -21,7 +21,7 @@ export const ProfileLogin: FC = () => {
           onClick={() => signIn()}
           variant="solid"
           radius="full"
-          className="bg-white font-medium text-purple-500"
+          className="bg-white font-medium uppercase text-purple-500"
         >
           {t('register')}
         </Button>

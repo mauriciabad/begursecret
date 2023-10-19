@@ -1,7 +1,4 @@
-'use client'
-
-import { Button } from '@nextui-org/react'
-import Link from 'next-intl/link'
+import { LinkButton } from './link-button'
 import { FC, ReactNode } from 'react'
 
 export const LinkIconButton: FC<{
@@ -10,8 +7,8 @@ export const LinkIconButton: FC<{
   children: ReactNode
 }> = ({ url, label, children }) => {
   return (
-    <Button as={Link} href={url} variant="light" aria-label={label} isIconOnly>
+    <LinkButton href={url} variant="light" aria-label={label} isIconOnly>
       {children}
-    </Button>
+    </LinkButton>
   )
 }
