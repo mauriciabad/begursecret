@@ -16,7 +16,7 @@ export const UserPreview: FC<{ user: Session['user'] }> = ({ user }) => {
         alt=""
         className="mx-auto block h-6 w-6 rounded-full border border-stone-300"
       />
-      <h2 className="text-center text-lg font-bold">
+      <h2 className="text-center  text-lg font-bold">
         {user.name ?? t('anonymous')}
       </h2>
     </>

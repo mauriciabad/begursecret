@@ -15,7 +15,7 @@ export const SignInPageContent: FC<SignInPageContentProps> = ({
   const t = useTranslations('signIn')
   return (
     <>
-      <h1 className="mb-8 text-2xl">{t('heading')}</h1>
+      <h1 className="mb-8 font-title text-2xl">{t('heading')}</h1>
       <ul className="grid gap-4">
         {Object.values(providers).map((provider) => (
           <li key={provider.name}>

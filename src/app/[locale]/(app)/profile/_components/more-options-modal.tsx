@@ -52,7 +52,7 @@ export const MoreOptionsModal: FC = () => {
           {() => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                <h2>{t('title')}</h2>
+                <h2 className="font-title">{t('title')}</h2>
               </ModalHeader>
 
               <ModalBody>
