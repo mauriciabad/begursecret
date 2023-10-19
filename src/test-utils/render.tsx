@@ -26,13 +26,10 @@ function makeWrapper({ session = null }: { session?: Session | null }) {
   return AllProviders
 }
 
-const customRender = (
+export const customRender = (
   ui: ReactElement,
   {
     session,
     ...options
   }: Omit<RenderOptions, 'wrapper'> & { session?: Session | null } = {}
 ) => render(ui, { wrapper: makeWrapper({ session }), ...options })
-
-export * from '@testing-library/react'
-export { customRender as render }
