@@ -25,7 +25,7 @@ const HomePage: FC<LocaleRouteParams> = () => {
 
   return (
     <>
-      <main className="mx-auto flex min-h-screen max-w-2xl flex-col items-center justify-center bg-stone-100 p-4 text-center text-stone-800">
+      <main className="mx-auto flex min-h-screen max-w-2xl flex-col items-center justify-center p-4 text-center text-stone-800">
         <div className="origin-bottom animate-wiggle">
           <Logo
             className="anima mb-4 h-24 animate-hover text-brand-600"
