@@ -11,7 +11,7 @@ export const LinkButton: FC<
   }
 > = ({ href, children, ...props }) => {
   return (
-    <Button as={Link} href={href} {...props}>
+    <Button as={Link} href={href} {...props} role="link">
       {children}
     </Button>
   )
