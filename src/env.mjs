@@ -20,7 +20,8 @@ const server = z.object({
   GITHUB_CLIENT_SECRET: z.string().min(1),
   /** App URL when deployed on Vercel */
   BASE_URL: z.string().regex(/https?:\/\/\w+(\.\w+)*(:\d{4})?/),
-  VERCEL_BRANCH_URL: z
+  NEXTAUTH_URL: z.string().regex(/https?:\/\/\w+(\.\w+)*(:\d{4})?/),
+  VERCEL_URL: z
     .string()
     .regex(/[\w\d-]+(\.[\w\d-]+)*/)
     .optional(),
@@ -37,11 +38,11 @@ const server = z.object({
  * */
 const refineServer = (obj) => obj
 // .superRefine((data, ctx) => {
-//   if (!data.BASE_URL && !data.VERCEL_BRANCH_URL) {
+//   if (!data.BASE_URL && !data.VERCEL_URL) {
 //     ctx.addIssue({
 //       code: z.ZodIssueCode.custom,
 //       path: ['BASE_URL'],
-//       message: 'BASE_URL is required when there is no VERCEL_BRANCH_URL',
+//       message: 'BASE_URL is required when there is no VERCEL_URL',
 //     })
 //   }
 // })
@@ -52,6 +53,9 @@ const refineServer = (obj) => obj
  * To expose them to the client, prefix them with `NEXT_PUBLIC_`.
  */
 const client = z.object({})
+
+const vercelUrlWithProtocol =
+  process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`
 
 /**
  * You can't destruct `process.env` as a regular object in the Next.js edge runtimes (e.g.
@@ -64,11 +68,9 @@ const processEnv = {
   PORT: process.env.PORT,
   GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
   GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
-  BASE_URL:
-    process.env.BASE_URL ??
-    (process.env.VERCEL_BRANCH_URL &&
-      `https://${process.env.VERCEL_BRANCH_URL}`),
-  VERCEL_BRANCH_URL: process.env.VERCEL_BRANCH_URL,
+  BASE_URL: process.env.BASE_URL ?? vercelUrlWithProtocol,
+  NEXTAUTH_URL: process.env.NEXTAUTH_URL ?? vercelUrlWithProtocol,
+  VERCEL_URL: process.env.VERCEL_URL,
   USE_LOCAL_DB: process.env.USE_LOCAL_DB,
   DATABASE_HOST: process.env.DATABASE_HOST,
   DATABASE_USERNAME: process.env.DATABASE_USERNAME,
