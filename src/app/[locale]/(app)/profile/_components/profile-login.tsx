@@ -32,7 +32,7 @@ export const ProfileLogin: FC = () => {
       <ContinueWithEmail />
       <ContinueWithProvider
         className="mt-8"
-        isProduction={Boolean(env.IS_PRODUCTION)}
+        isProduction={env.IS_PRODUCTION === 'true'}
       />
 
       <h2 className="mt-8 font-title text-2xl font-medium">{t('register')}</h2>
