@@ -59,7 +59,20 @@
     },
     "login": {
       "register": "Registrar-se",
-      "login": "Iniciar la sessió",
+      "login-with": "Iniciar la sessió amb",
+      "providers": {
+        "google": "Google",
+        "facebook": "Facebook",
+        "apple": "Apple",
+        "github": "Github"
+      },
+      "credentials": {
+        "email-or-username": "Email",
+        "email-or-username-placeholder": "Introdueix el teu email",
+        "password": "Contrasenya",
+        "password-placeholder": "Introdueix la teva contrasenya",
+        "send": "Enviar"
+      },
       "banner": {
         "subtitle": "Registra't a",
         "title": "Descobreix Begur App",

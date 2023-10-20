@@ -1,9 +1,8 @@
-'use client'
-
-import { Button } from '@nextui-org/button'
-import { signIn } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'
+import { LinkButton } from '~/components/link-button'
+import { ContinueWithProvider } from './continue-with-provider'
+import { ContinueWithEmail } from './continue-with-email'
 
 export const ProfileLogin: FC = () => {
   const t = useTranslations('profile.login')
@@ -17,25 +16,25 @@ export const ProfileLogin: FC = () => {
           <p className="text-lg leading-none">{t('banner.text')}</p>
         </div>
 
-        <Button
-          onClick={() => signIn()}
-          variant="solid"
+        <LinkButton
+          href="/register"
           radius="full"
           className="bg-white font-medium uppercase text-purple-500"
         >
           {t('register')}
-        </Button>
+        </LinkButton>
       </div>
 
-      <h2 className="mt-8 font-title text-2xl font-medium">{t('login')}</h2>
-      <Button onClick={() => signIn()} variant="solid" color="primary">
-        {t('login')}
-      </Button>
+      <h2 className="mt-8 font-title text-2xl font-medium">
+        {t('login-with')}
+      </h2>
+      <ContinueWithEmail />
+      <ContinueWithProvider className="mt-8" />
 
       <h2 className="mt-8 font-title text-2xl font-medium">{t('register')}</h2>
-      <Button onClick={() => signIn()} variant="solid" color="primary">
+      <LinkButton href="/register" variant="solid" color="primary">
         {t('register')}
-      </Button>
+      </LinkButton>
     </>
   )
 }
