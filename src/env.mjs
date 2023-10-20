@@ -8,6 +8,8 @@ import { z } from 'zod'
  */
 const server = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']),
+  VERCEL_ENV: z.enum(['development', 'preview', 'production']).optional(),
+  IS_PRODUCTION: z.boolean(),
   PORT: z.preprocess((str) => {
     if (typeof str !== 'string') return undefined
     const port = parseInt(str, 10)
@@ -65,6 +67,12 @@ const vercelUrlWithProtocol =
  */
 const processEnv = {
   NODE_ENV: process.env.NODE_ENV,
+  VERCEL_ENV: process.env.VERCEL_ENV,
+  IS_PRODUCTION:
+    process.env.NODE_ENV === 'production' &&
+    process.env.VERCEL_ENV === 'production'
+      ? '1'
+      : undefined,
   PORT: process.env.PORT,
   GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
   GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,

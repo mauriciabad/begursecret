@@ -3,6 +3,7 @@ import { FC } from 'react'
 import { LinkButton } from '~/components/link-button'
 import { ContinueWithProvider } from './continue-with-provider'
 import { ContinueWithEmail } from './continue-with-email'
+import { env } from 'process'
 
 export const ProfileLogin: FC = () => {
   const t = useTranslations('profile.login')
@@ -29,7 +30,10 @@ export const ProfileLogin: FC = () => {
         {t('login-with')}
       </h2>
       <ContinueWithEmail />
-      <ContinueWithProvider className="mt-8" />
+      <ContinueWithProvider
+        className="mt-8"
+        isProduction={Boolean(env.IS_PRODUCTION)}
+      />
 
       <h2 className="mt-8 font-title text-2xl font-medium">{t('register')}</h2>
       <LinkButton href="/register" variant="solid" color="primary">
