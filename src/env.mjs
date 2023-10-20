@@ -19,13 +19,33 @@ const server = z.object({
   /** GitHub client secret */
   GITHUB_CLIENT_SECRET: z.string().min(1),
   /** App URL when deployed on Vercel */
-  BASE_URL: z.string().regex(/\w+(\.\w+)*(:\d{4})?/),
+  BASE_URL: z.string().regex(/https?:\/\/\w+(\.\w+)*(:\d{4})?/),
+  VERCEL_BRANCH_URL: z
+    .string()
+    .regex(/[\w\d-]+(\.[\w\d-]+)*/)
+    .optional(),
   USE_LOCAL_DB: z.union([z.literal('true'), z.literal('false')]).optional(),
   DATABASE_HOST: z.string().min(1),
   DATABASE_USERNAME: z.string().min(1),
   DATABASE_PASSWORD: z.string().min(1),
   DATABASE_NAME: z.string().min(1),
 })
+
+/**
+ * @template {typeof server} T
+ * @param {T} obj
+ * */
+const refineServer = (obj) =>
+  obj
+  // .superRefine((data, ctx) => {
+  //   if (!data.BASE_URL && !data.VERCEL_BRANCH_URL) {
+  //     ctx.addIssue({
+  //       code: z.ZodIssueCode.custom,
+  //       path: ['BASE_URL'],
+  //       message: 'BASE_URL is required when there is no VERCEL_BRANCH_URL',
+  //     })
+  //   }
+  // })
 
 /**
  * Specify your client-side environment variables schema here.
@@ -45,7 +65,11 @@ const processEnv = {
   PORT: process.env.PORT,
   GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
   GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
-  BASE_URL: process.env.BASE_URL,
+  BASE_URL:
+    process.env.BASE_URL ??
+    (process.env.VERCEL_BRANCH_URL &&
+      `https://${process.env.VERCEL_BRANCH_URL}`),
+  VERCEL_BRANCH_URL: process.env.VERCEL_BRANCH_URL,
   USE_LOCAL_DB: process.env.USE_LOCAL_DB,
   DATABASE_HOST: process.env.DATABASE_HOST,
   DATABASE_USERNAME: process.env.DATABASE_USERNAME,
@@ -56,7 +80,7 @@ const processEnv = {
 // Don't touch the part below
 // --------------------------
 
-const merged = server.merge(client)
+const merged = refineServer(server.merge(client))
 
 /** @typedef {z.input<typeof merged>} MergedInput */
 /** @typedef {z.infer<typeof merged>} MergedOutput */
