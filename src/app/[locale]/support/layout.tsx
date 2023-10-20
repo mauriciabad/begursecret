@@ -1,14 +1,13 @@
 import { Navbar, NavbarContent, NavbarItem } from '@nextui-org/navbar'
-import { IconHelpCircle } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import type { FC, PropsWithChildren } from 'react'
+import { LinkButton } from '~/components/link-button'
 import type { LocaleRouteParams } from '~/i18n'
-import { LinkIconButton } from '~/components/link-icon-button'
 
-type HubLayoutProps = PropsWithChildren<LocaleRouteParams>
+type SupportLayoutProps = PropsWithChildren<LocaleRouteParams>
 
-const HubLayout: FC<HubLayoutProps> = ({ children }) => {
-  const t = useTranslations('hub')
+const SupportLayout: FC<SupportLayoutProps> = ({ children }) => {
+  const t = useTranslations('support')
 
   return (
     <>
@@ -25,16 +24,16 @@ const HubLayout: FC<HubLayoutProps> = ({ children }) => {
         </NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem>
-            <LinkIconButton label={t('support')} href="/support">
-              <IconHelpCircle />
-            </LinkIconButton>
+            <LinkButton href="/explore" variant="solid" color="primary">
+              {t('go-to-app')}
+            </LinkButton>
           </NavbarItem>
         </NavbarContent>
       </Navbar>
 
-      <main className="mx-auto max-w-2xl px-6 py-3">{children}</main>
+      <main className="mx-auto max-w-2xl px-6 pb-32 pt-8">{children}</main>
     </>
   )
 }
 
-export default HubLayout
+export default SupportLayout

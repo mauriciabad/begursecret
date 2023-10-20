@@ -4,13 +4,16 @@ export const Logo: FC<{
   outline?: boolean
   className?: string
   stroke?: number
-}> = ({ outline, className, stroke = 2 }) => {
+  size?: number
+}> = ({ outline, className, stroke = 2, size = 24 }) => {
   return (
     <svg
       viewBox="0 0 24 24"
       fill="none"
       className={className}
       aria-label="Logo"
+      height={size}
+      width={size}
     >
       {outline ? (
         <>
