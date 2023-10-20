@@ -4,9 +4,8 @@ import { Button } from '@nextui-org/button'
 import { signIn } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'
+import { isProduction } from '~/helpers/client-env'
 import { cn } from '~/helpers/cn'
-
-const isProduction = process.env.NODE_ENV === 'production'
 
 export const ContinueWithProvider: FC<{
   className?: string
