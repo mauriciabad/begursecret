@@ -5,9 +5,8 @@ import { signIn } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'
 import { cn } from '~/helpers/cn'
-import { env } from '~/env.mjs'
 
-const isProduction = env.NODE_ENV === 'production'
+const isProduction = process.env.NODE_ENV === 'production'
 
 export const ContinueWithProvider: FC<{
   className?: string
