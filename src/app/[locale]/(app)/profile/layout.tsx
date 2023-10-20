@@ -28,7 +28,7 @@ const ProfileLayout: FC<ProfileLayoutProps> = ({ children }) => {
           <NavbarItem>
             <LinkIconButton
               label={t('notifications')}
-              url="/profile/notifications"
+              href="/profile/notifications"
             >
               <IconBell />
             </LinkIconButton>

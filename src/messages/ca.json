@@ -98,5 +98,27 @@
       "es": "Español",
       "ca": "Català"
     }
+  },
+  "support": {
+    "meta": {
+      "title": "Suport",
+      "description": "Obtén ajuda i aprèn sobre l'aplicació"
+    },
+    "heading": "Suport",
+    "privacy-policy": "Política de privacitat",
+    "terms-of-service": "Termes del servei",
+    "go-to-app": "Anar a l'app"
+  },
+  "privacy-policy": {
+    "meta": {
+      "title": "Política de privacitat",
+      "description": "Política de privacitat"
+    }
+  },
+  "terms-of-service": {
+    "meta": {
+      "title": "Termes del servei",
+      "description": "Termes del servei"
+    }
   }
 }

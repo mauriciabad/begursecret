@@ -100,5 +100,27 @@
       "es": "Español",
       "ca": "Català"
     }
+  },
+  "support": {
+    "meta": {
+      "title": "Support",
+      "description": "Get help and learn about the app"
+    },
+    "heading": "Support",
+    "privacy-policy": "Privacy policy",
+    "terms-of-service": "Terms of service",
+    "go-to-app": "Go to app"
+  },
+  "privacy-policy": {
+    "meta": {
+      "title": "Privacy Policy",
+      "description": "Privacy policy"
+    }
+  },
+  "terms-of-service": {
+    "meta": {
+      "title": "Terms of Service",
+      "description": "Terms of service"
+    }
   }
 }
