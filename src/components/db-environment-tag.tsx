@@ -1,8 +1,9 @@
 import type { FC } from 'react'
 import { cn } from '~/helpers/cn'
+import { env } from '~/env.mjs'
 
-const isUsingLocalDb = process.env.USE_LOCAL_DB === 'true'
-const isProduction = process.env.NODE_ENV === 'production'
+const isUsingLocalDb = env.USE_LOCAL_DB === 'true'
+const isProduction = env.NODE_ENV === 'production'
 
 export const DbEnvironmentTag: FC<{ className?: string }> = ({ className }) => {
   return (

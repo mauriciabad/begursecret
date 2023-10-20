@@ -5,6 +5,9 @@ import { signIn } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'
 import { cn } from '~/helpers/cn'
+import { env } from '~/env.mjs'
+
+const isProduction = env.NODE_ENV === 'production'
 
 export const ContinueWithProvider: FC<{
   className?: string
@@ -17,6 +20,7 @@ export const ContinueWithProvider: FC<{
         onClick={() => signIn('github')}
         variant="solid"
         className="bg-black text-white"
+        disabled={!isProduction}
       >
         {t('providers.github')}
       </Button>
