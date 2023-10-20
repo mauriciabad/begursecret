@@ -3,9 +3,10 @@
   "home": {
     "meta": {
       "title": "Descobreix Begur App",
-      "description": "Descobreix llocs d'es teu poble."
+      "description": "Descobreix llocs increïbles d'és teu poble."
     },
-    "heading": "Benvingut/da a Descobreix Begur App",
+    "heading": "Descobreix Begur App",
+    "subtitle": "Descobreix llocs increïbles d'és teu poble.",
     "lunchApp": "Obrir App"
   },
   "signIn": {
@@ -52,8 +53,19 @@
       "description": "Perfil de l'usuari"
     },
     "heading": "Perfil",
-    "content": "Pàgina en construcció...",
     "notifications": "Notificacions",
+    "preview": {
+      "anonymous": "Anònim"
+    },
+    "login": {
+      "register": "Registrar-se",
+      "login": "Iniciar la sessió",
+      "banner": {
+        "subtitle": "Registra't a",
+        "title": "Descobreix Begur App",
+        "text": "Guanya premis, guarda llocs i completa missions"
+      }
+    },
     "more-options": {
       "title": "Més opcions",
       "preferences": "Preferències",
@@ -63,6 +75,14 @@
       "login": "Iniciar la sessió",
       "support": "Suport",
       "feedback": "Suggerencies i errors"
+    }
+  },
+  "language-switcher": {
+    "label": "Canviar idioma",
+    "options": {
+      "en": "English",
+      "es": "Español",
+      "ca": "Català"
     }
   }
 }

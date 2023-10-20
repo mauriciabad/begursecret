@@ -21,7 +21,7 @@ const ProfileLayout: FC<ProfileLayoutProps> = ({ children }) => {
       >
         <NavbarContent justify="start">
           <NavbarItem>
-            <h1>{t('heading')}</h1>
+            <h1 className="font-title">{t('heading')}</h1>
           </NavbarItem>
         </NavbarContent>
         <NavbarContent justify="end">

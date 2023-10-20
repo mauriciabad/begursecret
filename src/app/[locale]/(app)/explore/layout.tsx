@@ -18,7 +18,7 @@ const ExploreLayout: FC<ExploreLayoutProps> = ({ children }) => {
       >
         <NavbarContent justify="start">
           <NavbarItem>
-            <h1>{t('heading')}</h1>
+            <h1 className="font-title">{t('heading')}</h1>
           </NavbarItem>
         </NavbarContent>
       </Navbar>

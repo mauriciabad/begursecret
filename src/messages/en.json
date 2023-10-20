@@ -3,9 +3,10 @@
   "home": {
     "meta": {
       "title": "Descobreix Begur App",
-      "description": "Explore your town."
+      "description": "Discover incredible places in this beautiful town."
     },
-    "heading": "Welcome to Descobreix Begur App",
+    "heading": "Descobreix Begur App",
+    "subtitle": "Discover incredible places in this beautiful town.",
     "lunchApp": "Lunch App"
   },
   "signIn": {
@@ -54,6 +55,18 @@
     "heading": "Profile",
     "content": "Page under construction...",
     "notifications": "Notifications",
+    "preview": {
+      "anonymous": "Anonymous"
+    },
+    "login": {
+      "register": "Register",
+      "login": "Login",
+      "banner": {
+        "subtitle": "Sign up in",
+        "title": "Descobreix Begur App",
+        "text": "Win prices, save places, and complete missions"
+      }
+    },
     "more-options": {
       "title": "More options",
       "preferences": "Preferences",
@@ -63,6 +76,14 @@
       "login": "Login",
       "support": "Support",
       "feedback": "Feedback and errors"
+    }
+  },
+  "language-switcher": {
+    "label": "Change language",
+    "options": {
+      "en": "English",
+      "es": "Español",
+      "ca": "Català"
     }
   }
 }

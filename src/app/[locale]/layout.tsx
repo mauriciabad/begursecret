@@ -15,6 +15,13 @@ export async function generateMetadata({
       default: t('meta.title'),
       template: `%s | ${t('meta.title')}`,
     },
+    themeColor: [
+      { media: '(prefers-color-scheme: light)', color: '#5F797A' },
+      { media: '(prefers-color-scheme: dark)', color: '#222222' },
+    ],
+    icons: {
+      apple: '/favicon/apple-icon.png',
+    },
   }
 }
 
