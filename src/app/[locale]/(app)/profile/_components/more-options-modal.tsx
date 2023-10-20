@@ -14,13 +14,12 @@ import {
   IconEdit,
   IconExternalLink,
   IconHelpCircle,
-  IconLogin,
   IconLogout,
   IconMenu2,
   IconMessage,
   IconSettings,
 } from '@tabler/icons-react'
-import { signIn, signOut, useSession } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 import Link from 'next-intl/link'
 import { FC, ReactNode } from 'react'
@@ -76,17 +75,11 @@ export const MoreOptionsModal: FC = () => {
                   text={t('app-settings')}
                   icon={<IconSettings />}
                 />
-                {session ? (
+                {session && (
                   <MoreOptionsButton
                     onClick={() => signOut({ callbackUrl: '/' })}
                     text={t('logout')}
                     icon={<IconLogout />}
-                  />
-                ) : (
-                  <MoreOptionsButton
-                    onClick={() => signIn()}
-                    text={t('login')}
-                    icon={<IconLogin />}
                   />
                 )}
 

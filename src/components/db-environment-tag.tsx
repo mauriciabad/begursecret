@@ -1,13 +1,13 @@
 import type { FC } from 'react'
+import { env } from '~/env.mjs'
 import { cn } from '~/helpers/cn'
 
-const isUsingLocalDb = process.env.USE_LOCAL_DB === 'true'
-const isProduction = process.env.NODE_ENV === 'production'
+const isUsingLocalDb = env.USE_LOCAL_DB === 'true'
 
 export const DbEnvironmentTag: FC<{ className?: string }> = ({ className }) => {
   return (
     <>
-      {!isProduction && (
+      {env.IS_PRODUCTION === 'false' && (
         <span
           className={cn(
             'mr-2 rounded bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800',

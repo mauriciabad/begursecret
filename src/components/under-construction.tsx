@@ -12,8 +12,8 @@ export const UnderConstruction: FC = () => {
         gradientTransform="rotate(-78.317 263.916 204.004)"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#fff"></stop>
-        <stop offset="1" stop-color="#efeeef"></stop>
+        <stop offset="0" stopColor="#fff"></stop>
+        <stop offset="1" stopColor="#efeeef"></stop>
       </linearGradient>
       <circle cx="222.555" cy="147.733" r="60.636" fill="url(#a)"></circle>
       <path
@@ -28,8 +28,8 @@ export const UnderConstruction: FC = () => {
         y2="683.105"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#efeeef"></stop>
-        <stop offset="1" stop-color="#fff"></stop>
+        <stop offset="0" stopColor="#efeeef"></stop>
+        <stop offset="1" stopColor="#fff"></stop>
       </linearGradient>
       <circle cx="690.538" cy="629.946" r="75.176" fill="url(#b)"></circle>
       <path
@@ -45,8 +45,8 @@ export const UnderConstruction: FC = () => {
         gradientTransform="rotate(-45.001 383.168 721.35)"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#fff"></stop>
-        <stop offset="1" stop-color="#efeeef"></stop>
+        <stop offset="0" stopColor="#fff"></stop>
+        <stop offset="1" stopColor="#efeeef"></stop>
       </linearGradient>
       <circle cx="229.411" cy="627.634" r="91.403" fill="url(#c)"></circle>
       <path
@@ -61,8 +61,8 @@ export const UnderConstruction: FC = () => {
         y2="604.094"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#92a6eb"></stop>
-        <stop offset="1" stop-color="#6a74ef"></stop>
+        <stop offset="0" stopColor="#92a6eb"></stop>
+        <stop offset="1" stopColor="#6a74ef"></stop>
       </linearGradient>
       <path
         fill="url(#d)"
@@ -76,8 +76,8 @@ export const UnderConstruction: FC = () => {
         y2="604.094"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#2421a2"></stop>
-        <stop offset="1" stop-color="#5c60d5"></stop>
+        <stop offset="0" stopColor="#2421a2"></stop>
+        <stop offset="1" stopColor="#5c60d5"></stop>
       </linearGradient>
       <path
         fill="url(#e)"
@@ -91,8 +91,8 @@ export const UnderConstruction: FC = () => {
         y2="685.36"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#5c60d5"></stop>
-        <stop offset="1" stop-color="#2421a2"></stop>
+        <stop offset="0" stopColor="#5c60d5"></stop>
+        <stop offset="1" stopColor="#2421a2"></stop>
       </linearGradient>
       <path
         fill="url(#f)"
@@ -110,8 +110,8 @@ export const UnderConstruction: FC = () => {
         y2="747.185"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#5c60d5"></stop>
-        <stop offset="1" stop-color="#2421a2"></stop>
+        <stop offset="0" stopColor="#5c60d5"></stop>
+        <stop offset="1" stopColor="#2421a2"></stop>
       </linearGradient>
       <path
         fill="url(#g)"
@@ -135,8 +135,8 @@ export const UnderConstruction: FC = () => {
         y2="648.885"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#dc6734"></stop>
-        <stop offset="1" stop-color="#ae2e41"></stop>
+        <stop offset="0" stopColor="#dc6734"></stop>
+        <stop offset="1" stopColor="#ae2e41"></stop>
       </linearGradient>
       <path
         fill="url(#h)"
@@ -154,8 +154,8 @@ export const UnderConstruction: FC = () => {
         y2="761.862"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#92a6eb"></stop>
-        <stop offset="1" stop-color="#6a74ef"></stop>
+        <stop offset="0" stopColor="#92a6eb"></stop>
+        <stop offset="1" stopColor="#6a74ef"></stop>
       </linearGradient>
       <path
         fill="url(#i)"
@@ -177,8 +177,8 @@ export const UnderConstruction: FC = () => {
         y2="751.382"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#e9aa4a"></stop>
-        <stop offset="1" stop-color="#ea971d"></stop>
+        <stop offset="0" stopColor="#e9aa4a"></stop>
+        <stop offset="1" stopColor="#ea971d"></stop>
       </linearGradient>
       <path fill="url(#j)" d="M280.567 746.128h111.41v10.508h-111.41z"></path>
       <path
@@ -198,8 +198,8 @@ export const UnderConstruction: FC = () => {
         y2="537.957"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#e3dde4"></stop>
-        <stop offset="1" stop-color="#b5a8ae"></stop>
+        <stop offset="0" stopColor="#e3dde4"></stop>
+        <stop offset="1" stopColor="#b5a8ae"></stop>
       </linearGradient>
       <path
         fill="url(#k)"
@@ -213,8 +213,8 @@ export const UnderConstruction: FC = () => {
         y2="414.384"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#dc6734"></stop>
-        <stop offset="1" stop-color="#ae2e41"></stop>
+        <stop offset="0" stopColor="#dc6734"></stop>
+        <stop offset="1" stopColor="#ae2e41"></stop>
       </linearGradient>
       <path
         fill="url(#l)"
@@ -232,8 +232,8 @@ export const UnderConstruction: FC = () => {
         y2="175.667"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#e9aa4a"></stop>
-        <stop offset="1" stop-color="#f2d265"></stop>
+        <stop offset="0" stopColor="#e9aa4a"></stop>
+        <stop offset="1" stopColor="#f2d265"></stop>
       </linearGradient>
       <path
         fill="url(#m)"
@@ -251,8 +251,8 @@ export const UnderConstruction: FC = () => {
         y2="126.666"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#6a74ef"></stop>
-        <stop offset="1" stop-color="#92a6eb"></stop>
+        <stop offset="0" stopColor="#6a74ef"></stop>
+        <stop offset="1" stopColor="#92a6eb"></stop>
       </linearGradient>
       <path
         fill="url(#n)"
@@ -294,8 +294,8 @@ export const UnderConstruction: FC = () => {
         y2="364.19"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#f2d265"></stop>
-        <stop offset="1" stop-color="#dcbb60"></stop>
+        <stop offset="0" stopColor="#f2d265"></stop>
+        <stop offset="1" stopColor="#dcbb60"></stop>
       </linearGradient>
       <path
         fill="url(#o)"
@@ -321,8 +321,8 @@ export const UnderConstruction: FC = () => {
         y2="190.635"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#dc6734"></stop>
-        <stop offset="1" stop-color="#ae2e41"></stop>
+        <stop offset="0" stopColor="#dc6734"></stop>
+        <stop offset="1" stopColor="#ae2e41"></stop>
       </linearGradient>
       <circle cx="283.737" cy="175.667" r="21.167" fill="url(#p)"></circle>
       <path
@@ -366,8 +366,8 @@ export const UnderConstruction: FC = () => {
         y2="321.573"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#92a6eb"></stop>
-        <stop offset="1" stop-color="#6a74ef"></stop>
+        <stop offset="0" stopColor="#92a6eb"></stop>
+        <stop offset="1" stopColor="#6a74ef"></stop>
       </linearGradient>
       <path
         fill="url(#q)"
@@ -390,8 +390,8 @@ export const UnderConstruction: FC = () => {
         y2="141.634"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#dc6734"></stop>
-        <stop offset="1" stop-color="#ae2e41"></stop>
+        <stop offset="0" stopColor="#dc6734"></stop>
+        <stop offset="1" stopColor="#ae2e41"></stop>
       </linearGradient>
       <circle cx="410.876" cy="126.667" r="21.167" fill="url(#r)"></circle>
       <circle cx="420.376" cy="270.949" r="8.75" fill="#BE4118"></circle>
@@ -404,10 +404,10 @@ export const UnderConstruction: FC = () => {
         y2="742.472"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#eaaea4"></stop>
-        <stop offset=".313" stop-color="#e8a89d"></stop>
-        <stop offset=".782" stop-color="#e39688"></stop>
-        <stop offset="1" stop-color="#e08c7c"></stop>
+        <stop offset="0" stopColor="#eaaea4"></stop>
+        <stop offset=".313" stopColor="#e8a89d"></stop>
+        <stop offset=".782" stopColor="#e39688"></stop>
+        <stop offset="1" stopColor="#e08c7c"></stop>
       </linearGradient>
       <path
         fill="url(#s)"
@@ -421,8 +421,8 @@ export const UnderConstruction: FC = () => {
         y2="765.971"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#dc6734"></stop>
-        <stop offset="1" stop-color="#ae2e41"></stop>
+        <stop offset="0" stopColor="#dc6734"></stop>
+        <stop offset="1" stopColor="#ae2e41"></stop>
       </linearGradient>
       <path
         fill="url(#t)"
@@ -436,9 +436,9 @@ export const UnderConstruction: FC = () => {
         y2="394.384"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#5c60d5"></stop>
-        <stop offset=".588" stop-color="#2421a2"></stop>
-        <stop offset="1" stop-color="#250f52"></stop>
+        <stop offset="0" stopColor="#5c60d5"></stop>
+        <stop offset=".588" stopColor="#2421a2"></stop>
+        <stop offset="1" stopColor="#250f52"></stop>
       </linearGradient>
       <path
         fill="url(#u)"
@@ -452,8 +452,8 @@ export const UnderConstruction: FC = () => {
         y2="485.313"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#6a74ef"></stop>
-        <stop offset="1" stop-color="#5c60d5"></stop>
+        <stop offset="0" stopColor="#6a74ef"></stop>
+        <stop offset="1" stopColor="#5c60d5"></stop>
       </linearGradient>
       <path
         fill="url(#v)"
@@ -470,8 +470,8 @@ export const UnderConstruction: FC = () => {
         y2="772.605"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#e9aa4a"></stop>
-        <stop offset="1" stop-color="#ea971d"></stop>
+        <stop offset="0" stopColor="#e9aa4a"></stop>
+        <stop offset="1" stopColor="#ea971d"></stop>
       </linearGradient>
       <path
         fill="url(#w)"
@@ -485,8 +485,8 @@ export const UnderConstruction: FC = () => {
         y2="715.811"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#92a6eb"></stop>
-        <stop offset="1" stop-color="#6a74ef"></stop>
+        <stop offset="0" stopColor="#92a6eb"></stop>
+        <stop offset="1" stopColor="#6a74ef"></stop>
       </linearGradient>
       <path
         fill="url(#x)"
@@ -504,10 +504,10 @@ export const UnderConstruction: FC = () => {
         y2="753.188"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#eaaea4"></stop>
-        <stop offset=".313" stop-color="#e8a89d"></stop>
-        <stop offset=".782" stop-color="#e39688"></stop>
-        <stop offset="1" stop-color="#e08c7c"></stop>
+        <stop offset="0" stopColor="#eaaea4"></stop>
+        <stop offset=".313" stopColor="#e8a89d"></stop>
+        <stop offset=".782" stopColor="#e39688"></stop>
+        <stop offset="1" stopColor="#e08c7c"></stop>
       </linearGradient>
       <path
         fill="url(#y)"
@@ -521,8 +521,8 @@ export const UnderConstruction: FC = () => {
         y2="775.328"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#dc6734"></stop>
-        <stop offset="1" stop-color="#ae2e41"></stop>
+        <stop offset="0" stopColor="#dc6734"></stop>
+        <stop offset="1" stopColor="#ae2e41"></stop>
       </linearGradient>
       <path
         fill="url(#z)"
@@ -536,9 +536,9 @@ export const UnderConstruction: FC = () => {
         y2="569.356"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#5c60d5"></stop>
-        <stop offset=".588" stop-color="#2421a2"></stop>
-        <stop offset="1" stop-color="#250f52"></stop>
+        <stop offset="0" stopColor="#5c60d5"></stop>
+        <stop offset=".588" stopColor="#2421a2"></stop>
+        <stop offset="1" stopColor="#250f52"></stop>
       </linearGradient>
       <path
         fill="url(#A)"
@@ -560,8 +560,8 @@ export const UnderConstruction: FC = () => {
         y2="782.686"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#e9aa4a"></stop>
-        <stop offset="1" stop-color="#ea971d"></stop>
+        <stop offset="0" stopColor="#e9aa4a"></stop>
+        <stop offset="1" stopColor="#ea971d"></stop>
       </linearGradient>
       <path
         fill="url(#B)"
@@ -575,8 +575,8 @@ export const UnderConstruction: FC = () => {
         y2="728.197"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#92a6eb"></stop>
-        <stop offset="1" stop-color="#6a74ef"></stop>
+        <stop offset="0" stopColor="#92a6eb"></stop>
+        <stop offset="1" stopColor="#6a74ef"></stop>
       </linearGradient>
       <path
         fill="url(#C)"
@@ -593,13 +593,13 @@ export const UnderConstruction: FC = () => {
         r="110.882"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#e08d7d"></stop>
-        <stop offset=".035" stop-color="#e49587"></stop>
-        <stop offset=".137" stop-color="#efaa9e"></stop>
-        <stop offset=".247" stop-color="#f6b8ae"></stop>
-        <stop offset=".369" stop-color="#fbc0b8"></stop>
-        <stop offset=".527" stop-color="#fcc3bb"></stop>
-        <stop offset="1" stop-color="#eaaea4"></stop>
+        <stop offset="0" stopColor="#e08d7d"></stop>
+        <stop offset=".035" stopColor="#e49587"></stop>
+        <stop offset=".137" stopColor="#efaa9e"></stop>
+        <stop offset=".247" stopColor="#f6b8ae"></stop>
+        <stop offset=".369" stopColor="#fbc0b8"></stop>
+        <stop offset=".527" stopColor="#fcc3bb"></stop>
+        <stop offset="1" stopColor="#eaaea4"></stop>
       </radialGradient>
       <path
         fill="url(#D)"
@@ -613,8 +613,8 @@ export const UnderConstruction: FC = () => {
         y2="260.029"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#e9aa4a"></stop>
-        <stop offset="1" stop-color="#ea971d"></stop>
+        <stop offset="0" stopColor="#e9aa4a"></stop>
+        <stop offset="1" stopColor="#ea971d"></stop>
       </linearGradient>
       <path
         fill="url(#E)"
@@ -632,10 +632,10 @@ export const UnderConstruction: FC = () => {
         y2="193.043"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#eaaea4"></stop>
-        <stop offset=".313" stop-color="#e8a89d"></stop>
-        <stop offset=".782" stop-color="#e39688"></stop>
-        <stop offset="1" stop-color="#e08c7c"></stop>
+        <stop offset="0" stopColor="#eaaea4"></stop>
+        <stop offset=".313" stopColor="#e8a89d"></stop>
+        <stop offset=".782" stopColor="#e39688"></stop>
+        <stop offset="1" stopColor="#e08c7c"></stop>
       </linearGradient>
       <path
         fill="url(#F)"
@@ -649,8 +649,8 @@ export const UnderConstruction: FC = () => {
         y2="181.847"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#e25ab8"></stop>
-        <stop offset="1" stop-color="#eaaea4"></stop>
+        <stop offset="0" stopColor="#e25ab8"></stop>
+        <stop offset="1" stopColor="#eaaea4"></stop>
       </linearGradient>
       <path
         fill="url(#G)"
@@ -664,10 +664,10 @@ export const UnderConstruction: FC = () => {
         y2="182.485"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#eaaea4"></stop>
-        <stop offset=".313" stop-color="#e8a89d"></stop>
-        <stop offset=".782" stop-color="#e39688"></stop>
-        <stop offset="1" stop-color="#e08c7c"></stop>
+        <stop offset="0" stopColor="#eaaea4"></stop>
+        <stop offset=".313" stopColor="#e8a89d"></stop>
+        <stop offset=".782" stopColor="#e39688"></stop>
+        <stop offset="1" stopColor="#e08c7c"></stop>
       </linearGradient>
       <path
         fill="url(#H)"
@@ -689,12 +689,12 @@ export const UnderConstruction: FC = () => {
         y2="169.382"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#be4118"></stop>
-        <stop offset=".165" stop-color="#a2391e"></stop>
-        <stop offset=".388" stop-color="#833024"></stop>
-        <stop offset=".606" stop-color="#6d2a28"></stop>
-        <stop offset=".814" stop-color="#60262b"></stop>
-        <stop offset="1" stop-color="#5b252c"></stop>
+        <stop offset="0" stopColor="#be4118"></stop>
+        <stop offset=".165" stopColor="#a2391e"></stop>
+        <stop offset=".388" stopColor="#833024"></stop>
+        <stop offset=".606" stopColor="#6d2a28"></stop>
+        <stop offset=".814" stopColor="#60262b"></stop>
+        <stop offset="1" stopColor="#5b252c"></stop>
       </linearGradient>
       <path
         fill="url(#I)"
@@ -732,8 +732,8 @@ export const UnderConstruction: FC = () => {
         y2="168.22"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#5b252c"></stop>
-        <stop offset="1" stop-color="#250f50"></stop>
+        <stop offset="0" stopColor="#5b252c"></stop>
+        <stop offset="1" stopColor="#250f50"></stop>
       </linearGradient>
       <path
         fill="url(#J)"
@@ -758,10 +758,10 @@ export const UnderConstruction: FC = () => {
         y2="141.048"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#eaaea4"></stop>
-        <stop offset=".313" stop-color="#e8a89d"></stop>
-        <stop offset=".782" stop-color="#e39688"></stop>
-        <stop offset="1" stop-color="#e08c7c"></stop>
+        <stop offset="0" stopColor="#eaaea4"></stop>
+        <stop offset=".313" stopColor="#e8a89d"></stop>
+        <stop offset=".782" stopColor="#e39688"></stop>
+        <stop offset="1" stopColor="#e08c7c"></stop>
       </linearGradient>
       <path
         fill="url(#K)"
@@ -775,10 +775,10 @@ export const UnderConstruction: FC = () => {
         y2="137.87"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#eaaea4"></stop>
-        <stop offset=".313" stop-color="#e8a89d"></stop>
-        <stop offset=".782" stop-color="#e39688"></stop>
-        <stop offset="1" stop-color="#e08c7c"></stop>
+        <stop offset="0" stopColor="#eaaea4"></stop>
+        <stop offset=".313" stopColor="#e8a89d"></stop>
+        <stop offset=".782" stopColor="#e39688"></stop>
+        <stop offset="1" stopColor="#e08c7c"></stop>
       </linearGradient>
       <path
         fill="url(#L)"
@@ -792,10 +792,10 @@ export const UnderConstruction: FC = () => {
         y2="135.539"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#eaaea4"></stop>
-        <stop offset=".313" stop-color="#e8a89d"></stop>
-        <stop offset=".782" stop-color="#e39688"></stop>
-        <stop offset="1" stop-color="#e08c7c"></stop>
+        <stop offset="0" stopColor="#eaaea4"></stop>
+        <stop offset=".313" stopColor="#e8a89d"></stop>
+        <stop offset=".782" stopColor="#e39688"></stop>
+        <stop offset="1" stopColor="#e08c7c"></stop>
       </linearGradient>
       <path
         fill="url(#M)"
@@ -809,10 +809,10 @@ export const UnderConstruction: FC = () => {
         y2="127.489"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#eaaea4"></stop>
-        <stop offset=".313" stop-color="#e8a89d"></stop>
-        <stop offset=".782" stop-color="#e39688"></stop>
-        <stop offset="1" stop-color="#e08c7c"></stop>
+        <stop offset="0" stopColor="#eaaea4"></stop>
+        <stop offset=".313" stopColor="#e8a89d"></stop>
+        <stop offset=".782" stopColor="#e39688"></stop>
+        <stop offset="1" stopColor="#e08c7c"></stop>
       </linearGradient>
       <path
         fill="url(#N)"
@@ -830,8 +830,8 @@ export const UnderConstruction: FC = () => {
         y2="158.633"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#fcc3bb"></stop>
-        <stop offset="1" stop-color="#eaaea4"></stop>
+        <stop offset="0" stopColor="#fcc3bb"></stop>
+        <stop offset="1" stopColor="#eaaea4"></stop>
       </linearGradient>
       <path
         fill="url(#O)"
@@ -844,13 +844,13 @@ export const UnderConstruction: FC = () => {
         r="131.225"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#e08d7d"></stop>
-        <stop offset=".035" stop-color="#e49587"></stop>
-        <stop offset=".137" stop-color="#efaa9e"></stop>
-        <stop offset=".247" stop-color="#f6b8ae"></stop>
-        <stop offset=".369" stop-color="#fbc0b8"></stop>
-        <stop offset=".527" stop-color="#fcc3bb"></stop>
-        <stop offset="1" stop-color="#eaaea4"></stop>
+        <stop offset="0" stopColor="#e08d7d"></stop>
+        <stop offset=".035" stopColor="#e49587"></stop>
+        <stop offset=".137" stopColor="#efaa9e"></stop>
+        <stop offset=".247" stopColor="#f6b8ae"></stop>
+        <stop offset=".369" stopColor="#fbc0b8"></stop>
+        <stop offset=".527" stopColor="#fcc3bb"></stop>
+        <stop offset="1" stopColor="#eaaea4"></stop>
       </radialGradient>
       <path
         fill="url(#P)"
@@ -868,8 +868,8 @@ export const UnderConstruction: FC = () => {
         y2="313.66"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#e9aa4a"></stop>
-        <stop offset="1" stop-color="#ea971d"></stop>
+        <stop offset="0" stopColor="#e9aa4a"></stop>
+        <stop offset="1" stopColor="#ea971d"></stop>
       </linearGradient>
       <path
         fill="url(#Q)"
@@ -887,9 +887,9 @@ export const UnderConstruction: FC = () => {
         y2="388.415"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#5c60d5"></stop>
-        <stop offset=".588" stop-color="#2421a2"></stop>
-        <stop offset="1" stop-color="#250f52"></stop>
+        <stop offset="0" stopColor="#5c60d5"></stop>
+        <stop offset=".588" stopColor="#2421a2"></stop>
+        <stop offset="1" stopColor="#250f52"></stop>
       </linearGradient>
       <path
         fill="url(#R)"
@@ -903,8 +903,8 @@ export const UnderConstruction: FC = () => {
         y2="301.211"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#e9aa4a"></stop>
-        <stop offset="1" stop-color="#ea971d"></stop>
+        <stop offset="0" stopColor="#e9aa4a"></stop>
+        <stop offset="1" stopColor="#ea971d"></stop>
       </linearGradient>
       <path
         fill="url(#S)"
@@ -926,8 +926,8 @@ export const UnderConstruction: FC = () => {
         y2="409.291"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#dc6734"></stop>
-        <stop offset="1" stop-color="#ae2e41"></stop>
+        <stop offset="0" stopColor="#dc6734"></stop>
+        <stop offset="1" stopColor="#ae2e41"></stop>
       </linearGradient>
       <path
         fill="url(#T)"
@@ -977,8 +977,8 @@ export const UnderConstruction: FC = () => {
         y2="434.631"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#ea971d"></stop>
-        <stop offset="1" stop-color="#dc6734"></stop>
+        <stop offset="0" stopColor="#ea971d"></stop>
+        <stop offset="1" stopColor="#dc6734"></stop>
       </linearGradient>
       <path
         fill="url(#U)"
@@ -992,8 +992,8 @@ export const UnderConstruction: FC = () => {
         y2="434.346"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#dc6734"></stop>
-        <stop offset="1" stop-color="#ae2e41"></stop>
+        <stop offset="0" stopColor="#dc6734"></stop>
+        <stop offset="1" stopColor="#ae2e41"></stop>
       </linearGradient>
       <path
         fill="url(#V)"
@@ -1011,8 +1011,8 @@ export const UnderConstruction: FC = () => {
         y2="425.7"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#dc6734"></stop>
-        <stop offset="1" stop-color="#ae2e41"></stop>
+        <stop offset="0" stopColor="#dc6734"></stop>
+        <stop offset="1" stopColor="#ae2e41"></stop>
       </linearGradient>
       <path
         fill="url(#W)"
@@ -1026,8 +1026,8 @@ export const UnderConstruction: FC = () => {
         y2="411.786"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#ea971d"></stop>
-        <stop offset="1" stop-color="#dc6734"></stop>
+        <stop offset="0" stopColor="#ea971d"></stop>
+        <stop offset="1" stopColor="#dc6734"></stop>
       </linearGradient>
       <path
         fill="url(#X)"

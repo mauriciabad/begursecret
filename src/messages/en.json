@@ -60,7 +60,22 @@
     },
     "login": {
       "register": "Register",
-      "login": "Login",
+      "login-with": "Login with",
+
+      "providers": {
+        "google": "Google",
+        "facebook": "Facebook",
+        "apple": "Apple",
+        "github": "Github"
+      },
+      "credentials": {
+        "email-or-username": "Email or username",
+        "email-or-username-placeholder": "Enter your email or username",
+        "password": "Password",
+        "password-placeholder": "Enter your password",
+        "password-invalid": "Password is invalid",
+        "send": "Send"
+      },
       "banner": {
         "subtitle": "Sign up in",
         "title": "Descobreix Begur App",
