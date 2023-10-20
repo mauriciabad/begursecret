@@ -35,17 +35,16 @@ const server = z.object({
  * @template {typeof server} T
  * @param {T} obj
  * */
-const refineServer = (obj) =>
-  obj
-  // .superRefine((data, ctx) => {
-  //   if (!data.BASE_URL && !data.VERCEL_BRANCH_URL) {
-  //     ctx.addIssue({
-  //       code: z.ZodIssueCode.custom,
-  //       path: ['BASE_URL'],
-  //       message: 'BASE_URL is required when there is no VERCEL_BRANCH_URL',
-  //     })
-  //   }
-  // })
+const refineServer = (obj) => obj
+// .superRefine((data, ctx) => {
+//   if (!data.BASE_URL && !data.VERCEL_BRANCH_URL) {
+//     ctx.addIssue({
+//       code: z.ZodIssueCode.custom,
+//       path: ['BASE_URL'],
+//       message: 'BASE_URL is required when there is no VERCEL_BRANCH_URL',
+//     })
+//   }
+// })
 
 /**
  * Specify your client-side environment variables schema here.
