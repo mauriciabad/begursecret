@@ -60,11 +60,12 @@
     "login": {
       "register": "Registrar-se",
       "login-with": "Iniciar la sessió amb",
+      "not-supported": "No suportat en mode de desenvolupament",
       "providers": {
         "google": "Google",
         "facebook": "Facebook",
         "apple": "Apple",
-        "github": "Github"
+        "github": "GitHub"
       },
       "credentials": {
         "email-or-username": "Email",

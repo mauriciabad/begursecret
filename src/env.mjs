@@ -8,24 +8,17 @@ import { z } from 'zod'
  */
 const server = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']),
-  VERCEL_ENV: z.enum(['development', 'preview', 'production']).optional(),
-  PORT: z.preprocess((str) => {
-    if (typeof str !== 'string') return undefined
-    const port = parseInt(str, 10)
-    if (isNaN(port)) return undefined
-    return port
-  }, z.number().positive().optional()),
-  /** GitHub client ID */
+
   GITHUB_CLIENT_ID: z.string().min(1),
-  /** GitHub client secret */
   GITHUB_CLIENT_SECRET: z.string().min(1),
-  /** App URL when deployed on Vercel */
+
   BASE_URL: z.string().regex(/https?:\/\/\w+(\.\w+)*(:\d{4})?/),
   NEXTAUTH_URL: z.string().regex(/https?:\/\/\w+(\.\w+)*(:\d{4})?/),
   VERCEL_URL: z
     .string()
     .regex(/[\w\d-]+(\.[\w\d-]+)*/)
     .optional(),
+
   USE_LOCAL_DB: z.union([z.literal('true'), z.literal('false')]).optional(),
   DATABASE_HOST: z.string().min(1),
   DATABASE_USERNAME: z.string().min(1),
@@ -55,8 +48,13 @@ const refineServer = (obj) => obj
  */
 const client = z.object({})
 
-const vercelUrlWithProtocol =
+const VERCEL_URL_WITH_PROTOCOL =
   process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`
+
+const FAKE_VALUE_ONLY_FOR_DEVELOPMENT =
+  process.env.NODE_ENV === 'production'
+    ? undefined
+    : 'fake-value-only-for-development'
 
 /**
  * You can't destruct `process.env` as a regular object in the Next.js edge runtimes (e.g.
@@ -66,13 +64,16 @@ const vercelUrlWithProtocol =
  */
 const processEnv = {
   NODE_ENV: process.env.NODE_ENV,
-  VERCEL_ENV: process.env.VERCEL_ENV,
-  PORT: process.env.PORT,
-  GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
-  GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
-  BASE_URL: process.env.BASE_URL ?? vercelUrlWithProtocol,
-  NEXTAUTH_URL: process.env.NEXTAUTH_URL ?? vercelUrlWithProtocol,
+
+  GITHUB_CLIENT_ID:
+    process.env.GITHUB_CLIENT_ID ?? FAKE_VALUE_ONLY_FOR_DEVELOPMENT,
+  GITHUB_CLIENT_SECRET:
+    process.env.GITHUB_CLIENT_SECRET ?? FAKE_VALUE_ONLY_FOR_DEVELOPMENT,
+
+  BASE_URL: process.env.BASE_URL ?? VERCEL_URL_WITH_PROTOCOL,
   VERCEL_URL: process.env.VERCEL_URL,
+  NEXTAUTH_URL: process.env.NEXTAUTH_URL ?? VERCEL_URL_WITH_PROTOCOL,
+
   USE_LOCAL_DB: process.env.USE_LOCAL_DB,
   DATABASE_HOST: process.env.DATABASE_HOST,
   DATABASE_USERNAME: process.env.DATABASE_USERNAME,

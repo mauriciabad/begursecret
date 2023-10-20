@@ -10,7 +10,7 @@ export const DbEnvironmentTag: FC<{ className?: string }> = ({ className }) => {
       {env.NODE_ENV !== 'production' && (
         <span
           className={cn(
-            'mr-2 rounded bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800',
+            'mr-2 rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-800',
             {
               'bg-yellow-100 text-yellow-800': isUsingLocalDb,
               'bg-blue-100 text-blue-800': !isUsingLocalDb,
@@ -18,7 +18,7 @@ export const DbEnvironmentTag: FC<{ className?: string }> = ({ className }) => {
             className
           )}
         >
-          {isUsingLocalDb ? 'Local' : 'Prod'}
+          {isUsingLocalDb ? 'Local DB' : 'Prod DB'}
         </span>
       )}
     </>
