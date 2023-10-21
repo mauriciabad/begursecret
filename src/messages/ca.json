@@ -74,12 +74,13 @@
         "password": "Contrasenya",
         "password-placeholder": "Introdueix la teva contrasenya",
         "send": "Enviar"
-      },
-      "banner": {
-        "subtitle": "Registra't a",
-        "title": "Descobreix Begur App",
-        "text": "Guanya premis, guarda llocs i completa missions"
       }
+    },
+    "register-banner": {
+      "register": "Registrar-se",
+      "subtitle": "Registra't a",
+      "title": "Descobreix Begur App",
+      "text": "Guanya premis, guarda llocs i completa missions"
     },
     "more-options": {
       "title": "Més opcions",
@@ -121,5 +122,14 @@
       "title": "Termes del servei",
       "description": "Termes del servei"
     }
+  },
+  "register": {
+    "meta": {
+      "title": "Registra't",
+      "description": "Registra't per a una experiència personalitzada"
+    },
+    "heading": "Registra't",
+    "content": "Pàgina en construcció...",
+    "go-to-app": "Anar a l'app"
   }
 }
