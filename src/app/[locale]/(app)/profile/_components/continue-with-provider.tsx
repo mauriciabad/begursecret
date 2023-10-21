@@ -26,9 +26,7 @@ export const ContinueWithProvider: FC<{
       aria-hidden={!isProduction}
     >
       <Button
-        onClick={() =>
-          signIn('google', { callbackUrl: '/api/auth/callback/google' })
-        }
+        onClick={() => signIn('google')}
         variant="solid"
         className=" border border-stone-200 bg-white text-stone-800 shadow-md"
         fullWidth
