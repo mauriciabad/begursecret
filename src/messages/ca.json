@@ -11,12 +11,12 @@
   },
   "signIn": {
     "meta": {
-      "title": "Inicia la sessió",
-      "description": "Inicia la sessió per a una experiència personalitzada"
+      "title": "Inicia sessió",
+      "description": "Inicia sessió per a una experiència personalitzada"
     },
-    "heading": "Inicia la sessió",
+    "heading": "Inicia sessió",
     "goHome": "Anar a l'inici",
-    "providerButtonText": "Inicia la sessió amb {name}"
+    "providerButtonText": "Inicia sessió amb {name}"
   },
   "explore": {
     "meta": {
@@ -59,7 +59,7 @@
     },
     "login": {
       "register": "Registrar-se",
-      "login": "Iniciar la sessió",
+      "login": "Iniciar sessió",
       "continue-with": "Continuar amb",
       "not-supported": "No suportat en mode de desenvolupament",
       "providers": {
@@ -87,8 +87,8 @@
       "preferences": "Preferències",
       "edit": "Editar perfil",
       "app-settings": "Configuració de l'aplicació",
-      "logout": "Tanca la sessió",
-      "login": "Iniciar la sessió",
+      "logout": "Tanca sessió",
+      "login": "Iniciar sessió",
       "support": "Suport",
       "feedback": "Suggerencies i errors"
     }
