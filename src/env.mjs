@@ -11,6 +11,8 @@ const server = z.object({
 
   GITHUB_CLIENT_ID: z.string().min(1),
   GITHUB_CLIENT_SECRET: z.string().min(1),
+  GOOGLE_CLIENT_ID: z.string().min(1),
+  GOOGLE_CLIENT_SECRET: z.string().min(1),
 
   BASE_URL: z.string().regex(/https?:\/\/\w+(\.\w+)*(:\d{4})?/),
   NEXTAUTH_URL: z.string().regex(/https?:\/\/\w+(\.\w+)*(:\d{4})?/),
@@ -69,6 +71,10 @@ const processEnv = {
     process.env.GITHUB_CLIENT_ID ?? FAKE_VALUE_ONLY_FOR_DEVELOPMENT,
   GITHUB_CLIENT_SECRET:
     process.env.GITHUB_CLIENT_SECRET ?? FAKE_VALUE_ONLY_FOR_DEVELOPMENT,
+  GOOGLE_CLIENT_ID:
+    process.env.GOOGLE_CLIENT_ID ?? FAKE_VALUE_ONLY_FOR_DEVELOPMENT,
+  GOOGLE_CLIENT_SECRET:
+    process.env.GOOGLE_CLIENT_SECRET ?? FAKE_VALUE_ONLY_FOR_DEVELOPMENT,
 
   BASE_URL: process.env.BASE_URL ?? VERCEL_URL_WITH_PROTOCOL,
   VERCEL_URL: process.env.VERCEL_URL,
