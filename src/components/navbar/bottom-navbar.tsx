@@ -62,7 +62,7 @@ export const BottomNavbar = async () => {
           }
         />
       </ul>
-      <div className="-z-1 pointer-events-none absolute inset-0 flex items-center justify-center">
+      <div className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
         <DbEnvironmentTag />
       </div>
     </nav>
