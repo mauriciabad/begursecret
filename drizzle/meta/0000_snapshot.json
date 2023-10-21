@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "5b2a885d-a094-435d-9d05-24c29fb45d98",
+  "id": "7ed78391-6147-422a-aabe-4142c0e039c0",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "place": {
@@ -14,20 +14,12 @@
           "notNull": true,
           "autoincrement": true
         },
-        "title": {
-          "name": "title",
+        "name": {
+          "name": "name",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
-        },
-        "createdAt": {
-          "name": "createdAt",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(now())"
         }
       },
       "indexes": {},
@@ -110,7 +102,7 @@
         },
         "id_token": {
           "name": "id_token",
-          "type": "varchar(255)",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
