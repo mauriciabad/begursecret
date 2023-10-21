@@ -11,9 +11,7 @@ const server = z.object({
 
   GOOGLE_CLIENT_ID: z.string().min(1),
   GOOGLE_CLIENT_SECRET: z.string().min(1),
-  FACEBOOK_CLIENT_ID: z.string().min(1),
-  FACEBOOK_CLIENT_SECRET: z.string().min(1),
-
+  
   BASE_URL: z.string().regex(/https?:\/\/\w+(\.\w+)*(:\d{4})?/),
   NEXTAUTH_URL: z.string().regex(/https?:\/\/\w+(\.\w+)*(:\d{4})?/),
   VERCEL_URL: z
@@ -71,10 +69,6 @@ const processEnv = {
     process.env.GOOGLE_CLIENT_ID ?? FAKE_VALUE_ONLY_FOR_DEVELOPMENT,
   GOOGLE_CLIENT_SECRET:
     process.env.GOOGLE_CLIENT_SECRET ?? FAKE_VALUE_ONLY_FOR_DEVELOPMENT,
-  FACEBOOK_CLIENT_ID:
-    process.env.FACEBOOK_CLIENT_ID ?? FAKE_VALUE_ONLY_FOR_DEVELOPMENT,
-  FACEBOOK_CLIENT_SECRET:
-    process.env.FACEBOOK_CLIENT_SECRET ?? FAKE_VALUE_ONLY_FOR_DEVELOPMENT,
 
   BASE_URL: process.env.BASE_URL ?? VERCEL_URL_WITH_PROTOCOL,
   VERCEL_URL: process.env.VERCEL_URL,

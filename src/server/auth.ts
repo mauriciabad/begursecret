@@ -1,7 +1,6 @@
 import { DrizzleAdapter } from '@auth/drizzle-adapter'
 import type { AuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
-import FacebookProvider from 'next-auth/providers/facebook'
 import 'server-only'
 import { signInPagePath } from '~/auth'
 import { env } from '~/env.mjs'
@@ -15,10 +14,6 @@ export const authOptions: AuthOptions = {
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
-    }),
-    FacebookProvider({
-      clientId: env.FACEBOOK_CLIENT_ID,
-      clientSecret: env.FACEBOOK_CLIENT_SECRET,
     }),
   ],
   pages: {
