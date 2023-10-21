@@ -26,7 +26,9 @@ export const ContinueWithProvider: FC<{
       aria-hidden={!isProduction}
     >
       <Button
-        onClick={() => signIn('google')}
+        onClick={() =>
+          signIn('google', { callbackUrl: '/api/auth/callback/google' })
+        }
         variant="solid"
         className="bg-rose-600 text-white"
         startContent={<IconBrandGoogle size={20} />}
@@ -34,7 +36,9 @@ export const ContinueWithProvider: FC<{
         <span className="flex-grow">{t('providers.google')}</span>
       </Button>
       <Button
-        onClick={() => signIn('facebook')}
+        onClick={() =>
+          signIn('facebook', { callbackUrl: '/api/auth/callback/facebook' })
+        }
         variant="solid"
         className="bg-blue-600 text-white"
         startContent={<IconBrandFacebook size={20} />}
