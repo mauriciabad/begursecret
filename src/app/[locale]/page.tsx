@@ -4,7 +4,7 @@ import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
 import { LanguageSwitcher } from '~/components/language-switcher'
 import { LinkButton } from '~/components/link-button'
-import { Logo } from '~/components/logo'
+import { Logo } from '~/components/icons/logo'
 import type { LocaleRouteParams } from '~/i18n'
 
 export async function generateMetadata({

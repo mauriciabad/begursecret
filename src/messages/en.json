@@ -60,7 +60,8 @@
     },
     "login": {
       "register": "Register",
-      "login-with": "Login with",
+      "login": "Login",
+      "continue-with": "Continue with",
       "not-supported": "Not supported in development mode",
       "providers": {
         "google": "Google",

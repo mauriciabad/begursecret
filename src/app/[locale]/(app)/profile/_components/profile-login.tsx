@@ -26,19 +26,28 @@ export const ProfileLogin: FC = () => {
         </LinkButton>
       </div>
 
-      <h2 className="mt-8 font-title text-2xl font-medium">
-        {t('login-with')}
-      </h2>
-      <ContinueWithEmail />
-      <ContinueWithProvider
-        className="mt-8"
-        isProduction={env.NODE_ENV === 'production'}
-      />
+      <div className="mx-auto mt-10  max-w-sm">
+        <h2 className="mb-2 text-center font-title text-2xl font-semibold uppercase text-stone-800">
+          {t('login')}
+        </h2>
+        <ContinueWithEmail />
 
-      <h2 className="mt-8 font-title text-2xl font-medium">{t('register')}</h2>
-      <LinkButton href="/register" variant="solid" color="primary">
-        {t('register')}
-      </LinkButton>
+        <div className="mb-2 mt-4 flex items-center gap-2">
+          <div className="flex-1 border-t border-stone-300" aria-hidden />
+          <h3 className=" inline-block font-title text-sm font-medium uppercase text-stone-600">
+            {t('continue-with')}
+          </h3>
+          <div className="flex-1 border-t border-stone-300" aria-hidden />
+        </div>
+        <ContinueWithProvider isProduction={env.NODE_ENV === 'production'} />
+
+        <h2 className="mb-2 mt-10 text-center font-title text-2xl font-semibold uppercase text-stone-800">
+          {t('register')}
+        </h2>
+        <LinkButton href="/register" variant="solid" color="primary" fullWidth>
+          {t('register')}
+        </LinkButton>
+      </div>
     </>
   )
 }

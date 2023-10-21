@@ -59,7 +59,8 @@
     },
     "login": {
       "register": "Registrar-se",
-      "login-with": "Iniciar la sessió amb",
+      "login": "Iniciar la sessió",
+      "continue-with": "Continuar amb",
       "not-supported": "No suportat en mode de desenvolupament",
       "providers": {
         "google": "Google",
