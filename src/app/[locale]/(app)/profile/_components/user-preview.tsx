@@ -14,7 +14,7 @@ export const UserPreview: FC<{ user: Session['user'] }> = ({ user }) => {
       <img
         src={user.image ?? DEFAULT_IMAGE}
         alt=""
-        className="mx-auto block h-6 w-6 rounded-full border border-stone-300"
+        className="mx-auto mb-2 block h-24 w-24 rounded-full border border-stone-300"
       />
       <h2 className="text-center  text-lg font-bold">
         {user.name ?? t('anonymous')}
