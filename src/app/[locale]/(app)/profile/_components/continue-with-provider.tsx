@@ -1,12 +1,7 @@
 'use client'
 
 import { Button } from '@nextui-org/button'
-import {
-  IconBrandApple,
-  IconBrandFacebook,
-  IconBrandGithub,
-  IconBrandGoogle,
-} from '@tabler/icons-react'
+import { IconBrandFacebook, IconBrandGoogle } from '@tabler/icons-react'
 import { signIn } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'
@@ -31,12 +26,12 @@ export const ContinueWithProvider: FC<{
       aria-hidden={!isProduction}
     >
       <Button
-        onClick={() => signIn('github')}
+        onClick={() => signIn('google')}
         variant="solid"
-        className="bg-black text-white"
-        startContent={<IconBrandGithub size={20} />}
+        className="bg-rose-600 text-white"
+        startContent={<IconBrandGoogle size={20} />}
       >
-        <span className="flex-grow">{t('providers.github')}</span>
+        <span className="flex-grow">{t('providers.google')}</span>
       </Button>
       <Button
         onClick={() => signIn('facebook')}
@@ -45,22 +40,6 @@ export const ContinueWithProvider: FC<{
         startContent={<IconBrandFacebook size={20} />}
       >
         <span className="flex-grow">{t('providers.facebook')}</span>
-      </Button>
-      <Button
-        onClick={() => signIn('apple')}
-        variant="solid"
-        className="bg-stone-200 text-black"
-        startContent={<IconBrandApple size={20} />}
-      >
-        <span className="flex-grow">{t('providers.apple')}</span>
-      </Button>
-      <Button
-        onClick={() => signIn('google')}
-        variant="solid"
-        className="bg-rose-600 text-white"
-        startContent={<IconBrandGoogle size={20} />}
-      >
-        <span className="flex-grow">{t('providers.google')}</span>
       </Button>
     </div>
   )
