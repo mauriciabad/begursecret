@@ -9,8 +9,10 @@ import { z } from 'zod'
 const server = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']),
 
-  GITHUB_CLIENT_ID: z.string().min(1),
-  GITHUB_CLIENT_SECRET: z.string().min(1),
+  GOOGLE_CLIENT_ID: z.string().min(1),
+  GOOGLE_CLIENT_SECRET: z.string().min(1),
+  FACEBOOK_CLIENT_ID: z.string().min(1),
+  FACEBOOK_CLIENT_SECRET: z.string().min(1),
 
   BASE_URL: z.string().regex(/https?:\/\/\w+(\.\w+)*(:\d{4})?/),
   NEXTAUTH_URL: z.string().regex(/https?:\/\/\w+(\.\w+)*(:\d{4})?/),
@@ -65,10 +67,14 @@ const FAKE_VALUE_ONLY_FOR_DEVELOPMENT =
 const processEnv = {
   NODE_ENV: process.env.NODE_ENV,
 
-  GITHUB_CLIENT_ID:
-    process.env.GITHUB_CLIENT_ID ?? FAKE_VALUE_ONLY_FOR_DEVELOPMENT,
-  GITHUB_CLIENT_SECRET:
-    process.env.GITHUB_CLIENT_SECRET ?? FAKE_VALUE_ONLY_FOR_DEVELOPMENT,
+  GOOGLE_CLIENT_ID:
+    process.env.GOOGLE_CLIENT_ID ?? FAKE_VALUE_ONLY_FOR_DEVELOPMENT,
+  GOOGLE_CLIENT_SECRET:
+    process.env.GOOGLE_CLIENT_SECRET ?? FAKE_VALUE_ONLY_FOR_DEVELOPMENT,
+  FACEBOOK_CLIENT_ID:
+    process.env.FACEBOOK_CLIENT_ID ?? FAKE_VALUE_ONLY_FOR_DEVELOPMENT,
+  FACEBOOK_CLIENT_SECRET:
+    process.env.FACEBOOK_CLIENT_SECRET ?? FAKE_VALUE_ONLY_FOR_DEVELOPMENT,
 
   BASE_URL: process.env.BASE_URL ?? VERCEL_URL_WITH_PROTOCOL,
   VERCEL_URL: process.env.VERCEL_URL,

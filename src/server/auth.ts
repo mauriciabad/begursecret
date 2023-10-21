@@ -1,8 +1,8 @@
 import { DrizzleAdapter } from '@auth/drizzle-adapter'
 import type { AuthOptions } from 'next-auth'
-import GitHubProvider from 'next-auth/providers/github'
+import GoogleProvider from 'next-auth/providers/google'
+import FacebookProvider from 'next-auth/providers/facebook'
 import 'server-only'
-
 import { signInPagePath } from '~/auth'
 import { env } from '~/env.mjs'
 import { defaultLocale } from '~/i18n'
@@ -12,9 +12,13 @@ export const authOptions: AuthOptions = {
   // Note: Cast required to workaround issue https://github.com/nextauthjs/next-auth/issues/8283
   adapter: DrizzleAdapter(db) as AuthOptions['adapter'],
   providers: [
-    GitHubProvider({
-      clientId: env.GITHUB_CLIENT_ID,
-      clientSecret: env.GITHUB_CLIENT_SECRET,
+    GoogleProvider({
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+    }),
+    FacebookProvider({
+      clientId: env.FACEBOOK_CLIENT_ID,
+      clientSecret: env.FACEBOOK_CLIENT_SECRET,
     }),
   ],
   pages: {
