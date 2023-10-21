@@ -3,7 +3,6 @@ import { FC } from 'react'
 import { LinkButton } from '~/components/link-button'
 import { ContinueWithProvider } from './continue-with-provider'
 import { ContinueWithEmail } from './continue-with-email'
-import { env } from 'process'
 import { RegisterBanner } from './register-banner'
 
 export const ProfileLogin: FC = () => {
@@ -26,7 +25,7 @@ export const ProfileLogin: FC = () => {
           </h3>
           <div className="flex-1 border-t border-stone-300" aria-hidden />
         </div>
-        <ContinueWithProvider isProduction={env.NODE_ENV === 'production'} />
+        <ContinueWithProvider />
 
         <h2 className="mb-2 mt-10 text-center font-title text-2xl font-semibold uppercase text-stone-800">
           {t('register')}

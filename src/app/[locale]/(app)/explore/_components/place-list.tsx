@@ -34,10 +34,7 @@ export const PlaceList: FC<Omit<HTMLAttributes<HTMLElement>, 'children'>> = ({
           key={place.id}
           className="flex items-center justify-between rounded border border-gray-500 px-4 py-2"
         >
-          <span className="text-lg">{place.title}</span>
-          <span className="text-sm text-gray-500">
-            {t('createdDate', { createdDate: place.createdAt })}
-          </span>
+          <span className="text-lg">{place.name}</span>
         </li>
       ))}
     </ul>

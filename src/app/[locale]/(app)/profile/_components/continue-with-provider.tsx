@@ -9,21 +9,13 @@ import { cn } from '~/helpers/cn'
 
 export const ContinueWithProvider: FC<{
   className?: string
-  isProduction?: boolean
-}> = ({ className, isProduction }) => {
+}> = ({ className }) => {
   const t = useTranslations('profile.login')
 
   return (
     <div
-      className={cn(
-        'flex flex-wrap items-center justify-center',
-        !isProduction &&
-          'relative cursor-not-allowed after:pointer-events-none after:absolute after:-inset-2 after:z-10 after:flex after:items-center after:justify-center after:rounded-xl after:bg-stone-200/70 after:px-4 after:text-center after:font-bold after:leading-3 after:opacity-0 after:transition-opacity after:duration-300 after:ease-in-out after:content-[attr(data-after)] hover:after:opacity-100',
-        className
-      )}
+      className={cn('flex flex-wrap items-center justify-center', className)}
       data-after={t('not-supported')}
-      tabIndex={isProduction ? undefined : -1}
-      aria-hidden={!isProduction}
     >
       <Button
         onClick={() => signIn('google')}
