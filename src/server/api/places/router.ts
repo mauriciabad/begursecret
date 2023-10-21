@@ -8,7 +8,7 @@ import { procedure, router } from '~/server/trpc'
 export const placesRouter = router({
   list: procedure.query(async () => {
     return await db.query.places.findMany({
-      orderBy: [desc(places.createdAt)],
+      orderBy: [desc(places.name)],
     })
   }),
 })

@@ -60,7 +60,8 @@
     },
     "login": {
       "register": "Register",
-      "login-with": "Login with",
+      "login": "Login",
+      "continue-with": "Continue with",
       "not-supported": "Not supported in development mode",
       "providers": {
         "google": "Google",
@@ -75,12 +76,13 @@
         "password-placeholder": "Enter your password",
         "password-invalid": "Password is invalid",
         "send": "Send"
-      },
-      "banner": {
-        "subtitle": "Sign up in",
-        "title": "Descobreix Begur App",
-        "text": "Win prices, save places, and complete missions"
       }
+    },
+    "register-banner": {
+      "register": "Register",
+      "subtitle": "Sign up in",
+      "title": "Descobreix Begur App",
+      "text": "Win prices, save places, and complete missions"
     },
     "more-options": {
       "title": "More options",
@@ -122,5 +124,14 @@
       "title": "Terms of Service",
       "description": "Terms of service"
     }
+  },
+  "register": {
+    "meta": {
+      "title": "Register",
+      "description": "Register for a personalized experience"
+    },
+    "heading": "Register",
+    "content": "Page under construction...",
+    "go-to-app": "Go to app"
   }
 }

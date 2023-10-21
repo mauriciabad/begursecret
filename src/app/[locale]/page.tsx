@@ -4,7 +4,7 @@ import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
 import { LanguageSwitcher } from '~/components/language-switcher'
 import { LinkButton } from '~/components/link-button'
-import { Logo } from '~/components/logo'
+import { Logo } from '~/components/icons/logo'
 import type { LocaleRouteParams } from '~/i18n'
 
 export async function generateMetadata({
@@ -28,9 +28,10 @@ const HomePage: FC<LocaleRouteParams> = () => {
       <main className="mx-auto flex min-h-screen max-w-2xl flex-col items-center justify-center p-4 text-center text-stone-800">
         <div className="origin-bottom animate-wiggle">
           <Logo
-            className="anima mb-4 h-24 animate-hover text-brand-600"
+            className="anima mb-4 animate-hover text-brand-600"
             outline
             stroke={1.25}
+            size={96}
           />
         </div>
 

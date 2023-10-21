@@ -1,7 +1,6 @@
 CREATE TABLE `place` (
 	`id` serial AUTO_INCREMENT NOT NULL,
-	`title` text NOT NULL,
-	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`name` text NOT NULL,
 	CONSTRAINT `place_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
@@ -15,7 +14,7 @@ CREATE TABLE `account` (
 	`expires_at` int,
 	`token_type` varchar(255),
 	`scope` varchar(255),
-	`id_token` varchar(255),
+	`id_token` text,
 	`session_state` varchar(255),
 	CONSTRAINT `account_provider_providerAccountId` PRIMARY KEY(`provider`,`providerAccountId`)
 );
