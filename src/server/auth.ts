@@ -1,8 +1,8 @@
 import { DrizzleAdapter } from '@auth/drizzle-adapter'
 import type { AuthOptions } from 'next-auth'
 import GitHubProvider from 'next-auth/providers/github'
+import GoogleProvider from 'next-auth/providers/google'
 import 'server-only'
-
 import { signInPagePath } from '~/auth'
 import { env } from '~/env.mjs'
 import { defaultLocale } from '~/i18n'
@@ -15,6 +15,10 @@ export const authOptions: AuthOptions = {
     GitHubProvider({
       clientId: env.GITHUB_CLIENT_ID,
       clientSecret: env.GITHUB_CLIENT_SECRET,
+    }),
+    GoogleProvider({
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
   ],
   pages: {
