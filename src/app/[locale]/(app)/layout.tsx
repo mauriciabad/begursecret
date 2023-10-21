@@ -6,11 +6,10 @@ type ProfileLayoutProps = PropsWithChildren<LocaleRouteParams>
 
 const ProfileLayout: FC<ProfileLayoutProps> = ({ children }) => {
   return (
-    <>
+    <div className="pb-14">
       {children}
-
-      <BottomNavbar />
-    </>
+      <BottomNavbar className="h-14" />
+    </div>
   )
 }
 

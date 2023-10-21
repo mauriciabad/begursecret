@@ -12,13 +12,22 @@ import { DbEnvironmentTag } from '../db-environment-tag'
 import { BottomNavbarItem } from './bottom-navbar-item'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '~/server/auth'
+import { cn } from '~/helpers/cn'
+import { FC } from 'react'
 
-export const BottomNavbar = async () => {
+export const BottomNavbar: FC<{
+  className?: string
+}> = async ({ className }) => {
   const session = await getServerSession(authOptions)
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 border-t border-stone-200 bg-white shadow-xl">
-      <ul className="mx-auto grid h-12 max-w-2xl grid-cols-4">
+    <nav
+      className={cn(
+        'fixed inset-x-0 bottom-0 h-12 border-t border-stone-200 bg-white shadow-xl',
+        className
+      )}
+    >
+      <ul className="mx-auto grid h-full max-w-2xl grid-cols-4">
         <BottomNavbarItem
           url="/explore"
           icon={<IconCompass />}
