@@ -23,7 +23,7 @@ export const BottomNavbar: FC<{
   return (
     <nav
       className={cn(
-        'fixed inset-x-0 bottom-0 h-12 border-t border-stone-200 bg-white shadow-xl',
+        'fixed inset-x-0 bottom-0 h-14 border-t border-stone-200 bg-white shadow-xl',
         className
       )}
     >
