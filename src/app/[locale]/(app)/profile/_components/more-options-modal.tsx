@@ -57,7 +57,7 @@ export const MoreOptionsModal: FC = () => {
 
               <ModalBody>
                 <MoreOptionsButton
-                  url="/profile/edit"
+                  url="/complete-profile"
                   text={t('edit')}
                   icon={<IconEdit />}
                 />

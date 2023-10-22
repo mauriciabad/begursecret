@@ -73,6 +73,22 @@
       "login": "Login",
       "support": "Support",
       "feedback": "Feedback and errors"
+    },
+    "completeProfile": {
+      "meta": {
+        "title": "Complete profile",
+        "description": "Complete your profile"
+      },
+      "heading": "Complete profile",
+      "go-to-profile": "Go to profile",
+      "inputs": {
+        "name": "Name",
+        "name-placeholder": "Enter your name"
+      },
+      "save": "Save",
+      "cancel": "Cancel",
+      "welcome": "Welcome",
+      "description": "Complete your profile"
     }
   },
   "auth": {

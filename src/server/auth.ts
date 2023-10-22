@@ -53,6 +53,7 @@ export const authOptions: AuthOptions = {
   ],
   pages: {
     signIn: '/profile',
+    newUser: '/complete-profile',
   },
   callbacks: {
     session({ session, user }) {

@@ -83,9 +83,7 @@ export const RegisterForm: FC<{
       />
 
       {register.error && (
-        <p className="mt-8 text-danger-700">
-          Something went wrong! {register.error.message}
-        </p>
+        <p className="mt-8 text-danger-700">{register.error.message}</p>
       )}
 
       <Button

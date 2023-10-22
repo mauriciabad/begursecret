@@ -72,6 +72,22 @@
       "login": "Iniciar sessió",
       "support": "Suport",
       "feedback": "Suggerencies i errors"
+    },
+    "completeProfile": {
+      "meta": {
+        "title": "Completar perfil",
+        "description": "Completa el teu perfil"
+      },
+      "heading": "Completar perfil",
+      "go-to-profile": "Tornar al perfil",
+      "inputs": {
+        "name": "Nom",
+        "name-placeholder": "Introdueix el teu nom"
+      },
+      "save": "Guardar",
+      "cancel": "Cancel·lar",
+      "welcome": "Benvingut/da",
+      "description": "Completa el teu perfil"
     }
   },
   "auth": {
