@@ -2,10 +2,6 @@ name: CI
 
 on: push
 
-concurrency:
-  group: 'ci'
-  cancel-in-progress: true
-
 jobs:
   lintfix:
     name: Lint and fix
