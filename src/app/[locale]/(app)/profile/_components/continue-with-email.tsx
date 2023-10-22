@@ -15,10 +15,17 @@ export const ContinueWithEmail: FC<{
   const toggleVisibility = () => setIsVisible(!isVisible)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [hasError, setHasError] = useState<boolean>(false)
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    await signIn('credentials', { email, password })
+
+    const signInResponse = await signIn('credentials', {
+      email,
+      password,
+      redirect: false,
+    })
+    setHasError(!signInResponse?.ok)
   }
 
   return (
@@ -32,6 +39,7 @@ export const ContinueWithEmail: FC<{
         type="email"
         value={email}
         onValueChange={setEmail}
+        isInvalid={hasError}
       />
       <div className="flex items-end gap-4">
         <Input
@@ -57,6 +65,7 @@ export const ContinueWithEmail: FC<{
           }
           isRequired
           type={isVisible ? 'text' : 'password'}
+          isInvalid={hasError}
         />
         <Button variant="solid" color="primary" type="submit">
           {t('send')}
