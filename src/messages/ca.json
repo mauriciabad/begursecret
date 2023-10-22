@@ -110,6 +110,13 @@
       "name": "Nom",
       "name-placeholder": "Introdueix el teu nom",
       "terms-of-service": "Accepto els <link>termes del servei</link>."
+    },
+    "errors": {
+      "invalidInput": "Entrada invàlida",
+      "userDoesNotExist": "L'usuari no existeix",
+      "userDoesNotHavePassword": "L'usuari no té contrasenya",
+      "incorrectPassword": "Contrasenya incorrecta",
+      "otherError": "Error desconegut"
     }
   },
   "language-switcher": {

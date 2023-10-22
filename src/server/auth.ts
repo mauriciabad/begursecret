@@ -26,20 +26,20 @@ export const authOptions: AuthOptions = {
       },
       async authorize(credentials) {
         const parsedCredentials = loginSchema.safeParse(credentials)
-        if (!parsedCredentials.success) return null // Invalid input
+        if (!parsedCredentials.success) throw new Error('invalidInput')
         const input = parsedCredentials.data
 
         const user = await db.query.users.findFirst({
           where: eq(users.email, input.email),
         })
-        if (!user) return null // User not found
-        if (!user.hashedPassword) return null // User has no password
+        if (!user) throw new Error('userDoesNotExist')
+        if (!user.hashedPassword) throw new Error('userDoesNotHavePassword')
 
         const isCorrectPassword = await bcrypt.compare(
           input.password,
           user.hashedPassword
         )
-        if (!isCorrectPassword) return null // Incorrect password
+        if (!isCorrectPassword) throw new Error('incorrectPassword')
 
         return {
           id: user.id,

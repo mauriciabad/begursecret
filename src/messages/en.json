@@ -112,6 +112,13 @@
       "name": "Name",
       "name-placeholder": "Enter your name",
       "terms-of-service": "I accept the <link>terms of service</link>."
+    },
+    "errors": {
+      "invalidInput": "Invalid input",
+      "userDoesNotExist": "User does not exist",
+      "userDoesNotHavePassword": "User does not have password",
+      "incorrectPassword": "Incorrect password",
+      "otherError": "Other error"
     }
   },
   "language-switcher": {
