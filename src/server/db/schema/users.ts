@@ -11,7 +11,7 @@ import {
 
 export const users = mysqlTable('user', {
   id: varchar('id', { length: 255 }).notNull().primaryKey(),
-  name: varchar('name', { length: 255 }).notNull(),
+  name: varchar('name', { length: 255 }),
   hashedPassword: varchar('hashedPassword', { length: 255 }),
   email: varchar('email', { length: 255 }).unique().notNull(),
   emailVerified: timestamp('emailVerified', {
