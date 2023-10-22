@@ -21,8 +21,8 @@ export const authOptions: AuthOptions = {
     }),
     CredentialsProvider({
       credentials: {
-        email: { label: 'Email', type: 'email' },
-        password: { label: 'Password', type: 'password' },
+        email: {},
+        password: {},
       },
       async authorize(credentials) {
         const parsedCredentials = loginSchema.safeParse(credentials)

@@ -26,7 +26,8 @@ export const CompleteProfileForm: FC<{
     try {
       await completeProfile.mutateAsync({ name, userId })
 
-      router.push(`/profile?revalidate=${Date.now()}`)
+      router.push('/profile')
+      router.refresh()
     } catch (error) {
       console.error(error)
     }
