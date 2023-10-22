@@ -58,26 +58,6 @@
     "preview": {
       "anonymous": "Anonymous"
     },
-    "login": {
-      "register": "Register",
-      "login": "Login",
-      "continue-with": "Continue with",
-      "not-supported": "Not supported in development mode",
-      "providers": {
-        "google": "Google",
-        "facebook": "Facebook",
-        "apple": "Apple",
-        "github": "GitHub"
-      },
-      "credentials": {
-        "email-or-username": "Email or username",
-        "email-or-username-placeholder": "Enter your email or username",
-        "password": "Password",
-        "password-placeholder": "Enter your password",
-        "password-invalid": "Password is invalid",
-        "send": "Send"
-      }
-    },
     "register-banner": {
       "register": "Register",
       "subtitle": "Sign up in",
@@ -93,6 +73,28 @@
       "login": "Login",
       "support": "Support",
       "feedback": "Feedback and errors"
+    }
+  },
+  "auth": {
+    "register": "Register",
+    "login": "Login",
+    "continue-with": "Continue with",
+    "not-supported": "Not supported in development mode",
+    "providers": {
+      "google": "Google",
+      "facebook": "Facebook",
+      "apple": "Apple",
+      "github": "GitHub"
+    },
+    "send": "Send",
+    "inputs": {
+      "email": "Email",
+      "email-placeholder": "Enter your email",
+      "password": "Password",
+      "password-placeholder": "Enter your password",
+      "password-invalid": "Password is invalid",
+      "name": "Name",
+      "name-placeholder": "Enter your name"
     }
   },
   "language-switcher": {

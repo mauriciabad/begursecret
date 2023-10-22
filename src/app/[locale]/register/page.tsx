@@ -1,9 +1,8 @@
 import type { Metadata } from 'next'
-import { useTranslations } from 'next-intl'
 import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
-import { UnderConstruction } from '~/components/under-construction'
 import type { LocaleRouteParams } from '~/i18n'
+import { RegisterForm } from './_components/register-form'
 
 export async function generateMetadata({
   params,
@@ -16,11 +15,9 @@ export async function generateMetadata({
 }
 
 const RegisterPage: FC<LocaleRouteParams> = () => {
-  const t = useTranslations('register')
   return (
     <>
-      <UnderConstruction />
-      <p className="text-center">{t('content')}</p>
+      <RegisterForm />
     </>
   )
 }

@@ -9,14 +9,11 @@ import {
   varchar,
 } from 'drizzle-orm/mysql-core'
 
-/*
- * NextAuth tables, see https://authjs.dev/reference/adapter/drizzle
- */
-
 export const users = mysqlTable('user', {
   id: varchar('id', { length: 255 }).notNull().primaryKey(),
-  name: varchar('name', { length: 255 }),
-  email: varchar('email', { length: 255 }).notNull(),
+  name: varchar('name', { length: 255 }).notNull(),
+  hashedPassword: varchar('hashedPassword', { length: 255 }),
+  email: varchar('email', { length: 255 }).unique().notNull(),
   emailVerified: timestamp('emailVerified', {
     mode: 'date',
     fsp: 3,

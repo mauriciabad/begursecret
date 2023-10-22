@@ -1,9 +1,8 @@
 import { NextResponse, type NextRequest } from 'next/server'
 
-import { signInPagePath } from '~/auth'
 import { defaultLocale, getLocale } from '~/i18n'
 
-const signInPagePathPattern = /^\/[^/\s]+\/auth\/signin/
+const signInPagePathPattern = /^\/[^/\s]+\/profile/
 
 export const authI18nMiddleware = (request: NextRequest) => {
   if (!signInPagePathPattern.test(request.nextUrl.pathname)) return
@@ -15,7 +14,7 @@ export const authI18nMiddleware = (request: NextRequest) => {
   const callbackLocale = getLocale(new URL(callbackUrl).pathname)
   if (callbackLocale && callbackLocale !== currentLocale) {
     const redirectUrl = new URL(request.nextUrl)
-    redirectUrl.pathname = signInPagePath(callbackLocale)
+    redirectUrl.pathname = `${callbackLocale}/profile`
     return NextResponse.redirect(redirectUrl)
   }
 }

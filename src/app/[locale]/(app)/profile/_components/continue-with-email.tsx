@@ -10,36 +10,34 @@ import { FC, useState } from 'react'
 export const ContinueWithEmail: FC<{
   className?: string
 }> = ({ className }) => {
-  const t = useTranslations('profile.login.credentials')
+  const t = useTranslations('auth')
   const [isVisible, setIsVisible] = useState(false)
   const toggleVisibility = () => setIsVisible(!isVisible)
-  const [emailOrUsername, setEmailOrUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
   return (
     <form
-      onSubmit={() =>
-        signIn('credentials', { username: emailOrUsername, password })
-      }
+      onSubmit={() => signIn('credentials', { email, password })}
       className={className}
     >
       <Input
-        label={t('email-or-username')}
+        label={t('inputs.email')}
         variant="bordered"
         labelPlacement="outside"
-        placeholder={t('email-or-username-placeholder')}
+        placeholder={t('inputs.email-placeholder')}
         isRequired
         type="email"
-        value={emailOrUsername}
-        onValueChange={setEmailOrUsername}
+        value={email}
+        onValueChange={setEmail}
       />
       <div className="flex items-end gap-4">
         <Input
           className="mt-2 flex-grow"
-          label={t('password')}
+          label={t('inputs.password')}
           variant="bordered"
           labelPlacement="outside"
-          placeholder={t('password-placeholder')}
+          placeholder={t('inputs.password-placeholder')}
           value={password}
           onValueChange={setPassword}
           endContent={

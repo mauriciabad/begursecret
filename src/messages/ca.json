@@ -57,25 +57,6 @@
     "preview": {
       "anonymous": "Anònim"
     },
-    "login": {
-      "register": "Registrar-se",
-      "login": "Iniciar sessió",
-      "continue-with": "Continuar amb",
-      "not-supported": "No suportat en mode de desenvolupament",
-      "providers": {
-        "google": "Google",
-        "facebook": "Facebook",
-        "apple": "Apple",
-        "github": "GitHub"
-      },
-      "credentials": {
-        "email-or-username": "Email",
-        "email-or-username-placeholder": "Introdueix el teu email",
-        "password": "Contrasenya",
-        "password-placeholder": "Introdueix la teva contrasenya",
-        "send": "Enviar"
-      }
-    },
     "register-banner": {
       "register": "Registrar-se",
       "subtitle": "Registra't a",
@@ -91,6 +72,27 @@
       "login": "Iniciar sessió",
       "support": "Suport",
       "feedback": "Suggerencies i errors"
+    }
+  },
+  "auth": {
+    "register": "Registrar-se",
+    "login": "Iniciar sessió",
+    "continue-with": "Continuar amb",
+    "not-supported": "No suportat en mode de desenvolupament",
+    "providers": {
+      "google": "Google",
+      "facebook": "Facebook",
+      "apple": "Apple",
+      "github": "GitHub"
+    },
+    "send": "Enviar",
+    "inputs": {
+      "email": "Email",
+      "email-placeholder": "Introdueix el teu email",
+      "password": "Contrasenya",
+      "password-placeholder": "Introdueix la teva contrasenya",
+      "name": "Nom",
+      "name-placeholder": "Introdueix el teu nom"
     }
   },
   "language-switcher": {
