@@ -12,15 +12,8 @@
     {
       "idx": 1,
       "version": "5",
-      "when": 1697978132766,
-      "tag": "0001_slow_stark_industries",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1697993394104,
-      "tag": "0002_massive_scream",
+      "when": 1697998014565,
+      "tag": "0001_friendly_yellowjacket",
       "breakpoints": true
     }
   ]

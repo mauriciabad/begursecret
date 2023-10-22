@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "c826c31f-62dc-4a9f-9437-d98d4989eee8",
+  "id": "60e6bc97-3429-4396-b81c-d597457d90a7",
   "prevId": "7ed78391-6147-422a-aabe-4142c0e039c0",
   "tables": {
     "place": {
@@ -182,6 +182,13 @@
           "notNull": false,
           "autoincrement": false
         },
+        "hashedPassword": {
+          "name": "hashedPassword",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "email": {
           "name": "email",
           "type": "varchar(255)",
@@ -215,7 +222,14 @@
           ]
         }
       },
-      "uniqueConstraints": {}
+      "uniqueConstraints": {
+        "user_email_unique": {
+          "name": "user_email_unique",
+          "columns": [
+            "email"
+          ]
+        }
+      }
     },
     "verificationToken": {
       "name": "verificationToken",
