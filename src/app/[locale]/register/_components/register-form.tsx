@@ -5,7 +5,7 @@ import { Input } from '@nextui-org/input'
 import { IconEye, IconEyeOff } from '@tabler/icons-react'
 import { signIn } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
-import { FC, useState } from 'react'
+import { FC, FormEvent, useState } from 'react'
 import { trpc } from '~/trpc'
 
 export const RegisterForm: FC<{
@@ -20,12 +20,12 @@ export const RegisterForm: FC<{
 
   const register = trpc.auth.register.useMutation()
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
 
-    register.mutate({ email, password, name })
+    await register.mutateAsync({ email, password, name })
 
-    signIn('credentials', {
+    await signIn('credentials', {
       email,
       password,
       name,

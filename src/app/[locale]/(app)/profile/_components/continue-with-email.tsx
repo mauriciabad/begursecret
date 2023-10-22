@@ -5,7 +5,7 @@ import { Input } from '@nextui-org/input'
 import { IconEye, IconEyeOff } from '@tabler/icons-react'
 import { signIn } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
-import { FC, useState } from 'react'
+import { FC, FormEvent, useState } from 'react'
 
 export const ContinueWithEmail: FC<{
   className?: string
@@ -16,11 +16,13 @@ export const ContinueWithEmail: FC<{
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault()
+    await signIn('credentials', { email, password })
+  }
+
   return (
-    <form
-      onSubmit={() => signIn('credentials', { email, password })}
-      className={className}
-    >
+    <form onSubmit={handleSubmit} className={className}>
       <Input
         label={t('inputs.email')}
         variant="bordered"
