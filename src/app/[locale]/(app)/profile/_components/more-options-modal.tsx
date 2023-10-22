@@ -33,7 +33,8 @@ export const MoreOptionsModal: FC = () => {
   return (
     <>
       <Button
-        onPress={onOpen}
+        // Should use onPress but there's a bug https://github.com/nextui-org/nextui/issues/1796
+        onClick={onOpen}
         isIconOnly
         aria-label={t('title')}
         variant="light"
