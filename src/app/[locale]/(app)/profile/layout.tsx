@@ -1,10 +1,8 @@
 import { Navbar, NavbarContent, NavbarItem } from '@nextui-org/navbar'
-import { IconBell } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import type { FC, PropsWithChildren } from 'react'
 import type { LocaleRouteParams } from '~/i18n'
 import { MoreOptionsModal } from './_components/more-options-modal'
-import { LinkIconButton } from '~/components/link-icon-button'
 
 type ProfileLayoutProps = PropsWithChildren<LocaleRouteParams>
 
@@ -25,14 +23,6 @@ const ProfileLayout: FC<ProfileLayoutProps> = ({ children }) => {
           </NavbarItem>
         </NavbarContent>
         <NavbarContent justify="end">
-          <NavbarItem>
-            <LinkIconButton
-              label={t('notifications')}
-              href="/profile/notifications"
-            >
-              <IconBell />
-            </LinkIconButton>
-          </NavbarItem>
           <NavbarItem>
             <MoreOptionsModal />
           </NavbarItem>
