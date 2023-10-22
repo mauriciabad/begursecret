@@ -108,7 +108,8 @@
       "password": "Contrasenya",
       "password-placeholder": "Introdueix la teva contrasenya",
       "name": "Nom",
-      "name-placeholder": "Introdueix el teu nom"
+      "name-placeholder": "Introdueix el teu nom",
+      "terms-of-service": "Accepto els <link>termes del servei</link>."
     }
   },
   "language-switcher": {

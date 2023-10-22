@@ -110,7 +110,8 @@
       "password-placeholder": "Enter your password",
       "password-invalid": "Password is invalid",
       "name": "Name",
-      "name-placeholder": "Enter your name"
+      "name-placeholder": "Enter your name",
+      "terms-of-service": "I accept the <link>terms of service</link>."
     }
   },
   "language-switcher": {

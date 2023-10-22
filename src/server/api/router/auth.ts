@@ -22,7 +22,6 @@ export const authRouter = router({
       id: uuidv4(),
       email: input.email,
       hashedPassword: bcrypt.hashSync(input.password, 10),
-      name: input.name,
     })
   }),
 })
