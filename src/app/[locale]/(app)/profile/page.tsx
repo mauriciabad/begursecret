@@ -20,19 +20,7 @@ export async function generateMetadata({
 const ProfilePage: FC<LocaleRouteParams> = async () => {
   const session = await getServerSession(authOptions)
 
-  return (
-    <>
-      {session ? (
-        <>
-          <UserPreview user={session.user} />
-        </>
-      ) : (
-        <>
-          <ProfileLogin />
-        </>
-      )}
-    </>
-  )
+  return <>{session ? <UserPreview user={session.user} /> : <ProfileLogin />}</>
 }
 
 export default ProfilePage
