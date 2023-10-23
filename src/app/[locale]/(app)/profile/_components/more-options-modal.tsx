@@ -33,7 +33,8 @@ export const MoreOptionsModal: FC = () => {
   return (
     <>
       <Button
-        onPress={onOpen}
+        // Should use onPress but there's a bug https://github.com/nextui-org/nextui/issues/1796
+        onClick={onOpen}
         isIconOnly
         aria-label={t('title')}
         variant="light"
@@ -55,21 +56,24 @@ export const MoreOptionsModal: FC = () => {
               </ModalHeader>
 
               <ModalBody>
-                <MoreOptionsButton
-                  url="/profile/edit"
-                  text={t('edit')}
-                  icon={<IconEdit />}
-                />
-                <MoreOptionsButton
-                  url="/profile/preferences"
-                  text={t('preferences')}
-                  icon={<IconAdjustmentsHorizontal />}
-                />
+                {session && (
+                  <>
+                    <MoreOptionsButton
+                      url="/complete-profile"
+                      text={t('edit')}
+                      icon={<IconEdit />}
+                    />
+                    <MoreOptionsButton
+                      url="/profile/preferences"
+                      text={t('preferences')}
+                      icon={<IconAdjustmentsHorizontal />}
+                    />
 
-                <div className="px-4 py-2">
-                  <Divider />
-                </div>
-
+                    <div className="px-4 py-2">
+                      <Divider />
+                    </div>
+                  </>
+                )}
                 <MoreOptionsButton
                   url="/profile/app-settings"
                   text={t('app-settings')}

@@ -1,13 +1,13 @@
 import { Navbar, NavbarContent, NavbarItem } from '@nextui-org/navbar'
 import { useTranslations } from 'next-intl'
 import type { FC, PropsWithChildren } from 'react'
+import { LinkButton } from '~/components/link-button'
 import type { LocaleRouteParams } from '~/i18n'
-import { MoreOptionsModal } from './_components/more-options-modal'
 
-type ProfileLayoutProps = PropsWithChildren<LocaleRouteParams>
+type EditLayoutProps = PropsWithChildren<LocaleRouteParams>
 
-const ProfileLayout: FC<ProfileLayoutProps> = ({ children }) => {
-  const t = useTranslations('profile')
+const EditLayout: FC<EditLayoutProps> = ({ children }) => {
+  const t = useTranslations('profile.completeProfile')
 
   return (
     <>
@@ -24,7 +24,9 @@ const ProfileLayout: FC<ProfileLayoutProps> = ({ children }) => {
         </NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem>
-            <MoreOptionsModal />
+            <LinkButton href="/profile" variant="solid" color="primary">
+              {t('go-to-profile')}
+            </LinkButton>
           </NavbarItem>
         </NavbarContent>
       </Navbar>
@@ -34,4 +36,4 @@ const ProfileLayout: FC<ProfileLayoutProps> = ({ children }) => {
   )
 }
 
-export default ProfileLayout
+export default EditLayout

@@ -57,25 +57,6 @@
     "preview": {
       "anonymous": "Anònim"
     },
-    "login": {
-      "register": "Registrar-se",
-      "login": "Iniciar sessió",
-      "continue-with": "Continuar amb",
-      "not-supported": "No suportat en mode de desenvolupament",
-      "providers": {
-        "google": "Google",
-        "facebook": "Facebook",
-        "apple": "Apple",
-        "github": "GitHub"
-      },
-      "credentials": {
-        "email-or-username": "Email",
-        "email-or-username-placeholder": "Introdueix el teu email",
-        "password": "Contrasenya",
-        "password-placeholder": "Introdueix la teva contrasenya",
-        "send": "Enviar"
-      }
-    },
     "register-banner": {
       "register": "Registrar-se",
       "subtitle": "Registra't a",
@@ -91,6 +72,51 @@
       "login": "Iniciar sessió",
       "support": "Suport",
       "feedback": "Suggerencies i errors"
+    },
+    "completeProfile": {
+      "meta": {
+        "title": "Completar perfil",
+        "description": "Completa el teu perfil"
+      },
+      "heading": "Completar perfil",
+      "go-to-profile": "Tornar al perfil",
+      "inputs": {
+        "name": "Nom",
+        "name-placeholder": "Introdueix el teu nom"
+      },
+      "save": "Guardar",
+      "cancel": "Cancel·lar",
+      "welcome": "Benvingut/da",
+      "description": "Completa el teu perfil"
+    }
+  },
+  "auth": {
+    "register": "Registrar-se",
+    "login": "Iniciar sessió",
+    "continue-with": "Continuar amb",
+    "not-supported": "No suportat en mode de desenvolupament",
+    "providers": {
+      "google": "Google",
+      "facebook": "Facebook",
+      "apple": "Apple",
+      "github": "GitHub"
+    },
+    "send": "Enviar",
+    "inputs": {
+      "email": "Email",
+      "email-placeholder": "Introdueix el teu email",
+      "password": "Contrasenya",
+      "password-placeholder": "Introdueix la teva contrasenya",
+      "name": "Nom",
+      "name-placeholder": "Introdueix el teu nom",
+      "terms-of-service": "Accepto els <link>termes del servei</link>."
+    },
+    "errors": {
+      "invalidInput": "Entrada invàlida",
+      "userDoesNotExist": "L'usuari no existeix",
+      "userDoesNotHavePassword": "L'usuari no té contrasenya",
+      "incorrectPassword": "Contrasenya incorrecta",
+      "otherError": "Error desconegut"
     }
   },
   "language-switcher": {

@@ -47,6 +47,9 @@ dependencies:
   autoprefixer:
     specifier: 10.4.14
     version: 10.4.14(postcss@8.4.27)
+  bcryptjs:
+    specifier: 2.4.3
+    version: 2.4.3
   clsx:
     specifier: 2.0.0
     version: 2.0.0
@@ -95,6 +98,9 @@ dependencies:
   typescript:
     specifier: 5.1.6
     version: 5.1.6
+  uuid:
+    specifier: 9.0.1
+    version: 9.0.1
   zod:
     specifier: 3.21.4
     version: 3.21.4
@@ -115,9 +121,15 @@ devDependencies:
   '@testing-library/user-event':
     specifier: 14.5.1
     version: 14.5.1(@testing-library/dom@9.3.3)
+  '@types/bcryptjs':
+    specifier: 2.4.5
+    version: 2.4.5
   '@types/jest':
     specifier: 29.5.6
     version: 29.5.6
+  '@types/uuid':
+    specifier: 9.0.6
+    version: 9.0.6
   '@typescript-eslint/eslint-plugin':
     specifier: 6.7.5
     version: 6.7.5(@typescript-eslint/parser@6.2.1)(eslint@8.46.0)(typescript@5.1.6)
@@ -3606,6 +3618,10 @@ packages:
       '@babel/types': 7.23.0
     dev: true
 
+  /@types/bcryptjs@2.4.5:
+    resolution: {integrity: sha512-tOF6TivOIvq+TWQm78335CMdyVJhpBG3NUdWQDAp95ax4E2rSKbws/ELHLk5EBoucwx/tHt3/hhLOHwWJgVrSw==}
+    dev: true
+
   /@types/color-convert@2.0.1:
     resolution: {integrity: sha512-GwXanrvq/tBHJtudbl1lSy9Ybt7KS9+rA+YY3bcuIIM+d6jSHUr+5yjO83gtiRpuaPiBccwFjSnAK2qSrIPA7w==}
     dependencies:
@@ -3736,6 +3752,10 @@ packages:
 
   /@types/tough-cookie@4.0.3:
     resolution: {integrity: sha512-THo502dA5PzG/sfQH+42Lw3fvmYkceefOspdCwpHRul8ik2Jv1K8I5OZz1AT3/rs46kwgMCe9bSBmDLYkkOMGg==}
+    dev: true
+
+  /@types/uuid@9.0.6:
+    resolution: {integrity: sha512-BT2Krtx4xaO6iwzwMFUYvWBWkV2pr37zD68Vmp1CDV196MzczBRxuEpD6Pr395HAgebC/co7hOphs53r8V7jew==}
     dev: true
 
   /@types/yargs-parser@21.0.1:
@@ -4271,6 +4291,10 @@ packages:
 
   /balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
+
+  /bcryptjs@2.4.3:
+    resolution: {integrity: sha512-V/Hy/X9Vt7f3BbPJEi8BdVFMByHi+jNXrYkW3huaybV/kQ0KJg0Y6PkEMbn+zeT+i+SiKZ/HMqJGIIt4LZDqNQ==}
+    dev: false
 
   /big-integer@1.6.51:
     resolution: {integrity: sha512-GPEid2Y9QU1Exl1rpO9B2IPJGHPSupF5GnVIP0blYvNOMer2bTvSWs1jGOUg04hTmu67nmLsQ9TBo1puaotBHg==}
@@ -8595,6 +8619,11 @@ packages:
 
   /uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    hasBin: true
+    dev: false
+
+  /uuid@9.0.1:
+    resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
     hasBin: true
     dev: false
 

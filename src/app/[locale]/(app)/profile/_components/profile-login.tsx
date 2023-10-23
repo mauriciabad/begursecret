@@ -6,7 +6,7 @@ import { ContinueWithEmail } from './continue-with-email'
 import { RegisterBanner } from './register-banner'
 
 export const ProfileLogin: FC = () => {
-  const t = useTranslations('profile.login')
+  const t = useTranslations('auth')
 
   return (
     <>

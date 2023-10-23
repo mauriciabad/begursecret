@@ -10,7 +10,7 @@ import { cn } from '~/helpers/cn'
 export const ContinueWithProvider: FC<{
   className?: string
 }> = ({ className }) => {
-  const t = useTranslations('profile.login')
+  const t = useTranslations('auth')
 
   return (
     <div
