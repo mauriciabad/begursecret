@@ -2,6 +2,7 @@
 
 import { Button } from '@nextui-org/button'
 import { Input } from '@nextui-org/input'
+import { useSession } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next-intl/client'
 import { FC, FormEvent, useState } from 'react'
@@ -17,6 +18,7 @@ export const CompleteProfileForm: FC<{
   const t = useTranslations('profile.completeProfile')
   const router = useRouter()
   const [name, setName] = useState(defaultValues.name ?? '')
+  const { update } = useSession()
 
   const completeProfile = trpc.profile.completeProfile.useMutation()
 
@@ -25,9 +27,9 @@ export const CompleteProfileForm: FC<{
 
     try {
       await completeProfile.mutateAsync({ name, userId })
+      await update({ name })
 
       router.push('/profile')
-      router.refresh()
     } catch (error) {
       console.error(error)
     }
@@ -59,7 +61,6 @@ export const CompleteProfileForm: FC<{
           className="mt-8"
           variant="solid"
           color="default"
-          type="submit"
           onPress={() => router.push('/profile')}
         >
           {t('cancel')}

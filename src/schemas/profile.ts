@@ -1,8 +1,9 @@
 import { z } from 'zod'
+import { userFieldsSchema } from './auth'
 
 export const completeProfileSchema = z.object({
-  userId: z.string().uuid(),
-  name: z.string().min(1),
+  userId: userFieldsSchema.id,
+  name: userFieldsSchema.name,
 })
 
 export type CompleteProfileSchemaType = z.infer<typeof completeProfileSchema>

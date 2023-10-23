@@ -55,11 +55,25 @@ export const authOptions: AuthOptions = {
     signIn: '/profile',
     newUser: '/complete-profile',
   },
+  session: {
+    strategy: 'jwt',
+  },
   callbacks: {
-    session({ session, user }) {
-      const sessionUser = session.user ?? {}
-      sessionUser.id = user.id
-      session.user = sessionUser
+    async jwt({ token, trigger, session, user }) {
+      if (trigger === 'update') {
+        if (session?.name && typeof session.name === 'string') {
+          token.name = session.name
+        }
+      } else if (trigger === 'signIn' || trigger === 'signUp') {
+        token.id = user.id
+      }
+      return token
+    },
+    async session({ session, token }) {
+      session.user = {
+        ...session.user,
+        id: token.id,
+      }
       return session
     },
   },

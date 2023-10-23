@@ -7,8 +7,9 @@ import {
   IconEye,
   IconEyeOff,
 } from '@tabler/icons-react'
-import { signIn } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
+import { useRouter } from 'next-intl/client'
 import { FC, FormEvent, useState } from 'react'
 
 type CredentialsLoginErrors =
@@ -21,6 +22,8 @@ export const ContinueWithEmail: FC<{
   className?: string
 }> = ({ className }) => {
   const t = useTranslations('auth')
+  const { update } = useSession()
+  const router = useRouter()
   const [isVisible, setIsVisible] = useState(false)
   const toggleVisibility = () => setIsVisible(!isVisible)
   const [email, setEmail] = useState('')
@@ -53,6 +56,9 @@ export const ContinueWithEmail: FC<{
     }
 
     setError(undefined)
+
+    await update()
+    router.replace('/profile')
   }
 
   return (
