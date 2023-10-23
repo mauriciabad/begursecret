@@ -17,7 +17,7 @@ export const users = mysqlTable('user', {
   emailVerified: timestamp('emailVerified', {
     mode: 'date',
     fsp: 3,
-  }).defaultNow(),
+  }),
   image: varchar('image', { length: 255 }),
 })
 
