@@ -58,7 +58,7 @@ export const ContinueWithEmail: FC<{
     setError(undefined)
 
     await update()
-    router.replace('/profile')
+    router.refresh()
   }
 
   return (
