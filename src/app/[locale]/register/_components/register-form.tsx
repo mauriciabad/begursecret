@@ -31,7 +31,7 @@ export const RegisterForm: FC<{
     await signIn('credentials', {
       email,
       password,
-      callbackUrl: '/profile',
+      callbackUrl: '/complete-profile',
     })
   }
 
