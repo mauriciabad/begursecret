@@ -5,7 +5,10 @@ import path from 'node:path'
 dotenv.config({ path: path.resolve(process.cwd(), '.env.local') })
 dotenv.config({ path: path.resolve(process.cwd(), '.env') })
 
-if (process.env.USE_LOCAL_DB !== 'true') {
+if (
+  process.env.USE_LOCAL_DB !== 'true' &&
+  process.env.SKIP_ENV_VALIDATION !== 'true'
+) {
   if (
     !process.env.DATABASE_HOST ||
     !process.env.DATABASE_USERNAME ||
@@ -15,6 +18,7 @@ if (process.env.USE_LOCAL_DB !== 'true') {
     throw new Error('Missing environment variables for database')
   }
 }
+
 export default {
   schema: './src/server/db/schema/*',
   out: './drizzle',
