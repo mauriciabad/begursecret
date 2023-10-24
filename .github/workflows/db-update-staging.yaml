@@ -1,0 +1,129 @@
+name: Run migrations in staging database
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'drizzle/**'
+
+jobs:
+  planetscale:
+    permissions:
+      pull-requests: write
+      contents: read
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚀 Checkout
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: 🎯 Read .nvmrc
+        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        id: nvm
+
+      - name: 🏗️ Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
+
+      - name: 📦 Setup pnpm - Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          run_install: false
+
+      - name: 📦 Setup pnpm -  Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: 📦 Setup pnpm - Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: 📦 Install dependencies
+        run: pnpm install
+
+      - name: Create a branch
+        uses: planetscale/create-branch-action@v4
+        id: create_branch
+        with:
+          org_name: descobreix-begur-app
+          database_name: descobreix-begur-app
+          branch_name: stage
+          from: main
+          check_exists: true
+          wait: true
+        env:
+          PLANETSCALE_SERVICE_TOKEN_ID: ${{ secrets.PLANETSCALE_SERVICE_TOKEN_ID }}
+          PLANETSCALE_SERVICE_TOKEN: ${{ secrets.PLANETSCALE_SERVICE_TOKEN }}
+
+      - name: Set migration config
+        run: |
+          echo "org: descobreix-begur-app" > .pscale.yml
+          echo "database: descobreix-begur-app" >> .pscale.yml
+          echo "branch: stage" >> .pscale.yml
+
+      - name: Setup pscale
+        uses: planetscale/setup-pscale-action
+
+      - name: Run migrations
+        run: |
+          db:push
+        env:
+          PSCALE_SERVICE_TOKEN_ID: ${{ secrets.PLANETSCALE_SERVICE_TOKEN_ID }}
+          PSCALE_SERVICE_TOKEN: ${{ secrets.PLANETSCALE_SERVICE_TOKEN }}
+
+      - name: Open DR (Deploy Request) if migrations
+        run: |
+          if grep -q "migrated" migration-output.txt; then
+            echo "DB_MIGRATED=true" >> $GITHUB_ENV
+            if pscale deploy-request create descobreix-begur-app stage; then
+              cat migration-output.txt
+              echo "DR_OPENED=true" >> $GITHUB_ENV
+              echo "Deploy request successfully opened"
+            else
+              echo "Error: Deployment request failed"
+              exit 0
+            fi
+          else
+            echo "Did not open a DR since nothing found in migration-output.txt"
+            cat migration-output.txt
+            exit 0
+          fi
+        env:
+          PLANETSCALE_SERVICE_TOKEN_ID: ${{ secrets.PLANETSCALE_SERVICE_TOKEN_ID }}
+          PLANETSCALE_SERVICE_TOKEN: ${{ secrets.PLANETSCALE_SERVICE_TOKEN }}
+
+      - name: Get Deploy Requests
+        if: ${{ env.DR_OPENED }}
+        env:
+          PLANETSCALE_SERVICE_TOKEN_ID: ${{ secrets.PLANETSCALE_SERVICE_TOKEN_ID }}
+          PLANETSCALE_SERVICE_TOKEN: ${{ secrets.PLANETSCALE_SERVICE_TOKEN }}
+        run: |
+          deploy_request_number=$(pscale deploy-request show descobreix-begur-app stage -f json | jq -r '.number')
+          echo "DEPLOY_REQUEST_NUMBER=$deploy_request_number" >> $GITHUB_ENV
+
+      - name: Comment PR - db migrated
+        if: ${{ env.DR_OPENED }}
+        env:
+          PLANETSCALE_SERVICE_TOKEN_ID: ${{ secrets.PLANETSCALE_SERVICE_TOKEN_ID }}
+          PLANETSCALE_SERVICE_TOKEN: ${{ secrets.PLANETSCALE_SERVICE_TOKEN }}
+        run: |
+          sleep 2
+          echo "Deploy request opened: https://app.planetscale.com/descobreix-begur-app/descobreix-begur-app/deploy-requests/${{ env.DEPLOY_REQUEST_NUMBER }}" >> migration-message.txt
+          echo "" >> migration-message.txt
+          echo "\`\`\`diff" >> migration-message.txt
+          pscale deploy-request diff descobreix-begur-app ${{ env.DEPLOY_REQUEST_NUMBER }}  -f json | jq -r '.[].raw' >> migration-message.txt
+          echo "\`\`\`" >> migration-message.txt
+
+      - name: Comment PR - db migrated
+        uses: thollander/actions-comment-pull-request@v2
+        if: ${{ env.DR_OPENED }}
+        with:
+          filePath: migration-message.txt
