@@ -1,4 +1,3 @@
-import { getServerSession } from 'next-auth'
 import { NextIntlClientProvider, useLocale } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { Inter, Poppins } from 'next/font/google'
@@ -7,7 +6,7 @@ import { AuthProvider } from '~/components/providers/auth-provider'
 import { NextuiProvider } from '~/components/providers/nextui-provider'
 import { TrpcProvider } from '~/components/providers/trpc-provider'
 import { cn } from '~/helpers/cn'
-import { authOptions } from '~/server/auth'
+import { auth } from '~/server/auth'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const poppins = Poppins({
@@ -19,7 +18,7 @@ const poppins = Poppins({
 export const PageLayout: FC<PropsWithChildren> = async ({ children }) => {
   const locale = useLocale()
   const messages = await getMessages(locale)
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   return (
     <html lang={locale}>
