@@ -1,9 +1,9 @@
 name: Run migrations in staging database
+
 on:
-  pull_request:
-    branches: [main]
-    paths:
-      - 'drizzle/**'
+  push:
+    paths: 'drizzle/**'
+    branches-ignore: 'main'
 
 jobs:
   planetscale:
