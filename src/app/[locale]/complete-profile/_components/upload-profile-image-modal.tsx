@@ -49,9 +49,7 @@ export const UploadProfileImageModal: FC<{
 
     const { imageUrl } = await uploadProfileImage({ file })
 
-    const updateData: UpdateSessionSchemaType = {
-      picture: imageUrl ?? undefined,
-    }
+    const updateData: UpdateSessionSchemaType = { picture: imageUrl }
     await update(updateData)
 
     onClose()

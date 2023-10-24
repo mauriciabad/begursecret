@@ -12,7 +12,7 @@ export const updateProfileImageSchema = z.object({
 export const updateSessionSchema = z
   .object({
     name: userFieldsSchema.name,
-    picture: userFieldsSchema.image,
+    picture: userFieldsSchema.image.or(z.null()),
   })
   .partial()
 
