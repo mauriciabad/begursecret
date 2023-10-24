@@ -61,7 +61,7 @@ jobs:
 
       - name: Run migrations
         run: |
-          db:push
+          pnpm db:push
         env:
           PSCALE_SERVICE_TOKEN_ID: ${{ secrets.PLANETSCALE_SERVICE_TOKEN_ID }}
           PSCALE_SERVICE_TOKEN: ${{ secrets.PLANETSCALE_SERVICE_TOKEN }}
