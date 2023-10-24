@@ -45,6 +45,12 @@ jobs:
       - name: 📦 Install dependencies
         run: pnpm install
 
+      - name: 🆕 Check if migrations are up to date
+        run: pnpm run db:generate
+
+      - name: 🚨 Fail if new migrations are generated
+        uses: NathanielHill/fail-if-changes@master
+
       - name: 🔦 Run lint
         run: pnpm lint --fix
 

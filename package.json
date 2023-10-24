@@ -11,7 +11,7 @@
     "test:integration:dev": "SKIP_ENV_VALIDATION=true jest --watch",
     "test:e2e": "playwright test",
     "test:e2e:dev": "playwright test --ui",
-    "db:generate": "drizzle-kit generate:mysql",
+    "db:generate": "SKIP_ENV_VALIDATION=true drizzle-kit generate:mysql",
     "db:push": "drizzle-kit push:mysql",
     "db-local:studio": "drizzle-kit studio",
     "db-local:migrate": "node ./src/server/db/migrate.mjs",

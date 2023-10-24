@@ -5,6 +5,15 @@ import { useTranslations } from 'next-intl'
 import type { FC, HTMLAttributes } from 'react'
 
 import { trpc } from '~/trpc'
+import { Card, CardBody, CardFooter } from '@nextui-org/card'
+import { Image } from '@nextui-org/image'
+
+function makeImageUrl<T extends string>(s3key: T | null) {
+  if (!s3key) {
+    return 'https://descobreix-begur-app-g3qf4o.s3.eu-west-1.amazonaws.com/static/app/content-placeholder.png'
+  }
+  return `https://descobreix-begur-app-g3qf4o.s3.eu-west-1.amazonaws.com/${s3key}` as const
+}
 
 export const PlaceList: FC<Omit<HTMLAttributes<HTMLElement>, 'children'>> = ({
   className,
@@ -28,14 +37,32 @@ export const PlaceList: FC<Omit<HTMLAttributes<HTMLElement>, 'children'>> = ({
   }
 
   return (
-    <ul className={cn('grid gap-4', className)} {...props}>
+    <ul
+      className={cn('grid grid-cols-2 gap-2 sm:grid-cols-4', className)}
+      {...props}
+    >
       {places?.map((place) => (
-        <li
+        <Card
+          as="li"
+          shadow="sm"
           key={place.id}
-          className="flex items-center justify-between rounded border border-gray-500 px-4 py-2"
+          isPressable
+          onPress={() => console.log('item pressed')}
         >
-          <span className="text-lg">{place.name}</span>
-        </li>
+          <CardBody className="overflow-visible p-0">
+            <Image
+              shadow="sm"
+              radius="lg"
+              width="100%"
+              alt={place.name}
+              className="aspect-video h-[140px] w-full object-cover"
+              src={makeImageUrl(place.mainImage)}
+            />
+          </CardBody>
+          <CardFooter className="justify-between text-small">
+            <b>{place.name}</b>
+          </CardFooter>
+        </Card>
       ))}
     </ul>
   )

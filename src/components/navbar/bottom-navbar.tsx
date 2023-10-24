@@ -49,7 +49,7 @@ export const BottomNavbar: FC<{
             session ? (
               <UserAvatar
                 user={session.user}
-                className="box-content h-6 w-6 rounded-full border-2 border-transparent"
+                className="box-content h-6 w-6 rounded-full"
               />
             ) : (
               <IconUser />
