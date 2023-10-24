@@ -8,7 +8,6 @@ import {
 import { db } from '~/server/db/db'
 import { users } from '~/server/db/schema/users'
 import { protectedProcedure, router } from '~/server/trpc'
-import { BUCKET_NAME, s3 } from '~/aws'
 
 export const profileRouter = router({
   completeProfile: protectedProcedure
@@ -31,18 +30,4 @@ export const profileRouter = router({
         })
         .where(eq(users.id, ctx.session.user.id))
     }),
-  getSignedUrlForUploadImage: protectedProcedure.mutation(async ({ ctx }) => {
-    return s3.createPresignedPost({
-      Bucket: BUCKET_NAME,
-      Fields: {
-        key: `profile-images/${ctx.session.user.id}`,
-      },
-      Expires: 60,
-      Conditions: [
-        ['content-length-range', 0, 2000000], // 2MB
-        ['starts-with', '$Content-Type', 'image/'],
-        { acl: 'public-read' },
-      ],
-    })
-  }),
 })
