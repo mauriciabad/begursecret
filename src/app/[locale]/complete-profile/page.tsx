@@ -25,7 +25,7 @@ const CompleteProfilePage: FC<LocaleRouteParams> = async () => {
 
   return (
     <>
-      <CompleteProfileForm userId={session.user.id} defaultValues={profile} />
+      <CompleteProfileForm defaultValues={profile} />
     </>
   )
 }
