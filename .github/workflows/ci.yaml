@@ -49,7 +49,7 @@ jobs:
         run: pnpm run db:generate
 
       - name: 🚨 Fail if new migrations are generated
-        uses: NathanielHill/fail-if-changes
+        uses: NathanielHill/fail-if-changes@master
 
       - name: 🔦 Run lint
         run: pnpm lint --fix
