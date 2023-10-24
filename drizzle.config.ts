@@ -9,14 +9,14 @@ if (
   process.env.USE_LOCAL_DB !== 'true' &&
   process.env.SKIP_ENV_VALIDATION !== 'true'
 ) {
-  if (
-    !process.env.DATABASE_HOST ||
-    !process.env.DATABASE_USERNAME ||
-    !process.env.DATABASE_PASSWORD ||
-    !process.env.DATABASE_NAME
-  ) {
-    throw new Error('Missing environment variables for database')
-  }
+  if (!process.env.DATABASE_HOST)
+    throw new Error('Missing environment variable DATABASE_HOST')
+  if (!process.env.DATABASE_NAME)
+    throw new Error('Missing environment variable DATABASE_NAME')
+  if (!process.env.DATABASE_USERNAME)
+    throw new Error('Missing environment variable DATABASE_USERNAME')
+  if (!process.env.DATABASE_PASSWORD)
+    throw new Error('Missing environment variable DATABASE_PASSWORD')
 }
 
 export default {
