@@ -33,6 +33,7 @@
     "@types/react": "18.2.18",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.14",
+    "aws-sdk": "2.1479.0",
     "bcryptjs": "2.4.3",
     "clsx": "2.0.0",
     "drizzle-orm": "0.28.6",

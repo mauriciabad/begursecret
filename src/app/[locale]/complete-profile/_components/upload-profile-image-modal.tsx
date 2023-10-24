@@ -14,16 +14,39 @@ import { FC, useState, FormEvent, ChangeEvent } from 'react'
 import { useSession } from 'next-auth/react'
 import { trpc } from '~/trpc'
 import { UpdateSessionSchemaType } from '~/schemas/profile'
+import { PresignedPost } from 'aws-sdk/clients/s3'
 
 const uploadProfileImage = async ({
   file,
   uploadUrl,
+  fields,
 }: {
   file: File
   uploadUrl: string
+  fields: PresignedPost.Fields
 }) => {
-  console.log('uploading profile image', file, uploadUrl)
-  return 'https://picsum.photos/200'
+  const formData = new FormData()
+
+  Object.entries({
+    ...fields,
+    file,
+    'Content-Type': file.type,
+  }).forEach(([key, value]) => {
+    formData.append(key, value)
+  })
+
+  const response = await fetch(uploadUrl, {
+    method: 'POST',
+    body: formData,
+  })
+
+  if (!response.ok) {
+    throw new Error('Failed to upload image')
+  }
+
+  const imageUrl = await response.text()
+
+  return imageUrl
 }
 
 export const UploadProfileImageModal: FC<{
@@ -34,8 +57,8 @@ export const UploadProfileImageModal: FC<{
   const [file, setFile] = useState<File | null>(null)
   const { update } = useSession()
   const updateProfileImage = trpc.profile.updateProfileImage.useMutation()
-  // const getSignedUrlForUploadImage =
-  //   trpc.profile.getSignedUrlForUploadImage.useFetch()
+  const getSignedUrlForUploadImage =
+    trpc.profile.getSignedUrlForUploadImage.useMutation()
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -44,19 +67,15 @@ export const UploadProfileImageModal: FC<{
 
     // TODO: Resize image to 256x256 with sharp
 
-    // Get signed URL from S3
-    // const uploadUrl = await getSignedUrlForUploadImage()
-    const uploadUrl = 'fake-url'
+    const { url: uploadUrl, fields } =
+      await getSignedUrlForUploadImage.mutateAsync()
 
-    // Upload the image to S3
-    const imageUrl = await uploadProfileImage({ file, uploadUrl })
+    const imageUrl = await uploadProfileImage({ file, uploadUrl, fields })
 
-    // Update the profile image on the DB (and replace old one)
     await updateProfileImage.mutateAsync({
       image: imageUrl,
     })
 
-    // Update the local session
     const updateData: UpdateSessionSchemaType = { picture: imageUrl }
     await update(updateData)
 
