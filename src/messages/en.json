@@ -83,12 +83,16 @@
       "go-to-profile": "Go to profile",
       "inputs": {
         "name": "Name",
-        "name-placeholder": "Enter your name"
+        "name-placeholder": "Enter your name",
+        "profile-image": "Profile image",
+        "profile-image-placeholder": "Upload profile image"
       },
       "save": "Save",
       "cancel": "Cancel",
       "welcome": "Welcome",
-      "description": "Complete your profile"
+      "description": "Complete your profile",
+      "change-profile-image": "Change profile image",
+      "leave-empty-to-remove-profile-image": "Leave empty to remove profile image"
     }
   },
   "auth": {

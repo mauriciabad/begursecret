@@ -1,7 +1,7 @@
 import 'server-only'
 
 import { DrizzleAdapter } from '@auth/drizzle-adapter'
-import type { AuthOptions } from 'next-auth'
+import { getServerSession, type AuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { env } from '~/env.mjs'
@@ -10,6 +10,12 @@ import bcrypt from 'bcryptjs'
 import { loginSchema } from '~/schemas/auth'
 import { eq } from 'drizzle-orm'
 import { users } from './db/schema'
+import { updateSessionSchema } from '~/schemas/profile'
+import {
+  GetServerSidePropsContext,
+  NextApiRequest,
+  NextApiResponse,
+} from 'next'
 
 export const authOptions: AuthOptions = {
   // Note: Cast required to workaround issue https://github.com/nextauthjs/next-auth/issues/8283
@@ -61,11 +67,11 @@ export const authOptions: AuthOptions = {
   callbacks: {
     async jwt({ token, trigger, session, user }) {
       if (trigger === 'update') {
-        if (session?.name && typeof session.name === 'string') {
-          token.name = session.name
-        }
-      } else if (trigger === 'signIn' || trigger === 'signUp') {
-        token.id = user.id
+        const validatedSession = updateSessionSchema.parse(session)
+        return { ...token, ...validatedSession }
+      }
+      if (trigger === 'signIn' || trigger === 'signUp') {
+        return { ...token, id: user.id }
       }
       return token
     },
@@ -77,4 +83,13 @@ export const authOptions: AuthOptions = {
       return session
     },
   },
+}
+
+export function auth(
+  ...args:
+    | [GetServerSidePropsContext['req'], GetServerSidePropsContext['res']]
+    | [NextApiRequest, NextApiResponse]
+    | []
+) {
+  return getServerSession(...args, authOptions)
 }

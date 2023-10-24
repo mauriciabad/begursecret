@@ -10,15 +10,15 @@ import {
 } from '@tabler/icons-react'
 import { DbEnvironmentTag } from '../db-environment-tag'
 import { BottomNavbarItem } from './bottom-navbar-item'
-import { getServerSession } from 'next-auth/next'
-import { authOptions } from '~/server/auth'
+import { auth } from '~/server/auth'
 import { cn } from '~/helpers/cn'
 import { FC } from 'react'
+import { UserAvatar } from '../userAvatar'
 
 export const BottomNavbar: FC<{
   className?: string
 }> = async ({ className }) => {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
 
   return (
     <nav
@@ -46,11 +46,9 @@ export const BottomNavbar: FC<{
         <BottomNavbarItem
           url="/profile"
           icon={
-            session?.user?.image ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={session.user.image}
-                alt=""
+            session ? (
+              <UserAvatar
+                user={session.user}
                 className="box-content h-6 w-6 rounded-full border-2 border-transparent"
               />
             ) : (
@@ -58,11 +56,9 @@ export const BottomNavbar: FC<{
             )
           }
           iconActive={
-            session?.user?.image ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={session.user.image}
-                alt=""
+            session ? (
+              <UserAvatar
+                user={session.user}
                 className="box-content h-6 w-6 rounded-full border-2 border-current"
               />
             ) : (

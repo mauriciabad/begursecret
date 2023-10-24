@@ -82,12 +82,16 @@
       "go-to-profile": "Tornar al perfil",
       "inputs": {
         "name": "Nom",
-        "name-placeholder": "Introdueix el teu nom"
+        "name-placeholder": "Introdueix el teu nom",
+        "profile-image": "Foto de perfil",
+        "profile-image-placeholder": "Puja una foto de perfil"
       },
       "save": "Guardar",
       "cancel": "Cancel·lar",
       "welcome": "Benvingut/da",
-      "description": "Completa el teu perfil"
+      "description": "Completa el teu perfil",
+      "change-profile-image": "Canviar foto de perfil",
+      "leave-empty-to-remove-profile-image": "Deixa-ho buit per eliminar la foto de perfil"
     }
   },
   "auth": {

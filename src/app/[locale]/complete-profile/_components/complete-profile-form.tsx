@@ -7,73 +7,92 @@ import { useTranslations } from 'next-intl'
 import { useRouter } from 'next-intl/client'
 import { FC, FormEvent, useState } from 'react'
 import { trpc } from '~/trpc'
+import { UploadProfileImageModal } from './upload-profile-image-modal'
+import { UpdateSessionSchemaType } from '~/schemas/profile'
+import { UserAvatar } from '~/components/userAvatar'
+import { LinkButton } from '~/components/link-button'
 
 export const CompleteProfileForm: FC<{
   className?: string
-  userId: string
   defaultValues?: {
     name?: string
   }
-}> = ({ className, userId, defaultValues = {} }) => {
-  const t = useTranslations('profile.completeProfile')
+}> = ({ className, defaultValues = {} }) => {
+  const { update, data: session } = useSession()
   const router = useRouter()
-  const [name, setName] = useState(defaultValues.name ?? '')
-  const { update } = useSession()
+  if (!session) {
+    router.push('/profile')
+    return
+  }
 
+  const t = useTranslations('profile.completeProfile')
+  const [name, setName] = useState(defaultValues.name ?? '')
   const completeProfile = trpc.profile.completeProfile.useMutation()
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
 
-    try {
-      await completeProfile.mutateAsync({ name, userId })
-      await update({ name })
+    await completeProfile.mutateAsync({ name })
+    const updateData: UpdateSessionSchemaType = { name }
+    await update(updateData)
 
-      router.push('/profile')
-    } catch (error) {
-      console.error(error)
-    }
+    router.push('/profile')
+    router.refresh()
   }
 
   return (
-    <form onSubmit={handleSubmit} className={className}>
-      <h1 className="mb-2 mt-8 text-center font-title text-3xl font-bold">
-        {t('welcome')}
-      </h1>
-      <p className="mb-8 text-center">{t('description')}</p>
+    <>
+      <div className={className}>
+        <h1 className="mb-2 mt-8 text-center font-title text-3xl font-bold">
+          {t('welcome')}
+        </h1>
+        <p className="mb-8 text-center">{t('description')}</p>
 
-      <Input
-        label={t('inputs.name')}
-        variant="bordered"
-        labelPlacement="outside"
-        placeholder={t('inputs.name-placeholder')}
-        type="text"
-        value={name}
-        onValueChange={setName}
-      />
+        <div className="mb-4 flex flex-col items-center gap-1">
+          <UserAvatar
+            user={session.user}
+            className="mx-auto mb-2 block h-24 w-24"
+          />
+          <UploadProfileImageModal />
+        </div>
 
-      {completeProfile.error && (
-        <p className="mt-8 text-danger-700">{completeProfile.error.message}</p>
-      )}
+        <form onSubmit={handleSubmit}>
+          <Input
+            label={t('inputs.name')}
+            variant="bordered"
+            labelPlacement="outside"
+            placeholder={t('inputs.name-placeholder')}
+            type="text"
+            value={name}
+            onValueChange={setName}
+          />
 
-      <div className="flex flex-wrap justify-end gap-4">
-        <Button
-          className="mt-8"
-          variant="solid"
-          color="default"
-          onPress={() => router.push('/profile')}
-        >
-          {t('cancel')}
-        </Button>
-        <Button
-          className="mt-8 flex-grow"
-          variant="solid"
-          color="primary"
-          type="submit"
-        >
-          {t('save')}
-        </Button>
+          {completeProfile.error && (
+            <p className="mt-8 text-danger-700">
+              {completeProfile.error.message}
+            </p>
+          )}
+
+          <div className="flex flex-wrap justify-end gap-4">
+            <LinkButton
+              href="/profile"
+              className="mt-8"
+              variant="solid"
+              color="default"
+            >
+              {t('cancel')}
+            </LinkButton>
+            <Button
+              className="mt-8 flex-grow"
+              variant="solid"
+              color="primary"
+              type="submit"
+            >
+              {t('save')}
+            </Button>
+          </div>
+        </form>
       </div>
-    </form>
+    </>
   )
 }
