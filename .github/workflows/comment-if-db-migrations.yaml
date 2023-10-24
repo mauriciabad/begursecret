@@ -1,0 +1,29 @@
+name: Check if db migrations are needed
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'drizzle/**'
+
+jobs:
+  comment-if-db-migrations:
+    permissions:
+      pull-requests: write
+      contents: read
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comment PR - db migrated
+        uses: thollander/actions-comment-pull-request@main
+        with:
+          message: |
+            This PR introduces cnages to the database.
+
+            Remember to run migrations in [stage database branch](https://app.planetscale.com/descobreix-begur-app/descobreix-begur-app/stage). 
+            And manually merge the deploy request from planetscale just before merging the PR.
+
+            ```bash
+            pnpm db:push
+            ```
+          comment_tag: execution
