@@ -90,7 +90,8 @@
       "cancel": "Cancel·lar",
       "welcome": "Benvingut/da",
       "description": "Completa el teu perfil",
-      "change-profile-image": "Canviar foto de perfil"
+      "change-profile-image": "Canviar foto de perfil",
+      "leave-empty-to-remove-profile-image": "Deixa-ho buit per eliminar la foto de perfil"
     }
   },
   "auth": {

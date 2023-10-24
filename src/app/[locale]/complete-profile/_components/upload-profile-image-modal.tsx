@@ -14,11 +14,13 @@ import { useTranslations } from 'next-intl'
 import { FC, useState, FormEvent, ChangeEvent } from 'react'
 import { useSession } from 'next-auth/react'
 import { UpdateSessionSchemaType } from '~/schemas/profile'
+import { AlertBox } from '~/components/alert-box'
+import { UploadProfileImageResponse } from '~/app/api/upload/profile-image/route'
 
-const uploadProfileImage = async ({ file }: { file: File }) => {
+const uploadProfileImage = async ({ file }: { file: File | null }) => {
   const body = new FormData()
 
-  body.set('image', file)
+  if (file) body.set('image', file)
 
   const response = await fetch('/api/upload/profile-image', {
     method: 'POST',
@@ -29,8 +31,8 @@ const uploadProfileImage = async ({ file }: { file: File }) => {
     throw new Error('Error uploading profile image')
   }
 
-  const result: { imageUrl: string } = await response.json()
-
+  const result: UploadProfileImageResponse = await response.json()
+  if (!result) throw new Error('Error uploading profile image')
   return result
 }
 
@@ -45,11 +47,11 @@ export const UploadProfileImageModal: FC<{
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (!file) throw new Error('No file selected')
-
     const { imageUrl } = await uploadProfileImage({ file })
 
-    const updateData: UpdateSessionSchemaType = { picture: imageUrl }
+    const updateData: UpdateSessionSchemaType = {
+      picture: imageUrl ?? undefined,
+    }
     await update(updateData)
 
     onClose()
@@ -84,6 +86,9 @@ export const UploadProfileImageModal: FC<{
                     onChange={handleFileChange}
                     accept="image/*"
                   />
+                  <AlertBox type="info">
+                    {t('leave-empty-to-remove-profile-image')}
+                  </AlertBox>
                 </ModalBody>
 
                 <ModalFooter>
@@ -93,7 +98,6 @@ export const UploadProfileImageModal: FC<{
                     color="primary"
                     type="submit"
                     fullWidth
-                    disabled={!file}
                   >
                     {t('save')}
                   </Button>

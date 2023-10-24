@@ -1,5 +1,5 @@
 import sharp from 'sharp'
-import { uploadToS3 } from '~/server/aws'
+import { deleteFromS3, uploadToS3 } from '~/server/aws'
 import { db } from '~/server/db/db'
 import { eq } from 'drizzle-orm'
 import { users } from '~/server/db/schema'
@@ -9,29 +9,16 @@ import { auth } from '~/server/auth'
 export async function POST(request: NextRequest) {
   const session = await auth()
   if (!session) {
-    return NextResponse.json({ error: 'Not authorized' }, { status: 401 })
+    return NextResponse.json(null, { status: 401 })
   }
 
   const formData = await request.formData()
   const imageFile = formData.get('image') as unknown as File | null
-  if (!imageFile) {
-    return NextResponse.json(
-      { error: 'No image file provided' },
-      { status: 400 }
-    )
-  }
-  const imageBuffer = Buffer.from(await imageFile.arrayBuffer())
-  const fileKeyInS3 = `profile-images/${session.user.id}`
 
-  const editedImageBuffer = await sharp(imageBuffer)
-    .resize({ height: 256, width: 256, fit: 'cover' })
-    .toBuffer()
-
-  const imageUrl = await uploadToS3({
-    buffer: editedImageBuffer,
-    key: fileKeyInS3,
-    contentType: imageFile.type,
-  })
+  const imageUrl = await uploadOrDeleteFromS3(
+    imageFile,
+    `profile-images/${session.user.id}`
+  )
 
   await db
     .update(users)
@@ -41,4 +28,36 @@ export async function POST(request: NextRequest) {
     .where(eq(users.id, session.user.id))
 
   return NextResponse.json({ imageUrl })
+}
+
+type ExtractGenericFromNextResponse<Type> = Type extends NextResponse<infer X>
+  ? X
+  : never
+export type UploadProfileImageResponse = ExtractGenericFromNextResponse<
+  Awaited<ReturnType<typeof POST>>
+>
+
+async function uploadOrDeleteFromS3<K extends string>(
+  file: File | null,
+  key: K
+) {
+  if (file) {
+    const imageBuffer = Buffer.from(await file.arrayBuffer())
+
+    const editedImageBuffer = await sharp(imageBuffer)
+      .resize({ height: 256, width: 256, fit: 'cover' })
+      .toBuffer()
+
+    return await uploadToS3({
+      buffer: editedImageBuffer,
+      key,
+      contentType: file.type,
+    })
+  } else {
+    await deleteFromS3({
+      key,
+    })
+
+    return null
+  }
 }

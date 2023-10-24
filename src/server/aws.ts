@@ -1,6 +1,10 @@
 import 'server-only'
 
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
+import {
+  S3Client,
+  PutObjectCommand,
+  DeleteObjectCommand,
+} from '@aws-sdk/client-s3'
 import { env } from '~/env.mjs'
 
 export const BUCKET_REGION = 'eu-west-1'
@@ -14,13 +18,13 @@ export const s3 = new S3Client({
   },
 })
 
-export async function uploadToS3({
+export async function uploadToS3<K extends string>({
   buffer,
   key,
   contentType,
 }: {
   buffer: Buffer
-  key: string
+  key: K
   contentType: string
 }) {
   await s3.send(
@@ -31,5 +35,14 @@ export async function uploadToS3({
       ContentType: contentType,
     })
   )
-  return `https://${BUCKET_NAME}.s3.${BUCKET_REGION}.amazonaws.com/${key}`
+  return `https://${BUCKET_NAME}.s3.${BUCKET_REGION}.amazonaws.com/${key}` as const
+}
+
+export async function deleteFromS3<K extends string>({ key }: { key: K }) {
+  await s3.send(
+    new DeleteObjectCommand({
+      Bucket: BUCKET_NAME,
+      Key: key,
+    })
+  )
 }
