@@ -7,27 +7,28 @@ import {
 } from '~/schemas/profile'
 import { db } from '~/server/db/db'
 import { users } from '~/server/db/schema/users'
-import { procedure, router } from '~/server/trpc'
+import { protectedProcedure, router } from '~/server/trpc'
 
 export const profileRouter = router({
-  completeProfile: procedure
+  completeProfile: protectedProcedure
     .input(completeProfileSchema)
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       return db
         .update(users)
         .set({
           name: input.name,
         })
-        .where(eq(users.id, input.userId))
+        .where(eq(users.id, ctx.session.user.id))
     }),
-  updateProfileImage: procedure
+  updateProfileImage: protectedProcedure
     .input(updateProfileImageSchema)
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       return db
         .update(users)
         .set({
           image: input.image,
         })
-        .where(eq(users.id, input.userId))
+        .where(eq(users.id, ctx.session.user.id))
     }),
+  // getSignedUrlForUploadImage: protectedProcedure,
 })

@@ -17,19 +17,18 @@ import { UpdateSessionSchemaType } from '~/schemas/profile'
 
 const uploadProfileImage = async ({
   file,
-  userId,
+  uploadUrl,
 }: {
   file: File
-  userId: string
+  uploadUrl: string
 }) => {
-  console.log('uploading profile image', file, userId)
+  console.log('uploading profile image', file, uploadUrl)
   return 'https://picsum.photos/200'
 }
 
 export const UploadProfileImageModal: FC<{
   className?: string
-  userId: string
-}> = ({ className, userId }) => {
+}> = ({ className }) => {
   const t = useTranslations('profile.completeProfile')
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
   const [file, setFile] = useState<File | null>(null)
@@ -46,15 +45,15 @@ export const UploadProfileImageModal: FC<{
     // TODO: Resize image to 256x256 with sharp
 
     // Get signed URL from S3
-    // const signedUrl = await getSignedUrlForUploadImage()
+    // const uploadUrl = await getSignedUrlForUploadImage()
+    const uploadUrl = 'fake-url'
 
     // Upload the image to S3
-    const imageUrl = await uploadProfileImage({ file, userId })
+    const imageUrl = await uploadProfileImage({ file, uploadUrl })
 
     // Update the profile image on the DB (and replace old one)
     await updateProfileImage.mutateAsync({
       image: imageUrl,
-      userId,
     })
 
     // Update the local session

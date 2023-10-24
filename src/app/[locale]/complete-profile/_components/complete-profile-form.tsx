@@ -32,7 +32,7 @@ export const CompleteProfileForm: FC<{
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
 
-    await completeProfile.mutateAsync({ name, userId: session.user.id })
+    await completeProfile.mutateAsync({ name })
     const updateData: UpdateSessionSchemaType = { name }
     await update(updateData)
 
@@ -53,7 +53,7 @@ export const CompleteProfileForm: FC<{
             user={session.user}
             className="mx-auto mb-2 block h-24 w-24"
           />
-          <UploadProfileImageModal userId={session.user.id} />
+          <UploadProfileImageModal />
         </div>
 
         <form onSubmit={handleSubmit}>
