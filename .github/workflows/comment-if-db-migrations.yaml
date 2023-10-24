@@ -18,10 +18,11 @@ jobs:
         uses: thollander/actions-comment-pull-request@main
         with:
           message: |
-            This PR introduces cnages to the database.
+            > [!NOTE]  
+            > This PR introduces changes to the database.
 
             Remember to run migrations in [stage database branch](https://app.planetscale.com/descobreix-begur-app/descobreix-begur-app/stage). 
-            And manually merge the deploy request from planetscale just before merging the PR.
+            And manually merge the deploy request from Planetscale just before merging the PR.
 
             ```bash
             pnpm db:push
