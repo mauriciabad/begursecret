@@ -49,20 +49,6 @@ jobs:
       - name: 📦 Install dependencies
         run: pnpm install
 
-      - name: Create a branch
-        uses: planetscale/create-branch-action@v4
-        id: create_branch
-        with:
-          org_name: descobreix-begur-app
-          database_name: descobreix-begur-app
-          branch_name: stage
-          from: main
-          check_exists: true
-          wait: true
-        env:
-          PLANETSCALE_SERVICE_TOKEN_ID: ${{ secrets.PLANETSCALE_SERVICE_TOKEN_ID }}
-          PLANETSCALE_SERVICE_TOKEN: ${{ secrets.PLANETSCALE_SERVICE_TOKEN }}
-
       - name: Set migration config
         run: |
           echo "org: descobreix-begur-app" > .pscale.yml
