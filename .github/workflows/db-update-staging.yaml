@@ -56,7 +56,7 @@ jobs:
           echo "branch: stage" >> .pscale.yml
 
       - name: Setup pscale
-        uses: planetscale/setup-pscale-action
+        uses: planetscale/setup-pscale-action@main
 
       - name: Run migrations
         run: |
