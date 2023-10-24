@@ -21,10 +21,12 @@ jobs:
             > [!NOTE]  
             > This PR introduces changes to the database.
 
-            Remember to run migrations in [stage database branch](https://app.planetscale.com/descobreix-begur-app/descobreix-begur-app/stage). 
-            And manually merge the deploy request from Planetscale just before merging the PR.
+            **Remember to:**
 
-            ```bash
-            pnpm db:push
-            ```
+            1. Run the migrations in [stage database branch](https://app.planetscale.com/descobreix-begur-app/descobreix-begur-app/stage) with:
+               ```bash
+               pnpm db:push
+               ```
+            1. Create a [deploy request in Planetscale](https://app.planetscale.com/descobreix-begur-app/descobreix-begur-app/deploy-requests/)
+            1. Merge the deploy request from Planetscale just before merging the PR.
           comment_tag: execution
