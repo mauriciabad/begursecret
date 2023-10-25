@@ -11,7 +11,7 @@ export const defaultLocale = 'ca' satisfies (typeof locales)[number]
 function isLocaleInDatabase(
   locale: string
 ): locale is (typeof localesInDatabase)[number] {
-  return localesInDatabase.includes(locale as any)
+  return localesInDatabase.some((l) => l === locale)
 }
 
 export function localeOrDefault<T extends string>(locale: T) {
