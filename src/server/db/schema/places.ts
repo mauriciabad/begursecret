@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm'
-import { mysqlTable, serial, text } from 'drizzle-orm/mysql-core'
+import { int, mysqlTable, serial, text } from 'drizzle-orm/mysql-core'
 import { locale, s3ObjectKey } from '../utilities'
 
 export const placesData = mysqlTable('place_data', {
@@ -9,7 +9,7 @@ export const placesData = mysqlTable('place_data', {
 
 export const placesTranslations = mysqlTable('place_translation', {
   id: serial('id').primaryKey(),
-  placeId: serial('place_id').notNull(),
+  placeId: int('place_id').notNull(),
   locale: locale('locale').notNull(),
 
   name: text('name').notNull(),
