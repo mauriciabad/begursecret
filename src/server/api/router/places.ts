@@ -14,7 +14,7 @@ const getAllPlaces = db
     name: placesTranslations.name,
   })
   .from(placesData)
-  .leftJoin(placesTranslations, eq(placesData.id, placesTranslations.placeId))
+  .innerJoin(placesTranslations, eq(placesData.id, placesTranslations.placeId))
   .where(
     or(
       eq(placesTranslations.locale, sql.placeholder('locale')),
