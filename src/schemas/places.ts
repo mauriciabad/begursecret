@@ -1,7 +1,8 @@
 import { z } from 'zod'
+import { localesInDatabase } from '~/i18n'
 
-// TODO: This file is unused, I just left it here as an example
+export const listPlacesSchema = z.object({
+  locale: z.enum(localesInDatabase),
+})
 
-export const addPlaceInputSchema = z.object({ title: z.string().min(1) })
-
-export type AddPlaceInputData = z.infer<typeof addPlaceInputSchema>
+export type ListPlacesInputData = z.infer<typeof listPlacesSchema>

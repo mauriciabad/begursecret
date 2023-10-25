@@ -1,5 +1,22 @@
-export const locales = ['ca', 'en'] as const
-export const defaultLocale = locales[0]
+export const localesInDatabase = [
+  'ca',
+  'en',
+] as const satisfies readonly string[]
+export const locales = ['ca', 'en'] as const satisfies readonly [
+  ...typeof localesInDatabase,
+  ...string[],
+]
+export const defaultLocale = 'ca' satisfies (typeof locales)[number]
+
+function isLocaleInDatabase(
+  locale: string
+): locale is (typeof localesInDatabase)[number] {
+  return localesInDatabase.includes(locale as any)
+}
+
+export function localeOrDefault<T extends string>(locale: T) {
+  return isLocaleInDatabase(locale) ? locale : defaultLocale
+}
 
 const localePathPattern = /^\/(?<locale>[^/\s]+)/
 
