@@ -1,37 +1,32 @@
 import 'server-only'
 
-import { and, asc, eq, notExists, or, sql } from 'drizzle-orm'
-import { db } from '~/server/db/db'
-import { placesData, placesTranslations } from '~/server/db/schema/places'
-import { procedure, router } from '~/server/trpc'
+import { asc, eq, isNull, or, sql } from 'drizzle-orm'
 import { listPlacesSchema } from '~/schemas/places'
-import { defaultLocale } from '~/i18n'
+import { db } from '~/server/db/db'
+import { places, placesTranslations } from '~/server/db/schema/places'
+import { procedure, router } from '~/server/trpc'
+import {
+  flattenTranslations,
+  selectTranslations,
+} from '../../helpers/translations'
 
 const getAllPlaces = db
   .select({
-    id: placesData.id,
-    mainImage: placesData.mainImage,
-    name: placesTranslations.name,
+    id: places.id,
+    mainImage: places.mainImage,
+
+    ...selectTranslations({
+      fields: ['name'],
+      normalTable: places,
+      translationsTable: placesTranslations,
+    }),
   })
-  .from(placesData)
-  .innerJoin(placesTranslations, eq(placesData.id, placesTranslations.placeId))
+  .from(places)
+  .leftJoin(placesTranslations, eq(places.id, placesTranslations.placeId))
   .where(
     or(
       eq(placesTranslations.locale, sql.placeholder('locale')),
-      and(
-        eq(placesTranslations.locale, defaultLocale),
-        notExists(
-          db
-            .select()
-            .from(placesTranslations)
-            .where(
-              and(
-                eq(placesTranslations.placeId, placesData.id),
-                eq(placesTranslations.locale, sql.placeholder('locale'))
-              )
-            )
-        )
-      )
+      isNull(placesTranslations.locale)
     )
   )
   .orderBy(asc(placesTranslations.name))
@@ -39,6 +34,7 @@ const getAllPlaces = db
 
 export const placesRouter = router({
   list: procedure.input(listPlacesSchema).query(async ({ input }) => {
-    return await getAllPlaces.execute({ locale: input.locale })
+    const result = await getAllPlaces.execute({ locale: input.locale })
+    return result.map(flattenTranslations)
   }),
 })
