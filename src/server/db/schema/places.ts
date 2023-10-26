@@ -1,4 +1,4 @@
-import { serial, text } from 'drizzle-orm/mysql-core'
+import { text } from 'drizzle-orm/mysql-core'
 import { mysqlTableWithTranslations } from '../../helpers/translations'
 import { s3ObjectKey } from '../utilities'
 
@@ -10,7 +10,6 @@ export const {
 } = mysqlTableWithTranslations({
   name: 'place',
   normalColumns: {
-    id: serial('id').primaryKey(),
     mainImage: s3ObjectKey('mainImage'),
   },
   translatableColumns: {

@@ -90,15 +90,11 @@ function typeDynamicKey<K extends string, V>(key: K, value: V) {
 }
 
 /**
- * Creates tables for the translations and it's relations
+ * Creates tables for the translations and it's relations.
+ * The id columns is added automatically.
  *
- * normalTable - Table with normal and translatable columns
- *
- * translationsTable - Table with just translatable columns
- *
- * normalTableRelations - Relations for the normal table
- *
- * translationsTableRelations - Relations for the translations table
+ * The normalTable contains normal and translatable columns
+ * The translationsTable contains just translatable columns
  *
  */
 export function mysqlTableWithTranslations<
@@ -115,6 +111,7 @@ export function mysqlTableWithTranslations<
   translatableColumns: TC
 }) {
   const normalTable = mysqlTable(name, {
+    id: serial('id').primaryKey(),
     ...normalColumns,
     ...translatableColumns,
   })
