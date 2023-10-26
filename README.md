@@ -16,6 +16,7 @@ Source code for the app.
    ```
 
 1. Create the file `.env.local`.
+
    - Copy the `.env.example` file and update the variables.
    - Or ask @mauriciabad for the file.
 
