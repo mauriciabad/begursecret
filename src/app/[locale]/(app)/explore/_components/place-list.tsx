@@ -1,12 +1,12 @@
 'use client'
 
-import { cn } from '~/helpers/cn'
-import { useTranslations } from 'next-intl'
-import type { FC, HTMLAttributes } from 'react'
-
-import { trpc } from '~/trpc'
 import { Card, CardBody, CardFooter } from '@nextui-org/card'
 import { Image } from '@nextui-org/image'
+import { useLocale, useTranslations } from 'next-intl'
+import type { FC, HTMLAttributes } from 'react'
+import { cn } from '~/helpers/cn'
+import { onlyTranslatableLocales } from '~/i18n'
+import { trpc } from '~/trpc'
 
 function makeImageUrl<T extends string>(s3key: T | null) {
   if (!s3key) {
@@ -20,7 +20,11 @@ export const PlaceList: FC<Omit<HTMLAttributes<HTMLElement>, 'children'>> = ({
   ...props
 }) => {
   const t = useTranslations('explore.list')
-  const { data: places, isInitialLoading } = trpc.places.list.useQuery()
+  const locale = useLocale()
+
+  const { data: places, isInitialLoading } = trpc.places.list.useQuery({
+    locale: onlyTranslatableLocales(locale),
+  })
 
   if (isInitialLoading) {
     return (

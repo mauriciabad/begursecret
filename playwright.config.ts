@@ -59,12 +59,12 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   // webServer: [
   //   {
-  //     command: 'pnpm db-local:run-app',
+  //     command: 'pnpm db:local:run-app',
   //     url: 'http://localhost:3000',
   //     reuseExistingServer: !process.env.CI,
   //   },
   //   {
-  //     command: 'pnpm db-local:run-db',
+  //     command: 'pnpm db:local:run-db',
   //     url: 'http://localhost:3306',
   //     reuseExistingServer: !process.env.CI,
   //   },
