@@ -9,6 +9,7 @@ import { TrpcProvider } from '~/components/providers/trpc-provider'
 import { env } from '~/env.mjs'
 import { cn } from '~/helpers/cn'
 import { auth } from '~/server/auth'
+import { AxiomWebVitals } from 'next-axiom'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const poppins = Poppins({
@@ -32,6 +33,8 @@ export const PageLayout: FC<PropsWithChildren> = async ({ children }) => {
           'min-h-screen bg-stone-50',
         ])}
       >
+        <AxiomWebVitals />
+
         <AuthProvider session={session}>
           <TrpcProvider>
             <NextIntlClientProvider locale={locale} messages={messages}>

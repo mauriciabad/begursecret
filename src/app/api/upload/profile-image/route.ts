@@ -3,10 +3,11 @@ import { deleteFromS3, uploadToS3 } from '~/server/aws'
 import { db } from '~/server/db/db'
 import { eq } from 'drizzle-orm'
 import { users } from '~/server/db/schema'
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { auth } from '~/server/auth'
+import { withAxiom, AxiomRequest } from 'next-axiom'
 
-export async function POST(request: NextRequest) {
+export const POST = withAxiom(async (request: AxiomRequest) => {
   const session = await auth()
   if (!session) {
     return NextResponse.json(null, { status: 401 })
@@ -28,7 +29,7 @@ export async function POST(request: NextRequest) {
     .where(eq(users.id, session.user.id))
 
   return NextResponse.json({ imageUrl })
-}
+})
 
 type ExtractGenericFromNextResponse<Type> = Type extends NextResponse<infer X>
   ? X

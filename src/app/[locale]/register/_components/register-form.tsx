@@ -6,6 +6,7 @@ import { Input } from '@nextui-org/input'
 import { Link as NextUILink } from '@nextui-org/link'
 import { IconEye, IconEyeOff } from '@tabler/icons-react'
 import { signIn } from 'next-auth/react'
+import { useLogger } from 'next-axiom'
 import { useTranslations } from 'next-intl'
 import Link from 'next-intl/link'
 import { FC, FormEvent, useState } from 'react'
@@ -15,6 +16,7 @@ import { trpc } from '~/trpc'
 export const RegisterForm: FC<{
   className?: string
 }> = ({ className }) => {
+  const log = useLogger()
   const t = useTranslations('auth')
   const [isVisible, setIsVisible] = useState(false)
   const toggleVisibility = () => setIsVisible(!isVisible)
@@ -27,6 +29,8 @@ export const RegisterForm: FC<{
     e.preventDefault()
 
     await register.mutateAsync({ email, password })
+
+    log.info('User registered', { email })
 
     await signIn('credentials', {
       email,

@@ -1,4 +1,5 @@
 import nextIntlPlugin from 'next-intl/plugin'
+import { withAxiom } from 'next-axiom'
 
 /**
  * Run `build` or `dev` script with `SKIP_ENV_VALIDATION` to skip validation
@@ -13,6 +14,6 @@ import nextIntlPlugin from 'next-intl/plugin'
 const withNextIntl = nextIntlPlugin('./src/server/i18n.ts')
 
 /** @type {import('next').NextConfig} */
-const nextConfig = withNextIntl({})
+const nextConfig = withAxiom(withNextIntl({}))
 
 export default nextConfig
