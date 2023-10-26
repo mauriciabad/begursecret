@@ -94,3 +94,4 @@ These are the services we use related to the code:
 - [GitHub](https://github.com/mauriciabad/descobreix-begur-app)
 - [Cloudflare](https://www.cloudflare.com)
 - [Umami](https://analytics.eu.umami.is/websites/05dcd962-e08b-4cff-82a6-b0a62c4177a3)
+- [Axiom](https://app.axiom.co/descobreix-begur-app-7ctw/dashboards/vercel)
