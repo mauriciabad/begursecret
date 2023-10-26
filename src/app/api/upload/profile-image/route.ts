@@ -5,9 +5,9 @@ import { eq } from 'drizzle-orm'
 import { users } from '~/server/db/schema'
 import { NextResponse } from 'next/server'
 import { auth } from '~/server/auth'
-import { withAxiom, AxiomRequest } from 'next-axiom'
+import { withAxiom } from 'next-axiom'
 
-export const POST = withAxiom(async (request: AxiomRequest) => {
+export const POST = withAxiom(async (request) => {
   const session = await auth()
   if (!session) {
     return NextResponse.json(null, { status: 401 })
