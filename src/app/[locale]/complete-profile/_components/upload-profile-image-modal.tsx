@@ -47,6 +47,8 @@ export const UploadProfileImageModal: FC<{
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
+    // TODO: Remove when issue gets solved
+    // @ts-ignore
     const { imageUrl } = await uploadProfileImage({ file })
 
     const updateData: UpdateSessionSchemaType = { picture: imageUrl }
