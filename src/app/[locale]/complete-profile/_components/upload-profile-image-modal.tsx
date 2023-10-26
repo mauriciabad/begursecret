@@ -47,6 +47,10 @@ export const UploadProfileImageModal: FC<{
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
+    // TODO: Remove when issue gets solved
+    // https://github.com/axiomhq/next-axiom/pull/162
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const { imageUrl } = await uploadProfileImage({ file })
 
     const updateData: UpdateSessionSchemaType = { picture: imageUrl }

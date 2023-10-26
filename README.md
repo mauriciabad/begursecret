@@ -88,9 +88,9 @@ Ask @mauriciabad for access.
 
 These are the services we use related to the code:
 
-- [PlanetScale](https://planetscale.com)
+- [PlanetScale](https://app.planetscale.com/descobreix-begur-app/descobreix-begur-app)
 - [AWS S3](https://aws.amazon.com/s3)
-- [Vercel](https://vercel.com)
+- [Vercel](https://vercel.com/mauriciabad/descobreix-begur-app)
 - [GitHub](https://github.com/mauriciabad/descobreix-begur-app)
 - [Cloudflare](https://www.cloudflare.com)
-- [Umami](https://umami.is/)
+- [Umami](https://analytics.eu.umami.is/websites/05dcd962-e08b-4cff-82a6-b0a62c4177a3)
