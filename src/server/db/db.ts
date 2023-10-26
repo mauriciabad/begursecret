@@ -23,6 +23,8 @@ export const db =
           schema,
           mode: 'planetscale',
         }
+        // TODO: Remove this unsafe type cast when this issue is fixed:
+        // https://github.com/drizzle-team/drizzle-orm/issues/1129
       ) as unknown as PlanetScaleDatabase<typeof schema>)
     : drizzlePlanetscale(
         connect({
