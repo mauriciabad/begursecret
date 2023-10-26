@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { relations } from 'drizzle-orm'
 import {
   MySqlColumnBuilderBase,

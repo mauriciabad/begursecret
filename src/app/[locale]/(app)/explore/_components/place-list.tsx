@@ -5,7 +5,7 @@ import { Image } from '@nextui-org/image'
 import { useLocale, useTranslations } from 'next-intl'
 import type { FC, HTMLAttributes } from 'react'
 import { cn } from '~/helpers/cn'
-import { localeOrDefault } from '~/i18n'
+import { onlyTranslatableLocales } from '~/i18n'
 import { trpc } from '~/trpc'
 
 function makeImageUrl<T extends string>(s3key: T | null) {
@@ -23,7 +23,7 @@ export const PlaceList: FC<Omit<HTMLAttributes<HTMLElement>, 'children'>> = ({
   const locale = useLocale()
 
   const { data: places, isInitialLoading } = trpc.places.list.useQuery({
-    locale: localeOrDefault(locale),
+    locale: onlyTranslatableLocales(locale),
   })
 
   if (isInitialLoading) {
