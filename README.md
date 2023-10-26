@@ -90,6 +90,6 @@ These are the services we use related to the code:
 
 - [PlanetScale](https://planetscale.com)
 - [AWS S3](https://aws.amazon.com/s3)
-- [Vercel](https://vercel.com/)
+- [Vercel](https://vercel.com)
 - [GitHub](https://github.com/mauriciabad/descobreix-begur-app)
-- [Cloudflare](https://www.cloudflare.com/)
+- [Cloudflare](https://www.cloudflare.com)
