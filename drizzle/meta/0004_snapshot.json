@@ -1,11 +1,11 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "f499ec69-31cc-41e0-a681-e3259ddd180b",
+  "id": "5ab66feb-1129-4822-99c3-4e3bb4ac5de2",
   "prevId": "aea0cf0a-32d1-453e-b0e7-2419b3070b31",
   "tables": {
-    "place_data": {
-      "name": "place_data",
+    "place": {
+      "name": "place",
       "columns": {
         "id": {
           "name": "id",
@@ -20,13 +20,20 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
         }
       },
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {
-        "place_data_id": {
-          "name": "place_data_id",
+        "place_id": {
+          "name": "place_id",
           "columns": [
             "id"
           ]
@@ -316,9 +323,7 @@
   "schemas": {},
   "_meta": {
     "schemas": {},
-    "tables": {
-      "\"place\"": "\"place_data\""
-    },
+    "tables": {},
     "columns": {}
   }
 }

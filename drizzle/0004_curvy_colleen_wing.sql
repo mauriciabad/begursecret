@@ -5,6 +5,3 @@ CREATE TABLE `place_translation` (
 	`name` text NOT NULL,
 	CONSTRAINT `place_translation_id` PRIMARY KEY(`id`)
 );
---> statement-breakpoint
-RENAME TABLE `place` TO `place_data`;--> statement-breakpoint
-ALTER TABLE `place_data` DROP COLUMN `name`;
