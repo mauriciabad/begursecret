@@ -33,7 +33,7 @@ export const PageLayout: FC<PropsWithChildren> = async ({ children }) => {
           'min-h-screen bg-stone-50',
         ])}
       >
-        <AxiomWebVitals />
+        {env.VERCEL_ENV === 'production' && <AxiomWebVitals />}
 
         <AuthProvider session={session}>
           <TrpcProvider>
