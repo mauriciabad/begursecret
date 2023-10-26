@@ -93,3 +93,4 @@ These are the services we use related to the code:
 - [Vercel](https://vercel.com)
 - [GitHub](https://github.com/mauriciabad/descobreix-begur-app)
 - [Cloudflare](https://www.cloudflare.com)
+- [Umami](https://umami.is/)
