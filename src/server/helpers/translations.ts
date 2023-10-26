@@ -1,8 +1,6 @@
 import { relations } from 'drizzle-orm'
 import {
-  MySqlColumn,
   MySqlColumnBuilderBase,
-  MySqlTableWithColumns,
   int,
   mysqlTable,
   serial,
@@ -35,16 +33,6 @@ export function flattenTranslations<
   return prettyResult
 }
 
-interface CustomTableConfig<
-  KeyTableConfig extends string,
-  TColumn extends MySqlColumn = MySqlColumn,
-> {
-  name: string
-  schema: string | undefined
-  columns: Record<KeyTableConfig, TColumn>
-  dialect: string
-}
-
 /**
  * Selects the translatable fields from the normal table and the translations table
  * @param fields - Fields to select
@@ -74,11 +62,9 @@ interface CustomTableConfig<
  *  .prepare()
  */
 export function selectTranslations<
-  K extends string,
-  TTC extends CustomTableConfig<K>,
-  TT extends MySqlTableWithColumns<TTC>,
-  DTC extends CustomTableConfig<K>,
-  DT extends MySqlTableWithColumns<DTC>,
+  K extends Exclude<keyof DT & keyof TT, 'getSQL' | '_'>,
+  TT extends Record<string, any>,
+  DT extends Record<string, any>,
 >({
   fields,
   normalTable,

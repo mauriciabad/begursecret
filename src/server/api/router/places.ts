@@ -1,6 +1,6 @@
 import 'server-only'
 
-import { asc, eq, isNull, or, sql } from 'drizzle-orm'
+import { asc, eq, sql } from 'drizzle-orm'
 import { listPlacesSchema } from '~/schemas/places'
 import { db } from '~/server/db/db'
 import { places, placesTranslations } from '~/server/db/schema/places'
@@ -10,6 +10,12 @@ import {
   selectTranslations,
 } from '../../helpers/translations'
 
+const placeTranslationsInLocale = db
+  .select()
+  .from(placesTranslations)
+  .where(eq(placesTranslations.locale, sql.placeholder('locale')))
+  .as('placeTranslationsInLocale')
+
 const getAllPlaces = db
   .select({
     id: places.id,
@@ -18,18 +24,15 @@ const getAllPlaces = db
     ...selectTranslations({
       fields: ['name'],
       normalTable: places,
-      translationsTable: placesTranslations,
+      translationsTable: placeTranslationsInLocale,
     }),
   })
   .from(places)
-  .leftJoin(placesTranslations, eq(places.id, placesTranslations.placeId))
-  .where(
-    or(
-      eq(placesTranslations.locale, sql.placeholder('locale')),
-      isNull(placesTranslations.locale)
-    )
+  .leftJoin(
+    placeTranslationsInLocale,
+    eq(places.id, placeTranslationsInLocale.placeId)
   )
-  .orderBy(asc(placesTranslations.name))
+  .orderBy(asc(placeTranslationsInLocale.name))
   .prepare()
 
 export const placesRouter = router({
