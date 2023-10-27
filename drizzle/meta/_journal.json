@@ -36,6 +36,13 @@
       "when": 1698286606173,
       "tag": "0004_curvy_colleen_wing",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1698442666925,
+      "tag": "0005_daily_sersi",
+      "breakpoints": true
     }
   ]
 }

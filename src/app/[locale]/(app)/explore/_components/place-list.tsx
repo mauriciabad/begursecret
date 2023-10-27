@@ -64,7 +64,10 @@ export const PlaceList: FC<Omit<HTMLAttributes<HTMLElement>, 'children'>> = ({
             />
           </CardBody>
           <CardFooter className="justify-between text-small">
-            <b>{place.name}</b>
+            <p className="font-bold">{place.name}</p>
+            <p>
+              {place.location.lat}, {place.location.lng}
+            </p>
           </CardFooter>
         </Card>
       ))}
