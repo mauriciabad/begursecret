@@ -9,11 +9,11 @@ export async function generateMetadata({
 }: LocaleRouteParams): Promise<Metadata> {
   const t = await getTranslator(params.locale, 'privacy-policy')
   return {
-    description: t('meta.description'),
     title: {
       default: t('meta.title'),
       template: `%s | ${t('meta.title')}`,
     },
+    description: t('meta.description'),
   }
 }
 
