@@ -7,7 +7,7 @@
     },
     "heading": "Descobreix Begur App",
     "subtitle": "Discover incredible places in this beautiful town.",
-    "lunchApp": "Lunch App"
+    "launch-app": "Launch App"
   },
   "signIn": {
     "meta": {
@@ -16,7 +16,7 @@
     },
     "heading": "Sign In",
     "goHome": "Go to home",
-    "providerButtonText": "Sign in with {name}"
+    "provider-button-text": "Sign in with {name}"
   },
   "explore": {
     "meta": {
@@ -26,7 +26,7 @@
     "heading": "Explore",
     "list": {
       "loading": "Loading places...",
-      "createdDate": "Created on {createdDate, date, ::yyyyMMddHHmmss}"
+      "created-date": "Created on {createdDate, date, ::yyyyMMddHHmmss}"
     },
     "content": "Page under construction..."
   },
@@ -163,5 +163,24 @@
     "heading": "Register",
     "content": "Page under construction...",
     "go-to-app": "Go to app"
+  },
+  "error-pages": {
+    "not-found": {
+      "meta": {
+        "title": "Page not found",
+        "description": "Something went wrong, and the page you accessed is nor avilable."
+      },
+      "title": "Page not found",
+      "go-home": "Go to homepage"
+    },
+    "generic": {
+      "internal-server-error": "Internal Server Error",
+      "message": "Your specific error code is",
+      "error-message": "Full error message",
+      "actions": "You can try...",
+      "contact-support": "Contact support",
+      "go-home": "Go to homepage",
+      "try-again": "Try again"
+    }
   }
 }

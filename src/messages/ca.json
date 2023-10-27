@@ -7,7 +7,7 @@
     },
     "heading": "Descobreix Begur App",
     "subtitle": "Descobreix llocs increïbles d'és teu poble.",
-    "lunchApp": "Obrir App"
+    "launch-app": "Obrir App"
   },
   "signIn": {
     "meta": {
@@ -16,7 +16,7 @@
     },
     "heading": "Inicia sessió",
     "goHome": "Anar a l'inici",
-    "providerButtonText": "Inicia sessió amb {name}"
+    "provider-button-text": "Inicia sessió amb {name}"
   },
   "explore": {
     "meta": {
@@ -26,7 +26,7 @@
     "heading": "Explorar",
     "list": {
       "loading": "Carregant llocs...",
-      "createdDate": "Creada el {createdDate, date, ::yyyyMMddHHmmss}"
+      "created-date": "Creada el {createdDate, date, ::yyyyMMddHHmmss}"
     },
     "content": "Pàgina en construcció..."
   },
@@ -161,5 +161,24 @@
     "heading": "Registra't",
     "content": "Pàgina en construcció...",
     "go-to-app": "Anar a l'app"
+  },
+  "error-pages": {
+    "not-found": {
+      "meta": {
+        "title": "Pàgina no trobada",
+        "description": "Alguna cosa ha anat malament, i la pàgina que has intentat accedir no està disponible."
+      },
+      "title": "Pàgina no trobada",
+      "go-home": "Tornar a l'inici"
+    },
+    "generic": {
+      "internal-server-error": "Error Intern del Servidor",
+      "message": "Aquest és el codi del teu error específicament",
+      "error-message": "Missatge d'error complet",
+      "actions": "Pots intentar...",
+      "contact-support": "Contactar amb suport",
+      "go-home": "Tornar a l'inici",
+      "try-again": "Reintentar"
+    }
   }
 }

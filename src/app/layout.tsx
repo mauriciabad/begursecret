@@ -12,7 +12,7 @@ import { NextuiProvider } from '~/components/providers/nextui-provider'
 import { TrpcProvider } from '~/components/providers/trpc-provider'
 import { env } from '~/env.mjs'
 import { cn } from '~/helpers/cn'
-import type { LocaleRouteParams } from '~/i18n'
+import { type LocaleRouteParams } from '~/i18n'
 import { auth } from '~/server/auth'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
@@ -21,6 +21,7 @@ const poppins = Poppins({
   weight: ['400', '500', '600', '700', '800'],
   variable: '--font-poppins',
 })
+
 export async function generateMetadata({
   params,
 }: LocaleRouteParams): Promise<Metadata> {

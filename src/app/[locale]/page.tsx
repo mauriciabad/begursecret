@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
 import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
-import { LanguageSwitcher } from '~/components/language-switcher'
-import { LinkButton } from '~/components/link-button'
 import { Logo } from '~/components/icons/logo'
+import { LanguageSwitcher } from '~/components/language-switcher'
+import { LinkButtonCustom } from '~/components/link-button-custom'
 import type { LocaleRouteParams } from '~/i18n'
 
 export async function generateMetadata({
@@ -41,15 +41,7 @@ const HomePage: FC<LocaleRouteParams> = () => {
 
         <p className="mt-4 text-xl">{t('subtitle')}</p>
 
-        <LinkButton
-          href="/explore"
-          radius="full"
-          variant="solid"
-          color="primary"
-          className=" mt-6 bg-brand-600 px-8 py-3 uppercase text-white"
-        >
-          {t('lunchApp')}
-        </LinkButton>
+        <LinkButtonCustom href="/explore">{t('launch-app')}</LinkButtonCustom>
 
         <LanguageSwitcher className="mt-12" />
       </main>
