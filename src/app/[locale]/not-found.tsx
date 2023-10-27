@@ -4,8 +4,6 @@ import { getTranslator } from 'next-intl/server'
 import { LinkButtonCustom } from '~/components/link-button-custom'
 import { LocaleRouteParams } from '~/i18n'
 
-export const dynamic = 'force-dynamic'
-
 export async function generateMetadata({
   params,
 }: LocaleRouteParams): Promise<Metadata> {
