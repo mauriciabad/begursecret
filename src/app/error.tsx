@@ -1,22 +1,9 @@
 'use client'
 
 import { Button } from '@nextui-org/button'
-import { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
-import { getTranslator } from 'next-intl/server'
 import { useEffect } from 'react'
 import { LinkButtonCustom } from '~/components/link-button-custom'
-import { LocaleRouteParams } from '~/i18n'
-
-export async function generateMetadata({
-  params,
-}: LocaleRouteParams): Promise<Metadata> {
-  const t = await getTranslator(params.locale, 'error-pages.generic')
-  return {
-    title: t('meta.title'),
-    description: t('meta.description'),
-  }
-}
 
 export default function Error({
   error,

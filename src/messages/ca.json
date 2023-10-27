@@ -172,10 +172,6 @@
       "go-home": "Tornar a l'inici"
     },
     "generic": {
-      "meta": {
-        "title": "Error",
-        "description": "Alguna cosa ha anat malament."
-      },
       "internal-server-error": "Error Intern del Servidor",
       "message": "Aquest és el codi del teu error específicament",
       "error-message": "Missatge d'error complet",

@@ -174,10 +174,6 @@
       "go-home": "Go to homepage"
     },
     "generic": {
-      "meta": {
-        "title": "Error",
-        "description": "Something went wrong."
-      },
       "internal-server-error": "Internal Server Error",
       "message": "Your specific error code is",
       "error-message": "Full error message",
