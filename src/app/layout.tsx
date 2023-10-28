@@ -64,9 +64,7 @@ const RootLayout: FC<RootLayoutProps> = async ({ children }) => {
         <AuthProvider session={session}>
           <TrpcProvider>
             <NextIntlClientProvider locale={locale} messages={messages}>
-              <NextuiProvider className="flex min-h-screen flex-col">
-                {children}
-              </NextuiProvider>
+              <NextuiProvider>{children}</NextuiProvider>
             </NextIntlClientProvider>
           </TrpcProvider>
         </AuthProvider>

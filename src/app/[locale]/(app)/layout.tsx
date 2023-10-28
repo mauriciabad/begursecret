@@ -6,7 +6,7 @@ type AppLayoutProps = PropsWithChildren<LocaleRouteParams>
 
 const AppLayout: FC<AppLayoutProps> = ({ children }) => {
   return (
-    <div className="flex grow flex-col pb-14">
+    <div className="flex min-h-screen grow flex-col pb-14">
       {children}
       <BottomNavbar className="h-14" />
     </div>
