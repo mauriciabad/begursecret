@@ -55,7 +55,9 @@ function getPoint(
   if (typeof value === 'string') {
     try {
       return getPoint(JSON.parse(value))
-    } catch (e) {}
+    } catch (e) {
+      // Ignore
+    }
 
     const matches = value.match(/(?<lng>[\d.-]+) *,? +(?<lat>[\d.-]+)/)
     if (!matches?.groups?.['lat'] || !matches?.groups?.['lng']) {
