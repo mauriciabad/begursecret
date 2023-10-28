@@ -1,6 +1,6 @@
 'use client'
 
-import { Card, CardBody, CardFooter } from '@nextui-org/card'
+import { Card, CardBody } from '@nextui-org/card'
 import { Image } from '@nextui-org/image'
 import { useLocale, useTranslations } from 'next-intl'
 import type { FC, HTMLAttributes } from 'react'
@@ -42,7 +42,7 @@ export const PlaceList: FC<Omit<HTMLAttributes<HTMLElement>, 'children'>> = ({
 
   return (
     <ul
-      className={cn('grid grid-cols-2 gap-2 sm:grid-cols-4', className)}
+      className={cn('grid grid-cols-2 gap-2 sm:grid-cols-3', className)}
       {...props}
     >
       {places?.map((place) => (
@@ -53,22 +53,20 @@ export const PlaceList: FC<Omit<HTMLAttributes<HTMLElement>, 'children'>> = ({
           isPressable
           onPress={() => console.log('item pressed')}
         >
-          <CardBody className="overflow-visible p-0">
+          <CardBody className="">
             <Image
               shadow="sm"
               radius="lg"
               width="100%"
               alt={place.name}
-              className="aspect-video h-[140px] w-full object-cover"
+              className="aspect-square w-full object-cover"
               src={makeImageUrl(place.mainImage)}
             />
-          </CardBody>
-          <CardFooter className="justify-between text-small">
-            <p className="font-bold">{place.name}</p>
+            <p className="mt-4 font-bold">{place.name}</p>
             <p>
               {place.location.lat}, {place.location.lng}
             </p>
-          </CardFooter>
+          </CardBody>
         </Card>
       ))}
     </ul>
