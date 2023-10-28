@@ -13,7 +13,7 @@ import { BottomNavbarItem } from './bottom-navbar-item'
 import { auth } from '~/server/auth'
 import { cn } from '~/helpers/cn'
 import { FC } from 'react'
-import { UserAvatar } from '../userAvatar'
+import { UserAvatar } from '../user-avatar'
 
 export const BottomNavbar: FC<{
   className?: string

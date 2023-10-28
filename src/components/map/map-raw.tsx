@@ -16,7 +16,7 @@ import 'leaflet.locatecontrol'
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { divIcon } from 'leaflet'
-import { PlaceMarker } from '../app/[locale]/(app)/explore/_components/map/place-marker'
+import { PlaceMarker } from './place-marker'
 import { cn } from '~/helpers/cn'
 import { PlaceType } from '~/server/db/constants/places'
 

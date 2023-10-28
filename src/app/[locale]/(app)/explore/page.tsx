@@ -6,7 +6,7 @@ import { useLocale, useTranslations } from 'next-intl'
 import type { FC } from 'react'
 import { onlyTranslatableLocales, type LocaleRouteParams } from '~/i18n'
 import { trpc } from '~/trpc'
-import { MapView } from './_components/map/map-view'
+import { Map } from '~/components/map/map'
 
 // export async function generateMetadata({
 //   params,
@@ -27,7 +27,7 @@ const ExplorePage: FC<LocaleRouteParams> = () => {
 
   if (placesQuery.status !== 'success') {
     return (
-      <div className="rounded border border-gray-200 bg-gray-200 px-4 py-2 text-lg">
+      <div className="flex grow items-center justify-center rounded border border-gray-200 bg-gray-200 px-4 py-2 text-lg">
         {t('loading')}
       </div>
     )
@@ -37,7 +37,16 @@ const ExplorePage: FC<LocaleRouteParams> = () => {
 
   return (
     <>
-      <MapView places={places} />
+      <Map
+        className="grow"
+        fullControl
+        zoom={14}
+        markers={places.map((place) => ({
+          text: place.name,
+          location: place.location,
+          markerType: 'beach',
+        }))}
+      />
 
       {/* 
       <aside className="pointer-events-none absolute inset-x-0 top-0">
