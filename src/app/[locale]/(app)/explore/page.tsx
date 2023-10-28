@@ -7,7 +7,6 @@ import type { FC } from 'react'
 import { onlyTranslatableLocales, type LocaleRouteParams } from '~/i18n'
 import { trpc } from '~/trpc'
 import { MapView } from './_components/map/map-view'
-import { PlaceList } from './_components/place-list'
 
 // export async function generateMetadata({
 //   params,
@@ -40,11 +39,13 @@ const ExplorePage: FC<LocaleRouteParams> = () => {
     <>
       <MapView places={places} />
 
+      {/* 
       <aside className="pointer-events-none absolute inset-x-0 top-0">
         <div className="mx-auto max-w-2xl px-6 py-3">
           <PlaceList places={places} />
         </div>
-      </aside>
+      </aside> 
+      */}
     </>
   )
 }
