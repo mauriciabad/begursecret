@@ -68,6 +68,12 @@ dependencies:
   framer-motion:
     specifier: 10.16.4
     version: 10.16.4(react-dom@18.2.0)(react@18.2.0)
+  leaflet:
+    specifier: 1.9.4
+    version: 1.9.4
+  leaflet.locatecontrol:
+    specifier: 0.79.0
+    version: 0.79.0
   mysql2:
     specifier: 3.6.1
     version: 3.6.1
@@ -92,6 +98,9 @@ dependencies:
   react-hook-form:
     specifier: 7.45.4
     version: 7.45.4(react@18.2.0)
+  react-leaflet:
+    specifier: 4.2.1
+    version: 4.2.1(leaflet@1.9.4)(react-dom@18.2.0)(react@18.2.0)
   sharp:
     specifier: 0.32.6
     version: 0.32.6
@@ -133,6 +142,12 @@ devDependencies:
   '@types/jest':
     specifier: 29.5.6
     version: 29.5.6
+  '@types/leaflet':
+    specifier: 1.9.7
+    version: 1.9.7
+  '@types/leaflet.locatecontrol':
+    specifier: 0.74.3
+    version: 0.74.3
   '@types/uuid':
     specifier: 9.0.6
     version: 9.0.6
@@ -3596,6 +3611,18 @@ packages:
       react: 18.2.0
     dev: false
 
+  /@react-leaflet/core@2.1.0(leaflet@1.9.4)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-Qk7Pfu8BSarKGqILj4x7bCSZ1pjuAPZ+qmRwH5S7mDS91VSbVVsJSrW4qA+GPrro8t69gFYVMWb1Zc4yFmPiVg==}
+    peerDependencies:
+      leaflet: ^1.9.0
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    dependencies:
+      leaflet: 1.9.4
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
   /@react-stately/checkbox@3.5.1(react@18.2.0):
     resolution: {integrity: sha512-j+EbHpZgS8J2LbysbVDK3vQAJc7YZHOjHRX20auEzVmulAFKwkRpevo/R5gEL4EpOz4bRyu+BH/jbssHXG+Ezw==}
     peerDependencies:
@@ -4634,6 +4661,10 @@ packages:
     resolution: {integrity: sha512-uG/4x6EXYbq4VDsBJLNDHQAQmtRPg3x4tAXcBspxlnEknz8NiJxnHoxSiJKGNExiS00q4mJNvuEBgVA3jsDIdQ==}
     dev: false
 
+  /@types/geojson@7946.0.12:
+    resolution: {integrity: sha512-uK2z1ZHJyC0nQRbuovXFt4mzXDwf27vQeUWNhfKGwRcWW429GOhP8HxUHlM6TLH4bzmlv/HlEjpvJh3JfmGsAA==}
+    dev: true
+
   /@types/graceful-fs@4.1.8:
     resolution: {integrity: sha512-NhRH7YzWq8WiNKVavKPBmtLYZHxNY19Hh+az28O/phfp68CF45pMFud+ZzJ8ewnxnC5smIdF3dqFeiSUQ5I+pw==}
     dependencies:
@@ -4678,6 +4709,18 @@ packages:
   /@types/json5@0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: false
+
+  /@types/leaflet.locatecontrol@0.74.3:
+    resolution: {integrity: sha512-UTGWnjvlBwnphmCucQ5x2727DOIrH1I7ayMV04SPp14q4XoD4uZDtJZMe8ilVPSd8pqTKOAqx5IH4eioI1URtQ==}
+    dependencies:
+      '@types/leaflet': 1.9.7
+    dev: true
+
+  /@types/leaflet@1.9.7:
+    resolution: {integrity: sha512-FOfKB1ALYUDnXkH7LfTFreWiZr9R7GErqGP+8lYQGWr2GFq5+jy3Ih0M7e9j41cvRN65kLALJ4dc43yZwyl/6g==}
+    dependencies:
+      '@types/geojson': 7946.0.12
+    dev: true
 
   /@types/lodash.foreach@4.5.7:
     resolution: {integrity: sha512-YjBEB6/Bl19V+R70IpyB/MhMb2IvrSgD26maRNyqbGRNDTH9AnPrQoT+ECvhFJ/hwhQ+RgYWaZKvF+knCguMJw==}
@@ -7926,6 +7969,14 @@ packages:
       language-subtag-registry: 0.3.22
     dev: false
 
+  /leaflet.locatecontrol@0.79.0:
+    resolution: {integrity: sha512-h64QIHFkypYdr90lkSfjKvPvvk8/b8UnP3m9WuoWdp5p2AaCWC0T1NVwyuj4rd5U4fBW3tQt4ppmZ2LceHMIDg==}
+    dev: false
+
+  /leaflet@1.9.4:
+    resolution: {integrity: sha512-nxS1ynzJOmOlHp+iL3FyWqK89GtNL8U8rvlMOsQdTTssxZwCXh8N2NB3GDQOL+YR3XnWyZAxwQixURb+FA74PA==}
+    dev: false
+
   /leven@3.1.0:
     resolution: {integrity: sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A==}
     engines: {node: '>=6'}
@@ -8888,6 +8939,19 @@ packages:
   /react-is@18.2.0:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
     dev: true
+
+  /react-leaflet@4.2.1(leaflet@1.9.4)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-p9chkvhcKrWn/H/1FFeVSqLdReGwn2qmiobOQGO3BifX+/vV/39qhY8dGqbdcPh1e6jxh/QHriLXr7a4eLFK4Q==}
+    peerDependencies:
+      leaflet: ^1.9.0
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    dependencies:
+      '@react-leaflet/core': 2.1.0(leaflet@1.9.4)(react-dom@18.2.0)(react@18.2.0)
+      leaflet: 1.9.4
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
 
   /react-remove-scroll-bar@2.3.4(@types/react@18.2.18)(react@18.2.0):
     resolution: {integrity: sha512-63C4YQBUt0m6ALadE9XV56hV8BgJWDmmTPY758iIJjfQKt2nYwoUrPk0LXRXcB/yIj82T1/Ixfdpdk68LwIB0A==}

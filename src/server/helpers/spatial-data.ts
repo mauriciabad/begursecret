@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DriverValueMapper, sql } from 'drizzle-orm'
 import { customType } from 'drizzle-orm/mysql-core'
+import { LatLngLiteral } from 'leaflet'
 
-export type Point = {
-  lat: number
-  lng: number
-}
+export type Point = LatLngLiteral
 
 // ETRS89 UTM zone 31 North
 const SRID_CODE = 25831

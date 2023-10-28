@@ -56,7 +56,7 @@ const RootLayout: FC<RootLayoutProps> = async ({ children }) => {
           inter.className,
           poppins.variable,
           inter.variable,
-          'min-h-screen bg-stone-50',
+          'bg-stone-50',
         ])}
       >
         <AxiomWebVitals />
@@ -64,7 +64,9 @@ const RootLayout: FC<RootLayoutProps> = async ({ children }) => {
         <AuthProvider session={session}>
           <TrpcProvider>
             <NextIntlClientProvider locale={locale} messages={messages}>
-              <NextuiProvider>{children}</NextuiProvider>
+              <NextuiProvider className="flex min-h-screen flex-col">
+                {children}
+              </NextuiProvider>
             </NextIntlClientProvider>
           </TrpcProvider>
         </AuthProvider>

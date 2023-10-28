@@ -2,15 +2,15 @@ import type { FC, PropsWithChildren } from 'react'
 import { BottomNavbar } from '~/components/navbar/bottom-navbar'
 import type { LocaleRouteParams } from '~/i18n'
 
-type ProfileLayoutProps = PropsWithChildren<LocaleRouteParams>
+type AppLayoutProps = PropsWithChildren<LocaleRouteParams>
 
-const ProfileLayout: FC<ProfileLayoutProps> = ({ children }) => {
+const AppLayout: FC<AppLayoutProps> = ({ children }) => {
   return (
-    <div className="pb-14">
+    <div className="flex grow flex-col pb-14">
       {children}
       <BottomNavbar className="h-14" />
     </div>
   )
 }
 
-export default ProfileLayout
+export default AppLayout
