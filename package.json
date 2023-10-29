@@ -23,6 +23,7 @@
     "@auth/core": "0.12.0",
     "@auth/drizzle-adapter": "0.3.1",
     "@aws-sdk/client-s3": "3.433.0",
+    "@ducanh2912/next-pwa": "9.7.2",
     "@hookform/resolvers": "3.2.0",
     "@nextui-org/react": "2.1.13",
     "@planetscale/database": "1.11.0",
@@ -84,7 +85,8 @@
     "prettier-plugin-tailwindcss": "0.5.5",
     "server-only": "0.0.1",
     "tailwind-merge": "1.14.0",
-    "ts-jest": "29.1.1"
+    "ts-jest": "29.1.1",
+    "webpack": "5.89.0"
   },
   "license": "GNU GENERAL PUBLIC LICENSE",
   "packageManager": "pnpm@8.9.2"

@@ -39,6 +39,14 @@ export async function generateMetadata({
     icons: {
       apple: '/favicon/apple-touch-icon.png',
     },
+    manifest: '/manifest.json',
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: 'default',
+      title: t('meta.title'),
+      // startUpImage: [],
+    },
+    applicationName: t('meta.title'),
   }
 }
 

@@ -1,5 +1,6 @@
-import nextIntlPlugin from 'next-intl/plugin'
+import withPWAInit from '@ducanh2912/next-pwa'
 import { withAxiom } from 'next-axiom'
+import nextIntlPlugin from 'next-intl/plugin'
 
 /**
  * Run `build` or `dev` script with `SKIP_ENV_VALIDATION` to skip validation
@@ -13,7 +14,22 @@ import { withAxiom } from 'next-axiom'
  */
 const withNextIntl = nextIntlPlugin('./src/server/i18n.ts')
 
+const withPWA = withPWAInit({
+  dest: 'public',
+  fallbacks: {
+    image: '/public/fallback.png',
+  },
+  cacheOnFrontEndNav: true,
+  aggressiveFrontEndNavCaching: true,
+  reloadOnOnline: true,
+  swcMinify: true,
+  disable: process.env.NODE_ENV === 'development',
+  workboxOptions: {
+    disableDevLogs: true,
+  },
+})
+
 /** @type {import('next').NextConfig} */
-const nextConfig = withAxiom(withNextIntl({}))
+const nextConfig = withAxiom(withNextIntl(withPWA({})))
 
 export default nextConfig
