@@ -3,7 +3,7 @@ import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
 import type { LocaleRouteParams } from '~/i18n'
 import { UserPreview } from './_components/user-preview'
-import { auth } from '~/server/auth'
+import { getSession } from '~/server/get-server-thing'
 import { ProfileLogin } from './_components/profile-login'
 
 export async function generateMetadata({
@@ -17,7 +17,7 @@ export async function generateMetadata({
 }
 
 const ProfilePage: FC<LocaleRouteParams> = async () => {
-  const session = await auth()
+  const session = await getSession()
 
   return <>{session ? <UserPreview user={session.user} /> : <ProfileLogin />}</>
 }

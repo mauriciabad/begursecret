@@ -10,7 +10,7 @@ import {
 } from '@tabler/icons-react'
 import { DbEnvironmentTag } from '../db-environment-tag'
 import { BottomNavbarItem } from './bottom-navbar-item'
-import { auth } from '~/server/auth'
+import { getSession } from '~/server/get-server-thing'
 import { cn } from '~/helpers/cn'
 import { FC } from 'react'
 import { UserAvatar } from '../user-avatar'
@@ -18,7 +18,7 @@ import { UserAvatar } from '../user-avatar'
 export const BottomNavbar: FC<{
   className?: string
 }> = async ({ className }) => {
-  const session = await auth()
+  const session = await getSession()
 
   return (
     <nav

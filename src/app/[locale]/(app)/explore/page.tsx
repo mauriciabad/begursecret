@@ -1,39 +1,27 @@
-'use client' // TODO: Make this a server component
-
-// import type { Metadata } from 'next'
-import { useLocale, useTranslations } from 'next-intl'
-// import { getTranslator } from 'next-intl/server'
+import type { Metadata } from 'next'
+import { useLocale } from 'next-intl'
+import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
-import { onlyTranslatableLocales, type LocaleRouteParams } from '~/i18n'
-import { trpc } from '~/trpc'
 import { Map } from '~/components/map/map'
+import { onlyTranslatableLocales, type LocaleRouteParams } from '~/i18n'
+import { getTrpc } from '~/server/get-server-thing'
 
-// export async function generateMetadata({
-//   params,
-// }: LocaleRouteParams): Promise<Metadata> {
-//   const t = await getTranslator(params.locale, 'explore')
-//   return {
-//     title: t('meta.title'),
-//     description: t('meta.description'),
-//   }
-// }
+export async function generateMetadata({
+  params,
+}: LocaleRouteParams): Promise<Metadata> {
+  const t = await getTranslator(params.locale, 'explore')
+  return {
+    title: t('meta.title'),
+    description: t('meta.description'),
+  }
+}
 
-const ExplorePage: FC<LocaleRouteParams> = () => {
-  const t = useTranslations('explore.list')
+const ExplorePage: FC<LocaleRouteParams> = async () => {
   const locale = useLocale()
-  const placesQuery = trpc.places.list.useQuery({
+  const trpc = await getTrpc()
+  const places = await trpc.places.list({
     locale: onlyTranslatableLocales(locale),
   })
-
-  if (placesQuery.status !== 'success') {
-    return (
-      <div className="flex grow items-center justify-center rounded border border-gray-200 bg-gray-200 px-4 py-2 text-lg">
-        {t('loading')}
-      </div>
-    )
-  }
-
-  const places = placesQuery.data
 
   return (
     <>

@@ -1,7 +1,7 @@
 import 'server-only'
 
 import { DrizzleAdapter } from '@auth/drizzle-adapter'
-import { getServerSession, type AuthOptions } from 'next-auth'
+import { type AuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { env } from '~/env.mjs'
@@ -11,11 +11,6 @@ import { loginSchema } from '~/schemas/auth'
 import { eq } from 'drizzle-orm'
 import { users } from './db/schema'
 import { updateSessionSchema } from '~/schemas/profile'
-import {
-  GetServerSidePropsContext,
-  NextApiRequest,
-  NextApiResponse,
-} from 'next'
 
 export const authOptions: AuthOptions = {
   // Note: Cast required to workaround issue https://github.com/nextauthjs/next-auth/issues/8283
@@ -83,13 +78,4 @@ export const authOptions: AuthOptions = {
       return session
     },
   },
-}
-
-export function auth(
-  ...args:
-    | [GetServerSidePropsContext['req'], GetServerSidePropsContext['res']]
-    | [NextApiRequest, NextApiResponse]
-    | []
-) {
-  return getServerSession(...args, authOptions)
 }
