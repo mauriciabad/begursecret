@@ -3,7 +3,7 @@ import { getTranslator, redirect } from 'next-intl/server'
 import type { FC } from 'react'
 import type { LocaleRouteParams } from '~/i18n'
 import { CompleteProfileForm } from './_components/complete-profile-form'
-import { auth } from '~/server/auth'
+import { getSession } from '~/server/get-server-thing'
 
 export async function generateMetadata({
   params,
@@ -16,7 +16,7 @@ export async function generateMetadata({
 }
 
 const CompleteProfilePage: FC<LocaleRouteParams> = async () => {
-  const session = await auth()
+  const session = await getSession()
   if (!session) redirect('/profile')
 
   const profile = {

@@ -2,7 +2,10 @@ import dynamic from 'next/dynamic'
 import { IconLoader } from '@tabler/icons-react'
 
 export const Map = dynamic(
-  () => import('./map-raw').then((mod) => mod.MapRaw),
+  async () => {
+    const { MapRaw: Map } = await import('./map-raw')
+    return { default: Map }
+  },
   {
     loading: () => (
       <div className="flex h-full w-full grow items-center justify-center bg-[#f2efe9]">

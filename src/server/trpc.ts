@@ -2,11 +2,11 @@ import { TRPCError, initTRPC } from '@trpc/server'
 import 'server-only'
 import superjson from 'superjson'
 
-import { auth } from './auth'
+import { getSession } from './get-server-thing'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const createContext = async (_req: Request) => {
-  const session = await auth()
+  const session = await getSession()
   return { session }
 }
 

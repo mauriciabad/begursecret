@@ -13,7 +13,7 @@ import { TrpcProvider } from '~/components/providers/trpc-provider'
 import { env } from '~/env.mjs'
 import { cn } from '~/helpers/cn'
 import { type LocaleRouteParams } from '~/i18n'
-import { auth } from '~/server/auth'
+import { getSession } from '~/server/get-server-thing'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const poppins = Poppins({
@@ -47,7 +47,7 @@ type RootLayoutProps = PropsWithChildren<LocaleRouteParams>
 const RootLayout: FC<RootLayoutProps> = async ({ children }) => {
   const locale = useLocale()
   const messages = await getMessages(locale)
-  const session = await auth()
+  const session = await getSession()
 
   return (
     <html lang={locale}>
