@@ -89,6 +89,7 @@ export const ContinueWithEmail: FC<{
               className="focus:outline-none"
               type="button"
               onClick={toggleVisibility}
+              aria-label={t('inputs.password-toggle-visibility')}
             >
               {isVisible ? (
                 <IconEyeOff className="pointer-events-none text-stone-400" />

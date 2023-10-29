@@ -15,15 +15,13 @@ export const RegisterBanner: FC<{
     >
       <div className={cn('mb-10', className)}>
         <p className="text-sm font-bold uppercase">{t('subtitle')}</p>
-        <h3 className="font-title text-3xl font-bold uppercase">
-          {t('title')}
-        </h3>
+        <p className="font-title text-3xl font-bold uppercase">{t('title')}</p>
         <p className="text-lg leading-none">{t('text')}</p>
       </div>
 
       <Button
         radius="full"
-        className="bg-white font-medium uppercase text-purple-500"
+        className="bg-white font-medium uppercase text-purple-600"
         tabIndex={-1}
       >
         {t('register')}

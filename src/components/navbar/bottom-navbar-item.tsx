@@ -8,12 +8,17 @@ export const BottomNavbarItem: FC<{
   url: string
   icon: ReactNode
   iconActive?: ReactNode
-}> = ({ url, icon, iconActive }) => {
+  label: string
+}> = ({ url, icon, iconActive, label }) => {
   const pathname = usePathname()
 
   return (
     <li>
-      <Link href={url} className="flex h-full items-center justify-center">
+      <Link
+        href={url}
+        className="flex h-full items-center justify-center"
+        aria-label={label}
+      >
         {!!iconActive && pathname === url ? iconActive : icon}
       </Link>
     </li>

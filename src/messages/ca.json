@@ -113,7 +113,8 @@
       "password-placeholder": "Introdueix la teva contrasenya",
       "name": "Nom",
       "name-placeholder": "Introdueix el teu nom",
-      "terms-of-service": "Accepto els <link>termes del servei</link>."
+      "terms-of-service": "Accepto els <link>termes del servei</link>.",
+      "password-toggle-visibility": "Mostrar contrasenya"
     },
     "errors": {
       "invalidInput": "Entrada invàlida",
@@ -180,5 +181,11 @@
       "go-home": "Tornar a l'inici",
       "try-again": "Reintentar"
     }
+  },
+  "navbar": {
+    "explore": "Explorar",
+    "missions": "Missions",
+    "hub": "Oficina virtual",
+    "profile": "Perfil"
   }
 }
