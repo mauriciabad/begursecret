@@ -115,7 +115,8 @@
       "password-invalid": "Password is invalid",
       "name": "Name",
       "name-placeholder": "Enter your name",
-      "terms-of-service": "I accept the <link>terms of service</link>."
+      "terms-of-service": "I accept the <link>terms of service</link>.",
+      "password-toggle-visibility": "Toggle password visibility"
     },
     "errors": {
       "invalidInput": "Invalid input",
@@ -182,5 +183,11 @@
       "go-home": "Go to homepage",
       "try-again": "Try again"
     }
+  },
+  "navbar": {
+    "explore": "Explore",
+    "missions": "Missions",
+    "hub": "Hub",
+    "profile": "Profile"
   }
 }
