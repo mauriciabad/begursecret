@@ -15,11 +15,20 @@ import { cn } from '~/helpers/cn'
 import { FC } from 'react'
 import { UserAvatar } from '../user-avatar'
 import { useTranslations } from 'next-intl'
+import { User } from 'next-auth'
 
 export const BottomNavbar: FC<{
   className?: string
 }> = async ({ className }) => {
   const session = await getSession()
+
+  return <BottomNavbarInner className={className} user={session?.user} />
+}
+
+const BottomNavbarInner: FC<{
+  className?: string
+  user?: User
+}> = ({ className, user }) => {
   const t = useTranslations('navbar')
 
   return (
@@ -52,9 +61,9 @@ export const BottomNavbar: FC<{
           url="/profile"
           label={t('profile')}
           icon={
-            session ? (
+            user ? (
               <UserAvatar
-                user={session.user}
+                user={user}
                 className="box-content h-6 w-6 rounded-full"
               />
             ) : (
@@ -62,9 +71,9 @@ export const BottomNavbar: FC<{
             )
           }
           iconActive={
-            session ? (
+            user ? (
               <UserAvatar
-                user={session.user}
+                user={user}
                 className="box-content h-6 w-6 rounded-full border-2 border-current"
               />
             ) : (
