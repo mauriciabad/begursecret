@@ -9,7 +9,7 @@ import { FC, FormEvent, useState } from 'react'
 import { trpc } from '~/trpc'
 import { UploadProfileImageModal } from './upload-profile-image-modal'
 import { UpdateSessionSchemaType } from '~/schemas/profile'
-import { UserAvatar } from '~/components/userAvatar'
+import { UserAvatar } from '~/components/user-avatar'
 import { LinkButton } from '~/components/link-button'
 
 export const CompleteProfileForm: FC<{

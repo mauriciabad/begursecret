@@ -9,6 +9,7 @@ import {
   flattenTranslations,
   selectTranslations,
 } from '../../helpers/translations'
+import { selectPoint } from '~/server/helpers/spatial-data'
 
 const placeTranslationsInLocale = db
   .select()
@@ -20,6 +21,7 @@ const getAllPlaces = db
   .select({
     id: places.id,
     mainImage: places.mainImage,
+    location: selectPoint('location', places.location),
 
     ...selectTranslations({
       fields: ['name'],

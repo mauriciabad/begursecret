@@ -56,7 +56,7 @@ const RootLayout: FC<RootLayoutProps> = async ({ children }) => {
           inter.className,
           poppins.variable,
           inter.variable,
-          'min-h-screen bg-stone-50',
+          'bg-stone-50',
         ])}
       >
         <AxiomWebVitals />

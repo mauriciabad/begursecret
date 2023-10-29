@@ -23,7 +23,7 @@ const ExploreLayout: FC<ExploreLayoutProps> = ({ children }) => {
         </NavbarContent>
       </Navbar>
 
-      <main className="mx-auto max-w-2xl px-6 py-3">{children}</main>
+      <main className="relative flex grow flex-col">{children}</main>
     </>
   )
 }
