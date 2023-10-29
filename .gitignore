@@ -43,6 +43,8 @@ next-env.d.ts
 **/public/workbox-*.js
 **/public/sw.js
 **/public/fallback-*.js
+**/public/wse-*.js
 **/public/workbox-*.js.map
 **/public/sw.js.map
 **/public/fallback-*.js.map
+**/public/wse-*.js.map
