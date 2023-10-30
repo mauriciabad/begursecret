@@ -30,9 +30,9 @@ const ExplorePage: FC<LocaleRouteParams> = async () => {
         fullControl
         zoom={14}
         markers={places.map((place) => ({
-          text: place.name,
           location: place.location,
           markerType: 'beach',
+          url: `/explore/places/${place.id}`,
         }))}
       />
 

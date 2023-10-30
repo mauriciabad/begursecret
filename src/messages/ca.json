@@ -187,5 +187,11 @@
     "missions": "Missions",
     "hub": "Oficina virtual",
     "profile": "Perfil"
+  },
+  "place": {
+    "meta": {
+      "title": "Lloc",
+      "description": "Informació del lloc"
+    }
   }
 }

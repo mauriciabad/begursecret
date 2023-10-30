@@ -189,5 +189,11 @@
     "missions": "Missions",
     "hub": "Hub",
     "profile": "Profile"
+  },
+  "place": {
+    "meta": {
+      "title": "Place",
+      "description": "Place information"
+    }
   }
 }

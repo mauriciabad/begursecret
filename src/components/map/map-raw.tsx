@@ -19,14 +19,15 @@ import { divIcon } from 'leaflet'
 import { PlaceMarker } from './place-marker'
 import { cn } from '~/helpers/cn'
 import { PlaceType } from '~/server/db/constants/places'
+import { useRouter } from 'next-intl/client'
 
-const DEFAULT_LOCATION = {
+const DEFAULT_CENTER = {
   lat: 41.958627,
   lng: 3.213765,
 } as const satisfies LatLngLiteral
 
 export const MapRaw: FC<{
-  location?: LatLngLiteral
+  center?: LatLngLiteral
   className?: string
   zoom?: number
   fullControl?: boolean
@@ -34,14 +35,16 @@ export const MapRaw: FC<{
     location: LatLngLiteral
     text?: string
     markerType?: PlaceType
+    url?: string
   }[]
 }> = ({
-  location = DEFAULT_LOCATION,
+  center = DEFAULT_CENTER,
   className,
   markers,
   fullControl,
   zoom = 14,
 }) => {
+  const router = useRouter()
   const [map, setMap] = useState<LeafletMap | null>(null)
 
   useEffect(() => {
@@ -71,7 +74,7 @@ export const MapRaw: FC<{
 
   return (
     <MapContainer
-      center={location}
+      center={center}
       zoom={zoom}
       zoomControl={false}
       scrollWheelZoom={fullControl}
@@ -79,7 +82,7 @@ export const MapRaw: FC<{
       className={cn('z-0 h-64 w-full', className)}
       ref={setMap}
     >
-      {markers?.map(({ text, location, markerType }) => (
+      {markers?.map(({ text, location, markerType, url: markerUrl }) => (
         <Marker
           key={`${location.lat}-${location.lng}`}
           position={location}
@@ -94,6 +97,16 @@ export const MapRaw: FC<{
                   iconAnchor: [94 * 0.3 * 0.5, 128 * 0.3 * 1],
                   iconSize: [94 * 0.3, 128 * 0.3],
                 })
+          }
+          eventHandlers={
+            markerUrl
+              ? {
+                  click: () => {
+                    console.log('click', markerUrl)
+                    router.push(markerUrl)
+                  },
+                }
+              : {}
           }
         >
           {text && <Popup>{text}</Popup>}
