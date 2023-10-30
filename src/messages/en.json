@@ -195,5 +195,13 @@
       "title": "Place",
       "description": "Place details"
     }
+  },
+  "map": {
+    "layout-types": {
+      "standard": "Standard",
+      "satellite": "Satellite",
+      "hybrid": "Hybrid",
+      "classic": "Classic"
+    }
   }
 }

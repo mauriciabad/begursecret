@@ -5,9 +5,18 @@ export const LinkIconButton: FC<{
   href: string
   label: string
   children: ReactNode
-}> = ({ href: url, label, children }) => {
+  className?: string
+  isExternal?: boolean
+}> = ({ href: url, label, children, className, isExternal }) => {
   return (
-    <LinkButton href={url} variant="light" aria-label={label} isIconOnly>
+    <LinkButton
+      href={url}
+      variant="light"
+      aria-label={label}
+      isIconOnly
+      className={className}
+      isExternal={isExternal}
+    >
       {children}
     </LinkButton>
   )

@@ -1,24 +1,18 @@
 'use client'
 
-import L, { Icon, LatLngLiteral, Map as LeafletMap } from 'leaflet'
-import 'leaflet/dist/leaflet.css'
-import {
-  LayersControl,
-  MapContainer,
-  Marker,
-  Popup,
-  TileLayer,
-} from 'react-leaflet'
-import IconMapPin from '/public/icon-map-pin.svg'
-import { FC, useEffect, useState } from 'react'
+import L, { Icon, LatLngLiteral, Map as LeafletMap, divIcon } from 'leaflet'
 import 'leaflet.locatecontrol'
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'
+import 'leaflet/dist/leaflet.css'
+import { useRouter } from 'next-intl/client'
+import { FC, useEffect, useState } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { divIcon } from 'leaflet'
-import { PlaceMarker } from './place-marker'
+import { MapContainer, Marker, Popup } from 'react-leaflet'
 import { cn } from '~/helpers/cn'
 import { PlaceType } from '~/server/db/constants/places'
-import { useRouter } from 'next-intl/client'
+import { CustomLayersControl } from './custom-layout-controls'
+import { PlaceMarker } from './place-marker'
+import IconMapPin from '/public/icon-map-pin.svg'
 
 const DEFAULT_CENTER = {
   lat: 41.958627,
@@ -112,71 +106,9 @@ export const MapRaw: FC<{
         </Marker>
       ))}
 
-      <LayersControl position="bottomleft">
-        <LayersControl.BaseLayer name="Classic (ICGC)">
-          <TileLayer
-            maxZoom={20}
-            attribution="ICGC"
-            url="https://geoserveis.icgc.cat/icc_mapesmultibase/noutm/wmts/topo/GRID3857/{z}/{x}/{y}.png"
-          />
-        </LayersControl.BaseLayer>
-        <LayersControl.BaseLayer name="Classic (MTN)">
-          <TileLayer
-            maxZoom={20}
-            attribution="<a href='http://www.ign.es/'>IDEE</a>"
-            url="https://ign.es/wmts/mapa-raster?service=WMTS&request=GetTile&version=1.0.0&Format=image/jpeg&layer=MTN&style=default&style=default&tilematrixset=GoogleMapsCompatible&TileMatrix={z}&TileRow={y}&TileCol={x}"
-          />
-        </LayersControl.BaseLayer>
-        <LayersControl.BaseLayer name="Standard (IGN)">
-          <TileLayer
-            maxZoom={20}
-            attribution="<a href='http://www.ign.es/'>IDEE</a>"
-            url="https://www.ign.es/wmts/ign-base?service=WMTS&request=GetTile&version=1.0.0&Format=image/png&layer=IGNBaseTodo&style=default&tilematrixset=GoogleMapsCompatible&TileMatrix={z}&TileRow={y}&TileCol={x}"
-          />
-        </LayersControl.BaseLayer>
-        <LayersControl.BaseLayer name="Standard (ICGC)">
-          <TileLayer
-            maxZoom={19}
-            attribution="ICGC"
-            url="https://geoserveis.icgc.cat/servei/catalunya/contextmaps/wmts/contextmaps-mapa-estandard/{z}/{x}/{y}.png"
-          />
-        </LayersControl.BaseLayer>
-        <LayersControl.BaseLayer name="Standard (OSM)">
-          <TileLayer
-            maxZoom={21}
-            attribution="OpenStreetMap"
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-        </LayersControl.BaseLayer>
-        <LayersControl.BaseLayer checked name="Satelite (IGN)">
-          <TileLayer
-            maxZoom={20}
-            attribution="<a href='http://www.ign.es/'>IGN</a>"
-            url="https://www.ign.es/wmts/pnoa-ma?service=WMTS&request=GetTile&version=1.0.0&Format=image/png&layer=OI.OrthoimageCoverage&style=default&tilematrixset=GoogleMapsCompatible&TileMatrix={z}&TileRow={y}&TileCol={x}"
-          />
-        </LayersControl.BaseLayer>
-        <LayersControl.BaseLayer name="Satelite (ICGC 1)">
-          <TileLayer
-            maxZoom={19}
-            attribution="ICGC"
-            url="https://geoserveis.icgc.cat/servei/catalunya/contextmaps/wmts/contextmaps-orto-estandard/MON3857NW/{z}/{x}/{y}.png"
-          />
-        </LayersControl.BaseLayer>
-        <LayersControl.BaseLayer name="Satelite (ICGC 2)">
-          <TileLayer
-            maxZoom={20}
-            attribution="ICGC"
-            url="https://geoserveis.icgc.cat/icc_mapesmultibase/noutm/wmts/orto/GRID3857/{z}/{x}/{y}.png"
-          />
-        </LayersControl.BaseLayer>
-        <LayersControl.BaseLayer name="Satelite (Esri)">
-          <TileLayer
-            maxZoom={20}
-            attribution='&copy; <a href="http://www.esri.com/">Esri</a>'
-            url="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-          />
-        </LayersControl.BaseLayer>
-      </LayersControl>
+      <div className="absolute bottom-4 right-4 z-[1000] flex flex-col-reverse gap-2">
+        <CustomLayersControl />
+      </div>
     </MapContainer>
   )
 }

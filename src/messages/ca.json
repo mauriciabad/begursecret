@@ -193,5 +193,13 @@
       "title": "Lloc",
       "description": "Informació del lloc"
     }
+  },
+  "map": {
+    "layout-types": {
+      "standard": "Mapa",
+      "satellite": "Satèl·lit",
+      "hybrid": "Híbrid",
+      "classic": "Classic"
+    }
   }
 }
