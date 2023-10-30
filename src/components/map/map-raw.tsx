@@ -45,6 +45,11 @@ export const MapRaw: FC<{
 }) => {
   const router = useRouter()
   const [map, setMap] = useState<LeafletMap | null>(null)
+  const locationControl = L.control.locate({
+    flyTo: true,
+    showPopup: false,
+    position: 'bottomright',
+  })
 
   useEffect(() => {
     if (map) {
@@ -61,13 +66,7 @@ export const MapRaw: FC<{
 
   useEffect(() => {
     if (map) {
-      L.control
-        .locate({
-          flyTo: true,
-          showPopup: false,
-          position: 'bottomright',
-        })
-        .addTo(map)
+      locationControl.addTo(map)
     }
   }, [map])
 
