@@ -8,7 +8,6 @@ import {
   Marker,
   Popup,
   TileLayer,
-  ZoomControl,
 } from 'react-leaflet'
 import IconMapPin from '/public/icon-map-pin.svg'
 import { FC, useEffect, useState } from 'react'
@@ -113,8 +112,6 @@ export const MapRaw: FC<{
           {text && <Popup>{text}</Popup>}
         </Marker>
       ))}
-
-      <ZoomControl position="bottomright" />
 
       <LayersControl position="bottomleft">
         <LayersControl.BaseLayer name="Classic (ICGC)">
