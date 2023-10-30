@@ -81,6 +81,7 @@ export const MapRaw: FC<{
       dragging={fullControl || !L.Browser.mobile}
       className={cn('z-0 h-64 w-full', className)}
       ref={setMap}
+      attributionControl={false}
     >
       {markers?.map(({ text, location, markerType, url: markerUrl }) => (
         <Marker
