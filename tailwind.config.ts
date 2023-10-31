@@ -66,7 +66,7 @@ const config: Config = {
     },
   },
   darkMode: 'class',
-  plugins: [nextui(), typography, textBorder],
+  plugins: [textBorder, nextui(), typography],
 }
 
 export default config
