@@ -1,8 +1,8 @@
 'use client'
 
 import { usePathname } from 'next-intl/client'
-import Link from 'next-intl/link'
 import { FC, ReactNode } from 'react'
+import { LinkButton } from '../link-button'
 
 export const BottomNavbarItem: FC<{
   url: string
@@ -12,15 +12,20 @@ export const BottomNavbarItem: FC<{
 }> = ({ url, icon, iconActive, label }) => {
   const pathname = usePathname()
 
+  const isActive = pathname.startsWith(url)
+
   return (
     <li>
-      <Link
+      <LinkButton
         href={url}
         className="flex h-full items-center justify-center"
         aria-label={label}
+        variant="light"
+        radius="none"
+        disabled={isActive}
       >
-        {!!iconActive && pathname.startsWith(url) ? iconActive : icon}
-      </Link>
+        {!!iconActive && isActive ? iconActive : icon}
+      </LinkButton>
     </li>
   )
 }
