@@ -1,6 +1,6 @@
 import type { FC, PropsWithChildren } from 'react'
 
-type MapDrawerProps = PropsWithChildren<{}>
+type MapDrawerProps = PropsWithChildren
 
 export const MapDrawer: FC<MapDrawerProps> = ({ children }) => {
   return (
