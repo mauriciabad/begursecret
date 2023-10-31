@@ -33,12 +33,16 @@ export const MapRaw: FC<{
     markerType?: PlaceType
     url?: string
   }[]
+  classNames?: {
+    controls?: string
+  }
 }> = ({
   center = DEFAULT_CENTER,
   className,
   markers,
   fullControl,
   zoom = 14,
+  classNames = {},
 }) => {
   const router = useRouter()
   const [map, setMap] = useState<LeafletMap | null>(null)
@@ -98,7 +102,12 @@ export const MapRaw: FC<{
         </Marker>
       ))}
 
-      <div className="absolute bottom-4 right-4 z-[1000] flex flex-col-reverse gap-2">
+      <div
+        className={cn(
+          'absolute bottom-4 right-4 z-[1000] flex flex-col-reverse gap-2',
+          classNames.controls
+        )}
+      >
         <CustomLayersControl />
         <CustomLocationControl />
       </div>

@@ -7,6 +7,7 @@ import { onlyTranslatableLocales, type LocaleRouteParams } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
 import { MapDrawer } from './_components/map-drawer'
 import { PlaceList } from './_components/place-list'
+import { cn } from '~/helpers/cn'
 
 export async function generateMetadata({
   params,
@@ -28,7 +29,14 @@ const ExplorePage: FC<LocaleRouteParams> = async () => {
   return (
     <>
       <Map
-        className="grow basis-[calc(100dvh_-_256px)]"
+        className={cn(
+          'min-h-[calc(100dvh_-_192px)]',
+          'sticky top-0 grow',
+          '-mb-2 box-content pb-2'
+        )}
+        classNames={{
+          controls: 'bottom-6',
+        }}
         fullControl
         zoom={14}
         markers={places.map((place) => ({
@@ -38,7 +46,11 @@ const ExplorePage: FC<LocaleRouteParams> = async () => {
         }))}
       />
 
-      <MapDrawer>
+      <MapDrawer
+        classNames={{
+          wrapper: 'rounded-t-lg',
+        }}
+      >
         <PlaceList places={places} />
       </MapDrawer>
     </>
