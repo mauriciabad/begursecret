@@ -13,7 +13,7 @@ export const MapDrawer: FC<MapDrawerProps> = ({
   classNames = {},
 }) => {
   return (
-    <div className={cn('z-20 bg-[#fefefe]', classNames.wrapper)}>
+    <div className={cn('z-20 bg-[#fefefe] shadow-md', classNames.wrapper)}>
       <div className="py-1">
         <div className="mx-auto h-1 w-8 rounded-full bg-stone-300" />
       </div>

@@ -11,7 +11,6 @@ const ExploreLayout: FC<ExploreLayoutProps> = ({ children }) => {
   return (
     <>
       <Navbar
-        shouldHideOnScroll
         isBlurred={false}
         isBordered
         classNames={{ wrapper: 'max-w-2xl' }}

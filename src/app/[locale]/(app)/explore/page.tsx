@@ -31,7 +31,7 @@ const ExplorePage: FC<LocaleRouteParams> = async () => {
       <Map
         className={cn(
           'min-h-[calc(100dvh_-_192px)]',
-          'sticky top-0 grow',
+          'sticky top-16 grow',
           '-mb-2 box-content pb-2'
         )}
         classNames={{
