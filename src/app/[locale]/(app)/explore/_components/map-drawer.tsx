@@ -9,7 +9,7 @@ export const MapDrawer: FC<MapDrawerProps> = ({ children }) => {
         <div className="mx-auto h-1 w-8 rounded-full bg-stone-300" />
       </div>
 
-      <div className="mx-auto max-w-2xl px-6 py-3">{children}</div>
+      <div className="mx-auto max-w-2xl">{children}</div>
     </div>
   )
 }

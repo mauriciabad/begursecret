@@ -22,17 +22,17 @@ export const PlaceList: FC<{
   }[]
 }> = ({ places }) => {
   return (
-    <ul className="space-y-4">
+    <ul className="py-2">
       {places?.map((place) => (
         <Card
           as={Link}
           shadow="none"
-          radius="md"
+          radius="none"
           key={place.id}
           isPressable
           href={`/explore/places/${place.id}`}
         >
-          <CardBody className="grid grid-cols-[1fr_auto] p-0">
+          <CardBody className="grid grid-cols-[1fr_auto] px-4 py-2">
             <div>
               <h2 className="font-title font-bold">{place.name}</h2>
               <p className="text-sm text-gray-500">
