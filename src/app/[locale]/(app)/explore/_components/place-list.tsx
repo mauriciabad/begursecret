@@ -3,7 +3,8 @@
 import { Card, CardBody } from '@nextui-org/card'
 import { Image } from '@nextui-org/image'
 import { LatLngLiteral } from 'leaflet'
-import type { FC } from 'react'
+import Link from 'next-intl/link'
+import { FC } from 'react'
 
 function makeImageUrl<T extends string>(s3key: T | null) {
   if (!s3key) {
@@ -21,25 +22,29 @@ export const PlaceList: FC<{
   }[]
 }> = ({ places }) => {
   return (
-    <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+    <ul className="space-y-4">
       {places?.map((place) => (
         <Card
-          as="li"
-          shadow="sm"
+          as={Link}
+          shadow="none"
+          radius="md"
           key={place.id}
           isPressable
-          onPress={() => console.log('item pressed')}
+          href={`/explore/places/${place.id}`}
         >
-          <CardBody className="">
+          <CardBody className="grid grid-cols-[1fr_auto] p-0">
+            <div>
+              <h2 className="font-title font-bold">{place.name}</h2>
+              <p className="text-sm text-gray-500">
+                {place.location.lat}, {place.location.lng}
+              </p>
+            </div>
             <Image
-              shadow="sm"
-              radius="lg"
-              width="100%"
+              radius="md"
               alt={place.name}
-              className="aspect-square w-full object-cover"
+              className="z-0 aspect-square h-16 object-cover"
               src={makeImageUrl(place.mainImage)}
             />
-            <p className="mt-4 font-bold">{place.name}</p>
           </CardBody>
         </Card>
       ))}
