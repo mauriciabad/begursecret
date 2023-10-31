@@ -2,8 +2,8 @@
 
 import { Card, CardBody } from '@nextui-org/card'
 import { Image } from '@nextui-org/image'
-import type { FC } from 'react'
 import { LatLngLiteral } from 'leaflet'
+import type { FC } from 'react'
 
 function makeImageUrl<T extends string>(s3key: T | null) {
   if (!s3key) {

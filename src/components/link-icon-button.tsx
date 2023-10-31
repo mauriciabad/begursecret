@@ -1,5 +1,5 @@
-import { LinkButton } from './link-button'
 import { FC, ReactNode } from 'react'
+import { LinkButton } from './link-button'
 
 export const LinkIconButton: FC<{
   href: string

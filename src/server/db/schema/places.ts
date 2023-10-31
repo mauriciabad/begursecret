@@ -1,7 +1,7 @@
 import { text } from 'drizzle-orm/mysql-core'
+import { pointType } from '../../helpers/spatial-data'
 import { mysqlTableWithTranslations } from '../../helpers/translations'
 import { s3ObjectKey } from '../utilities'
-import { pointType } from '../../helpers/spatial-data'
 
 export const {
   normalTable: places,

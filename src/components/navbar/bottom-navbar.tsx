@@ -8,14 +8,14 @@ import {
   IconUser,
   IconUserFilled,
 } from '@tabler/icons-react'
-import { DbEnvironmentTag } from '../db-environment-tag'
-import { BottomNavbarItem } from './bottom-navbar-item'
-import { getSession } from '~/server/get-server-thing'
-import { cn } from '~/helpers/cn'
-import { FC } from 'react'
-import { UserAvatar } from '../user-avatar'
-import { useTranslations } from 'next-intl'
 import { User } from 'next-auth'
+import { useTranslations } from 'next-intl'
+import { FC } from 'react'
+import { cn } from '~/helpers/cn'
+import { getSession } from '~/server/get-server-thing'
+import { DbEnvironmentTag } from '../db-environment-tag'
+import { UserAvatar } from '../user-avatar'
+import { BottomNavbarItem } from './bottom-navbar-item'
 
 export const BottomNavbar: FC<{
   className?: string

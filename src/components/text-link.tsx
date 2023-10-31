@@ -1,8 +1,8 @@
 'use client'
 
-import { cn } from '~/helpers/cn'
 import Link from 'next-intl/link'
 import { forwardRef, type ComponentPropsWithoutRef } from 'react'
+import { cn } from '~/helpers/cn'
 
 export const TextLink = forwardRef<
   HTMLAnchorElement,

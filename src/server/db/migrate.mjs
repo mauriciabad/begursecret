@@ -1,7 +1,7 @@
 /* eslint-env node */
 // @ts-check
-import { migrate } from 'drizzle-orm/mysql2/migrator'
 import { drizzle as drizzleMysql } from 'drizzle-orm/mysql2'
+import { migrate } from 'drizzle-orm/mysql2/migrator'
 import { createConnection } from 'mysql2'
 
 if (process.env.USE_LOCAL_DB !== 'true') {

@@ -1,5 +1,5 @@
-import { FC } from 'react'
 import { Avatar, AvatarProps } from '@nextui-org/avatar'
+import { FC } from 'react'
 
 function getProfileImage(user: User) {
   if (user.image) return user.image

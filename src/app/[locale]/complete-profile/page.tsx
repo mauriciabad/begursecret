@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { getTranslator, redirect } from 'next-intl/server'
 import type { FC } from 'react'
 import type { LocaleRouteParams } from '~/i18n'
-import { CompleteProfileForm } from './_components/complete-profile-form'
 import { getSession } from '~/server/get-server-thing'
+import { CompleteProfileForm } from './_components/complete-profile-form'
 
 export async function generateMetadata({
   params,

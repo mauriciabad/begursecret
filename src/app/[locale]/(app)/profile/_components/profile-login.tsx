@@ -1,8 +1,8 @@
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'
 import { LinkButton } from '~/components/link-button'
-import { ContinueWithProvider } from './continue-with-provider'
 import { ContinueWithEmail } from './continue-with-email'
+import { ContinueWithProvider } from './continue-with-provider'
 import { RegisterBanner } from './register-banner'
 
 export const ProfileLogin: FC = () => {

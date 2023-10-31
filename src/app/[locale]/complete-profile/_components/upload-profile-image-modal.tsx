@@ -1,21 +1,21 @@
 'use client'
 
+import { Button } from '@nextui-org/button'
+import { Input } from '@nextui-org/input'
 import {
   Modal,
   ModalBody,
   ModalContent,
-  ModalHeader,
   ModalFooter,
+  ModalHeader,
   useDisclosure,
 } from '@nextui-org/modal'
-import { Button } from '@nextui-org/button'
-import { Input } from '@nextui-org/input'
-import { useTranslations } from 'next-intl'
-import { FC, useState, FormEvent, ChangeEvent } from 'react'
 import { useSession } from 'next-auth/react'
-import { UpdateSessionSchemaType } from '~/schemas/profile'
-import { AlertBox } from '~/components/alert-box'
+import { useTranslations } from 'next-intl'
+import { ChangeEvent, FC, FormEvent, useState } from 'react'
 import { UploadProfileImageResponse } from '~/app/api/upload/profile-image/route'
+import { AlertBox } from '~/components/alert-box'
+import { UpdateSessionSchemaType } from '~/schemas/profile'
 
 const uploadProfileImage = async ({ file }: { file: File | null }) => {
   const body = new FormData()

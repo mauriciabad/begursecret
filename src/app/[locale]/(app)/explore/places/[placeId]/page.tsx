@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
 import { Map } from '~/components/map/map'
-import { onlyTranslatableLocales, LocaleParams } from '~/i18n'
+import { LocaleParams, onlyTranslatableLocales } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
 
 type Params = LocaleParams & { placeId: string }

@@ -1,7 +1,7 @@
-import { cn } from '~/helpers/cn'
-import { PlaceIcon } from '~/components/icons/place-icon'
-import { PlaceType } from '~/server/db/constants/places'
 import { FC } from 'react'
+import { PlaceIcon } from '~/components/icons/place-icon'
+import { cn } from '~/helpers/cn'
+import { PlaceType } from '~/server/db/constants/places'
 
 export const PlaceMarker: FC<{
   type?: PlaceType

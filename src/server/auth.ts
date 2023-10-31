@@ -1,16 +1,16 @@
 import 'server-only'
 
 import { DrizzleAdapter } from '@auth/drizzle-adapter'
-import { type AuthOptions } from 'next-auth'
-import GoogleProvider from 'next-auth/providers/google'
-import CredentialsProvider from 'next-auth/providers/credentials'
-import { env } from '~/env.mjs'
-import { db } from './db/db'
 import bcrypt from 'bcryptjs'
-import { loginSchema } from '~/schemas/auth'
 import { eq } from 'drizzle-orm'
-import { users } from './db/schema'
+import { type AuthOptions } from 'next-auth'
+import CredentialsProvider from 'next-auth/providers/credentials'
+import GoogleProvider from 'next-auth/providers/google'
+import { env } from '~/env.mjs'
+import { loginSchema } from '~/schemas/auth'
 import { updateSessionSchema } from '~/schemas/profile'
+import { db } from './db/db'
+import { users } from './db/schema'
 
 export const authOptions: AuthOptions = {
   // Note: Cast required to workaround issue https://github.com/nextauthjs/next-auth/issues/8283

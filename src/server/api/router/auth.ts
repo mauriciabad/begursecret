@@ -1,12 +1,12 @@
 import 'server-only'
 
-import { registerSchema } from '~/schemas/auth'
 import bcrypt from 'bcryptjs'
+import { eq } from 'drizzle-orm'
+import { v4 as uuidv4 } from 'uuid'
+import { registerSchema } from '~/schemas/auth'
 import { db } from '~/server/db/db'
 import { users } from '~/server/db/schema/users'
 import { procedure, router } from '~/server/trpc'
-import { eq } from 'drizzle-orm'
-import { v4 as uuidv4 } from 'uuid'
 
 export const authRouter = router({
   register: procedure.input(registerSchema).mutation(async ({ input }) => {

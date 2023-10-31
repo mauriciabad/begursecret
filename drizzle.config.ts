@@ -1,5 +1,5 @@
-import type { Config } from 'drizzle-kit'
 import dotenv from 'dotenv'
+import type { Config } from 'drizzle-kit'
 import path from 'node:path'
 
 dotenv.config({ path: path.resolve(process.cwd(), '.env.local') })

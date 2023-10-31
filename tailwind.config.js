@@ -1,8 +1,8 @@
 // @ts-check
 
 import { nextui } from '@nextui-org/react'
-import defaultTheme from 'tailwindcss/defaultTheme'
 import typography from '@tailwindcss/typography'
+import defaultTheme from 'tailwindcss/defaultTheme'
 import plugin from 'tailwindcss/plugin'
 
 /** @type {import('tailwindcss').Config}*/

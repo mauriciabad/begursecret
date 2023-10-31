@@ -2,8 +2,8 @@ import { Navbar, NavbarContent, NavbarItem } from '@nextui-org/navbar'
 import { IconHelpCircle } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import type { FC, PropsWithChildren } from 'react'
-import type { LocaleRouteParams } from '~/i18n'
 import { LinkIconButton } from '~/components/link-icon-button'
+import type { LocaleRouteParams } from '~/i18n'
 
 type HubLayoutProps = PropsWithChildren<LocaleRouteParams>
 
