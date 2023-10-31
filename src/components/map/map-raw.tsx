@@ -11,6 +11,7 @@ import { MapContainer, Marker, Popup } from 'react-leaflet'
 import { cn } from '~/helpers/cn'
 import { PlaceType } from '~/server/db/constants/places'
 import { CustomLayersControl } from './custom-layout-controls'
+import { CustomLocationControl } from './custom-location-control'
 import { PlaceMarker } from './place-marker'
 import IconMapPin from '/public/icon-map-pin.svg'
 
@@ -39,11 +40,6 @@ export const MapRaw: FC<{
 }) => {
   const router = useRouter()
   const [map, setMap] = useState<LeafletMap | null>(null)
-  const locationControl = L.control.locate({
-    flyTo: true,
-    showPopup: false,
-    position: 'bottomright',
-  })
 
   useEffect(() => {
     if (map) {
@@ -55,12 +51,6 @@ export const MapRaw: FC<{
       return () => {
         resizeObserver.unobserve(container)
       }
-    }
-  }, [map])
-
-  useEffect(() => {
-    if (map) {
-      locationControl.addTo(map)
     }
   }, [map])
 
@@ -108,6 +98,7 @@ export const MapRaw: FC<{
 
       <div className="absolute bottom-4 right-4 z-[1000] flex flex-col-reverse gap-2">
         <CustomLayersControl />
+        <CustomLocationControl />
       </div>
     </MapContainer>
   )
