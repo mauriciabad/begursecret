@@ -1,5 +1,11 @@
 {
   "files.exclude": {},
   "editor.formatOnSave": true,
-  "prettier.useEditorConfig": false
+  "prettier.useEditorConfig": false,
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "ngClass",
+    ".*classNames?"
+  ]
 }
