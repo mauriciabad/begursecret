@@ -13,6 +13,7 @@ import { useTranslations } from 'next-intl'
 import { FC, useMemo, useState } from 'react'
 import { useMap } from 'react-leaflet'
 import { cn } from '~/helpers/cn'
+import { LinkButton } from '../link-button'
 
 export const CustomLayersControl: FC = () => {
   const t = useTranslations('map')
@@ -58,6 +59,34 @@ export const CustomLayersControl: FC = () => {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="block space-y-4 p-4">
+        <div>
+          <h3 className="mb-2 font-title font-semibold leading-none">
+            External maps
+          </h3>
+          <div className="flex max-w-[256px] text-center">
+            <ExternalMapItem
+              name="Google"
+              href="https://maps.google.com"
+              image="/images/brands/google-g.svg"
+            />
+            <ExternalMapItem
+              name="Navionics"
+              href="https://webapp.navionics.com/#boating@11&key=kta_G%7B%7BsR"
+              image="/images/brands/navionics.svg"
+            />
+            <ExternalMapItem
+              name="Bing"
+              href="https://www.bing.com/maps?cp=41.846547%7E3.129044&lvl=11.0"
+              image="/images/brands/bing.svg"
+            />
+            <ExternalMapItem
+              name="Apple"
+              href="https://www.apple.com/maps/"
+              image="/images/brands/apple.svg"
+            />
+          </div>
+        </div>
+
         <div className="grid grid-cols-3 gap-2">
           <div className="col-span-2">
             <h3 className="mb-2 font-title font-semibold leading-none">
@@ -139,13 +168,31 @@ const LayerButton: FC<{
         {/* <LinkIconButton
           href={layer.attribution.url}
           label="Link to attribution"
-          className="block h-4 w-4 min-w-0 text-black/40"
-          isExternal
+          className="h-4 w-4 min-w-0 text-black/40"
+          whitespace-normalal
         >
           <IconInfoCircle size={16} />
         </LinkIconButton> */}
       </CardFooter>
     </Card>
+  )
+}
+
+const ExternalMapItem: FC<{
+  name: string
+  image: string
+  href: string
+}> = ({ name, image, href }) => {
+  return (
+    <LinkButton
+      href={href}
+      className="-my-2 flex h-auto min-w-0 shrink grow basis-0 flex-col items-center justify-start gap-1 py-2"
+      isExternal
+      variant="light"
+    >
+      <Image src={image} className="h-6" />
+      <span className="whitespace-normal text-xs">{name}</span>
+    </LinkButton>
   )
 }
 
