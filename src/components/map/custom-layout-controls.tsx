@@ -1,10 +1,10 @@
 'use client'
 
 import { Button } from '@nextui-org/button'
-import { Card, CardFooter } from '@nextui-org/card'
+import { Card, CardBody } from '@nextui-org/card'
 import { Image } from '@nextui-org/image'
 import { Popover, PopoverContent, PopoverTrigger } from '@nextui-org/popover'
-import { IconCircleFilled, IconStack2 } from '@tabler/icons-react'
+import { IconStack2 } from '@tabler/icons-react'
 import { TileLayer } from 'leaflet'
 import 'leaflet.locatecontrol'
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'
@@ -148,7 +148,6 @@ const LayerButton: FC<{
       key={layer.id}
       isPressable
       onPress={onPress}
-      isFooterBlurred
       className={cn('max-w-[80px]', {
         'ring-2 ring-brand-600 ring-offset-1': active,
       })}
@@ -160,21 +159,11 @@ const LayerButton: FC<{
         src={layer.sampleImage}
         radius="none"
       />
-      <CardFooter className="absolute inset-x-0 bottom-0 z-10 flex w-auto justify-center gap-1 overflow-hidden border-t border-white/30 bg-white/25 p-1 text-black/80">
-        {active && <IconCircleFilled size={8} className="text-black/40" />}
-        <span className="font-title font-bold leading-none">
+      <CardBody className="absolute inset-0 top-auto z-10 p-1">
+        <span className="text-border-white text-border text-center font-title text-xs font-bold leading-none text-black opacity-70">
           {layer.attribution.name}
         </span>
-        {active && <IconCircleFilled size={8} className="text-black/40" />}
-        {/* <LinkIconButton
-          href={layer.attribution.url}
-          label="Link to attribution"
-          className="h-4 w-4 min-w-0 text-black/40"
-          whitespace-normalal
-        >
-          <IconInfoCircle size={16} />
-        </LinkIconButton> */}
-      </CardFooter>
+      </CardBody>
     </Card>
   )
 }
@@ -192,7 +181,9 @@ const ExternalMapItem: FC<{
       variant="light"
     >
       <Image src={image} className="h-6" radius="none" />
-      <span className="whitespace-normal text-xs">{name}</span>
+      <span className="whitespace-normal text-xs font-medium text-stone-800">
+        {name}
+      </span>
     </LinkButton>
   )
 }

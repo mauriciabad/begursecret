@@ -2,6 +2,7 @@ import type { Config } from 'tailwindcss'
 import { nextui } from '@nextui-org/react'
 import defaultTheme from 'tailwindcss/defaultTheme'
 import typography from '@tailwindcss/typography'
+import textBorder from './tailwind/text-border-plugin'
 
 const config: Config = {
   content: [
@@ -65,7 +66,7 @@ const config: Config = {
     },
   },
   darkMode: 'class',
-  plugins: [nextui(), typography],
+  plugins: [nextui(), typography, textBorder],
 }
 
 export default config
