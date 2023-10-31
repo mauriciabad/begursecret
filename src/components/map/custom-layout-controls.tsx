@@ -50,6 +50,7 @@ export const CustomLayersControl: FC = () => {
     <Popover placement="top-end">
       <PopoverTrigger>
         <Button
+          size="lg"
           isIconOnly
           aria-label="Test"
           variant="solid"
@@ -190,7 +191,7 @@ const ExternalMapItem: FC<{
       isExternal
       variant="light"
     >
-      <Image src={image} className="h-6" />
+      <Image src={image} className="h-6" radius="none" />
       <span className="whitespace-normal text-xs">{name}</span>
     </LinkButton>
   )
