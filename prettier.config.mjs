@@ -4,7 +4,7 @@ const config = {
   semi: false,
   singleQuote: true,
   tailwindConfig: './tailwind.config.js',
-  plugins: ['prettier-plugin-tailwindcss'],
+  plugins: ['prettier-plugin-organize-imports', 'prettier-plugin-tailwindcss'],
 }
 
 export default config
