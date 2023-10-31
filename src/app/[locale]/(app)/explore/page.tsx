@@ -3,11 +3,11 @@ import { useLocale } from 'next-intl'
 import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
 import { Map } from '~/components/map/map'
+import { cn } from '~/helpers/cn'
 import { onlyTranslatableLocales, type LocaleRouteParams } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
 import { MapDrawer } from './_components/map-drawer'
 import { PlaceList } from './_components/place-list'
-import { cn } from '~/helpers/cn'
 
 export async function generateMetadata({
   params,
