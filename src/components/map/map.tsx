@@ -4,6 +4,7 @@ import { IconLoader } from '@tabler/icons-react'
 import dynamic from 'next/dynamic'
 import { createContext, useContext } from 'react'
 import { cn } from '~/helpers/cn'
+import { mapContainerClassName } from './map-raw'
 
 const DynamicMap = dynamic(
   async () => {
@@ -16,7 +17,8 @@ const DynamicMap = dynamic(
       return (
         <div
           className={cn(
-            'z-0 flex h-64 w-full items-center justify-center bg-[#f2efe9]',
+            mapContainerClassName,
+            'flex items-center justify-center bg-[#f2efe9]',
             className
           )}
         >

@@ -20,6 +20,8 @@ const DEFAULT_CENTER = {
   lng: 3.213765,
 } as const satisfies LatLngLiteral
 
+export const mapContainerClassName = 'z-0 h-64 w-full'
+
 export const MapRaw: FC<{
   center?: LatLngLiteral
   className?: string
@@ -61,7 +63,7 @@ export const MapRaw: FC<{
       zoomControl={false}
       scrollWheelZoom={fullControl}
       dragging={fullControl || !L.Browser.mobile}
-      className={cn('z-0 h-64 w-full', className)}
+      className={cn(mapContainerClassName, className)}
       ref={setMap}
       attributionControl={false}
     >
