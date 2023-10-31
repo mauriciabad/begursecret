@@ -66,9 +66,9 @@ export const CustomLayersControl: FC = () => {
           </h3>
           <div className="flex max-w-[256px] text-center">
             <ExternalMapItem
-              name="Google"
-              href="https://maps.google.com"
-              image="/images/brands/google-g.svg"
+              name="Earth"
+              href="https://earth.google.com/web/@41.95456799,3.20833249,206.88319143a,840.3173078d,35y,135h,60t,0r/data=KAI"
+              image="/images/brands/google-earth.svg"
             />
             <ExternalMapItem
               name="Navionics"
@@ -76,14 +76,14 @@ export const CustomLayersControl: FC = () => {
               image="/images/brands/navionics.svg"
             />
             <ExternalMapItem
-              name="Bing"
-              href="https://www.bing.com/maps?cp=41.846547%7E3.129044&lvl=11.0"
-              image="/images/brands/bing.svg"
+              name="Vissir3"
+              href="http://srv.icgc.cat/vissir3/index.html?HfYJ5y5Ks"
+              image="/images/brands/icgc.svg"
             />
             <ExternalMapItem
-              name="Apple"
-              href="https://www.apple.com/maps/"
-              image="/images/brands/apple.svg"
+              name="Wikiloc"
+              href="https://wikiloc.com/wikiloc/map.do?sw=41.92590918891433%2C3.1692981719970708&ne=41.982271629453585%2C3.2681751251220708&page=1"
+              image="/images/brands/wikiloc.svg"
             />
           </div>
         </div>
