@@ -1,7 +1,7 @@
 'use client'
 
-import dynamic from 'next/dynamic'
 import { IconLoader } from '@tabler/icons-react'
+import dynamic from 'next/dynamic'
 import { createContext, useContext } from 'react'
 import { cn } from '~/helpers/cn'
 
