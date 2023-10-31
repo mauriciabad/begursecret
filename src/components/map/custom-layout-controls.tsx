@@ -61,7 +61,7 @@ export const CustomLayersControl: FC = () => {
       <PopoverContent className="block space-y-4 p-4">
         <div>
           <h3 className="mb-2 font-title font-semibold leading-none">
-            External maps
+            {t('layout-types.external')}
           </h3>
           <div className="flex max-w-[256px] text-center">
             <ExternalMapItem

@@ -201,7 +201,8 @@
       "standard": "Standard",
       "satellite": "Satellite",
       "hybrid": "Hybrid",
-      "classic": "Classic"
+      "classic": "Classic",
+      "external": "External maps"
     }
   }
 }
