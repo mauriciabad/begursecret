@@ -187,5 +187,20 @@
     "missions": "Missions",
     "hub": "Oficina virtual",
     "profile": "Perfil"
+  },
+  "place": {
+    "meta": {
+      "title": "Lloc",
+      "description": "Informació del lloc"
+    }
+  },
+  "map": {
+    "layout-types": {
+      "standard": "Estàndard",
+      "satellite": "Satèl·lit",
+      "hybrid": "Híbrid",
+      "classic": "Classic",
+      "external": "Mapes externs"
+    }
   }
 }

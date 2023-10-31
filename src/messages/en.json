@@ -189,5 +189,20 @@
     "missions": "Missions",
     "hub": "Hub",
     "profile": "Profile"
+  },
+  "place": {
+    "meta": {
+      "title": "Place",
+      "description": "Place details"
+    }
+  },
+  "map": {
+    "layout-types": {
+      "standard": "Standard",
+      "satellite": "Satellite",
+      "hybrid": "Hybrid",
+      "classic": "Classic",
+      "external": "External maps"
+    }
   }
 }

@@ -8,10 +8,18 @@ export const LinkButton: FC<
   ButtonProps & {
     href: string
     children: ReactNode
+    isExternal?: boolean
   }
-> = ({ href, children, ...props }) => {
+> = ({ href, children, isExternal, ...props }) => {
   return (
-    <Button as={Link} href={href} {...props} role="link">
+    <Button
+      as={Link}
+      href={href}
+      {...props}
+      role="link"
+      target={isExternal ? '_blank' : undefined}
+      rel={isExternal ? 'noopener noreferrer' : undefined}
+    >
       {children}
     </Button>
   )

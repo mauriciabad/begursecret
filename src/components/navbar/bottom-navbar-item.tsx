@@ -19,7 +19,7 @@ export const BottomNavbarItem: FC<{
         className="flex h-full items-center justify-center"
         aria-label={label}
       >
-        {!!iconActive && pathname === url ? iconActive : icon}
+        {!!iconActive && pathname.startsWith(url) ? iconActive : icon}
       </Link>
     </li>
   )
