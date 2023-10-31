@@ -44,6 +44,7 @@ export const CustomLocationControl: FC = () => {
           onPress={() => {
             elementWithClickEvent.click()
           }}
+          size="lg"
           isIconOnly
           aria-label="Test"
           variant="solid"

@@ -1,10 +1,10 @@
 'use client'
 
 import { Button } from '@nextui-org/button'
-import { Card, CardFooter } from '@nextui-org/card'
+import { Card, CardBody } from '@nextui-org/card'
 import { Image } from '@nextui-org/image'
 import { Popover, PopoverContent, PopoverTrigger } from '@nextui-org/popover'
-import { IconCircleFilled, IconStack2 } from '@tabler/icons-react'
+import { IconStack2 } from '@tabler/icons-react'
 import { TileLayer } from 'leaflet'
 import 'leaflet.locatecontrol'
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'
@@ -50,6 +50,7 @@ export const CustomLayersControl: FC = () => {
     <Popover placement="top-end">
       <PopoverTrigger>
         <Button
+          size="lg"
           isIconOnly
           aria-label="Test"
           variant="solid"
@@ -65,9 +66,9 @@ export const CustomLayersControl: FC = () => {
           </h3>
           <div className="flex max-w-[256px] text-center">
             <ExternalMapItem
-              name="Google"
-              href="https://maps.google.com"
-              image="/images/brands/google-g.svg"
+              name="Earth"
+              href="https://earth.google.com/web/@41.95456799,3.20833249,206.88319143a,840.3173078d,35y,135h,60t,0r/data=KAI"
+              image="/images/brands/google-earth.svg"
             />
             <ExternalMapItem
               name="Navionics"
@@ -75,14 +76,14 @@ export const CustomLayersControl: FC = () => {
               image="/images/brands/navionics.svg"
             />
             <ExternalMapItem
-              name="Bing"
-              href="https://www.bing.com/maps?cp=41.846547%7E3.129044&lvl=11.0"
-              image="/images/brands/bing.svg"
+              name="Vissir3"
+              href="http://srv.icgc.cat/vissir3/index.html?HfYJ5y5Ks"
+              image="/images/brands/icgc.svg"
             />
             <ExternalMapItem
-              name="Apple"
-              href="https://www.apple.com/maps/"
-              image="/images/brands/apple.svg"
+              name="Wikiloc"
+              href="https://wikiloc.com/wikiloc/map.do?sw=41.92590918891433%2C3.1692981719970708&ne=41.982271629453585%2C3.2681751251220708&page=1"
+              image="/images/brands/wikiloc.svg"
             />
           </div>
         </div>
@@ -147,7 +148,6 @@ const LayerButton: FC<{
       key={layer.id}
       isPressable
       onPress={onPress}
-      isFooterBlurred
       className={cn('max-w-[80px]', {
         'ring-2 ring-brand-600 ring-offset-1': active,
       })}
@@ -159,21 +159,11 @@ const LayerButton: FC<{
         src={layer.sampleImage}
         radius="none"
       />
-      <CardFooter className="absolute inset-x-0 bottom-0 z-10 flex w-auto justify-center gap-1 overflow-hidden border-t border-white/30 bg-white/25 p-1 text-black/80">
-        {active && <IconCircleFilled size={8} className="text-black/40" />}
-        <span className="font-title font-bold leading-none">
+      <CardBody className="absolute inset-0 top-auto z-10 p-1">
+        <span className="text-center font-title text-xs font-bold leading-none text-black opacity-70 text-border-white">
           {layer.attribution.name}
         </span>
-        {active && <IconCircleFilled size={8} className="text-black/40" />}
-        {/* <LinkIconButton
-          href={layer.attribution.url}
-          label="Link to attribution"
-          className="h-4 w-4 min-w-0 text-black/40"
-          whitespace-normalal
-        >
-          <IconInfoCircle size={16} />
-        </LinkIconButton> */}
-      </CardFooter>
+      </CardBody>
     </Card>
   )
 }
@@ -190,8 +180,10 @@ const ExternalMapItem: FC<{
       isExternal
       variant="light"
     >
-      <Image src={image} className="h-6" />
-      <span className="whitespace-normal text-xs">{name}</span>
+      <Image src={image} className="h-6" radius="none" />
+      <span className="whitespace-normal text-xs font-medium text-stone-800">
+        {name}
+      </span>
     </LinkButton>
   )
 }
