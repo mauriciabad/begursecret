@@ -1,10 +1,12 @@
-import type { Config } from 'tailwindcss'
+// @ts-check
+
 import { nextui } from '@nextui-org/react'
 import defaultTheme from 'tailwindcss/defaultTheme'
 import typography from '@tailwindcss/typography'
-import textBorder from './tailwind/text-border-plugin'
+import plugin from 'tailwindcss/plugin'
 
-const config: Config = {
+/** @type {import('tailwindcss').Config}*/
+const config = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -20,7 +22,10 @@ const config: Config = {
       },
       minHeight: {
         ...defaultTheme.minHeight,
-        screen: ['100vh', '100dvh'] as unknown as string,
+
+        screen: /** @type {string} */ (
+          /** @type {unknown} */ (['100vh', '100dvh'])
+        ),
       },
       colors: {
         brand: {
@@ -66,7 +71,22 @@ const config: Config = {
     },
   },
   darkMode: 'class',
-  plugins: [textBorder, nextui(), typography],
+  plugins: [
+    nextui(),
+    typography,
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        '.text-border-white': {
+          'text-shadow': `
+             1px  1px 0 white,
+            -1px -1px 0 white,
+             1px -1px 0 white,
+            -1px  1px 0 white;
+          `,
+        },
+      })
+    }),
+  ],
 }
 
 export default config
