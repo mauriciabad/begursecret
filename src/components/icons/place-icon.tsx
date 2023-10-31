@@ -1,7 +1,7 @@
 import {
+  Icon,
   IconBeach,
   IconBuildingCastle,
-  Icon,
   IconCircle,
   IconFlag,
   TablerIconsProps,

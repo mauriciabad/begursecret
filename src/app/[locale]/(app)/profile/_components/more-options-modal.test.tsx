@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { MoreOptionsModal } from './more-options-modal'
 import { render } from '~/test-utils'
+import { MoreOptionsModal } from './more-options-modal'
 
 describe('MoreOptionsModal', () => {
   it('shows the correct title', async () => {

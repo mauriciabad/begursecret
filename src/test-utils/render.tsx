@@ -1,10 +1,10 @@
-import React, { ReactElement } from 'react'
 import { render, RenderOptions } from '@testing-library/react'
+import { Session } from 'next-auth'
 import { NextIntlClientProvider } from 'next-intl'
+import React, { ReactElement } from 'react'
 import { AuthProvider } from '~/components/providers/auth-provider'
 import { NextuiProvider } from '~/components/providers/nextui-provider'
 import { TrpcProvider } from '~/components/providers/trpc-provider'
-import { Session } from 'next-auth'
 
 import messages from '~/messages/en.json'
 

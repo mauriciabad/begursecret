@@ -6,11 +6,11 @@ import { useSession } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next-intl/client'
 import { FC, FormEvent, useState } from 'react'
+import { LinkButton } from '~/components/link-button'
+import { UserAvatar } from '~/components/user-avatar'
+import { UpdateSessionSchemaType } from '~/schemas/profile'
 import { trpc } from '~/trpc'
 import { UploadProfileImageModal } from './upload-profile-image-modal'
-import { UpdateSessionSchemaType } from '~/schemas/profile'
-import { UserAvatar } from '~/components/user-avatar'
-import { LinkButton } from '~/components/link-button'
 
 export const CompleteProfileForm: FC<{
   className?: string

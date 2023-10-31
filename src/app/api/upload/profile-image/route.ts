@@ -1,11 +1,11 @@
+import { eq } from 'drizzle-orm'
+import { withAxiom } from 'next-axiom'
+import { NextResponse } from 'next/server'
 import sharp from 'sharp'
 import { deleteFromS3, uploadToS3 } from '~/server/aws'
 import { db } from '~/server/db/db'
-import { eq } from 'drizzle-orm'
 import { users } from '~/server/db/schema'
-import { NextResponse } from 'next/server'
 import { getSession } from '~/server/get-server-thing'
-import { withAxiom } from 'next-axiom'
 
 export const POST = withAxiom(async (request) => {
   const session = await getSession()

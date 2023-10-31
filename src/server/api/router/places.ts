@@ -1,15 +1,15 @@
 import 'server-only'
 
-import { asc, eq, sql, and } from 'drizzle-orm'
+import { and, asc, eq, sql } from 'drizzle-orm'
 import { getPlacesSchema, listPlacesSchema } from '~/schemas/places'
 import { db } from '~/server/db/db'
 import { places, placesTranslations } from '~/server/db/schema/places'
+import { selectPoint } from '~/server/helpers/spatial-data'
 import { procedure, router } from '~/server/trpc'
 import {
   flattenTranslations,
   selectTranslations,
 } from '../../helpers/translations'
-import { selectPoint } from '~/server/helpers/spatial-data'
 
 const allPlacesTranslationsInLocale = db
   .select()

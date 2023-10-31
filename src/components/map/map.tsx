@@ -1,5 +1,5 @@
-import dynamic from 'next/dynamic'
 import { IconLoader } from '@tabler/icons-react'
+import dynamic from 'next/dynamic'
 
 export const Map = dynamic(
   async () => {
