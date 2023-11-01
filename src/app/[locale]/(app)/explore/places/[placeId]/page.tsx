@@ -2,8 +2,11 @@ import type { Metadata } from 'next'
 import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
 import { Map } from '~/components/map/map'
+import { cn } from '~/helpers/cn'
 import { LocaleParams, onlyTranslatableLocales } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
+import { MapDrawer } from '../../_components/map-drawer'
+import { PlaceDetails } from '../../_components/place-details'
 
 type Params = LocaleParams & { placeId: string }
 
@@ -33,18 +36,32 @@ const PlacePage: FC<{
   return (
     <>
       <Map
-        className="grow"
+        className={cn(
+          'min-h-[calc(100dvh_-_192px)]',
+          'sticky top-16 grow',
+          '-mb-2 box-content pb-2'
+        )}
+        classNames={{
+          controls: 'bottom-6',
+        }}
         fullControl
-        zoom={19}
+        zoom={18}
         center={place.location}
         markers={[
           {
-            text: place.name,
             location: place.location,
             markerType: 'beach',
           },
         ]}
       />
+
+      <MapDrawer
+        classNames={{
+          wrapper: 'rounded-t-lg',
+        }}
+      >
+        <PlaceDetails placeFullInfo={place} />
+      </MapDrawer>
     </>
   )
 }

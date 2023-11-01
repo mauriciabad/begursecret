@@ -3,8 +3,11 @@ import { useLocale } from 'next-intl'
 import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
 import { Map } from '~/components/map/map'
+import { cn } from '~/helpers/cn'
 import { onlyTranslatableLocales, type LocaleRouteParams } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
+import { MapDrawer } from './_components/map-drawer'
+import { PlaceList } from './_components/place-list'
 
 export async function generateMetadata({
   params,
@@ -26,7 +29,14 @@ const ExplorePage: FC<LocaleRouteParams> = async () => {
   return (
     <>
       <Map
-        className="grow"
+        className={cn(
+          'min-h-[calc(100dvh_-_192px)]',
+          'sticky top-16 grow',
+          '-mb-2 box-content pb-2'
+        )}
+        classNames={{
+          controls: 'bottom-6',
+        }}
         fullControl
         zoom={14}
         markers={places.map((place) => ({
@@ -36,13 +46,13 @@ const ExplorePage: FC<LocaleRouteParams> = async () => {
         }))}
       />
 
-      {/* 
-      <aside className="pointer-events-none absolute inset-x-0 top-0">
-        <div className="mx-auto max-w-2xl px-6 py-3">
-          <PlaceList places={places} />
-        </div>
-      </aside> 
-      */}
+      <MapDrawer
+        classNames={{
+          wrapper: 'rounded-t-lg',
+        }}
+      >
+        <PlaceList places={places} />
+      </MapDrawer>
     </>
   )
 }

@@ -20,6 +20,8 @@ const DEFAULT_CENTER = {
   lng: 3.213765,
 } as const satisfies LatLngLiteral
 
+export const mapContainerClassName = 'z-0 h-64 w-full'
+
 export const MapRaw: FC<{
   center?: LatLngLiteral
   className?: string
@@ -31,12 +33,16 @@ export const MapRaw: FC<{
     markerType?: PlaceType
     url?: string
   }[]
+  classNames?: {
+    controls?: string
+  }
 }> = ({
   center = DEFAULT_CENTER,
   className,
   markers,
   fullControl,
   zoom = 14,
+  classNames = {},
 }) => {
   const router = useRouter()
   const [map, setMap] = useState<LeafletMap | null>(null)
@@ -61,7 +67,7 @@ export const MapRaw: FC<{
       zoomControl={false}
       scrollWheelZoom={fullControl}
       dragging={fullControl || !L.Browser.mobile}
-      className={cn('z-0 h-64 w-full', className)}
+      className={cn(mapContainerClassName, className)}
       ref={setMap}
       attributionControl={false}
     >
@@ -96,7 +102,12 @@ export const MapRaw: FC<{
         </Marker>
       ))}
 
-      <div className="absolute bottom-4 right-4 z-[1000] flex flex-col-reverse gap-2">
+      <div
+        className={cn(
+          'absolute bottom-4 right-4 z-[1000] flex flex-col-reverse gap-2',
+          classNames.controls
+        )}
+      >
         <CustomLayersControl />
         <CustomLocationControl />
       </div>
