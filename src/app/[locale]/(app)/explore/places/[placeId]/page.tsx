@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { getTranslator } from 'next-intl/server'
+import { notFound } from 'next/navigation'
 import type { FC } from 'react'
 import { Map } from '~/components/map/map'
 import { cn } from '~/helpers/cn'
@@ -33,6 +34,8 @@ const PlacePage: FC<{
     id: placeId,
   })
 
+  if (!place) notFound()
+
   return (
     <>
       <Map
@@ -50,8 +53,8 @@ const PlacePage: FC<{
         markers={[
           {
             location: place.location,
-            icon: place.mainCategory?.icon,
-            color: place.mainCategory?.color,
+            icon: place.mainCategory.icon,
+            color: place.mainCategory.color,
           },
         ]}
       />

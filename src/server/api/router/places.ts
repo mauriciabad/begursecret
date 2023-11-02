@@ -1,20 +1,10 @@
 import 'server-only'
 
-import { and, eq, sql } from 'drizzle-orm'
+import { sql } from 'drizzle-orm'
 import { getPlacesSchema, listPlacesSchema } from '~/schemas/places'
 import { db } from '~/server/db/db'
-import {
-  placeCategories,
-  places,
-  placesTranslations,
-} from '~/server/db/schema/places'
-import { selectPoint } from '~/server/helpers/spatial-data'
 import { flattenTranslations } from '~/server/helpers/translations/flatten'
 import { procedure, router } from '~/server/trpc'
-import {
-  flattenTranslationsFromSelect,
-  selectTranslations,
-} from '../../helpers/translations/select'
 
 const getAllPlaces = db.query.places
   .findMany({
@@ -75,41 +65,64 @@ const getAllPlaces = db.query.places
   })
   .prepare()
 
-const placeTranslationsInLocale = db
-  .select()
-  .from(placesTranslations)
-  .where(
-    and(
-      eq(placesTranslations.placeId, sql.placeholder('id')),
-      eq(placesTranslations.locale, sql.placeholder('locale'))
-    )
-  )
-  .as('placeTranslationsInLocale')
-
-const getPlace = db
-  .selectDistinct({
-    id: places.id,
-    mainImage: places.mainImage,
-    location: selectPoint('location', places.location),
-    mainCategory: {
-      name: placeCategories.name, // TODO: Select translations
-      icon: placeCategories.icon,
-      color: placeCategories.color,
+const getPlace = db.query.places
+  .findFirst({
+    columns: {
+      id: true,
+      mainImage: true,
+      location: true,
+      name: true,
     },
-
-    ...selectTranslations({
-      fields: ['name'],
-      normalTable: places,
-      translationsTable: placeTranslationsInLocale,
-    }),
+    where: (place, { eq }) => eq(place.id, sql.placeholder('id')),
+    with: {
+      categories: {
+        columns: {},
+        with: {
+          category: {
+            columns: {
+              id: true,
+              icon: true,
+              name: true,
+            },
+          },
+        },
+      },
+      mainCategory: {
+        columns: {
+          id: true,
+          icon: true,
+          color: true,
+          name: true,
+        },
+        with: {
+          translations: {
+            columns: {
+              id: false,
+              locale: false,
+              placeCategoryId: false,
+            },
+            where: (translations, { eq, and, isNotNull }) =>
+              and(
+                isNotNull(sql.placeholder('locale')),
+                eq(translations.locale, sql.placeholder('locale'))
+              ),
+          },
+        },
+      },
+      translations: {
+        columns: {
+          id: false,
+          locale: false,
+          placeId: false,
+        },
+        where: (translations, { eq, and, isNotNull }) =>
+          and(
+            isNotNull(sql.placeholder('locale')),
+            eq(translations.locale, sql.placeholder('locale'))
+          ),
+      },
+    },
   })
-  .from(places)
-  .where(eq(places.id, sql.placeholder('id')))
-  .leftJoin(
-    placeTranslationsInLocale,
-    eq(places.id, placeTranslationsInLocale.placeId)
-  )
-  .leftJoin(placeCategories, eq(places.mainCategoryId, placeCategories.id))
   .prepare()
 
 export const placesRouter = router({
@@ -119,10 +132,11 @@ export const placesRouter = router({
     )
   }),
   get: procedure.input(getPlacesSchema).query(async ({ input }) => {
-    const result = await getPlace.execute({
-      locale: input.locale,
-      id: input.id,
-    })
-    return result.map(flattenTranslationsFromSelect)[0]
+    return flattenTranslations(
+      await getPlace.execute({
+        locale: input.locale,
+        id: input.id,
+      })
+    )
   }),
 })

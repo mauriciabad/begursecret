@@ -41,8 +41,8 @@ const ExplorePage: FC<LocaleRouteParams> = async () => {
         zoom={14}
         markers={places.map((place) => ({
           location: place.location,
-          icon: place.mainCategory?.icon,
-          color: place.mainCategory?.color,
+          icon: place.mainCategory.icon,
+          color: place.mainCategory.color,
           url: `/explore/places/${place.id}`,
         }))}
       />
