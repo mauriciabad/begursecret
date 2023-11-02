@@ -11,7 +11,7 @@ export const pointType = customType<{
   driverData: { x: number; y: number }
 }>({
   dataType() {
-    return `POINT SRID ${SRID_CODE}`
+    return 'point'
   },
   toDriver(value: MapPoint | string) {
     const point = getPoint(value)

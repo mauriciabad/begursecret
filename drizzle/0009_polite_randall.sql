@@ -1,0 +1,1 @@
+ALTER TABLE `place` MODIFY COLUMN `location` point NOT NULL;
