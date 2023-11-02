@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "7c6979f8-bc09-4405-83c5-3629f89033a9",
+  "id": "708b6cff-3965-4295-bf02-c0b01577327a",
   "prevId": "063d427f-f792-4617-81f8-b89e2c90fee9",
   "tables": {
     "placeCategory": {
@@ -139,7 +139,7 @@
         },
         "location": {
           "name": "location",
-          "type": "point",
+          "type": "POINT SRID 25831",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false

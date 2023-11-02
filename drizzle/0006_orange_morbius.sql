@@ -24,5 +24,4 @@ CREATE TABLE `placeToPlaceCategory` (
 	CONSTRAINT `placeToPlaceCategory_categoryId_placeId` PRIMARY KEY(`categoryId`,`placeId`)
 );
 --> statement-breakpoint
-ALTER TABLE `place` MODIFY COLUMN `location` point NOT NULL;--> statement-breakpoint
 ALTER TABLE `place` ADD `mainCategoryId` int DEFAULT 1 NOT NULL;

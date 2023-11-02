@@ -1,6 +1,6 @@
 import { DriverValueMapper, sql } from 'drizzle-orm'
 import { customType } from 'drizzle-orm/mysql-core'
-import { getPoint } from '~/helpers/spatial-data'
+import { getPoint } from '../../helpers/spatial-data'
 
 // ETRS89 UTM zone 31 North
 const SRID_CODE = 25831
