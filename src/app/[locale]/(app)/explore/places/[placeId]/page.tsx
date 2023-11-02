@@ -50,6 +50,8 @@ const PlacePage: FC<{
         markers={[
           {
             location: place.location,
+            icon: place.mainCategory.icon,
+            color: place.mainCategory.color,
           },
         ]}
       />
