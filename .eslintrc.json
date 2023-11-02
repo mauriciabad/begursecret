@@ -7,6 +7,9 @@
   ],
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
+  "rules": {
+    "no-empty-pattern": "warn"
+  },
   "overrides": [
     {
       "files": ["src/**/*.{spec,test}.{mjs,cjs,js,ts,jsx,tsx}"],
