@@ -4,6 +4,7 @@ import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
 import { Map } from '~/components/map/map'
 import { cn } from '~/helpers/cn'
+import { calculateLocation } from '~/helpers/spatial-data'
 import { onlyTranslatableLocales, type LocaleRouteParams } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
 import { MapDrawer } from './_components/map-drawer'
@@ -22,9 +23,11 @@ export async function generateMetadata({
 const ExplorePage: FC<LocaleRouteParams> = async () => {
   const locale = useLocale()
   const trpc = await getTrpc()
-  const places = await trpc.places.list({
+  const placesWithoutLocation = await trpc.places.list({
     locale: onlyTranslatableLocales(locale),
   })
+
+  const places = placesWithoutLocation.map(calculateLocation)
 
   return (
     <>

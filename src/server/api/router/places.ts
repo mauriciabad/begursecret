@@ -3,6 +3,8 @@ import 'server-only'
 import { sql } from 'drizzle-orm'
 import { getPlacesSchema, listPlacesSchema } from '~/schemas/places'
 import { db } from '~/server/db/db'
+import { places } from '~/server/db/schema'
+import { selectPoint } from '~/server/helpers/spatial-data'
 import {
   flattenTranslationsOnExecute,
   withTranslations,
@@ -16,8 +18,10 @@ const getAllPlaces = flattenTranslationsOnExecute(
         columns: {
           id: true,
           mainImage: true,
-          location: true,
           name: true,
+        },
+        extras: {
+          location: selectPoint('location', places.location),
         },
         with: {
           categories: {
@@ -53,8 +57,10 @@ const getPlace = flattenTranslationsOnExecute(
         columns: {
           id: true,
           mainImage: true,
-          location: true,
           name: true,
+        },
+        extras: {
+          location: selectPoint('location', places.location),
         },
         where: (place, { eq }) => eq(place.id, sql.placeholder('id')),
         with: {

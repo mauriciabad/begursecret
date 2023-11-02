@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import type { FC } from 'react'
 import { Map } from '~/components/map/map'
 import { cn } from '~/helpers/cn'
+import { calculateLocation } from '~/helpers/spatial-data'
 import { LocaleParams, onlyTranslatableLocales } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
 import { MapDrawer } from '../../_components/map-drawer'
@@ -29,12 +30,13 @@ const PlacePage: FC<{
   const placeId = Number(params.placeId)
 
   const trpc = await getTrpc()
-  const place = await trpc.places.get({
+  const placeWithoutLocation = await trpc.places.get({
     locale: onlyTranslatableLocales(params.locale),
     id: placeId,
   })
+  if (!placeWithoutLocation) notFound()
 
-  if (!place) notFound()
+  const place = calculateLocation(placeWithoutLocation)
 
   return (
     <>
