@@ -81,6 +81,7 @@ const getPlace = db
     placeTranslationsInLocale,
     eq(places.id, placeTranslationsInLocale.placeId)
   )
+  .leftJoin(placeCategories, eq(places.mainCategoryId, placeCategories.id))
   .prepare()
 
 export const placesRouter = router({
