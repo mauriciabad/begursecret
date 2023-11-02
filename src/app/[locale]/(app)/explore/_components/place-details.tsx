@@ -40,7 +40,7 @@ export const PlaceDetails: FC<{
                 <PlaceCategoryIcon icon={place.mainCategory.icon} size={16} />
                 {place.mainCategory.name}
               </span>
-              {place.categories.length > 1 && (
+              {place.categories.length >= 1 && (
                 <span className="h-4 w-[1px] bg-stone-200" />
               )}
               {place.categories.map(({ category }) => (
