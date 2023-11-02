@@ -1,6 +1,7 @@
 import 'server-only'
 
 import { sql } from 'drizzle-orm'
+import { calculateLocation } from '~/helpers/spatial-data'
 import { getPlacesSchema, listPlacesSchema } from '~/schemas/places'
 import { db } from '~/server/db/db'
 import { places } from '~/server/db/schema'
@@ -92,12 +93,15 @@ const getPlace = flattenTranslationsOnExecute(
 
 export const placesRouter = router({
   list: procedure.input(listPlacesSchema).query(async ({ input }) => {
-    return await getAllPlaces.execute({ locale: input.locale })
+    return (await getAllPlaces.execute({ locale: input.locale })).map(
+      calculateLocation
+    )
   }),
   get: procedure.input(getPlacesSchema).query(async ({ input }) => {
-    return await getPlace.execute({
+    const result = await getPlace.execute({
       locale: input.locale,
       id: input.id,
     })
+    return result ? calculateLocation(result) : undefined
   }),
 })
