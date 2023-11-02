@@ -5,7 +5,7 @@ import {
   mysqlTable,
   serial,
 } from 'drizzle-orm/mysql-core'
-import { locale } from '~/server/db/utilities'
+import { locale } from '../../db/utilities'
 
 /**
  * Creates tables for the translations and it's relations.

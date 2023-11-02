@@ -6,13 +6,13 @@ import {
   text,
   tinytext,
 } from 'drizzle-orm/mysql-core'
-import { mysqlTableWithTranslations } from '~/server/helpers/translations/db-tables'
 import { pointType } from '../../helpers/spatial-data'
+import { mysqlTableWithTranslations } from '../../helpers/translations/db-tables'
 import {
   placeCategoriesColors,
   placeCategoriesIcons,
 } from '../constants/places'
-import { s3ObjectKey } from '../utilities'
+import { gender, s3ObjectKey } from '../utilities'
 
 export const {
   normalTable: places,
@@ -24,7 +24,7 @@ export const {
   normalColumns: {
     mainImage: s3ObjectKey('mainImage'),
     location: pointType('location').notNull(),
-    mainCategoryId: int('mainCategoryId').notNull().default(1),
+    mainCategoryId: int('mainCategoryId').notNull().default(1), // TODO: remove default after migration
   },
   translatableColumns: {
     name: text('name').notNull(),
@@ -54,6 +54,8 @@ export const {
   },
   translatableColumns: {
     name: tinytext('name').notNull(),
+    namePlural: tinytext('namePlural').notNull(),
+    nameGender: gender('nameGender'),
   },
 })
 
