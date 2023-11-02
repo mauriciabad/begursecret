@@ -26,7 +26,7 @@ const getAllPlaces = db
     id: places.id,
     mainImage: places.mainImage,
     location: selectPoint('location', places.location),
-    category: {
+    mainCategory: {
       name: placeCategories.name, // TODO: Select translations
       icon: placeCategories.icon,
       color: placeCategories.color,

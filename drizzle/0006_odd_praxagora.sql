@@ -14,4 +14,10 @@ CREATE TABLE `placeCategory_translation` (
 	CONSTRAINT `placeCategory_translation_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
+CREATE TABLE `placeToPlaceCategory` (
+	`placeId` int NOT NULL,
+	`categoryId` int NOT NULL,
+	CONSTRAINT `placeToPlaceCategory_categoryId_placeId` PRIMARY KEY(`categoryId`,`placeId`)
+);
+--> statement-breakpoint
 ALTER TABLE `place` ADD `mainCategoryId` int NOT NULL;
