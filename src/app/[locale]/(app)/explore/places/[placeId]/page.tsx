@@ -50,7 +50,6 @@ const PlacePage: FC<{
         markers={[
           {
             location: place.location,
-            markerType: 'beach',
           },
         ]}
       />

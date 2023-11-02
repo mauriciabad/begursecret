@@ -3,7 +3,11 @@ import 'server-only'
 import { and, asc, eq, sql } from 'drizzle-orm'
 import { getPlacesSchema, listPlacesSchema } from '~/schemas/places'
 import { db } from '~/server/db/db'
-import { places, placesTranslations } from '~/server/db/schema/places'
+import {
+  placeCategories,
+  places,
+  placesTranslations,
+} from '~/server/db/schema/places'
 import { selectPoint } from '~/server/helpers/spatial-data'
 import { procedure, router } from '~/server/trpc'
 import {
@@ -22,6 +26,11 @@ const getAllPlaces = db
     id: places.id,
     mainImage: places.mainImage,
     location: selectPoint('location', places.location),
+    category: {
+      name: placeCategories.name, // TODO: Select translations
+      icon: placeCategories.icon,
+      color: placeCategories.color,
+    },
 
     ...selectTranslations({
       fields: ['name'],
@@ -34,6 +43,7 @@ const getAllPlaces = db
     allPlacesTranslationsInLocale,
     eq(places.id, allPlacesTranslationsInLocale.placeId)
   )
+  .leftJoin(placeCategories, eq(places.mainCategoryId, placeCategories.id))
   .orderBy(asc(allPlacesTranslationsInLocale.name))
   .prepare()
 

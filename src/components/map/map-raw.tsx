@@ -1,19 +1,19 @@
 'use client'
 
-import L, { Icon, LatLngLiteral, Map as LeafletMap, divIcon } from 'leaflet'
+import L, { LatLngLiteral, Map as LeafletMap, divIcon } from 'leaflet'
 import 'leaflet.locatecontrol'
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'
 import 'leaflet/dist/leaflet.css'
 import { useRouter } from 'next-intl/client'
-import { FC, useEffect, useState } from 'react'
+import { FC, useState } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { MapContainer, Marker, Popup } from 'react-leaflet'
+import { MapContainer, Marker } from 'react-leaflet'
 import { cn } from '~/helpers/cn'
-import { PlaceType } from '~/server/db/constants/places'
 import { CustomLayersControl } from './custom-layout-controls'
 import { CustomLocationControl } from './custom-location-control'
-import { PlaceMarker } from './place-marker'
-import IconMapPin from '/public/icon-map-pin.svg'
+import { PlaceMarker, PlaceMarkerProps } from './place-marker'
+import { useMapControlledZoom } from './useMapControlledZoom'
+import { useMapResize } from './useMapResize'
 
 const DEFAULT_CENTER = {
   lat: 41.958627,
@@ -27,12 +27,10 @@ export const MapRaw: FC<{
   className?: string
   zoom?: number
   fullControl?: boolean
-  markers?: {
+  markers?: (PlaceMarkerProps & {
     location: LatLngLiteral
-    text?: string
-    markerType?: PlaceType
     url?: string
-  }[]
+  })[]
   classNames?: {
     controls?: string
   }
@@ -41,24 +39,15 @@ export const MapRaw: FC<{
   className,
   markers,
   fullControl,
-  zoom = 14,
+  zoom: initialZoom = 14,
   classNames = {},
 }) => {
   const router = useRouter()
   const [map, setMap] = useState<LeafletMap | null>(null)
 
-  useEffect(() => {
-    if (map) {
-      const resizeObserver = new ResizeObserver(() => map.invalidateSize())
+  const {} = useMapResize(map)
 
-      const container = map.getContainer()
-      resizeObserver.observe(container)
-
-      return () => {
-        resizeObserver.unobserve(container)
-      }
-    }
-  }, [map])
+  const { zoom } = useMapControlledZoom(map, initialZoom)
 
   return (
     <MapContainer
@@ -71,36 +60,35 @@ export const MapRaw: FC<{
       ref={setMap}
       attributionControl={false}
     >
-      {markers?.map(({ text, location, markerType, url: markerUrl }) => (
-        <Marker
-          key={`${location.lat}-${location.lng}`}
-          position={location}
-          icon={
-            markerType
-              ? divIcon({
-                  html: renderToStaticMarkup(<PlaceMarker type={markerType} />),
-                  iconSize: [0, 0],
-                })
-              : new Icon({
-                  iconUrl: IconMapPin.src,
-                  iconAnchor: [94 * 0.3 * 0.5, 128 * 0.3 * 1],
-                  iconSize: [94 * 0.3, 128 * 0.3],
-                })
-          }
-          eventHandlers={
-            markerUrl
-              ? {
-                  click: () => {
-                    console.log('click', markerUrl)
-                    router.push(markerUrl)
-                  },
-                }
-              : {}
-          }
-        >
-          {text && <Popup>{text}</Popup>}
-        </Marker>
-      ))}
+      {markers?.map(
+        ({ location, url: markerUrl, size, ...placeMarkerProps }) => (
+          <Marker
+            key={`${location.lat}-${location.lng}`}
+            position={location}
+            icon={divIcon({
+              html: renderToStaticMarkup(
+                <PlaceMarker
+                  {...placeMarkerProps}
+                  size={size ?? (zoom >= 14 ? 'normal' : 'tiny')}
+                />
+              ),
+              iconSize: [0, 0],
+              className:
+                '!flex justify-center items-center border-0 bg-none [&>*]:shrink-0',
+            })}
+            eventHandlers={
+              markerUrl
+                ? {
+                    click: () => {
+                      console.log('click', markerUrl)
+                      router.push(markerUrl)
+                    },
+                  }
+                : {}
+            }
+          ></Marker>
+        )
+      )}
 
       <div
         className={cn(
