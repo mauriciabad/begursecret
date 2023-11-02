@@ -1,0 +1,1 @@
+ALTER TABLE `place` MODIFY COLUMN `mainCategoryId` int NOT NULL;
