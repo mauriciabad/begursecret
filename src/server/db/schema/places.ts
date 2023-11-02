@@ -6,8 +6,8 @@ import {
   text,
   tinytext,
 } from 'drizzle-orm/mysql-core'
+import { mysqlTableWithTranslations } from '~/server/helpers/translations/db-tables'
 import { pointType } from '../../helpers/spatial-data'
-import { mysqlTableWithTranslations } from '../../helpers/translations'
 import {
   placeCategoriesColors,
   placeCategoriesIcons,

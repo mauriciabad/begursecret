@@ -1,6 +1,6 @@
 'use client'
 
-import L, { LatLngLiteral, Map as LeafletMap, divIcon } from 'leaflet'
+import L, { Map as LeafletMap, divIcon } from 'leaflet'
 import 'leaflet.locatecontrol'
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'
 import 'leaflet/dist/leaflet.css'
@@ -9,6 +9,7 @@ import { FC, useState } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { MapContainer, Marker } from 'react-leaflet'
 import { cn } from '~/helpers/cn'
+import { MapPoint } from '~/helpers/spatial-data'
 import { CustomLayersControl } from './custom-layout-controls'
 import { CustomLocationControl } from './custom-location-control'
 import { PlaceMarker, PlaceMarkerProps } from './place-marker'
@@ -18,17 +19,17 @@ import { useMapResize } from './useMapResize'
 const DEFAULT_CENTER = {
   lat: 41.958627,
   lng: 3.213765,
-} as const satisfies LatLngLiteral
+} as const satisfies MapPoint
 
 export const mapContainerClassName = 'z-0 h-64 w-full'
 
 export const MapRaw: FC<{
-  center?: LatLngLiteral
+  center?: MapPoint
   className?: string
   zoom?: number
   fullControl?: boolean
   markers?: (PlaceMarkerProps & {
-    location: LatLngLiteral
+    location: MapPoint
     url?: string
   })[]
   classNames?: {

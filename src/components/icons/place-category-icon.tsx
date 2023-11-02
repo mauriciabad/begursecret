@@ -41,7 +41,7 @@ const iconsByIconName = {
 
 export const PlaceCategoryIcon: FC<
   TablerIconsProps & {
-    icon?: PlaceCategoryIconType
+    icon?: PlaceCategoryIconType | null
   }
 > = ({ icon, ...tablerIconsProps }) => {
   const Icon = icon ? iconsByIconName[icon] : IconMapPin

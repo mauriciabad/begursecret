@@ -2,8 +2,8 @@
 
 import { Card, CardBody } from '@nextui-org/card'
 import { Image } from '@nextui-org/image'
-import { LatLngLiteral } from 'leaflet'
 import { FC } from 'react'
+import { MapPoint } from '~/helpers/spatial-data'
 
 function makeImageUrl<T extends string>(s3key: T | null) {
   if (!s3key) {
@@ -16,7 +16,7 @@ export const PlaceDetails: FC<{
   placeFullInfo: {
     id: number
     mainImage: string | null
-    location: LatLngLiteral
+    location: MapPoint
     name: string
   }
 }> = ({ placeFullInfo: place }) => {

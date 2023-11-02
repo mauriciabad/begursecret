@@ -1,21 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DriverValueMapper, sql } from 'drizzle-orm'
 import { customType } from 'drizzle-orm/mysql-core'
-import { LatLngLiteral } from 'leaflet'
-
-export type Point = LatLngLiteral
+import { MapPoint } from '~/helpers/spatial-data'
 
 // ETRS89 UTM zone 31 North
 const SRID_CODE = 25831
 
 export const pointType = customType<{
-  data: Point
+  data: MapPoint
   driverData: { x: number; y: number }
 }>({
   dataType() {
     return `POINT SRID ${SRID_CODE}`
   },
-  toDriver(value: Point | string) {
+  toDriver(value: MapPoint | string) {
     const point = getPoint(value)
     if (!point) throw new Error(`Invalid point value: ${JSON.stringify(value)}`)
     return sql`ST_PointFromText('POINT(${point.lng} ${point.lat})', ${SRID_CODE})`
@@ -36,7 +34,7 @@ export const selectPoint = <
   column: C,
   decoder: D
 ) => {
-  return sql<Point>`ST_AsText(${sql.identifier(column)})`
+  return sql<MapPoint>`ST_AsText(${sql.identifier(column)})`
     .mapWith(decoder)
     .as(column)
 }
@@ -48,8 +46,8 @@ export const selectPoint = <
  * @returns Object with lat and lng properties
  */
 function getPoint(
-  value: string | { x: number; y: number } | Point
-): Point | null {
+  value: string | { x: number; y: number } | MapPoint
+): MapPoint | null {
   if (typeof value === 'string') {
     try {
       return getPoint(JSON.parse(value))
