@@ -46,7 +46,7 @@ export const MapRaw: FC<{
   const router = useRouter()
   const [map, setMap] = useState<LeafletMap | null>(null)
 
-  const {} = useMapResize(map)
+  useMapResize(map)
 
   const { zoom } = useMapControlledZoom(map, initialZoom)
 

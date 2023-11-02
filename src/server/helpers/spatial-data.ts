@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DriverValueMapper, sql } from 'drizzle-orm'
 import { customType } from 'drizzle-orm/mysql-core'
 import { MapPoint } from '~/helpers/spatial-data'
