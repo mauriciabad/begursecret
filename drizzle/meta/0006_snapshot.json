@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "343d110a-f5a4-4c4d-b976-b4a99bb6be6f",
+  "id": "7c6979f8-bc09-4405-83c5-3629f89033a9",
   "prevId": "063d427f-f792-4617-81f8-b89e2c90fee9",
   "tables": {
     "placeCategory": {
@@ -33,6 +33,20 @@
           "type": "tinytext",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false
+        },
+        "namePlural": {
+          "name": "namePlural",
+          "type": "tinytext",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "nameGender": {
+          "name": "nameGender",
+          "type": "enum('masculine','feminine')",
+          "primaryKey": false,
+          "notNull": false,
           "autoincrement": false
         }
       },
@@ -78,6 +92,20 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
+        },
+        "namePlural": {
+          "name": "namePlural",
+          "type": "tinytext",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "nameGender": {
+          "name": "nameGender",
+          "type": "enum('masculine','feminine')",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {},
@@ -111,7 +139,7 @@
         },
         "location": {
           "name": "location",
-          "type": "POINT SRID 25831",
+          "type": "point",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -121,7 +149,8 @@
           "type": "int",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "autoincrement": false,
+          "default": 1
         },
         "name": {
           "name": "name",
