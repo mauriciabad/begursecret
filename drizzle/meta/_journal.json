@@ -43,6 +43,13 @@
       "when": 1698442666925,
       "tag": "0005_daily_sersi",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1698960353454,
+      "tag": "0006_orange_morbius",
+      "breakpoints": true
     }
   ]
 }

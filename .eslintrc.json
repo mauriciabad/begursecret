@@ -15,6 +15,12 @@
     {
       "files": ["e2e-tests/**/*.{spec,test}.{mjs,cjs,js,ts,jsx,tsx}"],
       "extends": ["plugin:playwright/recommended"]
+    },
+    {
+      "files": ["**/helpers/**/*.{mjs,cjs,js,ts,jsx,tsx}"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off"
+      }
     }
   ]
 }
