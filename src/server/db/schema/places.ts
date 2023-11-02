@@ -17,7 +17,7 @@ import { s3ObjectKey } from '../utilities'
 export const {
   normalTable: places,
   translationsTable: placesTranslations,
-  normalTableRelations: placesRelations,
+  makeRelationsWithTranslations: makePlaceRelations,
   translationsTableRelations: placesTranslationsRelations,
 } = mysqlTableWithTranslations({
   name: 'place',
@@ -31,10 +31,20 @@ export const {
   },
 })
 
+export const placesRelations = relations(places, (r) => ({
+  ...makePlaceRelations(r),
+
+  mainCategory: r.one(placeCategories, {
+    fields: [places.mainCategoryId],
+    references: [placeCategories.id],
+  }),
+  categories: r.many(placesToPlaceCategories),
+}))
+
 export const {
   normalTable: placeCategories,
   translationsTable: placeCategoriesTranslations,
-  normalTableRelations: placeCategoriesDataRelations,
+  makeRelationsWithTranslations: makePlaceCategoryRelations,
   translationsTableRelations: placeCategoriesTranslationsRelations,
 } = mysqlTableWithTranslations({
   name: 'placeCategory',
@@ -47,6 +57,13 @@ export const {
   },
 })
 
+export const placeCategoriesRelations = relations(placeCategories, (r) => ({
+  ...makePlaceCategoryRelations(r),
+
+  mainPlaces: r.many(places),
+  places: r.many(placesToPlaceCategories),
+}))
+
 export const placesToPlaceCategories = mysqlTable(
   'placeToPlaceCategory',
   {
@@ -58,22 +75,6 @@ export const placesToPlaceCategories = mysqlTable(
       pk: primaryKey(table.placeId, table.categoryId),
     }
   }
-)
-
-export const placesRelations2 = relations(places, ({ many, one }) => ({
-  mainCategory: one(placeCategories, {
-    fields: [places.mainCategoryId],
-    references: [placeCategories.id],
-  }),
-  categories: many(placesToPlaceCategories),
-}))
-
-export const placeCategoriesRelations2 = relations(
-  placeCategories,
-  ({ many }) => ({
-    mainPlaces: many(places),
-    places: many(placesToPlaceCategories),
-  })
 )
 
 export const placesToPlaceCategoriesRelations = relations(

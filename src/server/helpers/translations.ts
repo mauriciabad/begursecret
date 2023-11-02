@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { relations } from 'drizzle-orm'
+import { TableRelationsHelpers, relations } from 'drizzle-orm'
 import {
   MySqlColumnBuilderBase,
   int,
@@ -121,9 +121,6 @@ export function mysqlTableWithTranslations<
     locale: locale('locale').notNull(),
     ...translatableColumns,
   })
-  const normalTableRelations = relations(normalTable, ({ many }) => ({
-    translations: many(translationsTable),
-  }))
   const translationsTableRelations = relations(
     translationsTable,
     ({ one }) => ({
@@ -133,10 +130,14 @@ export function mysqlTableWithTranslations<
       }),
     })
   )
+  const makeRelationsWithTranslations = (r: TableRelationsHelpers<Name>) => ({
+    translations: r.many(translationsTable),
+  })
+
   return {
     normalTable,
     translationsTable,
-    normalTableRelations,
+    makeRelationsWithTranslations,
     translationsTableRelations,
   }
 }
