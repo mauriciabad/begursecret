@@ -50,6 +50,13 @@
       "when": 1698960353454,
       "tag": "0006_orange_morbius",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1698964258438,
+      "tag": "0007_nifty_shinko_yamashiro",
+      "breakpoints": true
     }
   ]
 }

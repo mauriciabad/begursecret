@@ -24,7 +24,7 @@ export const {
   normalColumns: {
     mainImage: s3ObjectKey('mainImage'),
     location: pointType('location').notNull(),
-    mainCategoryId: int('mainCategoryId').notNull().default(1), // TODO: remove default after migration
+    mainCategoryId: int('mainCategoryId').notNull(),
   },
   translatableColumns: {
     name: text('name').notNull(),
