@@ -60,21 +60,19 @@ export const placesToPlaceCategories = mysqlTable(
   }
 )
 
-export const placesRelations2 = relations(places, ({ one }) => ({
+export const placesRelations2 = relations(places, ({ many, one }) => ({
   mainCategory: one(placeCategories, {
     fields: [places.mainCategoryId],
     references: [placeCategories.id],
   }),
-}))
-
-export const placesRelations3 = relations(places, ({ many }) => ({
-  placesToPlaceCategories: many(placesToPlaceCategories),
+  categories: many(placesToPlaceCategories),
 }))
 
 export const placeCategoriesRelations2 = relations(
   placeCategories,
   ({ many }) => ({
-    placesToPlaceCategories: many(placesToPlaceCategories),
+    mainPlaces: many(places),
+    places: many(placesToPlaceCategories),
   })
 )
 
