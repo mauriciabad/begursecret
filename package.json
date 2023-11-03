@@ -40,7 +40,7 @@
     "clsx": "2.0.0",
     "drizzle-orm": "0.28.6",
     "eslint": "8.52.0",
-    "eslint-config-next": "14.0.1",
+    "eslint-config-next": "13.5.6",
     "framer-motion": "10.16.4",
     "leaflet": "1.9.4",
     "leaflet.locatecontrol": "0.79.0",
