@@ -87,8 +87,8 @@ dependencies:
     specifier: 4.24.4
     version: 4.24.4(next@13.4.13)(react-dom@18.2.0)(react@18.2.0)
   next-intl:
-    specifier: 3.0.0-beta.10
-    version: 3.0.0-beta.10(next@13.4.13)(react@18.2.0)
+    specifier: 3.0.0-beta.19
+    version: 3.0.0-beta.19(next@13.4.13)(react@18.2.0)
   postcss:
     specifier: 8.4.31
     version: 8.4.31
@@ -9619,9 +9619,8 @@ packages:
       whatwg-fetch: 3.6.19
     dev: true
 
-  /next-intl@3.0.0-beta.10(next@13.4.13)(react@18.2.0):
-    resolution: {integrity: sha512-CTe8oAEl0+PbAJf9Y53DLD2B9fD0BHqjuYn5vmlv1spNEhsth4faN1zBnTUotZqbAucyD9Dv3RKTLE0e4hNrWA==}
-    engines: {node: '>=10'}
+  /next-intl@3.0.0-beta.19(next@13.4.13)(react@18.2.0):
+    resolution: {integrity: sha512-F9ZZ342rDUJE3hOD2ZkKtkbeJNNUQtorN0Wnr2gThgLeeyKchbwm5KgijK4gOU66Yw91V1lRuGEcV6BMJdSaxg==}
     peerDependencies:
       next: ^10.0.0 || ^11.0.0 || ^12.0.0 || ^13.0.0
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
