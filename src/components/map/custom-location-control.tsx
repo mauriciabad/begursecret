@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from '@nextui-org/button'
 import { IconCurrentLocation } from '@tabler/icons-react'
 import L from 'leaflet'
