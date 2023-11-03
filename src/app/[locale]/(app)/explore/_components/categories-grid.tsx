@@ -39,7 +39,7 @@ export const CategoriesGrid: FC<{
               isPressable
               href={`/explore/search?category=${category.id}`}
               className={cn(
-                'flex flex-col items-center justify-center gap-1 border border-stone-100 bg-white p-2',
+                'flex flex-col items-center justify-center gap-1 border border-stone-200 bg-white p-2',
                 { hidden: !showingAll && i >= 6 }
               )}
             >
@@ -59,7 +59,7 @@ export const CategoriesGrid: FC<{
       <Button
         variant="bordered"
         radius="full"
-        onPress={() => {
+        onClick={() => {
           setShowingAll(true)
         }}
         className={cn('mx-auto flex', { hidden: showingAll })}
@@ -69,7 +69,7 @@ export const CategoriesGrid: FC<{
       <Button
         variant="bordered"
         radius="full"
-        onPress={() => {
+        onClick={() => {
           setShowingAll(false)
         }}
         className={cn('mx-auto flex', { hidden: !showingAll })}

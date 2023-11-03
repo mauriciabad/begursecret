@@ -63,7 +63,7 @@ export const ListPlacesOfCategory: FC<{
               shadow="none"
               radius="none"
               isPressable
-              href={`/explore/place/${place.id}`}
+              href={`/explore/places/${place.id}`}
               className="flex w-32 shrink-0 flex-col items-center justify-center gap-2 overflow-visible p-0"
             >
               <Image
