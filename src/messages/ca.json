@@ -31,7 +31,10 @@
     "see-all": "Veure {gender, select, masculine {tots} feminine {totes} other {tots}}",
     "show-all": "Mostrar {gender, select, masculine {tots} feminine {totes} other {tots}}",
     "show-less": "Mostrar menys",
-    "categories": "Categories"
+    "categories": "Categories",
+    "details": {
+      "no-more-info": "No hi ha més informació disponible."
+    }
   },
   "missions": {
     "meta": {

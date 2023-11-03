@@ -31,7 +31,10 @@
     "see-all": "See all",
     "show-all": "Show all",
     "show-less": "Show less",
-    "categories": "Categories"
+    "categories": "Categories",
+    "details": {
+      "no-more-info": "No more information avilable."
+    }
   },
   "missions": {
     "meta": {

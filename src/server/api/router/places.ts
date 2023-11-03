@@ -108,6 +108,8 @@ const getPlace = flattenTranslationsOnExecute(
           id: true,
           mainImage: true,
           name: true,
+          description: true,
+          content: true,
         },
         extras: {
           location: selectPoint('location', places.location),
@@ -134,6 +136,7 @@ const getPlace = flattenTranslationsOnExecute(
               name: true,
             },
           }),
+          features: withTranslations({}),
         },
       })
     )
