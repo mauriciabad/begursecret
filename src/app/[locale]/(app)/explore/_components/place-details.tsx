@@ -48,6 +48,7 @@ export const PlaceDetails: FC<{
               {place.location.lat}, {place.location.lng}
             </p>
           </div>
+
           <Image
             radius="md"
             alt={place.name}
