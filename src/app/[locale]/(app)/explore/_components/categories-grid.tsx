@@ -26,7 +26,7 @@ export const CategoriesGrid: FC<{
 
   return (
     <div className="space-y-2 p-4">
-      <h3 className="font-title text-lg font-semibold text-center leading-none text-stone-900">
+      <h3 className="text-center font-title text-lg font-semibold leading-none text-stone-900">
         {t('categories')}
       </h3>
       <ul className="grid grid-cols-3 gap-2">
