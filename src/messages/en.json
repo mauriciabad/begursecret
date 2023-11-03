@@ -28,7 +28,7 @@
       "loading": "Loading places...",
       "created-date": "Created on {createdDate, date, ::yyyyMMddHHmmss}"
     },
-    "content": "Page under construction..."
+    "see-all": "See all"
   },
   "missions": {
     "meta": {

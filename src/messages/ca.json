@@ -28,7 +28,7 @@
       "loading": "Carregant llocs...",
       "created-date": "Creada el {createdDate, date, ::yyyyMMddHHmmss}"
     },
-    "content": "Pàgina en construcció..."
+    "see-all": "Veure {gender, select, masculine {tots} feminine {totes} other {tots}}"
   },
   "missions": {
     "meta": {

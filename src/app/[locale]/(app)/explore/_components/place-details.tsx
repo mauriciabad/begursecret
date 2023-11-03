@@ -4,15 +4,9 @@ import { Card, CardBody } from '@nextui-org/card'
 import { Image } from '@nextui-org/image'
 import { FC } from 'react'
 import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
+import { makeImageUrl } from '~/helpers/images'
 import { MapPoint } from '~/helpers/spatial-data'
 import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
-
-function makeImageUrl<T extends string>(s3key: T | null) {
-  if (!s3key) {
-    return 'https://descobreix-begur-app-g3qf4o.s3.eu-west-1.amazonaws.com/static/app/content-placeholder.png'
-  }
-  return `https://descobreix-begur-app-g3qf4o.s3.eu-west-1.amazonaws.com/${s3key}` as const
-}
 
 export const PlaceDetails: FC<{
   placeFullInfo: {
