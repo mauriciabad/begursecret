@@ -61,6 +61,7 @@ const PlacePage: FC<{
       <MapDrawer
         classNames={{
           wrapper: 'rounded-t-lg',
+          contents: 'pb-8',
         }}
       >
         <PlaceDetails placeFullInfo={place} />

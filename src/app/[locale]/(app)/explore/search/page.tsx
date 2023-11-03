@@ -57,6 +57,7 @@ const ExplorePage: FC<PageParams> = async ({ searchParams }) => {
       <MapDrawer
         classNames={{
           wrapper: 'rounded-t-lg',
+          contents: 'pb-8',
         }}
       >
         <PlaceList places={places} />

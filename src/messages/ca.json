@@ -28,7 +28,10 @@
       "loading": "Carregant llocs...",
       "created-date": "Creada el {createdDate, date, ::yyyyMMddHHmmss}"
     },
-    "see-all": "Veure {gender, select, masculine {tots} feminine {totes} other {tots}}"
+    "see-all": "Veure {gender, select, masculine {tots} feminine {totes} other {tots}}",
+    "show-all": "Mostrar {gender, select, masculine {tots} feminine {totes} other {tots}}",
+    "show-less": "Mostrar menys",
+    "categories": "Categories"
   },
   "missions": {
     "meta": {

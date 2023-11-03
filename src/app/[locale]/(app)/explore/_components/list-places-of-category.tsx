@@ -55,17 +55,16 @@ export const ListPlacesOfCategory: FC<{
           />
         </Link>
       </div>
-      <ul className="flex items-start gap-4 overflow-x-auto overflow-y-visible px-4 py-2 [&>*]:shrink-0">
+      <ul className="flex items-start gap-4 overflow-x-auto overflow-y-visible px-4 py-2">
         {places.map((place) => (
-          <li className="contents">
+          <li className="contents" key={place.id}>
             <Card
               as={Link}
               shadow="none"
               radius="none"
-              key={place.id}
               isPressable
               href={`/explore/place/${place.id}`}
-              className="flex w-32 flex-col items-center justify-center gap-2 overflow-visible p-0"
+              className="flex w-32 shrink-0 flex-col items-center justify-center gap-2 overflow-visible p-0"
             >
               <Image
                 radius="lg"

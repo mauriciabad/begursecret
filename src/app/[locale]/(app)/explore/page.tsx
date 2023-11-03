@@ -56,6 +56,7 @@ const ExplorePage: FC<LocaleRouteParams> = async () => {
       <MapDrawer
         classNames={{
           wrapper: 'rounded-t-lg',
+          contents: 'pb-8',
         }}
       >
         <CategoriesGrid categories={categories} />
