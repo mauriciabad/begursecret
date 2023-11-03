@@ -1,7 +1,13 @@
 import 'server-only'
 
 import { sql } from 'drizzle-orm'
-import { getPlacesSchema, listPlacesSchema } from '~/schemas/places'
+import { calculateLocation } from '~/helpers/spatial-data'
+import {
+  getPlacesSchema,
+  listCategoriesSchema,
+  listPlacesSchema,
+  searchPlacesSchema,
+} from '~/schemas/places'
 import { db } from '~/server/db/db'
 import { places } from '~/server/db/schema'
 import { selectPoint } from '~/server/helpers/spatial-data'
@@ -23,6 +29,50 @@ const getAllPlaces = flattenTranslationsOnExecute(
         extras: {
           location: selectPoint('location', places.location),
         },
+        with: {
+          categories: {
+            columns: {},
+            with: {
+              category: withTranslations({
+                columns: {
+                  id: true,
+                  icon: true,
+                  name: true,
+                },
+              }),
+            },
+          },
+          mainCategory: withTranslations({
+            columns: {
+              id: true,
+              icon: true,
+              color: true,
+              name: true,
+            },
+          }),
+        },
+      })
+    )
+    .prepare()
+)
+
+const searchPlaces = flattenTranslationsOnExecute(
+  db.query.places
+    .findMany(
+      withTranslations({
+        columns: {
+          id: true,
+          mainImage: true,
+          name: true,
+        },
+        extras: {
+          location: selectPoint('location', places.location),
+        },
+        where: (place, { eq, and, isNotNull }) =>
+          and(
+            isNotNull(place.mainCategoryId),
+            eq(place.mainCategoryId, sql.placeholder('category'))
+          ),
         with: {
           categories: {
             columns: {},
@@ -90,14 +140,47 @@ const getPlace = flattenTranslationsOnExecute(
     .prepare()
 )
 
+const listCategories = flattenTranslationsOnExecute(
+  db.query.placeCategories
+    .findMany(
+      withTranslations({
+        columns: {
+          id: true,
+          icon: true,
+          name: true,
+          namePlural: true,
+          nameGender: true,
+          color: true,
+        },
+      })
+    )
+    .prepare()
+)
+
 export const placesRouter = router({
   list: procedure.input(listPlacesSchema).query(async ({ input }) => {
-    return await getAllPlaces.execute({ locale: input.locale })
+    return (await getAllPlaces.execute({ locale: input.locale })).map(
+      calculateLocation
+    )
+  }),
+  search: procedure.input(searchPlacesSchema).query(async ({ input }) => {
+    return (
+      await searchPlaces.execute({
+        locale: input.locale,
+        category: input.category,
+      })
+    ).map(calculateLocation)
   }),
   get: procedure.input(getPlacesSchema).query(async ({ input }) => {
-    return await getPlace.execute({
+    const result = await getPlace.execute({
       locale: input.locale,
       id: input.id,
     })
+    return result ? calculateLocation(result) : undefined
   }),
+  listCategories: procedure
+    .input(listCategoriesSchema)
+    .query(async ({ input }) => {
+      return await listCategories.execute({ locale: input.locale })
+    }),
 })

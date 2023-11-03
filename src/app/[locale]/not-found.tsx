@@ -19,7 +19,7 @@ export default function Page() {
 
   return (
     <main className="flex flex-col items-center justify-center py-32">
-      <h1 className="mb-8 mt-4 text-center font-title text-6xl text-stone-800">
+      <h1 className="mb-8 mt-4 text-center font-title text-6xl font-extrabold uppercase text-stone-800">
         {t('title')}
       </h1>
 
