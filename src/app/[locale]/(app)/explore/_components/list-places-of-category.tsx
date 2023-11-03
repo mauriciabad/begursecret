@@ -57,7 +57,7 @@ export const ListPlacesOfCategory: FC<{
       </div>
       <ul className="flex items-start gap-4 overflow-x-auto overflow-y-visible px-4 py-2 [&>*]:shrink-0">
         {places.map((place) => (
-          <li>
+          <li className="contents">
             <Card
               as={Link}
               shadow="none"

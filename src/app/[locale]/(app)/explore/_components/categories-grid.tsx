@@ -1,6 +1,6 @@
 'use client'
 
-import { Card, CardBody } from '@nextui-org/card'
+import { Card } from '@nextui-org/card'
 import Link from 'next-intl/link'
 import { FC } from 'react'
 import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
@@ -21,7 +21,7 @@ export const CategoriesGrid: FC<{
   return (
     <ul className="grid grid-cols-3 gap-2 p-4">
       {categories.map((category) => (
-        <li>
+        <li className="contents">
           <Card
             as={Link}
             shadow="none"
@@ -29,18 +29,16 @@ export const CategoriesGrid: FC<{
             key={category.id}
             isPressable
             href={`/explore/search?category=${category.id}`}
-            className="border border-stone-100"
+            className="flex flex-col items-center justify-center gap-1 border border-stone-100 bg-white p-2"
           >
-            <CardBody className="flex flex-col items-center justify-center gap-1 p-2">
-              <PlaceCategoryIcon
-                icon={category.icon}
-                size={24}
-                className="text-stone-800"
-              />
-              <span className="text-sm font-medium leading-none text-stone-900">
-                {category.namePlural}
-              </span>
-            </CardBody>
+            <PlaceCategoryIcon
+              icon={category.icon}
+              size={24}
+              className="text-stone-800"
+            />
+            <span className="line-clamp-3 text-center text-sm font-medium leading-4 text-stone-900">
+              {category.namePlural}
+            </span>
           </Card>
         </li>
       ))}
