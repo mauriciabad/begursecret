@@ -21,7 +21,7 @@ const DEFAULT_CENTER = {
   lng: 3.2137,
 } as const satisfies MapPoint
 
-export const mapContainerClassName = 'z-0 h-64 w-full'
+export const mapContainerClassName = 'z-0 h-64 w-full !bg-[#2b3d59]'
 
 export const MapRaw: FC<{
   center?: MapPoint
