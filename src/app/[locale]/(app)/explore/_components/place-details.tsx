@@ -35,7 +35,7 @@ export const PlaceDetails: FC<{
   const t = useTranslations('explore')
 
   return (
-    <div className="p-4">
+    <div className="px-4">
       <h2 className="font-title text-xl font-semibold">{place.name}</h2>
 
       {place.description && (
