@@ -80,7 +80,10 @@
       "description": "Llista de missions"
     },
     "heading": "Missions",
-    "content": "Pàgina en construcció..."
+    "view-places-in-map": "Veure llocs al mapa",
+    "visited": "Visitat",
+    "verified": "Verificat",
+    "not-visited": "No visitat"
   },
   "hub": {
     "meta": {

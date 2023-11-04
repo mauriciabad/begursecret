@@ -20,13 +20,13 @@ const MissionsPage: FC<LocaleRouteParams> = async () => {
   const locale = useLocale()
   const trpc = await getTrpc()
 
-  const categories = await trpc.places.listCategories({
+  const visitMissions = await trpc.missions.getVisitMissions({
     locale: onlyTranslatableLocales(locale),
   })
 
   return (
     <>
-      <VisitMissionsAcordion categories={categories} />
+      <VisitMissionsAcordion visitMissions={visitMissions} />
     </>
   )
 }

@@ -1,7 +1,16 @@
 'use client'
 
 import { Accordion, AccordionItem } from '@nextui-org/accordion'
+import { Button } from '@nextui-org/button'
 import { CircularProgress } from '@nextui-org/progress'
+import {
+  IconChevronRight,
+  IconCircle,
+  IconCircleCheckFilled,
+  IconDiscountCheckFilled,
+  IconMap,
+} from '@tabler/icons-react'
+import { useTranslations } from 'next-intl'
 import { FC } from 'react'
 import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
 import { cn } from '~/helpers/cn'
@@ -11,35 +20,101 @@ import {
 } from '~/server/db/constants/places'
 
 export const VisitMissionsAcordion: FC<{
-  categories: {
-    id: number
-    namePlural: string
-    icon: PlaceCategoryIconType | null
-    color: PlaceCategoryColor
+  visitMissions: {
+    category: {
+      id: number
+      namePlural: string
+      icon: PlaceCategoryIconType | null
+      color: PlaceCategoryColor
+    }
+    places: {
+      id: number
+      name: string
+      visited?: boolean
+      verified?: boolean
+    }[]
   }[]
-}> = ({ categories }) => {
+}> = ({ visitMissions }) => {
+  const t = useTranslations('missions')
+
   return (
-    <Accordion variant="splitted" fullWidth className="p-0">
-      {categories.map((category) => (
+    <Accordion
+      variant="splitted"
+      fullWidth
+      className="p-0"
+      selectionMode="multiple"
+    >
+      {visitMissions.map(({ category, places }) => (
         <AccordionItem
           key={category.id}
           title={category.namePlural}
           classNames={{
-            base: '!pl-2 !pr-4 !shadow-small',
-            trigger: 'py-2',
-            content: 'pl-2 pr-0',
+            base: '!p-0 !shadow-small',
+            trigger: 'py-2 pl-2 pr-4',
+            content: 'p-0',
             title: 'text-gray-700 font-title text-lg font-semibold',
           }}
           startContent={
             <PlaceCategoryIconWithProgress
               icon={category.icon}
-              progress={Math.random() * 1.2}
+              progress={
+                places.filter((place) => place.visited).length / places.length
+              }
               color={category.color}
               label={category.namePlural}
             />
           }
         >
-          Test content
+          <div className="p-1">
+            <Button
+              className="border px-2 py-0 leading-none"
+              radius="full"
+              variant="bordered"
+              fullWidth
+              size="sm"
+              startContent={<IconMap size={18} className="text-stone-400" />}
+              endContent={
+                <IconChevronRight size={18} className="text-stone-300" />
+              }
+            >
+              <span className="grow text-left">{t('view-places-in-map')}</span>
+            </Button>
+          </div>
+          <ul className="py-1">
+            {places.map((place) => (
+              <Button
+                key={place.id}
+                className="flex items-center justify-start gap-2 px-2 py-1"
+                radius="none"
+                variant="light"
+                as="li"
+              >
+                {place.verified ? (
+                  <IconDiscountCheckFilled
+                    size={24}
+                    className="text-blue-400"
+                    aria-label={t('visited')}
+                  />
+                ) : place.visited ? (
+                  <IconCircleCheckFilled
+                    size={24}
+                    className="text-blue-400"
+                    aria-label={t('verified')}
+                  />
+                ) : (
+                  <IconCircle
+                    size={24}
+                    className="text-stone-500"
+                    aria-label={t('not-visited')}
+                  />
+                )}
+
+                <span className="grow text-left">{place.name}</span>
+
+                <IconChevronRight size={24} className="text-stone-300" />
+              </Button>
+            ))}
+          </ul>
         </AccordionItem>
       ))}
     </Accordion>
