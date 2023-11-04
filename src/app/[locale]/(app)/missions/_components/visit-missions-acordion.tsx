@@ -33,7 +33,7 @@ export const VisitMissionsAcordion: FC<{
           startContent={
             <PlaceCategoryIconWithProgress
               icon={category.icon}
-              progress={Math.random()}
+              progress={Math.random() * 1.2}
               color={category.color}
             />
           }
@@ -90,6 +90,26 @@ const PlaceCategoryIconWithProgress: FC<{
     'stroke-pink-500/20': color === 'pink',
     'stroke-rose-500/20': color === 'rose',
   } as const
+  const bgColorClassName = {
+    'bg-gray-700': color === 'gray',
+    'bg-red-500': color === 'red',
+    'bg-orange-500': color === 'orange',
+    'bg-amber-500': color === 'amber',
+    'bg-yellow-500': color === 'yellow',
+    'bg-lime-500': color === 'lime',
+    'bg-green-500': color === 'green',
+    'bg-emerald-500': color === 'emerald',
+    'bg-teal-500': color === 'teal',
+    'bg-cyan-500': color === 'cyan',
+    'bg-sky-500': color === 'sky',
+    'bg-blue-500': color === 'blue',
+    'bg-indigo-500': color === 'indigo',
+    'bg-violet-500': color === 'violet',
+    'bg-purple-500': color === 'purple',
+    'bg-fuchsia-500': color === 'fuchsia',
+    'bg-pink-500': color === 'pink',
+    'bg-rose-500': color === 'rose',
+  } as const
   const iconColorClassName = {
     'text-gray-700': color === 'gray',
     'text-red-500': color === 'red',
@@ -113,18 +133,27 @@ const PlaceCategoryIconWithProgress: FC<{
 
   return (
     <div className="relative">
-      <CircularProgress
-        value={progress}
-        minValue={0}
-        maxValue={1}
-        size="lg"
-        classNames={{
-          indicator: cn(indicatorColorClassName),
-          track: cn(trackColorClassName),
-        }}
-      />
+      {progress >= 1 ? (
+        <div className="p-1">
+          <div className={cn('h-10 w-10 rounded-full', bgColorClassName)} />
+        </div>
+      ) : (
+        <CircularProgress
+          value={progress}
+          minValue={0}
+          maxValue={1}
+          size="lg"
+          classNames={{
+            indicator: cn(indicatorColorClassName),
+            track: cn(trackColorClassName),
+          }}
+        />
+      )}
       <div className="absolute inset-0 flex items-center justify-center">
-        <PlaceCategoryIcon icon={icon} className={cn(iconColorClassName)} />
+        <PlaceCategoryIcon
+          icon={icon}
+          className={cn(iconColorClassName, { 'text-white': progress >= 1 })}
+        />
       </div>
     </div>
   )
