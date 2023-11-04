@@ -11,6 +11,7 @@ import {
   IconMap,
 } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
+import Link from 'next-intl/link'
 import { FC } from 'react'
 import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
 import { cn } from '~/helpers/cn'
@@ -67,6 +68,7 @@ export const VisitMissionsAcordion: FC<{
         >
           <div className="p-1">
             <Button
+              as={Link}
               className="border px-2 py-0 leading-none"
               radius="full"
               variant="bordered"
@@ -76,6 +78,7 @@ export const VisitMissionsAcordion: FC<{
               endContent={
                 <IconChevronRight size={18} className="text-stone-300" />
               }
+              href={`/explore/search?category=${category.id}`}
             >
               <span className="grow text-left">{t('view-places-in-map')}</span>
             </Button>
