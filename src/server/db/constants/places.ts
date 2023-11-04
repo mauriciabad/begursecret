@@ -1,19 +1,3 @@
-export const placeCategories = [
-  'beach',
-  'cove',
-  'viewpoint',
-  'historic',
-  'park',
-  'table',
-  'coast',
-  'coast-rocks',
-  'coast-sand',
-  'coast-pebbles',
-  'coast-concrete',
-  'coast-no-walking-access',
-] as const
-export type PlaceCategory = keyof typeof placeCategories
-
 // From https://tabler-icons.io/
 export const placeCategoriesIcons = [
   'beach',
@@ -21,6 +5,7 @@ export const placeCategoriesIcons = [
   'scuba-mask',
   'trees',
   'building-castle',
+  'tower',
   'fish-hook',
   'fountain',
   'mountain',
@@ -31,6 +16,11 @@ export const placeCategoriesIcons = [
   'walk',
   'oval-vertical',
   'sailboat',
+  'home',
+  'home-off',
+  'building-store',
+  'building-tunnel',
+  'pennant',
 ] as const
 export type PlaceCategoryIcon = (typeof placeCategoriesIcons)[number]
 
