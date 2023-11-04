@@ -1,0 +1,1 @@
+ALTER TABLE `placeCategory` ADD `hasVisitMission` boolean DEFAULT true NOT NULL;

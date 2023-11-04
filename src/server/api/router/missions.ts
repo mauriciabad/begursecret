@@ -20,6 +20,8 @@ const getVisitMissions = flattenTranslationsOnExecute(
           nameGender: true,
           color: true,
         },
+        where: (placeCategories, { eq }) =>
+          eq(placeCategories.hasVisitMission, true),
         with: {
           places: {
             with: {
