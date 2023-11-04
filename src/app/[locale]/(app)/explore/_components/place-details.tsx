@@ -8,7 +8,9 @@ import { FC } from 'react'
 import { MarkdownContent } from '~/components/markdown-content'
 import { makeImageUrl } from '~/helpers/images'
 import { MapPoint } from '~/helpers/spatial-data'
+import { Features } from '~/server/db/constants/features'
 import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
+import { FeaturesBlock } from './features-block'
 import { PlaceCategoryTagList } from './place-category-tag-list'
 
 export const PlaceDetails: FC<{
@@ -27,6 +29,7 @@ export const PlaceDetails: FC<{
     categories: {
       category: { icon: PlaceCategoryIconType | null; name: string }
     }[]
+    features: Features | null
   }
 }> = ({ placeFullInfo: place }) => {
   const t = useTranslations('explore')
@@ -81,6 +84,10 @@ export const PlaceDetails: FC<{
         mainCategory={place.mainCategory}
         categories={place.categories.map((c) => c.category)}
       />
+
+      {place.features && (
+        <FeaturesBlock features={place.features} className="mt-4" />
+      )}
 
       {place.content ? (
         <MarkdownContent content={place.content} className="mt-4" />

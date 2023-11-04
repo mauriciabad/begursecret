@@ -33,7 +33,40 @@
     "show-less": "Mostrar menys",
     "see-more": "Veure més",
     "categories": "Categories",
-    "no-more-info": "No hi ha més informació disponible."
+    "no-more-info": "No hi ha més informació disponible.",
+    "features": {
+      "features": "Característiques",
+      "services": "Serveis",
+      "accessible": "Accessible",
+      "bus-service": "Servei bus",
+      "parking": "Aparcament",
+      "difficulty": {
+        "accessible": "Accessible",
+        "smallEffort": "Requereix un petit esforç",
+        "hard": "Difícil",
+        "dangerous": "Perillós"
+      },
+      "toilet": "Servei WC",
+      "lifeguard": "Servei socorrista",
+      "showers": "Dutxes",
+      "restaurants": "Restaurants",
+      "leisure-services": "Serveis d'oci",
+      "drinking-water": "Aigua potable",
+      "no-drinking-water": "Aigua no potable",
+      "amount-of-people": {
+        "none": "Buit",
+        "few": "Poca gent",
+        "some": "Algunes persones",
+        "many": "Molta gent",
+        "crowded": "Massificat"
+      },
+      "ground-type": {
+        "sand": "Sorra",
+        "pebbles": "Pedretes",
+        "rocks": "Roces",
+        "concrete": "Ciment"
+      }
+    }
   },
   "missions": {
     "meta": {

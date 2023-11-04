@@ -1,3 +1,6 @@
+import { InferSelectModel } from 'drizzle-orm'
+import { features } from '../schema'
+
 // Don't reorder these values, they are used to generate the database enum.
 export const amountOfPeople = [
   'none',
@@ -21,3 +24,5 @@ export type Difficulty = keyof typeof difficulty
 // Don't reorder these values, they are used to generate the database enum.
 export const groundType = ['sand', 'pebbles', 'rocks', 'concrete'] as const
 export type GroundType = keyof typeof groundType
+
+export type Features = InferSelectModel<typeof features>
