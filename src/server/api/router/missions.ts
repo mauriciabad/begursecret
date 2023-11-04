@@ -48,26 +48,28 @@ export const missionsRouter = router({
     .input(getVisitMissionsSchema)
     .query(async ({ input }) => {
       const result = await getVisitMissions.execute({ locale: input.locale })
-      return result.map(({ places, mainPlaces, ...category }) => ({
-        category,
-        places: [
-          ...mainPlaces.map((place) => {
-            const rnd = Math.random()
-            return {
-              visited: rnd <= 0.4,
-              verified: rnd <= 0.2,
-              ...place,
-            }
-          }),
-          ...places.map(({ place }) => {
-            const rnd = Math.random()
-            return {
-              visited: rnd <= 0.45,
-              verified: rnd <= 0.2,
-              ...place,
-            }
-          }),
-        ],
-      }))
+      return result
+        .map(({ places, mainPlaces, ...category }) => ({
+          category,
+          places: [
+            ...mainPlaces.map((place) => {
+              const rnd = Math.random()
+              return {
+                visited: rnd <= 0.4,
+                verified: rnd <= 0.2,
+                ...place,
+              }
+            }),
+            ...places.map(({ place }) => {
+              const rnd = Math.random()
+              return {
+                visited: rnd <= 0.45,
+                verified: rnd <= 0.2,
+                ...place,
+              }
+            }),
+          ],
+        }))
+        .filter(({ places }) => places.length > 0)
     }),
 })
