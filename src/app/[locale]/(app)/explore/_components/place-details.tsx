@@ -1,18 +1,21 @@
 'use client'
 
+import { Button } from '@nextui-org/button'
 import { Image } from '@nextui-org/image'
+import { IconPhoto } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'
-import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
 import { MarkdownContent } from '~/components/markdown-content'
 import { makeImageUrl } from '~/helpers/images'
 import { MapPoint } from '~/helpers/spatial-data'
 import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
+import { PlaceCategoryTagList } from './place-category-tag-list'
 
 export const PlaceDetails: FC<{
   placeFullInfo: {
     id: number
     mainImage: string | null
+    images: { key: string }[] | null
     location: MapPoint
     name: string
     description: string | null
@@ -26,48 +29,66 @@ export const PlaceDetails: FC<{
     }[]
   }
 }> = ({ placeFullInfo: place }) => {
-  const t = useTranslations('explore.details')
+  const t = useTranslations('explore')
 
   return (
-    <>
-      <div className="grid grid-cols-[1fr_auto] px-4 py-2">
-        <div>
-          <h2 className="font-title font-bold">{place.name}</h2>
-          <div className="flex flex-wrap items-center justify-start gap-1">
-            <span className="inline-flex items-center gap-1 rounded-full border border-stone-300 bg-stone-50 px-2 py-1 text-sm leading-none text-stone-500">
-              <PlaceCategoryIcon icon={place.mainCategory.icon} size={16} />
-              {place.mainCategory.name}
-            </span>
-            {place.categories.length >= 1 && (
-              <span className="h-4 w-[1px] bg-stone-200" />
-            )}
-            {place.categories.map(({ category }) => (
-              <span className="inline-flex items-center gap-1 rounded-full border border-stone-300 bg-stone-50 px-2 py-1 text-sm leading-none text-stone-500">
-                <PlaceCategoryIcon icon={category.icon} size={16} />
-                {category.name}
-              </span>
-            ))}
-          </div>
-          <p className="line-clamp-3 text-sm text-gray-500">
-            {place.description}
-          </p>
-        </div>
+    <div className="p-4">
+      <h2 className="font-title text-xl font-semibold">{place.name}</h2>
 
+      {place.description && (
+        <p className="text-stone-800">{place.description}</p>
+      )}
+
+      {place.images?.length ? (
+        <div className="mt-4 grid grid-cols-[2fr_1fr] grid-rows-2 gap-2">
+          <Image
+            radius="lg"
+            shadow="sm"
+            alt={place.name}
+            className="aspect-[4/3] object-cover"
+            classNames={{
+              wrapper: 'row-span-2',
+            }}
+            src={makeImageUrl(place.mainImage)}
+          />
+          <Image
+            radius="lg"
+            shadow="sm"
+            alt={place.name}
+            className="h-full object-cover"
+            src={makeImageUrl(place.images[0].key)}
+          />
+          <Button
+            radius="lg"
+            variant="bordered"
+            startContent={<IconPhoto size={24} />}
+            className="flex h-full flex-col items-center justify-center gap-1 font-semibold"
+          >
+            {t('see-more')}
+          </Button>
+        </div>
+      ) : (
         <Image
-          radius="md"
+          radius="lg"
+          shadow="sm"
           alt={place.name}
-          className="z-0 aspect-square h-16 object-cover"
+          className="mt-4 aspect-[4/3] object-cover"
           src={makeImageUrl(place.mainImage)}
         />
-      </div>
+      )}
+
+      <PlaceCategoryTagList
+        mainCategory={place.mainCategory}
+        categories={place.categories.map((c) => c.category)}
+      />
 
       {place.content ? (
-        <MarkdownContent content={place.content} className="px-4" />
+        <MarkdownContent content={place.content} className="mt-4" />
       ) : (
-        <p className="p-4 text-center text-sm text-gray-500">
+        <p className="mt-4 py-4 text-center text-sm text-stone-500">
           {t('no-more-info')}
         </p>
       )}
-    </>
+    </div>
   )
 }
