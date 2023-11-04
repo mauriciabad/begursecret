@@ -81,7 +81,6 @@ export const MapRaw: FC<{
               markerUrl
                 ? {
                     click: () => {
-                      console.log('click', markerUrl)
                       router.push(markerUrl)
                     },
                   }

@@ -2,8 +2,6 @@ export function flattenTranslations<T extends ValidType>(
   value: T
 ): SimpleType<T>
 export function flattenTranslations<T>(value: T) {
-  console.log('flattenTranslations', value)
-
   if (Array.isArray(value)) return value.map(flattenTranslations)
 
   if (isPlainObject(value)) {
