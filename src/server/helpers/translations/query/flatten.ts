@@ -27,7 +27,7 @@ export function flattenTranslations<T>(value: T) {
 function removeNulls<T extends Record<string, any>>(
   obj: T
 ): { [K in keyof T]?: NonNullable<T[K]> } {
-  for (var propName in obj) {
+  for (const propName in obj) {
     if (obj[propName] === null || obj[propName] === undefined) {
       delete obj[propName]
     }
