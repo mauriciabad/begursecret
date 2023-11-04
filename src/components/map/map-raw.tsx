@@ -17,8 +17,8 @@ import { useMapControlledZoom } from './useMapControlledZoom'
 import { useMapResize } from './useMapResize'
 
 const DEFAULT_CENTER = {
-  lat: 41.958627,
-  lng: 3.213765,
+  lat: 41.953,
+  lng: 3.2137,
 } as const satisfies MapPoint
 
 export const mapContainerClassName = 'z-0 h-64 w-full'
