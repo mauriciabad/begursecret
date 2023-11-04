@@ -31,8 +31,10 @@ export const VisitMissionsAcordion: FC<{
     places: {
       id: number
       name: string
-      visited?: boolean
-      verified?: boolean
+      missionStatus: {
+        visited?: boolean
+        verified?: boolean
+      }
     }[]
   }[]
 }> = ({ visitMissions }) => {
@@ -59,7 +61,8 @@ export const VisitMissionsAcordion: FC<{
             <PlaceCategoryIconWithProgress
               icon={category.icon}
               progress={
-                places.filter((place) => place.visited).length / places.length
+                places.filter((place) => place.missionStatus.visited).length /
+                places.length
               }
               color={category.color}
               label={category.namePlural}
@@ -92,13 +95,13 @@ export const VisitMissionsAcordion: FC<{
                 variant="light"
                 as="li"
               >
-                {place.verified ? (
+                {place.missionStatus.verified ? (
                   <IconDiscountCheckFilled
                     size={24}
                     className="text-blue-400"
                     aria-label={t('visited')}
                   />
-                ) : place.visited ? (
+                ) : place.missionStatus.visited ? (
                   <IconCircleCheckFilled
                     size={24}
                     className="text-blue-400"

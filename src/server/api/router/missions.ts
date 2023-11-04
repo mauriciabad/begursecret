@@ -55,16 +55,14 @@ export const missionsRouter = router({
             ...mainPlaces.map((place) => {
               const rnd = Math.random()
               return {
-                visited: rnd <= 0.4,
-                verified: rnd <= 0.2,
+                missionStatus: { visited: rnd <= 0.45, verified: rnd <= 0.2 },
                 ...place,
               }
             }),
             ...places.map(({ place }) => {
               const rnd = Math.random()
               return {
-                visited: rnd <= 0.45,
-                verified: rnd <= 0.2,
+                missionStatus: { visited: rnd <= 0.45, verified: rnd <= 0.2 },
                 ...place,
               }
             }),
