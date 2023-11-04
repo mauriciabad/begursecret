@@ -35,6 +35,7 @@ export const VisitMissionsAcordion: FC<{
               icon={category.icon}
               progress={Math.random() * 1.2}
               color={category.color}
+              label={category.namePlural}
             />
           }
         >
@@ -49,7 +50,8 @@ const PlaceCategoryIconWithProgress: FC<{
   icon: PlaceCategoryIconType | null
   progress: number
   color: PlaceCategoryColor
-}> = ({ icon, progress, color }) => {
+  label: string
+}> = ({ icon, progress, color, label }) => {
   const indicatorColorClassName = {
     'stroke-gray-700': color === 'gray',
     'stroke-red-500': color === 'red',
@@ -140,6 +142,7 @@ const PlaceCategoryIconWithProgress: FC<{
       ) : (
         <CircularProgress
           value={progress}
+          aria-label={label}
           minValue={0}
           maxValue={1}
           size="lg"
