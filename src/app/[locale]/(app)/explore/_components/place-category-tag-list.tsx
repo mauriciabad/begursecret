@@ -16,7 +16,7 @@ export const PlaceCategoryTagList: FC<{
     <div className="mt-2 flex flex-wrap items-center justify-start gap-1">
       <PlaceCategoryTag category={mainCategory} />
 
-      {categories.length && <span className="h-4 w-[1px] bg-stone-200" />}
+      {categories.length >= 1 && <span className="h-4 w-[1px] bg-stone-200" />}
 
       {categories.map((category) => (
         <PlaceCategoryTag category={category} />

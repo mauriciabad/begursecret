@@ -42,7 +42,7 @@ export const PlaceDetails: FC<{
         <p className="text-stone-800">{place.description}</p>
       )}
 
-      {place.images?.length ? (
+      {place.images && place.images.length >= 1 ? (
         <div className="mt-4 grid grid-cols-[2fr_1fr] grid-rows-2 gap-2">
           <Image
             radius="lg"
