@@ -37,22 +37,12 @@
     "features": {
       "features": "Característiques",
       "services": "Serveis",
-      "accessible": "Accessible",
-      "bus-service": "Servei bus",
-      "parking": "Aparcament",
       "difficulty": {
         "accessible": "Accessible",
         "smallEffort": "Requereix un petit esforç",
         "hard": "Difícil",
         "dangerous": "Perillós"
       },
-      "toilet": "Servei WC",
-      "lifeguard": "Servei socorrista",
-      "showers": "Dutxes",
-      "restaurants": "Restaurants",
-      "leisure-services": "Serveis d'oci",
-      "drinking-water": "Aigua potable",
-      "no-drinking-water": "Aigua no potable",
       "amount-of-people": {
         "none": "Buit",
         "few": "Poca gent",
@@ -65,7 +55,23 @@
         "pebbles": "Pedretes",
         "rocks": "Roces",
         "concrete": "Ciment"
-      }
+      },
+      "bus-service": "Servei bus",
+      "no-bus-service": "Sense servei bus",
+      "parking": "Aparcament",
+      "no-parking": "Sense aparcament",
+      "toilet": "WC",
+      "no-toilet": "Sense WC",
+      "lifeguard": "Socorrista",
+      "no-lifeguard": "Sense socorrista",
+      "showers": "Dutxes",
+      "no-showers": "Sense dutxes",
+      "restaurants": "Restaurants",
+      "no-restaurants": "Sense restaurants",
+      "leisure-services": "Serveis d'oci",
+      "no-leisure-services": "Sense serveis d'oci",
+      "drinking-water": "Aigua potable",
+      "no-drinking-water": "Aigua no potable"
     }
   },
   "missions": {

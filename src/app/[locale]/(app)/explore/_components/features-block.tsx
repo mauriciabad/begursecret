@@ -7,16 +7,22 @@ import {
   IconAlertTriangleFilled,
   IconBadgeWc,
   IconBus,
+  IconBusOff,
+  IconDropletOff,
   IconDroplets,
   IconFountain,
   IconFountainOff,
   IconFriends,
   IconGrain,
   IconLifebuoy,
+  IconLifebuoyOff,
+  IconMoodOff,
   IconMoodSmile,
   IconParking,
+  IconParkingOff,
   IconRulerMeasure,
   IconToolsKitchen2,
+  IconToolsKitchen2Off,
 } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC, PropsWithChildren } from 'react'
@@ -71,27 +77,62 @@ export const FeaturesBlock: FC<{ features: Features; className?: string }> = ({
       </FeatureList>
 
       <FeatureList title={t('services')}>
-        {features.hasBus && (
-          <FeatureItem icon={IconBus} text={t('bus-service')} />
-        )}
-        {features.hasParking && (
-          <FeatureItem icon={IconParking} text={t('parking')} />
-        )}
-        {features.hasLifeguard && (
-          <FeatureItem icon={IconLifebuoy} text={t('lifeguard')} />
-        )}
-        {features.hasToilet && (
-          <FeatureItem icon={IconBadgeWc} text={t('toilet')} />
-        )}
-        {features.hasShower && (
-          <FeatureItem icon={IconDroplets} text={t('showers')} />
-        )}
-        {features.hasRestaurant && (
-          <FeatureItem icon={IconToolsKitchen2} text={t('restaurants')} />
-        )}
-        {features.hasLeisure && (
-          <FeatureItem icon={IconMoodSmile} text={t('leisure-services')} />
-        )}
+        <BooleanFeatureItem
+          value={features.hasBus}
+          icon={IconBus}
+          iconOff={IconBusOff}
+          text={t('bus-service')}
+          textOff={t('no-bus-service')}
+        />
+
+        <BooleanFeatureItem
+          value={features.hasParking}
+          icon={IconParking}
+          iconOff={IconParkingOff}
+          text={t('parking')}
+          textOff={t('no-parking')}
+        />
+
+        <BooleanFeatureItem
+          value={features.hasLifeguard}
+          icon={IconLifebuoy}
+          iconOff={IconLifebuoyOff}
+          text={t('lifeguard')}
+          textOff={t('no-lifeguard')}
+        />
+
+        <BooleanFeatureItem
+          value={features.hasToilet}
+          icon={IconBadgeWc}
+          iconOff={IconAccessibleOff}
+          text={t('toilet')}
+          textOff={t('no-toilet')}
+        />
+
+        <BooleanFeatureItem
+          value={features.hasShower}
+          icon={IconDroplets}
+          iconOff={IconDropletOff}
+          text={t('showers')}
+          textOff={t('no-showers')}
+        />
+
+        <BooleanFeatureItem
+          value={features.hasRestaurant}
+          icon={IconToolsKitchen2}
+          iconOff={IconToolsKitchen2Off}
+          text={t('restaurants')}
+          textOff={t('no-restaurants')}
+        />
+
+        <BooleanFeatureItem
+          value={features.hasLeisure}
+          icon={IconMoodSmile}
+          iconOff={IconMoodOff}
+          text={t('leisure-services')}
+          textOff={t('no-leisure-services')}
+        />
+
         {features.hasDrinkingWater === true ? (
           <FeatureItem icon={IconFountain} text={t('drinking-water')} />
         ) : features.hasDrinkingWater === false ? (
@@ -109,6 +150,28 @@ const FeatureItem: FC<{ icon: Icon; text: string }> = ({ icon, text }) => {
       <Icon size={18} className="shrink-0 text-stone-800" />
       <span className="text-sm font-medium text-stone-800">{text}</span>
     </li>
+  )
+}
+
+const BooleanFeatureItem: FC<{
+  icon: Icon
+  iconOff?: Icon
+  text: string
+  textOff?: string
+  value: boolean | null
+}> = ({ icon, iconOff, text, textOff, value }) => {
+  if (value === null) return null
+
+  return (
+    <>
+      {value ? (
+        <FeatureItem icon={icon} text={text} />
+      ) : (
+        (textOff || iconOff) && (
+          <FeatureItem icon={iconOff ?? icon} text={textOff ?? text} />
+        )
+      )}
+    </>
   )
 }
 

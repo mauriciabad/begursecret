@@ -37,22 +37,12 @@
     "features": {
       "features": "Features",
       "services": "Services",
-      "accessible": "Accessible",
-      "bus-service": "Bus service",
-      "parking": "Parking",
       "difficulty": {
         "accessible": "Accessible",
         "smallEffort": "Requires small effort",
         "hard": "Hard",
         "dangerous": "Dangerous"
       },
-      "toilet": "Toilet",
-      "lifeguard": "Lifeguard",
-      "showers": "Showers",
-      "restaurants": "Restaurants",
-      "leisure-services": "Leisure services",
-      "drinking-water": "Drinking water",
-      "no-drinking-water": "No drinking water",
       "amount-of-people": {
         "none": "No people",
         "few": "Few people",
@@ -65,7 +55,23 @@
         "pebbles": "Pebbles",
         "rocks": "Rocks",
         "concrete": "Concrete"
-      }
+      },
+      "bus-service": "Bus service",
+      "no-bus-service": "No bus service",
+      "parking": "Parking",
+      "no-parking": "No parking",
+      "toilet": "Toilet",
+      "no-toilet": "No toilet",
+      "lifeguard": "Lifeguard",
+      "no-lifeguard": "No lifeguard",
+      "showers": "Showers",
+      "no-showers": "No showers",
+      "restaurants": "Restaurants",
+      "no-restaurants": "No restaurants",
+      "leisure-services": "Leisure services",
+      "no-leisure-services": "No leisure services",
+      "drinking-water": "Drinking water",
+      "no-drinking-water": "No drinking water"
     }
   },
   "missions": {
