@@ -2,14 +2,15 @@ export function flattenTranslations<T extends ValidType>(
   value: T
 ): SimpleType<T>
 export function flattenTranslations<T>(value: T) {
+  console.log('flattenTranslations', value)
+
   if (Array.isArray(value)) return value.map(flattenTranslations)
 
   if (isPlainObject(value)) {
     if ('translations' in value) {
       const { translations: translationsArray, ...rest } = value
 
-      const translationsOverride: Record<string, any> =
-        translationsArray?.[0] ?? {}
+      const translationsOverride = removeNulls(translationsArray?.[0] ?? {})
 
       return objectMap(
         { ...rest, ...translationsOverride },
@@ -20,6 +21,18 @@ export function flattenTranslations<T>(value: T) {
   }
 
   return value
+}
+
+// Return type could be improved, but it's good enough
+function removeNulls<T extends Record<string, any>>(
+  obj: T
+): { [K in keyof T]?: NonNullable<T[K]> } {
+  for (const propName in obj) {
+    if (obj[propName] === null || obj[propName] === undefined) {
+      delete obj[propName]
+    }
+  }
+  return obj
 }
 
 function isPlainObject<
