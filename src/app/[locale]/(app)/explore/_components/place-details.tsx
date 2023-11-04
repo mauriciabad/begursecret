@@ -15,7 +15,7 @@ export const PlaceDetails: FC<{
   placeFullInfo: {
     id: number
     mainImage: string | null
-    images: { key: string }[] | null
+    images?: { key: string }[]
     location: MapPoint
     name: string
     description: string | null
