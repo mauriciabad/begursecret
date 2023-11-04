@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
-import { useTranslations } from 'next-intl'
+import { useLocale } from 'next-intl'
 import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
-import { UnderConstruction } from '~/components/under-construction'
-import type { LocaleRouteParams } from '~/i18n'
+import { onlyTranslatableLocales, type LocaleRouteParams } from '~/i18n'
+import { getTrpc } from '~/server/get-server-thing'
+import { VisitMissionsAcordion } from './_components/visit-missions-acordion'
 
 export async function generateMetadata({
   params,
@@ -15,12 +16,17 @@ export async function generateMetadata({
   }
 }
 
-const MissionsPage: FC<LocaleRouteParams> = () => {
-  const t = useTranslations('missions')
+const MissionsPage: FC<LocaleRouteParams> = async () => {
+  const locale = useLocale()
+  const trpc = await getTrpc()
+
+  const visitMissions = await trpc.missions.getVisitMissions({
+    locale: onlyTranslatableLocales(locale),
+  })
+
   return (
     <>
-      <UnderConstruction />
-      <p className="text-center">{t('content')}</p>
+      <VisitMissionsAcordion visitMissions={visitMissions} />
     </>
   )
 }

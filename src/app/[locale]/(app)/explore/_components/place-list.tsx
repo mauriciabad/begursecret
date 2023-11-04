@@ -16,6 +16,7 @@ export const PlaceList: FC<{
     mainImage: string | null
     location: MapPoint
     name: string
+    description: string | null
     mainCategory: {
       icon: PlaceCategoryIconType | null
       name: string
@@ -46,14 +47,14 @@ export const PlaceList: FC<{
                   categories={place.categories.map((c) => c.category)}
                 />
 
-                <p className="text-sm text-gray-500">
-                  {place.location.lat}, {place.location.lng}
-                </p>
+                {place.description && (
+                  <p className="text-stone-800">{place.description}</p>
+                )}
               </div>
               <Image
                 radius="md"
                 alt={place.name}
-                className="z-0 aspect-square h-16 object-cover"
+                className="z-0 aspect-[4/3] h-16 object-cover"
                 src={makeImageUrl(place.mainImage)}
               />
             </CardBody>

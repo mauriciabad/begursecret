@@ -38,7 +38,8 @@ export const PlaceMarker: FC<PlaceMarkerProps> = ({
     'border-fuchsia-800 bg-fuchsia-500': color === 'fuchsia',
     'border-pink-800 bg-pink-500': color === 'pink',
     'border-rose-800 bg-rose-500': color === 'rose',
-  }
+  } as const
+
   return (
     <>
       {size === 'tiny' ? (

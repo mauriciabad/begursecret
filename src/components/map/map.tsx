@@ -18,12 +18,11 @@ const DynamicMap = dynamic(
         <div
           className={cn(
             mapContainerClassName,
-            'flex items-center justify-center bg-[#f2efe9]',
+            'flex items-center justify-center',
             className
           )}
         >
-          <IconLoader className="mr-1 h-4 w-4 animate-spin" />
-          <span className="animate-pulse">Loading map...</span>
+          <IconLoader className="animate mr-1 h-6 w-6 animate-spin text-white [animation-duration:2s]" />
         </div>
       )
     },

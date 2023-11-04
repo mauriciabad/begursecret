@@ -80,7 +80,10 @@
       "description": "List of missions"
     },
     "heading": "Missions",
-    "content": "Page under construction..."
+    "view-places-in-map": "View places in map",
+    "visited": "Visited",
+    "verified": "Verified",
+    "not-visited": "Not visited"
   },
   "hub": {
     "meta": {

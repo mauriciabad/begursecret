@@ -1,6 +1,6 @@
 'use client'
 
-import { Card } from '@nextui-org/card'
+import { Card, CardBody } from '@nextui-org/card'
 import { Image } from '@nextui-org/image'
 import { IconChevronRight } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
@@ -41,6 +41,7 @@ export const ListPlacesOfCategory: FC<{
             {category.namePlural}
           </span>
         </h3>
+
         <Link
           href={`/explore/search?category=${category.id}`}
           className="flex items-center gap-1 pl-2"
@@ -55,27 +56,30 @@ export const ListPlacesOfCategory: FC<{
           />
         </Link>
       </div>
-      <ul className="flex items-start gap-4 overflow-x-auto overflow-y-visible px-4 py-2">
+
+      <ul className="flex items-stretch overflow-x-auto px-2 py-2">
         {places.map((place) => (
           <li className="contents" key={place.id}>
             <Card
               as={Link}
               shadow="none"
-              radius="none"
+              radius="lg"
               isPressable
               href={`/explore/places/${place.id}`}
-              className="flex w-32 shrink-0 flex-col items-center justify-center gap-2 overflow-visible p-0"
+              className="shrink-0"
             >
-              <Image
-                radius="lg"
-                shadow="sm"
-                alt={place.name}
-                className="z-0 aspect-[4/3] h-full object-cover"
-                src={makeImageUrl(place.mainImage)}
-              />
-              <span className="line-clamp-3 text-center text-sm font-medium leading-4 text-stone-900">
-                {place.name}
-              </span>
+              <CardBody className="flex w-32 flex-col items-center justify-center gap-2 p-2">
+                <Image
+                  radius="lg"
+                  shadow="sm"
+                  alt={place.name}
+                  className="z-0 aspect-[4/3] h-full object-cover"
+                  src={makeImageUrl(place.mainImage)}
+                />
+                <span className="line-clamp-3 grow text-center text-sm font-medium leading-4 text-stone-900">
+                  {place.name}
+                </span>
+              </CardBody>
             </Card>
           </li>
         ))}

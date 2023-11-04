@@ -1,5 +1,6 @@
 import { relations } from 'drizzle-orm'
 import {
+  boolean,
   int,
   mysqlTable,
   primaryKey,
@@ -59,6 +60,7 @@ export const {
   normalColumns: {
     icon: tinytext('icon', { enum: placeCategoriesIcons }).notNull(),
     color: tinytext('color', { enum: placeCategoriesColors }).notNull(),
+    hasVisitMission: boolean('hasVisitMission').notNull().default(true),
   },
   translatableColumns: {
     name: tinytext('name').notNull(),

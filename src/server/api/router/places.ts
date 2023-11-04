@@ -64,6 +64,7 @@ const searchPlaces = flattenTranslationsOnExecute(
           id: true,
           mainImage: true,
           name: true,
+          description: true,
         },
         extras: {
           location: selectPoint('location', places.location),
