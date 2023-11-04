@@ -2,17 +2,23 @@ import {
   Icon,
   IconBeach,
   IconBuildingCastle,
+  IconBuildingStore,
+  IconBuildingTunnel,
   IconFishHook,
   IconFlag,
   IconFountain,
   IconHistory,
+  IconHome,
+  IconHomeOff,
   IconMapPin,
   IconMountain,
   IconOvalVertical,
   IconParking,
+  IconPennant,
   IconRipple,
   IconSailboat,
   IconScubaMask,
+  IconTower,
   IconTrees,
   IconTrekking,
   IconWalk,
@@ -37,6 +43,12 @@ const iconsByIconName = {
   walk: IconWalk,
   'oval-vertical': IconOvalVertical,
   sailboat: IconSailboat,
+  pennant: IconPennant,
+  tower: IconTower,
+  'home-off': IconHomeOff,
+  home: IconHome,
+  'building-tunnel': IconBuildingTunnel,
+  'building-store': IconBuildingStore,
 } as const satisfies Record<PlaceCategoryIconType, Icon>
 
 export const PlaceCategoryIcon: FC<
@@ -44,7 +56,9 @@ export const PlaceCategoryIcon: FC<
     icon?: PlaceCategoryIconType | null
   }
 > = ({ icon, ...tablerIconsProps }) => {
-  const Icon = icon ? iconsByIconName[icon] : IconMapPin
+  const iconWithoutFallback =
+    icon && icon in iconsByIconName ? iconsByIconName[icon] : null
+  const Icon = iconWithoutFallback ?? IconMapPin
 
   return <Icon {...tablerIconsProps} />
 }

@@ -6,6 +6,7 @@ import {
   text,
   tinytext,
 } from 'drizzle-orm/mysql-core'
+import { features } from '.'
 import { pointType } from '../../helpers/spatial-data'
 import { mysqlTableWithTranslations } from '../../helpers/translations/db-tables'
 import {
@@ -25,9 +26,12 @@ export const {
     mainImage: s3ObjectKey('mainImage'),
     location: pointType('location').notNull(),
     mainCategoryId: int('mainCategoryId').notNull(),
+    featuresId: int('featuresId'),
   },
   translatableColumns: {
     name: text('name').notNull(),
+    description: tinytext('description'),
+    content: text('content'), // Markdown
   },
 })
 
@@ -39,6 +43,10 @@ export const placesRelations = relations(places, (r) => ({
     references: [placeCategories.id],
   }),
   categories: r.many(placesToPlaceCategories),
+  features: r.one(features, {
+    fields: [places.featuresId],
+    references: [features.id],
+  }),
 }))
 
 export const {

@@ -31,7 +31,48 @@
     "see-all": "Veure {gender, select, masculine {tots} feminine {totes} other {tots}}",
     "show-all": "Mostrar {gender, select, masculine {tots} feminine {totes} other {tots}}",
     "show-less": "Mostrar menys",
-    "categories": "Categories"
+    "see-more": "Veure més",
+    "categories": "Categories",
+    "no-more-info": "No hi ha més informació disponible.",
+    "features": {
+      "features": "Característiques",
+      "services": "Serveis",
+      "difficulty": {
+        "accessible": "Accessible",
+        "smallEffort": "Requereix un petit esforç",
+        "hard": "Difícil",
+        "dangerous": "Perillós"
+      },
+      "amount-of-people": {
+        "none": "Buit",
+        "few": "Poca gent",
+        "some": "Algunes persones",
+        "many": "Molta gent",
+        "crowded": "Massificat"
+      },
+      "ground-type": {
+        "sand": "Sorra",
+        "pebbles": "Pedretes",
+        "rocks": "Roces",
+        "concrete": "Ciment"
+      },
+      "bus-service": "Servei bus",
+      "no-bus-service": "Sense servei bus",
+      "parking": "Aparcament",
+      "no-parking": "Sense aparcament",
+      "toilet": "WC",
+      "no-toilet": "Sense WC",
+      "lifeguard": "Socorrista",
+      "no-lifeguard": "Sense socorrista",
+      "showers": "Dutxes",
+      "no-showers": "Sense dutxes",
+      "restaurants": "Restaurants",
+      "no-restaurants": "Sense restaurants",
+      "leisure-services": "Serveis d'oci",
+      "no-leisure-services": "Sense serveis d'oci",
+      "drinking-water": "Aigua potable",
+      "no-drinking-water": "Aigua no potable"
+    }
   },
   "missions": {
     "meta": {

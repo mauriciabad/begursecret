@@ -31,7 +31,48 @@
     "see-all": "See all",
     "show-all": "Show all",
     "show-less": "Show less",
-    "categories": "Categories"
+    "see-more": "See more",
+    "categories": "Categories",
+    "no-more-info": "No more information avilable.",
+    "features": {
+      "features": "Features",
+      "services": "Services",
+      "difficulty": {
+        "accessible": "Accessible",
+        "smallEffort": "Requires small effort",
+        "hard": "Hard",
+        "dangerous": "Dangerous"
+      },
+      "amount-of-people": {
+        "none": "No people",
+        "few": "Few people",
+        "some": "Some people",
+        "many": "Many people",
+        "crowded": "Crowded"
+      },
+      "ground-type": {
+        "sand": "Sand",
+        "pebbles": "Pebbles",
+        "rocks": "Rocks",
+        "concrete": "Concrete"
+      },
+      "bus-service": "Bus service",
+      "no-bus-service": "No bus service",
+      "parking": "Parking",
+      "no-parking": "No parking",
+      "toilet": "Toilet",
+      "no-toilet": "No toilet",
+      "lifeguard": "Lifeguard",
+      "no-lifeguard": "No lifeguard",
+      "showers": "Showers",
+      "no-showers": "No showers",
+      "restaurants": "Restaurants",
+      "no-restaurants": "No restaurants",
+      "leisure-services": "Leisure services",
+      "no-leisure-services": "No leisure services",
+      "drinking-water": "Drinking water",
+      "no-drinking-water": "No drinking water"
+    }
   },
   "missions": {
     "meta": {
