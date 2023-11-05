@@ -1,7 +1,10 @@
 import 'server-only'
+import { calculateLocation } from '~/helpers/spatial-data'
 
 import { getVisitMissionsSchema } from '~/schemas/missions'
 import { db } from '~/server/db/db'
+import { places } from '~/server/db/schema'
+import { selectPoint } from '~/server/helpers/spatial-data'
 import {
   flattenTranslationsOnExecute,
   withTranslations,
@@ -29,6 +32,33 @@ const getVisitMissions = flattenTranslationsOnExecute(
                 columns: {
                   id: true,
                   name: true,
+                  description: true,
+                  mainImage: true,
+                },
+                extras: {
+                  location: selectPoint('location', places.location),
+                },
+                with: {
+                  categories: {
+                    columns: {},
+                    with: {
+                      category: withTranslations({
+                        columns: {
+                          id: true,
+                          icon: true,
+                          name: true,
+                        },
+                      }),
+                    },
+                  },
+                  mainCategory: withTranslations({
+                    columns: {
+                      id: true,
+                      icon: true,
+                      name: true,
+                      color: true,
+                    },
+                  }),
                 },
               }),
             },
@@ -37,6 +67,33 @@ const getVisitMissions = flattenTranslationsOnExecute(
             columns: {
               id: true,
               name: true,
+              description: true,
+              mainImage: true,
+            },
+            extras: {
+              location: selectPoint('location', places.location),
+            },
+            with: {
+              categories: {
+                columns: {},
+                with: {
+                  category: withTranslations({
+                    columns: {
+                      id: true,
+                      icon: true,
+                      name: true,
+                    },
+                  }),
+                },
+              },
+              mainCategory: withTranslations({
+                columns: {
+                  id: true,
+                  icon: true,
+                  name: true,
+                  color: true,
+                },
+              }),
             },
           }),
         },
@@ -54,22 +111,31 @@ export const missionsRouter = router({
         .map(({ places, mainPlaces, ...category }) => ({
           category,
           places: [
-            ...mainPlaces.map((place) => {
-              const rnd = Math.random()
-              return {
-                missionStatus: { visited: rnd <= 0.45, verified: rnd <= 0.2 },
-                ...place,
-              }
-            }),
-            ...places.map(({ place }) => {
-              const rnd = Math.random()
-              return {
-                missionStatus: { visited: rnd <= 0.45, verified: rnd <= 0.2 },
-                ...place,
-              }
-            }),
+            ...mainPlaces.map((place) => mapPlace(place)),
+            ...places.map(({ place }) => mapPlace(place)),
           ],
         }))
         .filter(({ places }) => places.length > 0)
     }),
 })
+
+const mapPlace = <
+  T extends {
+    location: any // eslint-disable-line @typescript-eslint/no-explicit-any
+    categories: {
+      category: any // eslint-disable-line @typescript-eslint/no-explicit-any
+    }[]
+  },
+>(
+  place: T
+) => {
+  const rnd = Math.random()
+  const { categories, ...placeWithLocation } = calculateLocation(place)
+  return {
+    missionStatus: { visited: rnd <= 0.45, verified: rnd <= 0.2 },
+    categories: categories.map(({ category }) => category),
+    images: [],
+
+    ...placeWithLocation,
+  }
+}

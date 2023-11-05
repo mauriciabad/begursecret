@@ -83,7 +83,10 @@
     "view-places-in-map": "View places in map",
     "visited": "Visited",
     "verified": "Verified",
-    "not-visited": "Not visited"
+    "not-visited": "Not visited",
+    "validate-visit": "Validate visit",
+    "no-place-selected": "No place selected",
+    "view-full-place-info": "View full place info"
   },
   "hub": {
     "meta": {

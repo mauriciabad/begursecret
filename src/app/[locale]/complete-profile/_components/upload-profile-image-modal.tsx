@@ -14,7 +14,7 @@ import { useSession } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 import { ChangeEvent, FC, FormEvent, useState } from 'react'
 import { UploadProfileImageResponse } from '~/app/api/upload/profile-image/route'
-import { AlertBox } from '~/components/alert-box'
+import { AlertBox } from '~/components/generic/alert-box'
 import { UpdateSessionSchemaType } from '~/schemas/profile'
 
 const uploadProfileImage = async ({ file }: { file: File | null }) => {

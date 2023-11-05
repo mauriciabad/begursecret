@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
 import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
-import { LinkButton } from '~/components/link-button'
+import { LinkButton } from '~/components/links/link-button'
 import type { LocaleRouteParams } from '~/i18n'
 
 export async function generateMetadata({

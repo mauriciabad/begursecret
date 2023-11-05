@@ -8,7 +8,7 @@ import { makeImageUrl } from '~/helpers/images'
 import { MapPoint } from '~/helpers/spatial-data'
 
 import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
-import { PlaceCategoryTagList } from './place-category-tag-list'
+import { PlaceCategoryTagList } from '../../../../../components/place-category-tags/place-category-tag-list'
 
 export const PlaceList: FC<{
   places: {
@@ -45,6 +45,8 @@ export const PlaceList: FC<{
                 <PlaceCategoryTagList
                   mainCategory={place.mainCategory}
                   categories={place.categories.map((c) => c.category)}
+                  wrap
+                  className="mt-2"
                 />
 
                 {place.description && (

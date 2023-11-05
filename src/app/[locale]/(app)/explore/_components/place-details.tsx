@@ -5,19 +5,19 @@ import { Image } from '@nextui-org/image'
 import { IconPhoto } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'
-import { MarkdownContent } from '~/components/markdown-content'
+import { MarkdownContent } from '~/components/generic/markdown-content'
 import { makeImageUrl } from '~/helpers/images'
 import { MapPoint } from '~/helpers/spatial-data'
 import { Features } from '~/server/db/constants/features'
 import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
+import { PlaceCategoryTagList } from '../../../../../components/place-category-tags/place-category-tag-list'
 import { FeaturesBlock } from './features-block'
-import { PlaceCategoryTagList } from './place-category-tag-list'
 
 export const PlaceDetails: FC<{
   placeFullInfo: {
     id: number
     mainImage: string | null
-    images?: { key: string }[]
+    images: { key: string }[]
     location: MapPoint
     name: string
     description: string | null
@@ -83,6 +83,8 @@ export const PlaceDetails: FC<{
       <PlaceCategoryTagList
         mainCategory={place.mainCategory}
         categories={place.categories.map((c) => c.category)}
+        wrap
+        className="mt-2"
       />
 
       {place.features && (

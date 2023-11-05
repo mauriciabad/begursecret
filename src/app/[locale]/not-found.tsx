@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
 import { getTranslator } from 'next-intl/server'
-import { LinkButtonCustom } from '~/components/link-button-custom'
+import { LinkButtonCustom } from '~/components/links/link-button-custom'
 import { LocaleRouteParams } from '~/i18n'
 
 export async function generateMetadata({
