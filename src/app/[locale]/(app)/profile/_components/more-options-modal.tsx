@@ -23,7 +23,7 @@ import { signOut, useSession } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 import Link from 'next-intl/link'
 import { FC, ReactNode } from 'react'
-import { LanguageSwitcher } from '~/components/language-switcher'
+import { LanguageSwitcher } from '~/components/inputs/language-switcher'
 
 export const MoreOptionsModal: FC = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()

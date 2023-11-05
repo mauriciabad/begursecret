@@ -13,9 +13,9 @@ import { useTranslations } from 'next-intl'
 import { FC } from 'react'
 import { cn } from '~/helpers/cn'
 import { getSession } from '~/server/get-server-thing'
-import { DbEnvironmentTag } from '../db-environment-tag'
-import { UserAvatar } from '../user-avatar'
+import { UserAvatar } from '../generic/user-avatar'
 import { BottomNavbarItem } from './bottom-navbar-item'
+import { DbEnvironmentTag } from './db-environment-tag'
 
 export const BottomNavbar: FC<{
   className?: string

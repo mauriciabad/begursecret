@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
 import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
-import { UnderConstruction } from '~/components/under-construction'
+import { UnderConstruction } from '~/components/generic/under-construction'
 
 import type { LocaleRouteParams } from '~/i18n'
 

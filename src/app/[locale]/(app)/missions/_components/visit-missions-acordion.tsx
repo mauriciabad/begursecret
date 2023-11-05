@@ -3,6 +3,7 @@
 import { Accordion, AccordionItem } from '@nextui-org/accordion'
 import { Button } from '@nextui-org/button'
 import { CircularProgress } from '@nextui-org/progress'
+import { useDisclosure } from '@nextui-org/react'
 import {
   IconChevronRight,
   IconCircle,
@@ -12,13 +13,14 @@ import {
 } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import Link from 'next-intl/link'
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
 import { cn } from '~/helpers/cn'
 import {
   PlaceCategoryColor,
   PlaceCategoryIcon as PlaceCategoryIconType,
 } from '~/server/db/constants/places'
+import { PlacePreviewModal } from './place-prevew-modal'
 
 export const VisitMissionsAcordion: FC<{
   visitMissions: {
@@ -31,6 +33,22 @@ export const VisitMissionsAcordion: FC<{
     places: {
       id: number
       name: string
+      mainImage: string | null
+      images: { key: string }[]
+      description: string | null
+      location: {
+        lat: number
+        lng: number
+      }
+      mainCategory: {
+        icon: PlaceCategoryIconType
+        name: string
+        color: PlaceCategoryColor
+      }
+      categories: {
+        icon: PlaceCategoryIconType
+        name: string
+      }[]
       missionStatus: {
         visited?: boolean
         verified?: boolean
@@ -39,91 +57,108 @@ export const VisitMissionsAcordion: FC<{
   }[]
 }> = ({ visitMissions }) => {
   const t = useTranslations('missions')
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const [modalPlacePartialInfo, setModalPlacePartialInfo] = useState<
+    (typeof visitMissions)[number]['places'][number] | null
+  >(null)
 
   return (
-    <Accordion
-      variant="splitted"
-      fullWidth
-      className="p-0"
-      selectionMode="multiple"
-    >
-      {visitMissions.map(({ category, places }) => (
-        <AccordionItem
-          key={category.id}
-          title={category.namePlural}
-          classNames={{
-            base: '!p-0 !shadow-small',
-            trigger: 'py-2 pl-2 pr-4',
-            content: 'p-0',
-            title: 'text-gray-700 font-title text-lg font-semibold',
-          }}
-          startContent={
-            <PlaceCategoryIconWithProgress
-              icon={category.icon}
-              progress={
-                places.filter((place) => place.missionStatus.visited).length /
-                places.length
-              }
-              color={category.color}
-              label={category.namePlural}
-            />
-          }
-        >
-          <div className="p-1">
-            <Button
-              as={Link}
-              className="border px-2 py-0 leading-none"
-              radius="full"
-              variant="bordered"
-              fullWidth
-              size="sm"
-              startContent={<IconMap size={18} className="text-stone-400" />}
-              endContent={
-                <IconChevronRight size={18} className="text-stone-300" />
-              }
-              href={`/explore/search?category=${category.id}`}
-            >
-              <span className="grow text-left">{t('view-places-in-map')}</span>
-            </Button>
-          </div>
-          <ul className="py-1">
-            {places.map((place) => (
+    <>
+      <Accordion
+        variant="splitted"
+        fullWidth
+        className="p-0"
+        selectionMode="multiple"
+      >
+        {visitMissions.map(({ category, places }) => (
+          <AccordionItem
+            key={category.id}
+            title={category.namePlural}
+            classNames={{
+              base: '!p-0 !shadow-small',
+              trigger: 'py-2 pl-2 pr-4',
+              content: 'p-0',
+              title: 'text-gray-700 font-title text-lg font-semibold',
+            }}
+            startContent={
+              <PlaceCategoryIconWithProgress
+                icon={category.icon}
+                progress={
+                  places.filter((place) => place.missionStatus.visited).length /
+                  places.length
+                }
+                color={category.color}
+                label={category.namePlural}
+              />
+            }
+          >
+            <div className="p-1">
               <Button
-                key={place.id}
-                className="flex items-center justify-start gap-2 px-2 py-1"
-                radius="none"
-                variant="light"
-                as="li"
+                as={Link}
+                className="border px-2 py-0 leading-none"
+                radius="full"
+                variant="bordered"
+                fullWidth
+                size="sm"
+                startContent={<IconMap size={18} className="text-stone-400" />}
+                endContent={
+                  <IconChevronRight size={18} className="text-stone-300" />
+                }
+                href={`/explore/search?category=${category.id}`}
               >
-                {place.missionStatus.verified ? (
-                  <IconDiscountCheckFilled
-                    size={24}
-                    className="text-blue-400"
-                    aria-label={t('visited')}
-                  />
-                ) : place.missionStatus.visited ? (
-                  <IconCircleCheckFilled
-                    size={24}
-                    className="text-blue-400"
-                    aria-label={t('verified')}
-                  />
-                ) : (
-                  <IconCircle
-                    size={24}
-                    className="text-stone-500"
-                    aria-label={t('not-visited')}
-                  />
-                )}
-
-                <span className="grow text-left">{place.name}</span>
-
-                <IconChevronRight size={24} className="text-stone-300" />
+                <span className="grow text-left">
+                  {t('view-places-in-map')}
+                </span>
               </Button>
-            ))}
-          </ul>
-        </AccordionItem>
-      ))}
-    </Accordion>
+            </div>
+            <ul className="py-1">
+              {places.map((place) => (
+                <Button
+                  key={place.id}
+                  className="flex items-center justify-start gap-2 px-2 py-1"
+                  radius="none"
+                  variant="light"
+                  as="li"
+                  onPress={() => {
+                    setModalPlacePartialInfo(place)
+                    onOpen()
+                  }}
+                >
+                  {place.missionStatus.verified ? (
+                    <IconDiscountCheckFilled
+                      size={24}
+                      className="text-blue-400"
+                      aria-label={t('visited')}
+                    />
+                  ) : place.missionStatus.visited ? (
+                    <IconCircleCheckFilled
+                      size={24}
+                      className="text-blue-400"
+                      aria-label={t('verified')}
+                    />
+                  ) : (
+                    <IconCircle
+                      size={24}
+                      className="text-stone-500"
+                      aria-label={t('not-visited')}
+                    />
+                  )}
+
+                  <span className="grow text-left">{place.name}</span>
+
+                  <IconChevronRight size={24} className="text-stone-300" />
+                </Button>
+              ))}
+            </ul>
+          </AccordionItem>
+        ))}
+      </Accordion>
+      <PlacePreviewModal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        place={modalPlacePartialInfo}
+      />
+    </>
   )
 }
 

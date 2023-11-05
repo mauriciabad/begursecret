@@ -1,6 +1,6 @@
 'use client'
 
-import L, { Map as LeafletMap, divIcon } from 'leaflet'
+import { Map as LeafletMap, divIcon } from 'leaflet'
 import 'leaflet.locatecontrol'
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'
 import 'leaflet/dist/leaflet.css'
@@ -10,7 +10,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { MapContainer, Marker } from 'react-leaflet'
 import { cn } from '~/helpers/cn'
 import { MapPoint } from '~/helpers/spatial-data'
-import { CustomLayersControl } from './custom-layout-controls'
+import { CustomLayersControl, LayerId } from './custom-layout-controls'
 import { CustomLocationControl } from './custom-location-control'
 import { PlaceMarker, PlaceMarkerProps } from './place-marker'
 import { useMapControlledZoom } from './useMapControlledZoom'
@@ -35,6 +35,7 @@ export const MapRaw: FC<{
   classNames?: {
     controls?: string
   }
+  defaultLayer?: LayerId
 }> = ({
   center = DEFAULT_CENTER,
   className,
@@ -42,6 +43,7 @@ export const MapRaw: FC<{
   fullControl,
   zoom: initialZoom = 14,
   classNames = {},
+  defaultLayer,
 }) => {
   const router = useRouter()
   const [map, setMap] = useState<LeafletMap | null>(null)
@@ -56,10 +58,14 @@ export const MapRaw: FC<{
       zoom={zoom}
       zoomControl={false}
       scrollWheelZoom={fullControl}
-      dragging={fullControl || !L.Browser.mobile}
+      doubleClickZoom={fullControl}
+      touchZoom={fullControl}
+      dragging={fullControl}
+      keyboard={fullControl}
       className={cn(mapContainerClassName, className)}
       ref={setMap}
       attributionControl={false}
+      zoomSnap={0.5}
     >
       {markers?.map(
         ({ location, url: markerUrl, size, ...placeMarkerProps }) => (
@@ -84,9 +90,10 @@ export const MapRaw: FC<{
                       router.push(markerUrl)
                     },
                   }
-                : {}
+                : undefined
             }
-          ></Marker>
+            keyboard={fullControl}
+          />
         )
       )}
 
@@ -96,8 +103,8 @@ export const MapRaw: FC<{
           classNames.controls
         )}
       >
-        <CustomLayersControl />
-        <CustomLocationControl />
+        <CustomLayersControl hide={!fullControl} defaultLayer={defaultLayer} />
+        <CustomLocationControl hide={!fullControl} />
       </div>
     </MapContainer>
   )

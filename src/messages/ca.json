@@ -83,7 +83,10 @@
     "view-places-in-map": "Veure llocs al mapa",
     "visited": "Visitat",
     "verified": "Verificat",
-    "not-visited": "No visitat"
+    "not-visited": "No visitat",
+    "validate-visit": "Validar visita",
+    "no-place-selected": "No s'ha seleccionat cap lloc",
+    "view-full-place-info": "Veure tota la informació del lloc"
   },
   "hub": {
     "meta": {

@@ -9,7 +9,7 @@ import 'leaflet/dist/leaflet.css'
 import { FC, useEffect, useState } from 'react'
 import { useMap } from 'react-leaflet'
 
-export const CustomLocationControl: FC = () => {
+export const CustomLocationControl: FC<{ hide?: boolean }> = ({ hide }) => {
   const parentMap = useMap()
 
   const locationControl = L.control.locate({
@@ -41,7 +41,7 @@ export const CustomLocationControl: FC = () => {
 
   return (
     <>
-      {elementWithClickEvent && (
+      {!hide && elementWithClickEvent && (
         <Button
           onPress={() => {
             elementWithClickEvent.click()

@@ -3,8 +3,8 @@ import { useTranslations } from 'next-intl'
 import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
 import { Logo } from '~/components/icons/logo'
-import { LanguageSwitcher } from '~/components/language-switcher'
-import { LinkButtonCustom } from '~/components/link-button-custom'
+import { LanguageSwitcher } from '~/components/inputs/language-switcher'
+import { LinkButtonCustom } from '~/components/links/link-button-custom'
 import type { LocaleRouteParams } from '~/i18n'
 
 export async function generateMetadata({

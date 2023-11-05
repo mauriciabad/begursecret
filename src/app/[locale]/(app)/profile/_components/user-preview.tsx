@@ -1,7 +1,7 @@
 import { Session } from 'next-auth'
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'
-import { UserAvatar } from '~/components/user-avatar'
+import { UserAvatar } from '~/components/generic/user-avatar'
 
 export const UserPreview: FC<{ user: Session['user'] }> = ({ user }) => {
   const t = useTranslations('profile.preview')

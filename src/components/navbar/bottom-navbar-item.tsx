@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next-intl/client'
 import { FC, ReactNode } from 'react'
-import { LinkButton } from '../link-button'
+import { LinkButton } from '../links/link-button'
 
 export const BottomNavbarItem: FC<{
   url: string

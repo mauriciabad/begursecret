@@ -180,7 +180,7 @@ export const placesRouter = router({
       locale: input.locale,
       id: input.id,
     })
-    return result ? calculateLocation(result) : undefined
+    return result ? calculateLocation({ ...result, images: [] }) : undefined
   }),
   listCategories: procedure
     .input(listCategoriesSchema)

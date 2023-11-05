@@ -1,7 +1,7 @@
 import { Navbar, NavbarContent, NavbarItem } from '@nextui-org/navbar'
 import { useTranslations } from 'next-intl'
 import type { FC, PropsWithChildren } from 'react'
-import { LinkButton } from '~/components/link-button'
+import { LinkButton } from '~/components/links/link-button'
 import type { LocaleRouteParams } from '~/i18n'
 
 type RegisterLayoutProps = PropsWithChildren<LocaleRouteParams>

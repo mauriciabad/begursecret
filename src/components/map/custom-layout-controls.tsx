@@ -13,13 +13,16 @@ import { useTranslations } from 'next-intl'
 import { FC, useMemo, useState } from 'react'
 import { useMap } from 'react-leaflet'
 import { cn } from '~/helpers/cn'
-import { LinkButton } from '../link-button'
+import { LinkButton } from '../links/link-button'
 
-export const CustomLayersControl: FC = () => {
+export const CustomLayersControl: FC<{
+  hide?: boolean
+  defaultLayer?: LayerId
+}> = ({ hide, defaultLayer = 'bg-satelite-ign' }) => {
   const t = useTranslations('map')
   const parentMap = useMap()
 
-  const [selectedLayer, setSelectedLayer] = useState<LayerId>('bg-satelite-ign')
+  const [selectedLayer, setSelectedLayer] = useState<LayerId>(defaultLayer)
 
   const selectLayer = (layerId: LayerId) => {
     setSelectedLayer(layerId)
@@ -47,90 +50,94 @@ export const CustomLayersControl: FC = () => {
   }
 
   return (
-    <Popover placement="top-end">
-      <PopoverTrigger>
-        <Button
-          size="lg"
-          isIconOnly
-          aria-label="Test"
-          variant="solid"
-          className="bg-white shadow-md"
-        >
-          <IconStack2 />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="block space-y-4 p-4">
-        <div>
-          <h3 className="mb-2 font-title font-semibold leading-none">
-            {t('layout-types.external')}
-          </h3>
-          <div className="flex max-w-[256px] text-center">
-            <ExternalMapItem
-              name="Earth"
-              href="https://earth.google.com/web/@41.95456799,3.20833249,206.88319143a,840.3173078d,35y,135h,60t,0r/data=KAI"
-              image="/images/brands/google-earth.svg"
-            />
-            <ExternalMapItem
-              name="Navionics"
-              href="https://webapp.navionics.com/#boating@11&key=kta_G%7B%7BsR"
-              image="/images/brands/navionics.svg"
-            />
-            <ExternalMapItem
-              name="Vissir3"
-              href="http://srv.icgc.cat/vissir3/index.html?HfYJ5y5Ks"
-              image="/images/brands/icgc.svg"
-            />
-            <ExternalMapItem
-              name="Wikiloc"
-              href="https://wikiloc.com/wikiloc/map.do?sw=41.92590918891433%2C3.1692981719970708&ne=41.982271629453585%2C3.2681751251220708&page=1"
-              image="/images/brands/wikiloc.svg"
-            />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-3 gap-2">
-          <div className="col-span-2">
-            <h3 className="mb-2 font-title font-semibold leading-none">
-              {t('layout-types.classic')}
-            </h3>
-            <div className="grid grid-cols-2 gap-2">
-              {makeLayerButton('bg-classic-icgc')}
-              {makeLayerButton('bg-classic-ign')}
+    <>
+      {!hide && (
+        <Popover placement="top-end">
+          <PopoverTrigger>
+            <Button
+              size="lg"
+              isIconOnly
+              aria-label="Test"
+              variant="solid"
+              className="bg-white shadow-md"
+            >
+              <IconStack2 />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="block space-y-4 p-4">
+            <div>
+              <h3 className="mb-2 font-title font-semibold leading-none">
+                {t('layout-types.external')}
+              </h3>
+              <div className="flex max-w-[256px] text-center">
+                <ExternalMapItem
+                  name="Earth"
+                  href="https://earth.google.com/web/@41.95456799,3.20833249,206.88319143a,840.3173078d,35y,135h,60t,0r/data=KAI"
+                  image="/images/brands/google-earth.svg"
+                />
+                <ExternalMapItem
+                  name="Navionics"
+                  href="https://webapp.navionics.com/#boating@11&key=kta_G%7B%7BsR"
+                  image="/images/brands/navionics.svg"
+                />
+                <ExternalMapItem
+                  name="Vissir3"
+                  href="http://srv.icgc.cat/vissir3/index.html?HfYJ5y5Ks"
+                  image="/images/brands/icgc.svg"
+                />
+                <ExternalMapItem
+                  name="Wikiloc"
+                  href="https://wikiloc.com/wikiloc/map.do?sw=41.92590918891433%2C3.1692981719970708&ne=41.982271629453585%2C3.2681751251220708&page=1"
+                  image="/images/brands/wikiloc.svg"
+                />
+              </div>
             </div>
-          </div>
-          <div className="col-span-1">
-            <h3 className="mb-2 font-title font-semibold leading-none">
-              {t('layout-types.hybrid')}
-            </h3>
-            <div className="grid grid-cols-1 gap-2">
-              {makeLayerButton('bg-satelite-and-standard-icgc')}
+
+            <div className="grid grid-cols-3 gap-2">
+              <div className="col-span-2">
+                <h3 className="mb-2 font-title font-semibold leading-none">
+                  {t('layout-types.classic')}
+                </h3>
+                <div className="grid grid-cols-2 gap-2">
+                  {makeLayerButton('bg-classic-icgc')}
+                  {makeLayerButton('bg-classic-ign')}
+                </div>
+              </div>
+              <div className="col-span-1">
+                <h3 className="mb-2 font-title font-semibold leading-none">
+                  {t('layout-types.hybrid')}
+                </h3>
+                <div className="grid grid-cols-1 gap-2">
+                  {makeLayerButton('bg-satelite-and-standard-icgc')}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div>
-          <h3 className="mb-2 font-title font-semibold leading-none">
-            {t('layout-types.standard')}
-          </h3>
-          <div className="grid grid-cols-3 gap-2">
-            {makeLayerButton('bg-standard-icgc')}
-            {makeLayerButton('bg-standard-ign')}
-            {makeLayerButton('bg-standard-osm')}
-          </div>
-        </div>
+            <div>
+              <h3 className="mb-2 font-title font-semibold leading-none">
+                {t('layout-types.standard')}
+              </h3>
+              <div className="grid grid-cols-3 gap-2">
+                {makeLayerButton('bg-standard-icgc')}
+                {makeLayerButton('bg-standard-ign')}
+                {makeLayerButton('bg-standard-osm')}
+              </div>
+            </div>
 
-        <div>
-          <h3 className="mb-2 font-title font-semibold leading-none">
-            {t('layout-types.satellite')}
-          </h3>
-          <div className="grid grid-cols-3 gap-2">
-            {makeLayerButton('bg-satelite-icgc')}
-            {makeLayerButton('bg-satelite-ign')}
-            {makeLayerButton('bg-satelite-esri')}
-          </div>
-        </div>
-      </PopoverContent>
-    </Popover>
+            <div>
+              <h3 className="mb-2 font-title font-semibold leading-none">
+                {t('layout-types.satellite')}
+              </h3>
+              <div className="grid grid-cols-3 gap-2">
+                {makeLayerButton('bg-satelite-icgc')}
+                {makeLayerButton('bg-satelite-ign')}
+                {makeLayerButton('bg-satelite-esri')}
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
+      )}
+    </>
   )
 }
 
@@ -316,7 +323,7 @@ const layersData = [
   sampleImage: string
 }>
 
-type LayerId = (typeof layersData)[number]['id']
+export type LayerId = (typeof layersData)[number]['id']
 
 const layers = layersData.reduce(
   (acc, layer) => {

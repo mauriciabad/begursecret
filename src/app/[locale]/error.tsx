@@ -3,7 +3,7 @@
 import { Button } from '@nextui-org/button'
 import { useTranslations } from 'next-intl'
 import { useEffect } from 'react'
-import { LinkButtonCustom } from '~/components/link-button-custom'
+import { LinkButtonCustom } from '~/components/links/link-button-custom'
 
 export default function Error({
   error,
