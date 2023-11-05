@@ -19,6 +19,7 @@ import Link from 'next-intl/link'
 import { FC } from 'react'
 import { Map } from '~/components/map/map'
 import { PlaceCategoryTagList } from '~/components/place-category-tags/place-category-tag-list'
+import { shotConfettiStars } from '~/helpers/confetti'
 import { makeImageUrl } from '~/helpers/images'
 import {
   PlaceCategoryColor,
@@ -160,7 +161,8 @@ export const PlacePreviewModal: FC<
                 onOpenChange={onValidateModalOpenChange}
                 onValidate={(validated) => {
                   if (validated) {
-                    alert('validated')
+                    shotConfettiStars()
+
                     onClose()
                   } else {
                     alert('not validated')
