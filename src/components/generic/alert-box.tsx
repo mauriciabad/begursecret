@@ -1,23 +1,28 @@
-import { IconInfoCircle } from '@tabler/icons-react'
+import { IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react'
 import { FC, ReactNode } from 'react'
 import { cn } from '~/helpers/cn'
 
 export const AlertBox: FC<{
-  type?: 'info'
+  type?: 'info' | 'warning'
   className?: string
   children: ReactNode
-}> = ({ type, className, children }) => {
+}> = ({ type = 'info', className, children }) => {
   return (
     <div
       className={cn(
-        'mb-4 flex items-center gap-2 rounded-lg bg-stone-50 px-3 py-2 text-sm text-stone-800',
+        'flex items-center gap-2 rounded-lg bg-stone-50 px-3 py-2 text-sm text-stone-800',
         { 'bg-blue-50 text-blue-800': type === 'info' },
+        { 'bg-yellow-50 text-yellow-800': type === 'warning' },
         className
       )}
       role="alert"
     >
-      {type === 'info' && <IconInfoCircle size={20} />}
-      <div>{children}</div>
+      {type === 'info' && <IconInfoCircle className="shrink-0" size={20} />}
+      {type === 'warning' && (
+        <IconAlertTriangle className="shrink-0" size={20} />
+      )}
+
+      <div className="leading-none">{children}</div>
     </div>
   )
 }

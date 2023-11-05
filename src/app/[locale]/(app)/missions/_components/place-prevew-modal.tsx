@@ -8,6 +8,7 @@ import {
   ModalHeader,
   ModalProps,
 } from '@nextui-org/modal'
+import { useDisclosure } from '@nextui-org/react'
 import {
   IconChevronRight,
   IconDiscountCheckFilled,
@@ -23,6 +24,7 @@ import {
   PlaceCategoryColor,
   PlaceCategoryIcon as PlaceCategoryIconType,
 } from '~/server/db/constants/places'
+import { ValidatePlaceVisitModal } from './validate-place-visit-modal'
 
 export const PlacePreviewModal: FC<
   Omit<ModalProps, 'children'> & {
@@ -55,6 +57,13 @@ export const PlacePreviewModal: FC<
       place.location.lng > 3.24022 ||
       place.location.lat < 41.920697 ||
       place.location.lat > 41.984129)
+
+  const {
+    isOpen: isValidateModalOpen,
+    onOpen: onValidateModalOpen,
+    onOpenChange: onValidateModalOpenChange,
+  } = useDisclosure()
+
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>
@@ -139,12 +148,25 @@ export const PlacePreviewModal: FC<
                 <Button
                   color="primary"
                   fullWidth
-                  onPress={onClose}
+                  onPress={onValidateModalOpen}
                   startContent={<IconDiscountCheckFilled size={20} />}
                 >
                   {t('validate-visit')}
                 </Button>
               </ModalFooter>
+
+              <ValidatePlaceVisitModal
+                isOpen={isValidateModalOpen}
+                onOpenChange={onValidateModalOpenChange}
+                onValidate={(validated) => {
+                  if (validated) {
+                    alert('validated')
+                    onClose()
+                  } else {
+                    alert('not validated')
+                  }
+                }}
+              />
             </>
           ) : (
             <ModalBody className="">

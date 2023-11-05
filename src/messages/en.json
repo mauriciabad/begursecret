@@ -88,6 +88,15 @@
     "no-place-selected": "No place selected",
     "view-full-place-info": "View full place info"
   },
+  "validate": {
+    "validate-visit": "Validate visit",
+    "show-code-location": "Show code location",
+    "continue-without-validating": "Continue without validating",
+    "or": "or",
+    "place-has-no-code": "This place has no validation code",
+    "use-device-location-to-validate": "Use device location to validate.",
+    "grant-location-permission-to-continue": "Grant location permission when prompted."
+  },
   "hub": {
     "meta": {
       "title": "Hub",

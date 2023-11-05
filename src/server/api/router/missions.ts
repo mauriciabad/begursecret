@@ -129,10 +129,12 @@ const mapPlace = <
 >(
   place: T
 ) => {
-  const rnd = Math.random()
   const { categories, ...placeWithLocation } = calculateLocation(place)
   return {
-    missionStatus: { visited: rnd <= 0.45, verified: rnd <= 0.2 },
+    missionStatus: {
+      visited: false,
+      verified: false,
+    },
     categories: categories.map(({ category }) => category),
     images: [],
 

@@ -88,6 +88,15 @@
     "no-place-selected": "No s'ha seleccionat cap lloc",
     "view-full-place-info": "Veure tota la informació del lloc"
   },
+  "validate": {
+    "validate-visit": "Validar visita",
+    "show-code-location": "Mostrar ubicació del codi",
+    "continue-without-validating": "Continuar sense validar",
+    "or": "o",
+    "place-has-no-code": "Aquest lloc no té codi de verificació",
+    "use-device-location-to-validate": "Utilitzarà l'ubicació del dispositiu per validar la visita",
+    "grant-location-permission-to-continue": "Permet l'accés a la teva ubicació quan se't demani."
+  },
   "hub": {
     "meta": {
       "title": "Oficina virtual",
