@@ -72,7 +72,8 @@
       "no-leisure-services": "Sense serveis d'oci",
       "drinking-water": "Aigua potable",
       "no-drinking-water": "Aigua no potable"
-    }
+    },
+    "related-missions": "Missions relacionades"
   },
   "missions": {
     "meta": {

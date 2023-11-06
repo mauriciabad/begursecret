@@ -72,7 +72,8 @@
       "no-leisure-services": "No leisure services",
       "drinking-water": "Drinking water",
       "no-drinking-water": "No drinking water"
-    }
+    },
+    "related-missions": "Related missions"
   },
   "missions": {
     "meta": {

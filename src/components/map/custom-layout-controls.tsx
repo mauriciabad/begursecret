@@ -5,13 +5,12 @@ import { Card, CardBody } from '@nextui-org/card'
 import { Image } from '@nextui-org/image'
 import { Popover, PopoverContent, PopoverTrigger } from '@nextui-org/popover'
 import { IconStack2 } from '@tabler/icons-react'
-import { TileLayer } from 'leaflet'
 import 'leaflet.locatecontrol'
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'
 import 'leaflet/dist/leaflet.css'
 import { useTranslations } from 'next-intl'
-import { FC, useMemo, useState } from 'react'
-import { useMap } from 'react-leaflet'
+import { FC, useState } from 'react'
+import { TileLayer } from 'react-leaflet'
 import { cn } from '~/helpers/cn'
 import { LinkButton } from '../links/link-button'
 
@@ -20,37 +19,31 @@ export const CustomLayersControl: FC<{
   defaultLayer?: LayerId
 }> = ({ hide, defaultLayer = 'bg-satelite-ign' }) => {
   const t = useTranslations('map')
-  const parentMap = useMap()
 
   const [selectedLayer, setSelectedLayer] = useState<LayerId>(defaultLayer)
-
-  const selectLayer = (layerId: LayerId) => {
-    setSelectedLayer(layerId)
-  }
-
-  useMemo(() => {
-    parentMap.eachLayer((layer) => {
-      if (layer instanceof TileLayer) {
-        if (layer.options.id?.startsWith('bg-')) {
-          parentMap.removeLayer(layer)
-        }
-      }
-    })
-    parentMap.addLayer(layers[selectedLayer])
-  }, [selectedLayer, parentMap])
 
   const makeLayerButton = (layerId: LayerId) => {
     return (
       <LayerButton
         layerId={layerId}
-        onPress={() => selectLayer(layerId)}
+        onPress={() => setSelectedLayer(layerId)}
         active={layerId === selectedLayer}
       />
     )
   }
 
+  const selectedLayerFullData = layersData.find(
+    (layer) => layer.id === selectedLayer
+  )
+
   return (
     <>
+      {selectedLayerFullData && (
+        <TileLayer
+          attribution={`&copy; <a href="${selectedLayerFullData.attribution.url}">${selectedLayerFullData.attribution.name}</a>`}
+          url={selectedLayerFullData.tileUrlTemplate}
+        />
+      )}
       {!hide && (
         <Popover placement="top-end">
           <PopoverTrigger>
@@ -324,14 +317,3 @@ const layersData = [
 }>
 
 export type LayerId = (typeof layersData)[number]['id']
-
-const layers = layersData.reduce(
-  (acc, layer) => {
-    acc[layer.id] = new TileLayer(layer.tileUrlTemplate, {
-      maxZoom: layer.maxZoom,
-      id: layer.id,
-    })
-    return acc
-  },
-  {} as Record<LayerId, TileLayer>
-)
