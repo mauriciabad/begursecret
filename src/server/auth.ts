@@ -9,6 +9,7 @@ import GoogleProvider from 'next-auth/providers/google'
 import { env } from '~/env.mjs'
 import { loginSchema } from '~/schemas/auth'
 import { updateSessionSchema } from '~/schemas/profile'
+import { initializeUserInDatabase } from './api/router/auth'
 import { db } from './db/db'
 import { users } from './db/schema'
 
@@ -65,7 +66,11 @@ export const authOptions: AuthOptions = {
         const validatedSession = updateSessionSchema.parse(session)
         return { ...token, ...validatedSession }
       }
-      if (trigger === 'signIn' || trigger === 'signUp') {
+      if (trigger === 'signIn') {
+        return { ...token, id: user.id }
+      }
+      if (trigger === 'signUp') {
+        await initializeUserInDatabase({ id: user.id })
         return { ...token, id: user.id }
       }
       return token
