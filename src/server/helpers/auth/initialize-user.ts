@@ -9,6 +9,8 @@ export async function initializeUserInDatabase(newUser: {
   email: string
   password?: string
   emailVerified?: Date | null
+  name?: string
+  image?: string
 }) {
   return await db.transaction(async (tx) => {
     if (newUser.password) {
@@ -44,10 +46,12 @@ export async function initializeUserInDatabase(newUser: {
     await tx.insert(users).values({
       id: userId,
       email: newUser.email,
+      emailVerified: newUser.emailVerified,
+      name: newUser.name,
+      image: newUser.image,
       hashedPassword: newUser.password
         ? bcrypt.hashSync(newUser.password, 10)
         : null,
-      emailVerified: newUser.emailVerified ?? null,
       visitedPlaceListId: visitedPlaceListId,
     })
 
