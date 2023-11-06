@@ -7,9 +7,8 @@ import { procedure, router } from '~/server/trpc'
 
 export const authRouter = router({
   register: procedure.input(registerSchema).mutation(async ({ input }) => {
-    console.log('register', input)
     try {
-      await initializeUserInDatabase({
+      return await initializeUserInDatabase({
         email: input.email,
         password: input.password,
       })

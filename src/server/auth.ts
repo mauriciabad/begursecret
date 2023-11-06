@@ -14,8 +14,13 @@ import { users } from './db/schema'
 import { initializeUserInDatabase } from './helpers/auth/initialize-user'
 
 export const authOptions: AuthOptions = {
-  // Note: Cast required to workaround issue https://github.com/nextauthjs/next-auth/issues/8283
-  adapter: DrizzleAdapter(db) as AuthOptions['adapter'],
+  adapter: {
+    ...DrizzleAdapter(db),
+
+    async createUser(data) {
+      return await initializeUserInDatabase(data)
+    },
+  },
   providers: [
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
@@ -66,11 +71,7 @@ export const authOptions: AuthOptions = {
         const validatedSession = updateSessionSchema.parse(session)
         return { ...token, ...validatedSession }
       }
-      if (trigger === 'signIn') {
-        return { ...token, id: user.id }
-      }
-      if (trigger === 'signUp') {
-        await initializeUserInDatabase({ id: user.id })
+      if (trigger === 'signIn' || trigger === 'signUp') {
         return { ...token, id: user.id }
       }
       return token

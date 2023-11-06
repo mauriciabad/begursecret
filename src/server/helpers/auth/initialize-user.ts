@@ -5,33 +5,22 @@ import { db } from '~/server/db/db'
 import { placeLists } from '~/server/db/schema'
 import { users } from '~/server/db/schema/users'
 
-export async function initializeUserInDatabase(
-  newUser:
-    | { id?: undefined; email: string; password: string }
-    | { id: string; email?: undefined; password?: undefined }
-) {
-  await db.transaction(async (tx) => {
-    if (newUser.id === undefined) {
+export async function initializeUserInDatabase(newUser: {
+  email: string
+  password?: string
+  emailVerified?: Date | null
+}) {
+  return await db.transaction(async (tx) => {
+    if (newUser.password) {
       const existingUser = await tx.query.users.findFirst({
         where: eq(users.email, newUser.email),
       })
       if (existingUser) {
-        throw new Error('User already exists')
-      }
-    } else {
-      const existingUser = await tx.query.users.findFirst({
-        where: eq(users.id, newUser.id),
-      })
-      if (!existingUser) {
-        throw new Error('User does not exist')
-      }
-
-      if (existingUser.visitedPlaceListId) {
-        throw new Error('visitedPlaceList already exists')
+        throw new Error('User already exists with that email')
       }
     }
 
-    const userId = newUser.id ?? uuidv4()
+    const userId = uuidv4()
 
     const visitedPlaceListId = Number(
       (
@@ -52,20 +41,20 @@ export async function initializeUserInDatabase(
       throw new Error('Error creating visitedPlaceList')
     }
 
-    if (newUser.id === undefined) {
-      await tx.insert(users).values({
-        id: userId,
-        email: newUser.email,
-        hashedPassword: bcrypt.hashSync(newUser.password, 10),
-        visitedPlaceListId: visitedPlaceListId,
-      })
-    } else {
-      await tx
-        .update(users)
-        .set({
-          visitedPlaceListId: visitedPlaceListId,
-        })
-        .where(eq(users.id, userId))
-    }
+    await tx.insert(users).values({
+      id: userId,
+      email: newUser.email,
+      hashedPassword: newUser.password
+        ? bcrypt.hashSync(newUser.password, 10)
+        : null,
+      emailVerified: newUser.emailVerified ?? null,
+      visitedPlaceListId: visitedPlaceListId,
+    })
+
+    return await tx
+      .select()
+      .from(users)
+      .where(eq(users.id, userId))
+      .then((res) => res[0])
   })
 }
