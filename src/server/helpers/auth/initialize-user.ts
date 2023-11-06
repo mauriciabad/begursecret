@@ -9,8 +9,8 @@ export async function initializeUserInDatabase(newUser: {
   email: string
   password?: string
   emailVerified?: Date | null
-  name?: string
-  image?: string
+  name?: string | null
+  image?: string | null
 }) {
   return await db.transaction(async (tx) => {
     if (newUser.password) {
