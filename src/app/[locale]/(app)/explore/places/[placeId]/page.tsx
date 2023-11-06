@@ -35,6 +35,11 @@ const PlacePage: FC<{
   })
   if (!place) notFound()
 
+  const visitMissions = await trpc.missions.getVisitMissions({
+    locale: onlyTranslatableLocales(params.locale),
+    placeId,
+  })
+
   return (
     <>
       <Map
@@ -64,7 +69,7 @@ const PlacePage: FC<{
           contents: 'pb-8',
         }}
       >
-        <PlaceDetails placeFullInfo={place} />
+        <PlaceDetails placeFullInfo={place} visitMissions={visitMissions} />
       </MapDrawer>
     </>
   )

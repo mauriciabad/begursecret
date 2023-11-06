@@ -1,9 +1,10 @@
+import { sql } from 'drizzle-orm'
 import 'server-only'
 import { calculateLocation } from '~/helpers/spatial-data'
 
 import { getVisitMissionsSchema } from '~/schemas/missions'
 import { db } from '~/server/db/db'
-import { places } from '~/server/db/schema'
+import { places, placesToPlaceCategories } from '~/server/db/schema'
 import { selectPoint } from '~/server/helpers/spatial-data'
 import {
   flattenTranslationsOnExecute,
@@ -23,8 +24,32 @@ const getVisitMissions = flattenTranslationsOnExecute(
           nameGender: true,
           color: true,
         },
-        where: (placeCategories, { eq }) =>
-          eq(placeCategories.hasVisitMission, true),
+        where: (placeCategories, { eq, and, or, inArray, isNull }) =>
+          and(
+            eq(placeCategories.hasVisitMission, true),
+            or(
+              isNull(sql.placeholder('placeId')),
+              eq(
+                placeCategories.id,
+                db
+                  .selectDistinct({ data: places.mainCategoryId })
+                  .from(places)
+                  .where(eq(places.id, sql.placeholder('placeId')))
+              ),
+              inArray(
+                placeCategories.id,
+                db
+                  .select({ data: placesToPlaceCategories.categoryId })
+                  .from(placesToPlaceCategories)
+                  .where(
+                    eq(
+                      placesToPlaceCategories.placeId,
+                      sql.placeholder('placeId')
+                    )
+                  )
+              )
+            )
+          ),
         with: {
           places: {
             with: {
@@ -106,7 +131,10 @@ export const missionsRouter = router({
   getVisitMissions: procedure
     .input(getVisitMissionsSchema)
     .query(async ({ input }) => {
-      const result = await getVisitMissions.execute({ locale: input.locale })
+      const result = await getVisitMissions.execute({
+        locale: input.locale,
+        placeId: input.placeId,
+      })
       return result
         .map(({ places, mainPlaces, ...category }) => ({
           category,
@@ -129,10 +157,12 @@ const mapPlace = <
 >(
   place: T
 ) => {
-  const rnd = Math.random()
   const { categories, ...placeWithLocation } = calculateLocation(place)
   return {
-    missionStatus: { visited: rnd <= 0.45, verified: rnd <= 0.2 },
+    missionStatus: {
+      visited: false,
+      verified: false,
+    },
     categories: categories.map(({ category }) => category),
     images: [],
 

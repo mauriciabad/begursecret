@@ -8,6 +8,7 @@ import {
   ModalHeader,
   ModalProps,
 } from '@nextui-org/modal'
+import { useDisclosure } from '@nextui-org/react'
 import {
   IconChevronRight,
   IconDiscountCheckFilled,
@@ -18,11 +19,13 @@ import Link from 'next-intl/link'
 import { FC } from 'react'
 import { Map } from '~/components/map/map'
 import { PlaceCategoryTagList } from '~/components/place-category-tags/place-category-tag-list'
+import { shotConfettiStars } from '~/helpers/confetti'
 import { makeImageUrl } from '~/helpers/images'
 import {
   PlaceCategoryColor,
   PlaceCategoryIcon as PlaceCategoryIconType,
 } from '~/server/db/constants/places'
+import { ValidatePlaceVisitModal } from './validate-place-visit-modal'
 
 export const PlacePreviewModal: FC<
   Omit<ModalProps, 'children'> & {
@@ -55,6 +58,13 @@ export const PlacePreviewModal: FC<
       place.location.lng > 3.24022 ||
       place.location.lat < 41.920697 ||
       place.location.lat > 41.984129)
+
+  const {
+    isOpen: isValidateModalOpen,
+    onOpen: onValidateModalOpen,
+    onOpenChange: onValidateModalOpenChange,
+  } = useDisclosure()
+
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>
@@ -139,12 +149,23 @@ export const PlacePreviewModal: FC<
                 <Button
                   color="primary"
                   fullWidth
-                  onPress={onClose}
+                  onPress={onValidateModalOpen}
                   startContent={<IconDiscountCheckFilled size={20} />}
                 >
                   {t('validate-visit')}
                 </Button>
               </ModalFooter>
+
+              <ValidatePlaceVisitModal
+                isOpen={isValidateModalOpen}
+                onOpenChange={onValidateModalOpenChange}
+                expectedLocation={place.location}
+                placeId={place.id}
+                onValidate={(validated) => {
+                  shotConfettiStars({ withStars: validated })
+                  onClose()
+                }}
+              />
             </>
           ) : (
             <ModalBody className="">

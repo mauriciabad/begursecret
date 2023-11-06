@@ -72,7 +72,8 @@
       "no-leisure-services": "Sense serveis d'oci",
       "drinking-water": "Aigua potable",
       "no-drinking-water": "Aigua no potable"
-    }
+    },
+    "related-missions": "Missions relacionades"
   },
   "missions": {
     "meta": {
@@ -87,6 +88,28 @@
     "validate-visit": "Validar visita",
     "no-place-selected": "No s'ha seleccionat cap lloc",
     "view-full-place-info": "Veure tota la informació del lloc"
+  },
+  "validate": {
+    "validate-visit": "Validar visita",
+    "accessing-location": "Obtinguent ubicació...",
+    "show-code-location": "Mostrar ubicació del codi",
+    "continue-without-validating": "Continuar sense validar",
+    "or": "o",
+    "place-has-no-code": "Aquest lloc no té codi de verificació",
+    "use-device-location-to-validate": "S'utilitzarà la ubicació del dispositiu per validar la visita.",
+    "grant-location-permission-to-continue": "Permet l'accés a la teva ubicació quan se't demani.",
+    "device-location-errors": {
+      "too-low-accuracy": "La precisió de la ubicació és massa baixa.",
+      "too-far": "Estàs massa lluny del lloc.",
+      "geolocation-not-supported": "La geolocalització no està suportada pel teu dispositiu.",
+      "permission-denied": "No s'ha permès l'accés a la ubicació. Ves a la configuració del teu dispositiu o navegador i permet l'accés a la ubicació per a aquesta applicació web.",
+      "timeout": "S'ha excedit el temps d'espera per obtenir la ubicació.",
+      "position-unavailable": "Error: No s'ha pogut obtenir la ubicació."
+    },
+    "login-required": "Cal iniciar sessió",
+    "login-required-description": "Per validar la visita cal estar registrat.",
+    "login": "Iniciar sessió",
+    "register": "Registrar-se"
   },
   "hub": {
     "meta": {

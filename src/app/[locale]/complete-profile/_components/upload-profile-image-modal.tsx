@@ -88,7 +88,7 @@ export const UploadProfileImageModal: FC<{
                     onChange={handleFileChange}
                     accept="image/*"
                   />
-                  <AlertBox type="info">
+                  <AlertBox type="info" className="mb-4">
                     {t('leave-empty-to-remove-profile-image')}
                   </AlertBox>
                 </ModalBody>

@@ -1,17 +1,18 @@
-'use client'
-
-import { Button } from '@nextui-org/button'
 import { Image } from '@nextui-org/image'
-import { IconPhoto } from '@tabler/icons-react'
+import { IconAward } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'
+import { IconTitle } from '~/components/generic/icon-title'
 import { MarkdownContent } from '~/components/generic/markdown-content'
 import { makeImageUrl } from '~/helpers/images'
 import { MapPoint } from '~/helpers/spatial-data'
 import { Features } from '~/server/db/constants/features'
+import { VisitMission } from '~/server/db/constants/missions'
 import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
 import { PlaceCategoryTagList } from '../../../../../components/place-category-tags/place-category-tag-list'
+import { VisitMissionsAcordion } from '../../missions/_components/visit-missions-acordion'
 import { FeaturesBlock } from './features-block'
+import { ViewMoreImagesButtonAndDialog } from './view-more-images-button-and-dialog'
 
 export const PlaceDetails: FC<{
   placeFullInfo: {
@@ -31,7 +32,8 @@ export const PlaceDetails: FC<{
     }[]
     features: Features | null
   }
-}> = ({ placeFullInfo: place }) => {
+  visitMissions: VisitMission[]
+}> = ({ placeFullInfo: place, visitMissions }) => {
   const t = useTranslations('explore')
 
   return (
@@ -61,14 +63,15 @@ export const PlaceDetails: FC<{
             className="h-full object-cover"
             src={makeImageUrl(place.images[0].key)}
           />
-          <Button
-            radius="lg"
-            variant="bordered"
-            startContent={<IconPhoto size={24} />}
-            className="flex h-full flex-col items-center justify-center gap-1 font-semibold"
-          >
-            {t('see-more')}
-          </Button>
+          <ViewMoreImagesButtonAndDialog
+            images={
+              place.mainImage
+                ? [{ key: place.mainImage }, ...place.images]
+                : place.images
+            }
+            buttonText={t('see-more')}
+            className="h-full"
+          />
         </div>
       ) : (
         <Image
@@ -98,6 +101,9 @@ export const PlaceDetails: FC<{
           {t('no-more-info')}
         </p>
       )}
+
+      <IconTitle icon={IconAward} title={t('related-missions')} />
+      <VisitMissionsAcordion visitMissions={visitMissions} />
     </div>
   )
 }

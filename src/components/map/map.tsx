@@ -22,7 +22,7 @@ const DynamicMap = dynamic(
             className
           )}
         >
-          <IconLoader className="animate mr-1 h-6 w-6 animate-spin text-white [animation-duration:2s]" />
+          <IconLoader className="animate mr-1 h-6 w-6 animate-spin text-stone-800 [animation-duration:2s]" />
         </div>
       )
     },

@@ -16,6 +16,7 @@ import Link from 'next-intl/link'
 import { FC, useState } from 'react'
 import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
 import { cn } from '~/helpers/cn'
+import { VisitMission } from '~/server/db/constants/missions'
 import {
   PlaceCategoryColor,
   PlaceCategoryIcon as PlaceCategoryIconType,
@@ -23,38 +24,7 @@ import {
 import { PlacePreviewModal } from './place-prevew-modal'
 
 export const VisitMissionsAcordion: FC<{
-  visitMissions: {
-    category: {
-      id: number
-      namePlural: string
-      icon: PlaceCategoryIconType | null
-      color: PlaceCategoryColor
-    }
-    places: {
-      id: number
-      name: string
-      mainImage: string | null
-      images: { key: string }[]
-      description: string | null
-      location: {
-        lat: number
-        lng: number
-      }
-      mainCategory: {
-        icon: PlaceCategoryIconType
-        name: string
-        color: PlaceCategoryColor
-      }
-      categories: {
-        icon: PlaceCategoryIconType
-        name: string
-      }[]
-      missionStatus: {
-        visited?: boolean
-        verified?: boolean
-      }
-    }[]
-  }[]
+  visitMissions: VisitMission[]
 }> = ({ visitMissions }) => {
   const t = useTranslations('missions')
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
