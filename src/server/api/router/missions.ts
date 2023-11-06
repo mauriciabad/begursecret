@@ -1,10 +1,12 @@
-import { sql } from 'drizzle-orm'
 import 'server-only'
-import { calculateLocation } from '~/helpers/spatial-data'
+
+import { sql } from 'drizzle-orm'
+import { getPoint } from '~/helpers/spatial-data'
 
 import { getVisitMissionsSchema } from '~/schemas/missions'
 import { db } from '~/server/db/db'
 import { places, placesToPlaceCategories } from '~/server/db/schema'
+import { getVisitedPlacesIdsByUserId } from '~/server/helpers/db-queries/placeLists'
 import { selectPoint } from '~/server/helpers/spatial-data'
 import {
   flattenTranslationsOnExecute,
@@ -130,42 +132,32 @@ const getVisitMissions = flattenTranslationsOnExecute(
 export const missionsRouter = router({
   getVisitMissions: procedure
     .input(getVisitMissionsSchema)
-    .query(async ({ input }) => {
+    .query(async ({ input, ctx }) => {
       const result = await getVisitMissions.execute({
         locale: input.locale,
         placeId: input.placeId,
       })
+
+      const visitedPlacesIds = await getVisitedPlacesIdsByUserId(
+        ctx.session?.user.id
+      )
+
       return result
         .map(({ places, mainPlaces, ...category }) => ({
           category,
-          places: [
-            ...mainPlaces.map((place) => mapPlace(place)),
-            ...places.map(({ place }) => mapPlace(place)),
-          ],
+          places: [...mainPlaces, ...places.map(({ place }) => place)].map(
+            ({ location, categories, ...place }) => ({
+              ...place,
+              location: getPoint(location),
+              categories: categories.map(({ category }) => category),
+              images: [],
+              missionStatus: {
+                visited: visitedPlacesIds.has(place.id),
+                verified: false,
+              },
+            })
+          ),
         }))
         .filter(({ places }) => places.length > 0)
     }),
 })
-
-const mapPlace = <
-  T extends {
-    location: any // eslint-disable-line @typescript-eslint/no-explicit-any
-    categories: {
-      category: any // eslint-disable-line @typescript-eslint/no-explicit-any
-    }[]
-  },
->(
-  place: T
-) => {
-  const { categories, ...placeWithLocation } = calculateLocation(place)
-  return {
-    missionStatus: {
-      visited: false,
-      verified: false,
-    },
-    categories: categories.map(({ category }) => category),
-    images: [],
-
-    ...placeWithLocation,
-  }
-}

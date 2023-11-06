@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from '@nextui-org/button'
 import {
   Modal,
@@ -15,105 +17,57 @@ import {
   IconUser,
   IconUserPlus,
 } from '@tabler/icons-react'
-import haversine from 'haversine-distance'
 import { useSession } from 'next-auth/react'
 import { useLogger } from 'next-axiom'
 import { useTranslations } from 'next-intl'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { AlertBox } from '~/components/generic/alert-box'
 import { DividerWithText } from '~/components/generic/divider-with-text'
 import { ExplanationCard } from '~/components/generic/explanation-card'
 import { LinkButton } from '~/components/links/link-button'
 import { MapPoint } from '~/helpers/spatial-data'
 import { useDevicePermissions } from '~/helpers/useDevicePermissions'
+import { trpc } from '~/trpc'
+import { useLocationValidator } from '../_hooks/useLocationValidator'
 
-/** In meters */
-const MAX_DISTANCE_TO_PLACE = process.env.NODE_ENV === 'development' ? 500 : 25
-
-/** In meters */
-const MIN_LOCATION_ACCURACY = 50
-
-type ErrorCodes =
-  | 'too-low-accuracy'
-  | 'too-far'
-  | 'geolocation-not-supported'
-  | 'timeout'
-  | 'position-unavailable'
-  | 'permission-denied'
+type OnValidate = (
+  hasBeenVerified: boolean,
+  validationData: {
+    location: MapPoint | null
+  }
+) => Promise<void> | void
 
 export const ValidatePlaceVisitModal: FC<
   Omit<ModalProps, 'children'> & {
-    onValidate: (hasBeenVerified: boolean) => void
+    onValidate: OnValidate
     expectedLocation: MapPoint
     placeId: number
   }
 > = ({ isOpen, onOpenChange, onValidate, expectedLocation, placeId }) => {
   const t = useTranslations('validate')
-  const [deviceLocationError, setDeviceLocationError] =
-    useState<null | ErrorCodes>(null)
+  const { validateLocation, deviceLocationError, loadingDeviceLocation } =
+    useLocationValidator(expectedLocation)
   const { state: locationPermission } = useDevicePermissions({
     name: 'geolocation',
   })
-  const [loadingDeviceLocation, setLoadingDeviceLocation] = useState(false)
+
   const log = useLogger()
   const { data: session } = useSession()
+  const addToVisitedPlacesListMutation =
+    trpc.placeLists.addToVisitedPlacesList.useMutation()
 
-  /**
-   * Requests access to the device location and validates that it is closes than {@link MAX_DISTANCE_TO_PLACE}.
-   *
-   * If the location is not valid, it sets the error code in {@link deviceLocationError}.
-   *
-   * It automatically sets {@link loadingDeviceLocation} while the location is being accessed.
-   * @returns {Promise<boolean>} true if the location is valid
-   */
-  const validateLocation = async (): Promise<boolean> => {
-    setLoadingDeviceLocation(true)
-
-    const errorCode = await new Promise<ErrorCodes | null>((resolve) => {
-      if (!('geolocation' in navigator)) {
-        return resolve('geolocation-not-supported')
-      }
-
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const deviceLocation: MapPoint = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          }
-          const distance = haversine(deviceLocation, expectedLocation)
-          if (distance > MAX_DISTANCE_TO_PLACE) {
-            return resolve('too-far')
-          }
-
-          const accuracy = position.coords.accuracy
-          if (accuracy > MIN_LOCATION_ACCURACY) {
-            return resolve('too-low-accuracy')
-          }
-
-          return resolve(null)
-        },
-        (error) => {
-          if (error.POSITION_UNAVAILABLE) {
-            return resolve('position-unavailable')
-          } else if (error.TIMEOUT) {
-            return resolve('timeout')
-          } else if (error.PERMISSION_DENIED) {
-            return resolve('permission-denied')
-          } else {
-            return resolve('position-unavailable')
-          }
-        },
-        {
-          enableHighAccuracy: true,
-        }
-      )
+  const addToVisitedPlaces: OnValidate = async (
+    hasBeenVerified,
+    validationData
+  ) => {
+    await addToVisitedPlacesListMutation.mutateAsync({
+      placeId,
     })
+    if (hasBeenVerified) {
+      // Add to validations
+    }
 
-    setLoadingDeviceLocation(false)
-
-    setDeviceLocationError(errorCode)
-
-    return errorCode === null
+    await onValidate(hasBeenVerified, validationData)
   }
 
   return (
@@ -157,17 +111,21 @@ export const ValidatePlaceVisitModal: FC<
                     color="primary"
                     fullWidth
                     onPress={async () => {
-                      const isLocationValid = await validateLocation()
+                      const validatedLocation = await validateLocation()
 
-                      if (isLocationValid) {
-                        log.info('Place visit validated', {
+                      if (validatedLocation) {
+                        log.info('Place visit location validated', {
                           placeId,
                           userId: session.user.id,
+                          deviceLocation: validatedLocation,
                         })
-                        onValidate(true)
+
+                        await addToVisitedPlaces(true, {
+                          location: validatedLocation,
+                        })
                         onClose()
                       } else {
-                        log.error('Place visit validation failed', {
+                        log.error('Place visit location validation failed', {
                           placeId,
                           userId: session.user.id,
                           error: deviceLocationError,
@@ -194,8 +152,8 @@ export const ValidatePlaceVisitModal: FC<
 
                   <Button
                     fullWidth
-                    onPress={() => {
-                      onValidate(false)
+                    onPress={async () => {
+                      await addToVisitedPlaces(false, { location: null })
                       onClose()
                     }}
                     startContent={
