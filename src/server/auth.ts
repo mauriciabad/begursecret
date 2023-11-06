@@ -9,9 +9,9 @@ import GoogleProvider from 'next-auth/providers/google'
 import { env } from '~/env.mjs'
 import { loginSchema } from '~/schemas/auth'
 import { updateSessionSchema } from '~/schemas/profile'
-import { initializeUserInDatabase } from './api/router/auth'
 import { db } from './db/db'
 import { users } from './db/schema'
+import { initializeUserInDatabase } from './helpers/auth/initialize-user'
 
 export const authOptions: AuthOptions = {
   // Note: Cast required to workaround issue https://github.com/nextauthjs/next-auth/issues/8283
