@@ -159,14 +159,10 @@ export const PlacePreviewModal: FC<
               <ValidatePlaceVisitModal
                 isOpen={isValidateModalOpen}
                 onOpenChange={onValidateModalOpenChange}
+                expectedLocation={place.location}
                 onValidate={(validated) => {
-                  if (validated) {
-                    shotConfettiStars()
-
-                    onClose()
-                  } else {
-                    alert('not validated')
-                  }
+                  shotConfettiStars({ withStars: validated })
+                  onClose()
                 }}
               />
             </>

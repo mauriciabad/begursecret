@@ -4,7 +4,11 @@ import { confetti } from 'tsparticles-confetti'
 // |  Find more examples here: https://confetti.js.org/more.html  |
 // ----------------------------------------------------------------
 
-export async function shotConfettiStars() {
+export async function shotConfettiStars({
+  withStars = true,
+}: {
+  withStars?: boolean
+}) {
   const defaults = {
     spread: 360,
     ticks: 50,
@@ -14,13 +18,15 @@ export async function shotConfettiStars() {
   }
 
   function shoot() {
-    confetti({
-      ...defaults,
-      particleCount: 10,
-      scalar: 1.2,
-      shapes: ['star'],
-      colors: ['FFE400', 'FFBD00', 'E89400', 'FFCA6C', 'FDFFB8'],
-    })
+    if (withStars) {
+      confetti({
+        ...defaults,
+        particleCount: 10,
+        scalar: 1.2,
+        shapes: ['star'],
+        colors: ['FFE400', 'FFBD00', 'E89400', 'FFCA6C', 'FDFFB8'],
+      })
+    }
 
     confetti({
       ...defaults,
