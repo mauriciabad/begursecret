@@ -105,7 +105,12 @@
       "permission-denied": "Location permission denied. Go to your device or browser settings and allow location access for this web app.",
       "timeout": "Location request timed out.",
       "position-unavailable": "Error: Location unavailable."
-    }
+    },
+
+    "login-required": "Login required",
+    "login-required-description": "You need to be logged in to validate a visit.",
+    "login": "Login",
+    "register": "Register"
   },
   "hub": {
     "meta": {

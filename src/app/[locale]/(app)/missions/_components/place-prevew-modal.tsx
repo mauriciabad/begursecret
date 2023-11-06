@@ -160,6 +160,7 @@ export const PlacePreviewModal: FC<
                 isOpen={isValidateModalOpen}
                 onOpenChange={onValidateModalOpenChange}
                 expectedLocation={place.location}
+                placeId={place.id}
                 onValidate={(validated) => {
                   shotConfettiStars({ withStars: validated })
                   onClose()

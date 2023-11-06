@@ -104,7 +104,11 @@
       "permission-denied": "No s'ha permès l'accés a la ubicació. Ves a la configuració del teu dispositiu o navegador i permet l'accés a la ubicació per a aquesta applicació web.",
       "timeout": "S'ha excedit el temps d'espera per obtenir la ubicació.",
       "position-unavailable": "Error: No s'ha pogut obtenir la ubicació."
-    }
+    },
+    "login-required": "Cal iniciar sessió",
+    "login-required-description": "Per validar la visita cal estar registrat.",
+    "login": "Iniciar sessió",
+    "register": "Registrar-se"
   },
   "hub": {
     "meta": {
