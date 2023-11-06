@@ -109,7 +109,8 @@
     "login-required": "Cal iniciar sessió",
     "login-required-description": "Per validar la visita cal estar registrat.",
     "login": "Iniciar sessió",
-    "register": "Registrar-se"
+    "register": "Registrar-se",
+    "loading": "Carregant..."
   },
   "hub": {
     "meta": {

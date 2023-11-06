@@ -16,7 +16,7 @@ import Link from 'next-intl/link'
 import { FC, useState } from 'react'
 import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
 import { cn } from '~/helpers/cn'
-import { VisitMission } from '~/server/db/constants/missions'
+import { VisitMission, VisitMissionPlace } from '~/server/db/constants/missions'
 import {
   PlaceCategoryColor,
   PlaceCategoryIcon as PlaceCategoryIconType,
@@ -28,9 +28,8 @@ export const VisitMissionsAcordion: FC<{
 }> = ({ visitMissions }) => {
   const t = useTranslations('missions')
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
-  const [modalPlacePartialInfo, setModalPlacePartialInfo] = useState<
-    (typeof visitMissions)[number]['places'][number] | null
-  >(null)
+  const [modalPlacePartialInfo, setModalPlacePartialInfo] =
+    useState<VisitMissionPlace | null>(null)
 
   return (
     <>

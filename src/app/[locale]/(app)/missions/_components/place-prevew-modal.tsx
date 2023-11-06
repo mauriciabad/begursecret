@@ -21,34 +21,12 @@ import { Map } from '~/components/map/map'
 import { PlaceCategoryTagList } from '~/components/place-category-tags/place-category-tag-list'
 import { shotConfettiStars } from '~/helpers/confetti'
 import { makeImageUrl } from '~/helpers/images'
-import {
-  PlaceCategoryColor,
-  PlaceCategoryIcon as PlaceCategoryIconType,
-} from '~/server/db/constants/places'
+import { VisitMissionPlace } from '~/server/db/constants/missions'
 import { ValidatePlaceVisitModal } from './validate-place-visit-modal'
 
 export const PlacePreviewModal: FC<
   Omit<ModalProps, 'children'> & {
-    place: {
-      id: number
-      name: string
-      description: string | null
-      mainImage: string | null
-      images: { key: string }[]
-      mainCategory: {
-        icon: PlaceCategoryIconType
-        name: string
-        color: PlaceCategoryColor
-      }
-      categories: {
-        icon: PlaceCategoryIconType
-        name: string
-      }[]
-      location: {
-        lat: number
-        lng: number
-      }
-    } | null
+    place: VisitMissionPlace | null
   }
 > = ({ isOpen, onOpenChange, place }) => {
   const t = useTranslations('missions')
@@ -165,6 +143,7 @@ export const PlacePreviewModal: FC<
                   shotConfettiStars({ withStars: validated })
                   onClose()
                 }}
+                isAlreadyVisited={place.missionStatus.visited}
               />
             </>
           ) : (

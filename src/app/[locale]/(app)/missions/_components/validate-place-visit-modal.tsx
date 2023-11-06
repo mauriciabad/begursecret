@@ -42,27 +42,36 @@ export const ValidatePlaceVisitModal: FC<
     onValidate: OnValidate
     expectedLocation: MapPoint
     placeId: number
+    isAlreadyVisited: boolean
   }
-> = ({ isOpen, onOpenChange, onValidate, expectedLocation, placeId }) => {
+> = ({
+  isOpen,
+  onOpenChange,
+  onValidate,
+  expectedLocation,
+  placeId,
+  isAlreadyVisited,
+}) => {
   const t = useTranslations('validate')
   const { validateLocation, deviceLocationError, loadingDeviceLocation } =
     useLocationValidator(expectedLocation)
   const { state: locationPermission } = useDevicePermissions({
     name: 'geolocation',
   })
-
   const log = useLogger()
   const { data: session } = useSession()
-  const addToVisitedPlacesListMutation =
+  const addToVisitedPlacesMutation =
     trpc.placeLists.addToVisitedPlacesList.useMutation()
 
   const addToVisitedPlaces: OnValidate = async (
     hasBeenVerified,
     validationData
   ) => {
-    await addToVisitedPlacesListMutation.mutateAsync({
-      placeId,
-    })
+    if (!isAlreadyVisited) {
+      await addToVisitedPlacesMutation.mutateAsync({
+        placeId,
+      })
+    }
     if (hasBeenVerified) {
       // Add to validations
     }
@@ -123,6 +132,7 @@ export const ValidatePlaceVisitModal: FC<
                         await addToVisitedPlaces(true, {
                           location: validatedLocation,
                         })
+
                         onClose()
                       } else {
                         log.error('Place visit location validation failed', {
@@ -140,28 +150,45 @@ export const ValidatePlaceVisitModal: FC<
                       )
                     }
                     disabled={
-                      loadingDeviceLocation || locationPermission === 'denied'
+                      loadingDeviceLocation ||
+                      locationPermission === 'denied' ||
+                      addToVisitedPlacesMutation.isLoading
                     }
                   >
                     {loadingDeviceLocation
                       ? t('accessing-location')
+                      : addToVisitedPlacesMutation.isLoading
+                      ? t('loading')
                       : t('validate-visit')}
                   </Button>
 
-                  <DividerWithText text={t('or')} />
+                  {!isAlreadyVisited && (
+                    <>
+                      <DividerWithText text={t('or')} />
 
-                  <Button
-                    fullWidth
-                    onPress={async () => {
-                      await addToVisitedPlaces(false, { location: null })
-                      onClose()
-                    }}
-                    startContent={
-                      <IconCircleCheck className="text-stone-700" size={20} />
-                    }
-                  >
-                    {t('continue-without-validating')}
-                  </Button>
+                      <Button
+                        fullWidth
+                        onPress={async () => {
+                          await addToVisitedPlaces(false, { location: null })
+                          onClose()
+                        }}
+                        startContent={
+                          <IconCircleCheck
+                            className="text-stone-700"
+                            size={20}
+                          />
+                        }
+                        disabled={
+                          loadingDeviceLocation ||
+                          addToVisitedPlacesMutation.isLoading
+                        }
+                      >
+                        {addToVisitedPlacesMutation.isLoading
+                          ? t('loading')
+                          : t('continue-without-validating')}
+                      </Button>
+                    </>
+                  )}
                 </>
               </ModalBody>
             ) : (

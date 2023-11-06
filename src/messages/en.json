@@ -111,7 +111,8 @@
     "login-required": "Login required",
     "login-required-description": "You need to be logged in to validate a visit.",
     "login": "Login",
-    "register": "Register"
+    "register": "Register",
+    "loading": "Loading..."
   },
   "hub": {
     "meta": {
