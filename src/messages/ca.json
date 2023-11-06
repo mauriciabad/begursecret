@@ -99,7 +99,7 @@
     "use-device-location-to-validate": "S'utilitzarà la ubicació del dispositiu per validar la visita.",
     "grant-location-permission-to-continue": "Permet l'accés a la teva ubicació quan se't demani.",
     "device-location-errors": {
-      "too-low-accuracy": "La precisió de la ubicació és massa baixa.",
+      "too-low-accuracy": "La precisió de la ubicació és massa baixa. Torna-ho a intentar en uns segons.",
       "too-far": "Estàs massa lluny del lloc.",
       "geolocation-not-supported": "La geolocalització no està suportada pel teu dispositiu.",
       "permission-denied": "No s'ha permès l'accés a la ubicació. Ves a la configuració del teu dispositiu o navegador i permet l'accés a la ubicació per a aquesta applicació web.",

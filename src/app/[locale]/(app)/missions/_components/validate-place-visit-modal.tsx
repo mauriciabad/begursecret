@@ -30,6 +30,9 @@ import { useDevicePermissions } from '~/helpers/useDevicePermissions'
 /** In meters */
 const MAX_DISTANCE_TO_PLACE = process.env.NODE_ENV === 'development' ? 500 : 25
 
+/** In meters */
+const MIN_LOCATION_ACCURACY = 50
+
 type ErrorCodes =
   | 'too-low-accuracy'
   | 'too-far'
@@ -83,7 +86,7 @@ export const ValidatePlaceVisitModal: FC<
           }
 
           const accuracy = position.coords.accuracy
-          if (accuracy > MAX_DISTANCE_TO_PLACE) {
+          if (accuracy > MIN_LOCATION_ACCURACY) {
             return resolve('too-low-accuracy')
           }
 
