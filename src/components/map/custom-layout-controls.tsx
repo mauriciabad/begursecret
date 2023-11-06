@@ -42,6 +42,8 @@ export const CustomLayersControl: FC<{
         <TileLayer
           attribution={`&copy; <a href="${selectedLayerFullData.attribution.url}">${selectedLayerFullData.attribution.name}</a>`}
           url={selectedLayerFullData.tileUrlTemplate}
+          maxZoom={selectedLayerFullData.maxZoom}
+          id={selectedLayerFullData.id}
         />
       )}
       {!hide && (
