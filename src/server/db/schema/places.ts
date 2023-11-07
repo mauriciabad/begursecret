@@ -7,7 +7,6 @@ import {
   text,
   tinytext,
 } from 'drizzle-orm/mysql-core'
-import { features, placeListToPlace } from '.'
 import { pointType } from '../../helpers/spatial-data'
 import { mysqlTableWithTranslations } from '../../helpers/translations/db-tables'
 import {
@@ -15,6 +14,10 @@ import {
   placeCategoriesIcons,
 } from '../constants/places'
 import { gender, s3ObjectKey } from '../utilities'
+import { features } from './features'
+import { placeListToPlace } from './placeLists'
+import { verificationRequirements } from './verificationRequirements'
+import { verifications } from './verifications'
 
 export const {
   normalTable: places,
@@ -28,6 +31,7 @@ export const {
     location: pointType('location').notNull(),
     mainCategoryId: int('mainCategoryId').notNull(),
     featuresId: int('featuresId'),
+    verificationRequirementsId: int('verificationRequirementsId'),
   },
   translatableColumns: {
     name: text('name').notNull(),
@@ -49,6 +53,11 @@ export const placesRelations = relations(places, (r) => ({
     references: [features.id],
   }),
   placeLists: r.many(placeListToPlace),
+  verificationRequirements: r.one(verificationRequirements, {
+    fields: [places.verificationRequirementsId],
+    references: [verificationRequirements.id],
+  }),
+  verifications: r.many(verifications),
 }))
 
 export const {

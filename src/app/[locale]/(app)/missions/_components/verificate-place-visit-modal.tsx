@@ -31,16 +31,16 @@ import { useDevicePermissions } from '~/helpers/useDevicePermissions'
 import { trpc } from '~/trpc'
 import { useLocationValidator } from '../_hooks/useLocationValidator'
 
-type OnValidate = (
+type OnVerificate = (
   hasBeenVerified: boolean,
-  validationData: {
+  verificationData: {
     location: MapPoint | null
   }
 ) => Promise<void> | void
 
-export const ValidatePlaceVisitModal: FC<
+export const VerificatePlaceVisitModal: FC<
   Omit<ModalProps, 'children'> & {
-    onValidate: OnValidate
+    onVerificate: OnVerificate
     expectedLocation: MapPoint
     placeId: number
     isAlreadyVisited: boolean
@@ -48,12 +48,12 @@ export const ValidatePlaceVisitModal: FC<
 > = ({
   isOpen,
   onOpenChange,
-  onValidate,
+  onVerificate,
   expectedLocation,
   placeId,
   isAlreadyVisited,
 }) => {
-  const t = useTranslations('validate')
+  const t = useTranslations('verificate')
   const { validateLocation, deviceLocationError, loadingDeviceLocation } =
     useLocationValidator(expectedLocation)
   const { state: locationPermission } = useDevicePermissions({
@@ -65,9 +65,9 @@ export const ValidatePlaceVisitModal: FC<
     trpc.placeLists.addToVisitedPlacesList.useMutation()
   const router = useRouter()
 
-  const addToVisitedPlaces: OnValidate = async (
+  const addToVisitedPlaces: OnVerificate = async (
     hasBeenVerified,
-    validationData
+    verificationData
   ) => {
     if (!isAlreadyVisited) {
       await addToVisitedPlacesMutation.mutateAsync({
@@ -75,11 +75,11 @@ export const ValidatePlaceVisitModal: FC<
       })
     }
     if (hasBeenVerified) {
-      // Add to validations
+      // Add to verifications
     }
 
     router.refresh()
-    await onValidate(hasBeenVerified, validationData)
+    await onVerificate(hasBeenVerified, verificationData)
   }
 
   return (
@@ -88,7 +88,7 @@ export const ValidatePlaceVisitModal: FC<
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1">
-              {t('validate-visit')}
+              {t('verificate-visit')}
             </ModalHeader>
 
             {session ? (
@@ -97,7 +97,7 @@ export const ValidatePlaceVisitModal: FC<
                   <ExplanationCard
                     icon={IconQrcodeOff}
                     title={t('place-has-no-code')}
-                    subtitle={t('use-device-location-to-validate')}
+                    subtitle={t('use-device-location-to-verificate')}
                   />
 
                   {(!locationPermission || locationPermission === 'prompt') && (
@@ -126,7 +126,7 @@ export const ValidatePlaceVisitModal: FC<
                       const validatedLocation = await validateLocation()
 
                       if (validatedLocation) {
-                        log.info('Place visit location validated', {
+                        log.info('Place visit location verificated', {
                           placeId,
                           userId: session.user.id,
                           deviceLocation: validatedLocation,
@@ -138,7 +138,7 @@ export const ValidatePlaceVisitModal: FC<
 
                         onClose()
                       } else {
-                        log.error('Place visit location validation failed', {
+                        log.error('Place visit location verification failed', {
                           placeId,
                           userId: session.user.id,
                           error: deviceLocationError,
@@ -162,7 +162,7 @@ export const ValidatePlaceVisitModal: FC<
                       ? t('accessing-location')
                       : addToVisitedPlacesMutation.isLoading
                       ? t('loading')
-                      : t('validate-visit')}
+                      : t('verificate-visit')}
                   </Button>
 
                   {!isAlreadyVisited && (
@@ -188,7 +188,7 @@ export const ValidatePlaceVisitModal: FC<
                       >
                         {addToVisitedPlacesMutation.isLoading
                           ? t('loading')
-                          : t('continue-without-validating')}
+                          : t('continue-without-verificating')}
                       </Button>
                     </>
                   )}

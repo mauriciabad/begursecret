@@ -2,6 +2,7 @@ import { relations } from 'drizzle-orm'
 import { int, mysqlTable, timestamp, varchar } from 'drizzle-orm/mysql-core'
 import { userIdColumnType } from '../utilities'
 import { placeLists } from './placeLists'
+import { verifications } from './verifications'
 
 export const users = mysqlTable('user', {
   id: userIdColumnType('id').notNull().primaryKey(),
@@ -17,9 +18,10 @@ export const users = mysqlTable('user', {
   visitedPlaceListId: int('visitedPlaceListId').notNull(),
 })
 
-export const usersRelations = relations(users, ({ one }) => ({
+export const usersRelations = relations(users, ({ one, many }) => ({
   visitedPlaceList: one(placeLists, {
     fields: [users.visitedPlaceListId],
     references: [placeLists.id],
   }),
+  verifications: many(verifications),
 }))
