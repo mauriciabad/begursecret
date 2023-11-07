@@ -20,6 +20,7 @@ import {
 import { useSession } from 'next-auth/react'
 import { useLogger } from 'next-axiom'
 import { useTranslations } from 'next-intl'
+import { useRouter } from 'next-intl/client'
 import { FC } from 'react'
 import { AlertBox } from '~/components/generic/alert-box'
 import { DividerWithText } from '~/components/generic/divider-with-text'
@@ -62,6 +63,7 @@ export const ValidatePlaceVisitModal: FC<
   const { data: session } = useSession()
   const addToVisitedPlacesMutation =
     trpc.placeLists.addToVisitedPlacesList.useMutation()
+  const router = useRouter()
 
   const addToVisitedPlaces: OnValidate = async (
     hasBeenVerified,
@@ -76,6 +78,7 @@ export const ValidatePlaceVisitModal: FC<
       // Add to validations
     }
 
+    router.refresh()
     await onValidate(hasBeenVerified, validationData)
   }
 

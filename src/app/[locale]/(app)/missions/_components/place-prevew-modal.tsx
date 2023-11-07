@@ -23,6 +23,7 @@ import { shotConfettiStars } from '~/helpers/confetti'
 import { makeImageUrl } from '~/helpers/images'
 import { VisitMissionPlace } from '~/server/db/constants/missions'
 import { ValidatePlaceVisitModal } from './validate-place-visit-modal'
+import { LinkButton } from '~/components/links/link-button'
 
 export const PlacePreviewModal: FC<
   Omit<ModalProps, 'children'> & {
@@ -104,8 +105,7 @@ export const PlacePreviewModal: FC<
                 </>
               </ModalBody>
               <ModalFooter className="block space-y-2">
-                <Button
-                  as={Link}
+                <LinkButton
                   className="px-2"
                   variant="bordered"
                   fullWidth
@@ -123,7 +123,7 @@ export const PlacePreviewModal: FC<
                   <span className="grow text-left leading-none">
                     {t('view-full-place-info')}
                   </span>
-                </Button>
+                </LinkButton>
                 <Button
                   color="primary"
                   fullWidth
