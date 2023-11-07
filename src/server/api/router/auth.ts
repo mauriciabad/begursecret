@@ -1,27 +1,22 @@
 import 'server-only'
 
-import bcrypt from 'bcryptjs'
-import { eq } from 'drizzle-orm'
-import { v4 as uuidv4 } from 'uuid'
+import { TRPCError } from '@trpc/server'
 import { registerSchema } from '~/schemas/auth'
-import { db } from '~/server/db/db'
-import { users } from '~/server/db/schema/users'
+import { initializeUserInDatabase } from '~/server/helpers/auth/initialize-user'
 import { procedure, router } from '~/server/trpc'
 
 export const authRouter = router({
   register: procedure.input(registerSchema).mutation(async ({ input }) => {
-    const existingUser = await db.query.users.findFirst({
-      where: eq(users.email, input.email),
-    })
-
-    if (existingUser) {
-      throw new Error('User already exists')
+    try {
+      return await initializeUserInDatabase({
+        email: input.email,
+        password: input.password,
+      })
+    } catch (e) {
+      return new TRPCError({
+        code: 'INTERNAL_SERVER_ERROR',
+        message: (e as Error).message,
+      })
     }
-
-    return await db.insert(users).values({
-      id: uuidv4(),
-      email: input.email,
-      hashedPassword: bcrypt.hashSync(input.password, 10),
-    })
   }),
 })

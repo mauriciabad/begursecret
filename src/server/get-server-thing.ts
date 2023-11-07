@@ -1,4 +1,4 @@
-import { authOptions } from './auth'
+import 'server-only'
 
 import {
   GetServerSidePropsContext,
@@ -7,9 +7,10 @@ import {
 } from 'next'
 import { getServerSession } from 'next-auth'
 import { apiRouter } from './api/router'
+import { authOptions } from './auth'
 
 export async function getTrpc() {
-  const session = await getServerSession()
+  const session = await getSession()
   const trpcServerSide = apiRouter.createCaller({
     session,
   })

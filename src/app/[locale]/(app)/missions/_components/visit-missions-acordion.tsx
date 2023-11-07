@@ -12,11 +12,11 @@ import {
   IconMap,
 } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
-import Link from 'next-intl/link'
 import { FC, useState } from 'react'
 import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
+import { LinkButton } from '~/components/links/link-button'
 import { cn } from '~/helpers/cn'
-import { VisitMission } from '~/server/db/constants/missions'
+import { VisitMission, VisitMissionPlace } from '~/server/db/constants/missions'
 import {
   PlaceCategoryColor,
   PlaceCategoryIcon as PlaceCategoryIconType,
@@ -28,9 +28,8 @@ export const VisitMissionsAcordion: FC<{
 }> = ({ visitMissions }) => {
   const t = useTranslations('missions')
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
-  const [modalPlacePartialInfo, setModalPlacePartialInfo] = useState<
-    (typeof visitMissions)[number]['places'][number] | null
-  >(null)
+  const [modalPlacePartialInfo, setModalPlacePartialInfo] =
+    useState<VisitMissionPlace | null>(null)
 
   return (
     <>
@@ -63,8 +62,7 @@ export const VisitMissionsAcordion: FC<{
             }
           >
             <div className="p-1">
-              <Button
-                as={Link}
+              <LinkButton
                 className="border px-2 py-0 leading-none"
                 radius="full"
                 variant="bordered"
@@ -79,45 +77,45 @@ export const VisitMissionsAcordion: FC<{
                 <span className="grow text-left">
                   {t('view-places-in-map')}
                 </span>
-              </Button>
+              </LinkButton>
             </div>
             <ul className="py-1">
               {places.map((place) => (
-                <Button
-                  key={place.id}
-                  className="flex items-center justify-start gap-2 px-2 py-1"
-                  radius="none"
-                  variant="light"
-                  as="li"
-                  onPress={() => {
-                    setModalPlacePartialInfo(place)
-                    onOpen()
-                  }}
-                >
-                  {place.missionStatus.verified ? (
-                    <IconDiscountCheckFilled
-                      size={24}
-                      className="text-blue-400"
-                      aria-label={t('visited')}
-                    />
-                  ) : place.missionStatus.visited ? (
-                    <IconCircleCheckFilled
-                      size={24}
-                      className="text-blue-400"
-                      aria-label={t('verified')}
-                    />
-                  ) : (
-                    <IconCircle
-                      size={24}
-                      className="text-stone-500"
-                      aria-label={t('not-visited')}
-                    />
-                  )}
+                <li key={place.id}>
+                  <Button
+                    className="flex w-full items-center justify-start gap-2 px-2 py-1"
+                    radius="none"
+                    variant="light"
+                    onPress={() => {
+                      setModalPlacePartialInfo(place)
+                      onOpen()
+                    }}
+                  >
+                    {place.missionStatus.verified ? (
+                      <IconDiscountCheckFilled
+                        size={24}
+                        className="text-blue-400"
+                        aria-label={t('verified')}
+                      />
+                    ) : place.missionStatus.visited ? (
+                      <IconCircleCheckFilled
+                        size={24}
+                        className="text-blue-400"
+                        aria-label={t('visited')}
+                      />
+                    ) : (
+                      <IconCircle
+                        size={24}
+                        className="text-stone-500"
+                        aria-label={t('not-visited')}
+                      />
+                    )}
 
-                  <span className="grow text-left">{place.name}</span>
+                    <span className="grow text-left">{place.name}</span>
 
-                  <IconChevronRight size={24} className="text-stone-300" />
-                </Button>
+                    <IconChevronRight size={24} className="text-stone-300" />
+                  </Button>
+                </li>
               ))}
             </ul>
           </AccordionItem>

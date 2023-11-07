@@ -99,7 +99,7 @@
     "use-device-location-to-validate": "Use device location to validate.",
     "grant-location-permission-to-continue": "Grant location permission when prompted.",
     "device-location-errors": {
-      "too-low-accuracy": "Location accuracy is too low.",
+      "too-low-accuracy": "Location accuracy is too low. Try again in a few seconds.",
       "unknown": "Unknown error",
       "too-far": "You are too far from the place.",
       "geolocation-not-supported": "Geolocation is not supported by this device.",
@@ -111,7 +111,8 @@
     "login-required": "Login required",
     "login-required-description": "You need to be logged in to validate a visit.",
     "login": "Login",
-    "register": "Register"
+    "register": "Register",
+    "loading": "Loading..."
   },
   "hub": {
     "meta": {

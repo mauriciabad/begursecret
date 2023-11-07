@@ -12,3 +12,6 @@ export const locale = <T extends string>(name: T) =>
 
 export const gender = <T extends string>(name: T) =>
   mysqlEnum(name, genderValues)
+
+export const userIdColumnType = <T extends string>(name: T) =>
+  varchar(name, { length: 255 })

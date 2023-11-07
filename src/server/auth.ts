@@ -11,10 +11,16 @@ import { loginSchema } from '~/schemas/auth'
 import { updateSessionSchema } from '~/schemas/profile'
 import { db } from './db/db'
 import { users } from './db/schema'
+import { initializeUserInDatabase } from './helpers/auth/initialize-user'
 
 export const authOptions: AuthOptions = {
-  // Note: Cast required to workaround issue https://github.com/nextauthjs/next-auth/issues/8283
-  adapter: DrizzleAdapter(db) as AuthOptions['adapter'],
+  adapter: {
+    ...DrizzleAdapter(db),
+
+    async createUser(data) {
+      return await initializeUserInDatabase(data)
+    },
+  },
   providers: [
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,

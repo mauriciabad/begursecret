@@ -7,7 +7,7 @@ import {
   text,
   tinytext,
 } from 'drizzle-orm/mysql-core'
-import { features } from '.'
+import { features, placeListToPlace } from '.'
 import { pointType } from '../../helpers/spatial-data'
 import { mysqlTableWithTranslations } from '../../helpers/translations/db-tables'
 import {
@@ -48,6 +48,7 @@ export const placesRelations = relations(places, (r) => ({
     fields: [places.featuresId],
     references: [features.id],
   }),
+  placeLists: r.many(placeListToPlace),
 }))
 
 export const {
