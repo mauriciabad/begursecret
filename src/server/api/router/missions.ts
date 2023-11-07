@@ -143,10 +143,16 @@ export const missionsRouter = router({
       )
 
       return result
-        .map(({ places, mainPlaces, ...category }) => ({
-          category,
-          places: [...mainPlaces, ...places.map(({ place }) => place)].map(
-            ({ location, categories, ...place }) => ({
+        .map(({ places, mainPlaces, ...category }) => {
+          const mainPlacesIds = mainPlaces.map((place) => place.id)
+          return {
+            category,
+            places: [
+              ...mainPlaces,
+              ...places
+                .map(({ place }) => place)
+                .filter((place) => !mainPlacesIds.includes(place.id)),
+            ].map(({ location, categories, ...place }) => ({
               ...place,
               location: getPoint(location),
               categories: categories.map(({ category }) => category),
@@ -155,9 +161,9 @@ export const missionsRouter = router({
                 visited: visitedPlacesIds.has(place.id),
                 verified: false,
               },
-            })
-          ),
-        }))
+            })),
+          }
+        })
         .filter(({ places }) => places.length > 0)
     }),
 })
