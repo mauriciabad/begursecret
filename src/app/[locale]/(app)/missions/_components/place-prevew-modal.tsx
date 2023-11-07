@@ -17,13 +17,13 @@ import {
 import { useTranslations } from 'next-intl'
 import Link from 'next-intl/link'
 import { FC } from 'react'
+import { LinkButton } from '~/components/links/link-button'
 import { Map } from '~/components/map/map'
 import { PlaceCategoryTagList } from '~/components/place-category-tags/place-category-tag-list'
 import { shotConfettiStars } from '~/helpers/confetti'
 import { makeImageUrl } from '~/helpers/images'
 import { VisitMissionPlace } from '~/server/db/constants/missions'
 import { ValidatePlaceVisitModal } from './validate-place-visit-modal'
-import { LinkButton } from '~/components/links/link-button'
 
 export const PlacePreviewModal: FC<
   Omit<ModalProps, 'children'> & {
