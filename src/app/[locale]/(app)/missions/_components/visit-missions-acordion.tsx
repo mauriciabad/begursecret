@@ -95,13 +95,13 @@ export const VisitMissionsAcordion: FC<{
                       <IconDiscountCheckFilled
                         size={24}
                         className="text-blue-400"
-                        aria-label={t('visited')}
+                        aria-label={t('verified')}
                       />
                     ) : place.missionStatus.visited ? (
                       <IconCircleCheckFilled
                         size={24}
                         className="text-blue-400"
-                        aria-label={t('verified')}
+                        aria-label={t('visited')}
                       />
                     ) : (
                       <IconCircle
