@@ -16,11 +16,13 @@ export type VisitMissionPlace = {
     lng: number
   }
   mainCategory: {
+    id: number
     icon: PlaceCategoryIconType
     name: string
     color: PlaceCategoryColor
   }
   categories: {
+    id: number
     icon: PlaceCategoryIconType
     name: string
   }[]

@@ -46,8 +46,14 @@ export const placesRelations = relations(places, (r) => ({
   mainCategory: r.one(placeCategories, {
     fields: [places.mainCategoryId],
     references: [placeCategories.id],
+    relationName: 'main',
   }),
-  categories: r.many(placesToPlaceCategories),
+  categories: r.many(placesToPlaceCategories, {
+    relationName: 'all',
+  }),
+  secondaryCategories: r.many(placesToPlaceCategories, {
+    relationName: 'secondary',
+  }),
   features: r.one(features, {
     fields: [places.featuresId],
     references: [features.id],
@@ -82,8 +88,13 @@ export const {
 export const placeCategoriesRelations = relations(placeCategories, (r) => ({
   ...makePlaceCategoryRelations(r),
 
-  mainPlaces: r.many(places),
-  places: r.many(placesToPlaceCategories),
+  mainPlaces: r.many(places, { relationName: 'main' }),
+  secondaryPlaces: r.many(placesToPlaceCategories, {
+    relationName: 'secondary',
+  }),
+  places: r.many(placesToPlaceCategories, {
+    relationName: 'all',
+  }),
 }))
 
 export const placesToPlaceCategories = mysqlTable(
