@@ -29,6 +29,10 @@ import { DividerWithText } from '~/components/generic/divider-with-text'
 import { ExplanationCard } from '~/components/generic/explanation-card'
 import { LinkButton } from '~/components/links/link-button'
 import { MapPoint } from '~/helpers/spatial-data'
+import {
+  VerificationRequirements,
+  isVerificationRequired,
+} from '~/server/db/constants/verifications'
 import { trpc } from '~/trpc'
 import { useLocationValidator } from '../_hooks/useLocationValidator'
 
@@ -46,10 +50,7 @@ export const VerificatePlaceVisitModal: FC<
     expectedLocation: MapPoint
     placeId: number
     isAlreadyVisited: boolean
-    verificationRequirements: {
-      isLocationRequired: boolean
-      maxLocationDistance: number | null
-    } | null
+    verificationRequirements: VerificationRequirements | null
   }
 > = ({
   isOpen,
@@ -146,8 +147,7 @@ export const VerificatePlaceVisitModal: FC<
             {session ? (
               <ModalBody className="block space-y-2 pb-6 pt-0">
                 <>
-                  {verificationRequirements &&
-                  verificationRequirements.isLocationRequired ? (
+                  {isVerificationRequired(verificationRequirements) ? (
                     <>
                       {verificationRequirements.isLocationRequired && (
                         <>

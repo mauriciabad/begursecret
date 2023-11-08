@@ -170,7 +170,9 @@ export const missionsRouter = router({
               const hasBeenVisited = visitedPlacesIds.has(place.id)
               const lastVerification =
                 verifications.length > 0 ? verifications[0] : null
-
+              const isVerificationRequired =
+                place.verificationRequirements &&
+                place.verificationRequirements.isLocationRequired
               return {
                 ...place,
                 location: getPoint(location),
@@ -178,7 +180,7 @@ export const missionsRouter = router({
                 images: [],
                 missionStatus: {
                   visited: hasBeenVisited,
-                  verified: place.verificationRequirements
+                  verified: isVerificationRequired
                     ? Boolean(lastVerification)
                     : hasBeenVisited,
                 },
