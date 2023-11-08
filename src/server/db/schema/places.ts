@@ -116,6 +116,12 @@ export const placesToPlaceCategoriesRelations = relations(
     place: one(places, {
       fields: [placesToPlaceCategories.placeId],
       references: [places.id],
+      relationName: 'all',
+    }),
+    secondaryPlace: one(places, {
+      fields: [placesToPlaceCategories.placeId],
+      references: [places.id],
+      relationName: 'secondary',
     }),
     category: one(placeCategories, {
       fields: [placesToPlaceCategories.categoryId],
