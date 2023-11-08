@@ -18,11 +18,16 @@ export const PlaceList: FC<{
     name: string
     description: string | null
     mainCategory: {
+      id: number
       icon: PlaceCategoryIconType | null
       name: string
     }
     categories: {
-      category: { icon: PlaceCategoryIconType | null; name: string }
+      category: {
+        id: number
+        icon: PlaceCategoryIconType | null
+        name: string
+      }
     }[]
   }[]
 }> = ({ places }) => {

@@ -5,10 +5,12 @@ import { PlaceCategoryTag } from './place-category-tag'
 
 export const PlaceCategoryTagList: FC<{
   mainCategory: {
+    id: number
     icon: PlaceCategoryIconType | null
     name: string
-  }
+  } | null
   categories: {
+    id: number
     icon: PlaceCategoryIconType | null
     name: string
   }[]
@@ -25,12 +27,14 @@ export const PlaceCategoryTagList: FC<{
         className
       )}
     >
-      <PlaceCategoryTag category={mainCategory} />
+      {mainCategory && <PlaceCategoryTag category={mainCategory} />}
 
-      {categories.length >= 1 && <span className="h-4 w-[1px] bg-stone-200" />}
+      {mainCategory && categories.length >= 1 && (
+        <span className="h-4 w-[1px] bg-stone-200" />
+      )}
 
       {categories.map((category) => (
-        <PlaceCategoryTag category={category} />
+        <PlaceCategoryTag key={category.id} category={category} />
       ))}
     </div>
   )

@@ -16,11 +16,13 @@ export type VisitMissionPlace = {
     lng: number
   }
   mainCategory: {
+    id: number
     icon: PlaceCategoryIconType
     name: string
     color: PlaceCategoryColor
   }
   categories: {
+    id: number
     icon: PlaceCategoryIconType
     name: string
   }[]
@@ -28,6 +30,10 @@ export type VisitMissionPlace = {
     visited: boolean
     verified: boolean
   }
+  verificationRequirements: {
+    isLocationRequired: boolean
+    maxLocationDistance: number | null
+  } | null
 }
 
 export type VisitMission = {

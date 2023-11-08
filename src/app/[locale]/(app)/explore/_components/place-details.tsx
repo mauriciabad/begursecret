@@ -24,11 +24,16 @@ export const PlaceDetails: FC<{
     description: string | null
     content: string | null
     mainCategory: {
+      id: number
       icon: PlaceCategoryIconType | null
       name: string
     }
     categories: {
-      category: { icon: PlaceCategoryIconType | null; name: string }
+      category: {
+        id: number
+        icon: PlaceCategoryIconType | null
+        name: string
+      }
     }[]
     features: Features | null
   }

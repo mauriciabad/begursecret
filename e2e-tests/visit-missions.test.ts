@@ -28,7 +28,7 @@ test.skip('missions + login', async ({ page }) => {
   ).toBeVisible()
   await page.getByRole('button', { name: PLACE_NAME }).click()
 
-  await page.getByRole('button', { name: 'Validate visit' }).click()
+  await page.getByRole('button', { name: 'Verificate visit' }).click()
 
   await expect(page.getByText('Login required')).toBeVisible()
 
@@ -55,18 +55,18 @@ test.skip('missions + login', async ({ page }) => {
     page.getByRole('link', { name: 'View full place info' })
   ).toHaveAttribute('href', `/en/explore/places/${PLACE_ID}`)
 
-  await page.getByRole('button', { name: 'Validate visit' }).click()
+  await page.getByRole('button', { name: 'Verificate visit' }).click()
   await expect(
-    page.getByRole('banner').getByText('Validate visit')
+    page.getByRole('banner').getByText('Verificate visit')
   ).toBeVisible()
-  await page.getByRole('button', { name: 'Validate visit' }).click()
+  await page.getByRole('button', { name: 'Verificate visit' }).click()
   await expect(page.getByRole('alert').getByText('Error')).toBeVisible()
   await page
-    .getByRole('button', { name: 'Continue without validating' })
+    .getByRole('button', { name: 'Continue without verificating' })
     .click()
 
   await expect(
-    page.getByRole('banner').getByText('Validate visit')
+    page.getByRole('banner').getByText('Verificate visit')
   ).not.toBeVisible()
 
   await expect(
@@ -84,10 +84,10 @@ test.skip('missions + login', async ({ page }) => {
       .getByLabel('Visited', { exact: true })
   ).toBeVisible()
   await page.getByRole('button', { name: PLACE_NAME }).click()
-  await page.getByRole('button', { name: 'Validate visit' }).click()
+  await page.getByRole('button', { name: 'Verificate visit' }).click()
 
   await expect(
-    page.getByRole('button', { name: 'Continue without validating' })
+    page.getByRole('button', { name: 'Continue without verificating' })
   ).not.toBeVisible()
 })
 

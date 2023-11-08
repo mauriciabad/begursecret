@@ -23,7 +23,7 @@ import { PlaceCategoryTagList } from '~/components/place-category-tags/place-cat
 import { shotConfettiStars } from '~/helpers/confetti'
 import { makeImageUrl } from '~/helpers/images'
 import { VisitMissionPlace } from '~/server/db/constants/missions'
-import { ValidatePlaceVisitModal } from './validate-place-visit-modal'
+import { VerificatePlaceVisitModal } from './verificate-place-visit-modal'
 
 export const PlacePreviewModal: FC<
   Omit<ModalProps, 'children'> & {
@@ -39,9 +39,9 @@ export const PlacePreviewModal: FC<
       place.location.lat > 41.984129)
 
   const {
-    isOpen: isValidateModalOpen,
-    onOpen: onValidateModalOpen,
-    onOpenChange: onValidateModalOpenChange,
+    isOpen: isVerificateModalOpen,
+    onOpen: onVerificateModalOpen,
+    onOpenChange: onVerificateModalOpenChange,
   } = useDisclosure()
 
   return (
@@ -124,26 +124,40 @@ export const PlacePreviewModal: FC<
                     {t('view-full-place-info')}
                   </span>
                 </LinkButton>
-                <Button
-                  color="primary"
-                  fullWidth
-                  onPress={onValidateModalOpen}
-                  startContent={<IconDiscountCheckFilled size={20} />}
-                >
-                  {t('validate-visit')}
-                </Button>
+
+                {place.missionStatus.verified ? (
+                  <Button
+                    fullWidth
+                    color="primary"
+                    isDisabled
+                    onPress={onVerificateModalOpen}
+                    startContent={<IconDiscountCheckFilled size={20} />}
+                  >
+                    {t('visit-already-verified')}
+                  </Button>
+                ) : (
+                  <Button
+                    color="primary"
+                    fullWidth
+                    onPress={onVerificateModalOpen}
+                    startContent={<IconDiscountCheckFilled size={20} />}
+                  >
+                    {t('verificate-visit')}
+                  </Button>
+                )}
               </ModalFooter>
 
-              <ValidatePlaceVisitModal
-                isOpen={isValidateModalOpen}
-                onOpenChange={onValidateModalOpenChange}
+              <VerificatePlaceVisitModal
+                isOpen={isVerificateModalOpen}
+                onOpenChange={onVerificateModalOpenChange}
                 expectedLocation={place.location}
                 placeId={place.id}
-                onValidate={(validated) => {
-                  shotConfettiStars({ withStars: validated })
+                onVerificate={(verificated) => {
+                  shotConfettiStars({ withStars: verificated })
                   onClose()
                 }}
                 isAlreadyVisited={place.missionStatus.visited}
+                verificationRequirements={place.verificationRequirements}
               />
             </>
           ) : (

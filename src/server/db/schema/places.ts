@@ -7,7 +7,6 @@ import {
   text,
   tinytext,
 } from 'drizzle-orm/mysql-core'
-import { features, placeListToPlace } from '.'
 import { pointType } from '../../helpers/spatial-data'
 import { mysqlTableWithTranslations } from '../../helpers/translations/db-tables'
 import {
@@ -15,6 +14,10 @@ import {
   placeCategoriesIcons,
 } from '../constants/places'
 import { gender, s3ObjectKey } from '../utilities'
+import { features } from './features'
+import { placeListToPlace } from './placeLists'
+import { verificationRequirements } from './verificationRequirements'
+import { verifications } from './verifications'
 
 export const {
   normalTable: places,
@@ -28,6 +31,7 @@ export const {
     location: pointType('location').notNull(),
     mainCategoryId: int('mainCategoryId').notNull(),
     featuresId: int('featuresId'),
+    verificationRequirementsId: int('verificationRequirementsId'),
   },
   translatableColumns: {
     name: text('name').notNull(),
@@ -42,13 +46,21 @@ export const placesRelations = relations(places, (r) => ({
   mainCategory: r.one(placeCategories, {
     fields: [places.mainCategoryId],
     references: [placeCategories.id],
+    relationName: 'main',
   }),
-  categories: r.many(placesToPlaceCategories),
+  categories: r.many(placesToPlaceCategories, {
+    relationName: 'secondary',
+  }),
   features: r.one(features, {
     fields: [places.featuresId],
     references: [features.id],
   }),
   placeLists: r.many(placeListToPlace),
+  verificationRequirements: r.one(verificationRequirements, {
+    fields: [places.verificationRequirementsId],
+    references: [verificationRequirements.id],
+  }),
+  verifications: r.many(verifications),
 }))
 
 export const {
@@ -73,8 +85,10 @@ export const {
 export const placeCategoriesRelations = relations(placeCategories, (r) => ({
   ...makePlaceCategoryRelations(r),
 
-  mainPlaces: r.many(places),
-  places: r.many(placesToPlaceCategories),
+  mainPlaces: r.many(places, { relationName: 'main' }),
+  places: r.many(placesToPlaceCategories, {
+    relationName: 'secondary',
+  }),
 }))
 
 export const placesToPlaceCategories = mysqlTable(
@@ -96,6 +110,7 @@ export const placesToPlaceCategoriesRelations = relations(
     place: one(places, {
       fields: [placesToPlaceCategories.placeId],
       references: [places.id],
+      relationName: 'secondary',
     }),
     category: one(placeCategories, {
       fields: [placesToPlaceCategories.categoryId],

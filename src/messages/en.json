@@ -85,18 +85,19 @@
     "visited": "Visited",
     "verified": "Verified",
     "not-visited": "Not visited",
-    "validate-visit": "Validate visit",
+    "verificate-visit": "Verificate visit",
+    "visit-already-verified": "Visit already verified",
     "no-place-selected": "No place selected",
     "view-full-place-info": "View full place info"
   },
-  "validate": {
-    "validate-visit": "Validate visit",
+  "verificate": {
+    "verificate-visit": "Verificate visit",
     "accessing-location": "Getting location...",
     "show-code-location": "Show code location",
-    "continue-without-validating": "Continue without validating",
+    "continue-without-verificating": "Continue without verificating",
     "or": "or",
-    "place-has-no-code": "This place has no validation code",
-    "use-device-location-to-validate": "Use device location to validate.",
+    "place-has-no-code": "This place has no verification code",
+    "use-device-location-to-verificate": "Use device location to verificate.",
     "grant-location-permission-to-continue": "Grant location permission when prompted.",
     "device-location-errors": {
       "too-low-accuracy": "Location accuracy is too low. Try again in a few seconds.",
@@ -109,7 +110,9 @@
     },
 
     "login-required": "Login required",
-    "login-required-description": "You need to be logged in to validate a visit.",
+    "login-required-description": "You need to be logged in to verificate a visit.",
+    "place-can-not-be-verificated": "Visits can not be verificated in this place",
+    "place-can-not-be-verificated-description": "Possibly because it is too complicated to get there with a mobile device.",
     "login": "Login",
     "register": "Register",
     "loading": "Loading..."

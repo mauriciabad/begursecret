@@ -85,18 +85,19 @@
     "visited": "Visitat",
     "verified": "Verificat",
     "not-visited": "No visitat",
-    "validate-visit": "Validar visita",
+    "verificate-visit": "Verificar visita",
+    "visit-already-verified": "Visita ja verificada",
     "no-place-selected": "No s'ha seleccionat cap lloc",
     "view-full-place-info": "Veure tota la informació del lloc"
   },
-  "validate": {
-    "validate-visit": "Validar visita",
+  "verificate": {
+    "verificate-visit": "Verificar visita",
     "accessing-location": "Obtinguent ubicació...",
     "show-code-location": "Mostrar ubicació del codi",
-    "continue-without-validating": "Continuar sense validar",
+    "continue-without-verificating": "Continuar sense verificar",
     "or": "o",
     "place-has-no-code": "Aquest lloc no té codi de verificació",
-    "use-device-location-to-validate": "S'utilitzarà la ubicació del dispositiu per validar la visita.",
+    "use-device-location-to-verificate": "S'utilitzarà la ubicació del dispositiu per verificar la visita.",
     "grant-location-permission-to-continue": "Permet l'accés a la teva ubicació quan se't demani.",
     "device-location-errors": {
       "too-low-accuracy": "La precisió de la ubicació és massa baixa. Torna-ho a intentar en uns segons.",
@@ -107,7 +108,9 @@
       "position-unavailable": "Error: No s'ha pogut obtenir la ubicació."
     },
     "login-required": "Cal iniciar sessió",
-    "login-required-description": "Per validar la visita cal estar registrat.",
+    "login-required-description": "Per verificar la visita cal estar registrat.",
+    "place-can-not-be-verificated": "No es poden verificar visites a aquest lloc",
+    "place-can-not-be-verificated-description": "Possiblement per que és massa complicat arrivar-hi amb un dispositiu mòbil.",
     "login": "Iniciar sessió",
     "register": "Registrar-se",
     "loading": "Carregant..."
