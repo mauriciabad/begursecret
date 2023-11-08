@@ -2,6 +2,7 @@ import {
   PlaceCategoryColor,
   PlaceCategoryIcon as PlaceCategoryIconType,
 } from '~/server/db/constants/places'
+import { VerificationRequirements } from './verifications'
 
 export type VisitMissionPlace = {
   id: number
@@ -30,10 +31,7 @@ export type VisitMissionPlace = {
     visited: boolean
     verified: boolean
   }
-  verificationRequirements: {
-    isLocationRequired: boolean
-    maxLocationDistance: number | null
-  } | null
+  verificationRequirements: VerificationRequirements | null
 }
 
 export type VisitMission = {
