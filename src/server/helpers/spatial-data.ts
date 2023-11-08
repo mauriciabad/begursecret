@@ -1,5 +1,3 @@
-import 'server-only'
-
 import { DriverValueMapper, sql } from 'drizzle-orm'
 import { customType } from 'drizzle-orm/mysql-core'
 import {
