@@ -18,7 +18,10 @@ type ErrorCodes =
   | 'permission-denied'
   | 'permission-not-granted-yet'
 
-export function useLocationValidator(expectedLocation: MapPoint) {
+export function useLocationValidator(
+  expectedLocation: MapPoint,
+  maxLocationDistance?: number | null
+) {
   const [deviceLocationError, setDeviceLocationError] =
     useState<null | ErrorCodes>(null)
   const [loadingDeviceLocation, setLoadingDeviceLocation] = useState(false)
@@ -42,14 +45,6 @@ export function useLocationValidator(expectedLocation: MapPoint) {
     }
   }, [locationPermission])
 
-  /**
-   * Requests access to the device location and validates that it is closes than {@link MAX_DISTANCE_TO_PLACE}.
-   *
-   * If the location is not valid, it sets the error code in {@link deviceLocationError}.
-   *
-   * It automatically sets {@link loadingDeviceLocation} while the location is being accessed.
-   * @returns {Promise<MapPoint | null>} {@link MapPoint} if the location is valid, {@link null} otherwise.
-   */
   const validateLocation = useCallback<
     () => Promise<{ location: MapPoint; accuracy: number } | null>
   >(async () => {
@@ -86,7 +81,7 @@ export function useLocationValidator(expectedLocation: MapPoint) {
             deviceGeolocation.location,
             expectedLocation
           )
-          if (distance > MAX_DISTANCE_TO_PLACE) {
+          if (distance > (maxLocationDistance ?? MAX_DISTANCE_TO_PLACE)) {
             return resolve({
               error: 'too-far',
               data: deviceGeolocation,

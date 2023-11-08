@@ -32,6 +32,7 @@ export type VisitMissionPlace = {
   }
   verificationRequirements: {
     isLocationRequired: boolean
+    maxLocationDistance: number | null
   } | null
 }
 

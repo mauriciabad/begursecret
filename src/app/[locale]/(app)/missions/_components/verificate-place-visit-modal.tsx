@@ -48,6 +48,7 @@ export const VerificatePlaceVisitModal: FC<
     isAlreadyVisited: boolean
     verificationRequirements: {
       isLocationRequired: boolean
+      maxLocationDistance: number | null
     } | null
   }
 > = ({
@@ -61,7 +62,10 @@ export const VerificatePlaceVisitModal: FC<
 }) => {
   const t = useTranslations('verificate')
   const { validateLocation, deviceLocationError, loadingDeviceLocation } =
-    useLocationValidator(expectedLocation)
+    useLocationValidator(
+      expectedLocation,
+      verificationRequirements?.maxLocationDistance
+    )
   const log = useLogger()
   const { data: session } = useSession()
   const addToVisitedPlacesMutation =
