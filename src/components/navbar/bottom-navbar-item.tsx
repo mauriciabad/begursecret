@@ -22,7 +22,7 @@ export const BottomNavbarItem: FC<{
         aria-label={label}
         variant="light"
         radius="none"
-        disabled={isActive}
+        isDisabled={isActive}
       >
         {!!iconActive && isActive ? iconActive : icon}
       </LinkButton>

@@ -86,6 +86,13 @@ const getVisitMissions = flattenTranslationsOnExecute(
                       color: true,
                     },
                   }),
+                  verifications: {
+                    orderBy: (verifications, { desc }) => [
+                      desc(verifications.validatedOn),
+                    ],
+                    limit: 1,
+                  },
+                  verificationRequirements: true,
                 },
               }),
             },
@@ -121,6 +128,13 @@ const getVisitMissions = flattenTranslationsOnExecute(
                   color: true,
                 },
               }),
+              verifications: {
+                orderBy: (verifications, { desc }) => [
+                  desc(verifications.validatedOn),
+                ],
+                limit: 1,
+              },
+              verificationRequirements: true,
             },
           }),
         },
@@ -152,16 +166,25 @@ export const missionsRouter = router({
               ...places
                 .map(({ place }) => place)
                 .filter((place) => !mainPlacesIds.includes(place.id)),
-            ].map(({ location, categories, ...place }) => ({
-              ...place,
-              location: getPoint(location),
-              categories: categories.map(({ category }) => category),
-              images: [],
-              missionStatus: {
-                visited: visitedPlacesIds.has(place.id),
-                verified: false,
-              },
-            })),
+            ].map(({ location, categories, verifications, ...place }) => {
+              const hasBeenVisited = visitedPlacesIds.has(place.id)
+              const lastVerification =
+                verifications.length > 0 ? verifications[0] : null
+
+              return {
+                ...place,
+                location: getPoint(location),
+                categories: categories.map(({ category }) => category),
+                images: [],
+                missionStatus: {
+                  visited: hasBeenVisited,
+                  verified: place.verificationRequirements
+                    ? Boolean(lastVerification)
+                    : hasBeenVisited,
+                },
+                lastVerification,
+              }
+            }),
           }
         })
         .filter(({ places }) => places.length > 0)

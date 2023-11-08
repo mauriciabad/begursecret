@@ -28,6 +28,9 @@ export type VisitMissionPlace = {
     visited: boolean
     verified: boolean
   }
+  verificationRequirements: {
+    isLocationRequired: boolean
+  } | null
 }
 
 export type VisitMission = {

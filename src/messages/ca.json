@@ -86,6 +86,7 @@
     "verified": "Verificat",
     "not-visited": "No visitat",
     "verificate-visit": "Verificar visita",
+    "visit-already-verified": "Visita ja verificada",
     "no-place-selected": "No s'ha seleccionat cap lloc",
     "view-full-place-info": "Veure tota la informació del lloc"
   },
@@ -108,6 +109,8 @@
     },
     "login-required": "Cal iniciar sessió",
     "login-required-description": "Per verificar la visita cal estar registrat.",
+    "place-can-not-be-verificated": "No es poden verificar visites a aquest lloc",
+    "place-can-not-be-verificated-description": "Possiblement per que és massa complicat arrivar-hi amb un dispositiu mòbil.",
     "login": "Iniciar sessió",
     "register": "Registrar-se",
     "loading": "Carregant..."

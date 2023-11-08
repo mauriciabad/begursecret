@@ -1,9 +1,14 @@
-import { PointString } from '~/server/helpers/spatial-data'
-
 export type MapPoint = {
   lat: number
   lng: number
 }
+export type PointString = `POINT(${number} ${number})`
+
+type WTFPointType<Lat extends number = number, Lng extends number = number> = {
+  type: 'Point'
+  coordinates: [Lng, Lat]
+}
+
 /**
  * Extracts the lat and lng from a string.
  * Notice that the order is lng lat, not lat lng. Except in JSON format, where it doesn't matter.
@@ -11,7 +16,7 @@ export type MapPoint = {
  * @returns Object with lat and lng properties
  */
 export function getPoint(
-  value: PointString | { x: number; y: number } | MapPoint
+  value: PointString | { x: number; y: number } | MapPoint | WTFPointType
 ): MapPoint
 export function getPoint(value: null | undefined): null
 export function getPoint(
@@ -20,6 +25,7 @@ export function getPoint(
     | PointString
     | { x: number; y: number }
     | MapPoint
+    | WTFPointType
     | null
     | undefined
 ): MapPoint | null
@@ -29,6 +35,7 @@ export function getPoint(
     | PointString
     | { x: number; y: number }
     | MapPoint
+    | WTFPointType
     | null
     | undefined
 ): MapPoint | null {
@@ -64,6 +71,13 @@ export function getPoint(
     }
   }
 
+  if ('coordinates' in value && Array.isArray(value.coordinates)) {
+    return {
+      lat: value.coordinates[1],
+      lng: value.coordinates[0],
+    }
+  }
+
   return null
 }
 
@@ -75,4 +89,8 @@ export function calculateLocation<
     ...place,
     location: getPoint(place.location),
   }
+}
+
+export function pointToString(value: MapPoint): PointString {
+  return `POINT(${value.lng} ${value.lat})`
 }

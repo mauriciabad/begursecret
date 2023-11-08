@@ -1,6 +1,7 @@
 import haversine from 'haversine-distance'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { MapPoint } from '~/helpers/spatial-data'
+import { useDevicePermissions } from '~/helpers/useDevicePermissions'
 
 /** In meters */
 const MAX_DISTANCE_TO_PLACE = process.env.NODE_ENV === 'development' ? 500 : 25
@@ -15,11 +16,31 @@ type ErrorCodes =
   | 'timeout'
   | 'position-unavailable'
   | 'permission-denied'
+  | 'permission-not-granted-yet'
 
 export function useLocationValidator(expectedLocation: MapPoint) {
   const [deviceLocationError, setDeviceLocationError] =
     useState<null | ErrorCodes>(null)
   const [loadingDeviceLocation, setLoadingDeviceLocation] = useState(false)
+
+  const locationPermission = useDevicePermissions('geolocation')
+  useEffect(() => {
+    if (!locationPermission) return
+    if (locationPermission.state === 'granted') {
+      if (
+        deviceLocationError === 'permission-denied' ||
+        deviceLocationError === 'permission-not-granted-yet'
+      ) {
+        setDeviceLocationError(null)
+      }
+    } else {
+      setDeviceLocationError(
+        locationPermission.state === 'denied'
+          ? 'permission-denied'
+          : 'permission-not-granted-yet'
+      )
+    }
+  }, [locationPermission])
 
   /**
    * Requests access to the device location and validates that it is closes than {@link MAX_DISTANCE_TO_PLACE}.
@@ -29,59 +50,67 @@ export function useLocationValidator(expectedLocation: MapPoint) {
    * It automatically sets {@link loadingDeviceLocation} while the location is being accessed.
    * @returns {Promise<MapPoint | null>} {@link MapPoint} if the location is valid, {@link null} otherwise.
    */
-  const validateLocation = async (): Promise<MapPoint | null> => {
+  const validateLocation = useCallback<
+    () => Promise<{ location: MapPoint; accuracy: number } | null>
+  >(async () => {
     setLoadingDeviceLocation(true)
 
-    const data = await new Promise<
+    const { error, data } = await new Promise<
       | {
           error: null
-          location: MapPoint
+          data: { location: MapPoint; accuracy: number }
         }
       | {
           error: ErrorCodes
-          location: MapPoint | null
+          data: { location: MapPoint; accuracy: number } | null
         }
     >((resolve) => {
       if (!('geolocation' in navigator)) {
         return resolve({
           error: 'geolocation-not-supported',
-          location: null,
+          data: null,
         })
       }
 
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const deviceLocation: MapPoint = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          }
-          const distance = haversine(deviceLocation, expectedLocation)
+          const deviceGeolocation = {
+            location: {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            },
+            accuracy: position.coords.accuracy,
+          } as const
+
+          const distance = haversine(
+            deviceGeolocation.location,
+            expectedLocation
+          )
           if (distance > MAX_DISTANCE_TO_PLACE) {
             return resolve({
               error: 'too-far',
-              location: deviceLocation,
+              data: deviceGeolocation,
             })
           }
 
-          const accuracy = position.coords.accuracy
-          if (accuracy > MIN_LOCATION_ACCURACY) {
+          if (deviceGeolocation.accuracy > MIN_LOCATION_ACCURACY) {
             return resolve({
               error: 'too-low-accuracy',
-              location: deviceLocation,
+              data: deviceGeolocation,
             })
           }
 
-          return resolve({ location: deviceLocation, error: null })
+          return resolve({ data: deviceGeolocation, error: null })
         },
         (error) => {
           if (error.POSITION_UNAVAILABLE) {
-            return resolve({ error: 'position-unavailable', location: null })
+            return resolve({ error: 'position-unavailable', data: null })
           } else if (error.TIMEOUT) {
-            return resolve({ error: 'timeout', location: null })
+            return resolve({ error: 'timeout', data: null })
           } else if (error.PERMISSION_DENIED) {
-            return resolve({ error: 'permission-denied', location: null })
+            return resolve({ error: 'permission-denied', data: null })
           } else {
-            return resolve({ error: 'position-unavailable', location: null })
+            return resolve({ error: 'position-unavailable', data: null })
           }
         },
         {
@@ -92,10 +121,10 @@ export function useLocationValidator(expectedLocation: MapPoint) {
 
     setLoadingDeviceLocation(false)
 
-    setDeviceLocationError(data.error)
+    setDeviceLocationError(error)
 
-    return data.error ? null : data.location
-  }
+    return error ? null : data
+  }, [expectedLocation])
 
   return {
     validateLocation,

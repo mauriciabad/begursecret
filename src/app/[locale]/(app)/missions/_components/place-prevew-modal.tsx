@@ -124,14 +124,27 @@ export const PlacePreviewModal: FC<
                     {t('view-full-place-info')}
                   </span>
                 </LinkButton>
-                <Button
-                  color="primary"
-                  fullWidth
-                  onPress={onVerificateModalOpen}
-                  startContent={<IconDiscountCheckFilled size={20} />}
-                >
-                  {t('verificate-visit')}
-                </Button>
+
+                {place.missionStatus.verified ? (
+                  <Button
+                    fullWidth
+                    color="primary"
+                    isDisabled
+                    onPress={onVerificateModalOpen}
+                    startContent={<IconDiscountCheckFilled size={20} />}
+                  >
+                    {t('visit-already-verified')}
+                  </Button>
+                ) : (
+                  <Button
+                    color="primary"
+                    fullWidth
+                    onPress={onVerificateModalOpen}
+                    startContent={<IconDiscountCheckFilled size={20} />}
+                  >
+                    {t('verificate-visit')}
+                  </Button>
+                )}
               </ModalFooter>
 
               <VerificatePlaceVisitModal
@@ -144,6 +157,7 @@ export const PlacePreviewModal: FC<
                   onClose()
                 }}
                 isAlreadyVisited={place.missionStatus.visited}
+                verificationRequirements={place.verificationRequirements}
               />
             </>
           ) : (
