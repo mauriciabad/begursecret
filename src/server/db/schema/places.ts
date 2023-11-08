@@ -49,9 +49,6 @@ export const placesRelations = relations(places, (r) => ({
     relationName: 'main',
   }),
   categories: r.many(placesToPlaceCategories, {
-    relationName: 'all',
-  }),
-  secondaryCategories: r.many(placesToPlaceCategories, {
     relationName: 'secondary',
   }),
   features: r.one(features, {
@@ -89,11 +86,8 @@ export const placeCategoriesRelations = relations(placeCategories, (r) => ({
   ...makePlaceCategoryRelations(r),
 
   mainPlaces: r.many(places, { relationName: 'main' }),
-  secondaryPlaces: r.many(placesToPlaceCategories, {
-    relationName: 'secondary',
-  }),
   places: r.many(placesToPlaceCategories, {
-    relationName: 'all',
+    relationName: 'secondary',
   }),
 }))
 
@@ -114,11 +108,6 @@ export const placesToPlaceCategoriesRelations = relations(
   placesToPlaceCategories,
   ({ one }) => ({
     place: one(places, {
-      fields: [placesToPlaceCategories.placeId],
-      references: [places.id],
-      relationName: 'all',
-    }),
-    secondaryPlace: one(places, {
       fields: [placesToPlaceCategories.placeId],
       references: [places.id],
       relationName: 'secondary',

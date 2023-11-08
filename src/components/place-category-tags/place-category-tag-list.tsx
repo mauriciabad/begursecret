@@ -17,10 +17,6 @@ export const PlaceCategoryTagList: FC<{
   wrap?: boolean
   className?: string
 }> = ({ categories, mainCategory, wrap, className }) => {
-  const categoriesWithoutMain = categories.filter(
-    (category) => category.id !== mainCategory?.id
-  )
-
   return (
     <div
       className={cn(
@@ -33,11 +29,11 @@ export const PlaceCategoryTagList: FC<{
     >
       {mainCategory && <PlaceCategoryTag category={mainCategory} />}
 
-      {mainCategory && categoriesWithoutMain.length >= 1 && (
+      {mainCategory && categories.length >= 1 && (
         <span className="h-4 w-[1px] bg-stone-200" />
       )}
 
-      {categoriesWithoutMain.map((category) => (
+      {categories.map((category) => (
         <PlaceCategoryTag key={category.id} category={category} />
       ))}
     </div>
