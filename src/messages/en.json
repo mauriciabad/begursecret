@@ -182,9 +182,11 @@
         "tab-title": "Journal",
         "under-construction": "Page under construction..."
       },
-      "saved": {
-        "tab-title": "Saved",
-        "under-construction": "Page under construction..."
+      "visited": {
+        "tab-title": "Visited",
+        "visited-places": "Visited places",
+        "no-places": "No places saved",
+        "loading": "Loading saved places..."
       }
     }
   },

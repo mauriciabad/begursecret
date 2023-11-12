@@ -179,9 +179,11 @@
         "tab-title": "Diari",
         "under-construction": "Pàgina en construcció..."
       },
-      "saved": {
-        "tab-title": "Guardats",
-        "under-construction": "Pàgina en construcció..."
+      "visited": {
+        "tab-title": "Visitats",
+        "visited-places": "Llocs visitats",
+        "no-places": "Encara no has visitat cap lloc",
+        "loading": "Carregant llocs visitats..."
       }
     }
   },
