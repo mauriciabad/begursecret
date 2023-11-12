@@ -10,6 +10,7 @@ import {
 } from '~/schemas/places'
 import { db } from '~/server/db/db'
 import { places } from '~/server/db/schema'
+import { getVisitedPlacesIdsByUserId } from '~/server/helpers/db-queries/placeLists'
 import { selectPoint } from '~/server/helpers/spatial-data'
 import {
   flattenTranslationsOnExecute,
@@ -138,6 +139,22 @@ const getPlace = flattenTranslationsOnExecute(
             },
           }),
           features: withTranslations({}),
+          verifications: {
+            columns: {
+              id: true,
+              validatedOn: true,
+            },
+            orderBy: (verifications, { desc }) => [
+              desc(verifications.validatedOn),
+            ],
+            where: (verification, { or, isNull, eq }) =>
+              or(
+                isNull(sql.placeholder('userId')),
+                eq(verification.userId, sql.placeholder('userId'))
+              ),
+            limit: 1,
+          },
+          verificationRequirements: true,
         },
       })
     )
@@ -175,12 +192,23 @@ export const placesRouter = router({
       })
     ).map(calculateLocation)
   }),
-  get: procedure.input(getPlacesSchema).query(async ({ input }) => {
+  get: procedure.input(getPlacesSchema).query(async ({ input, ctx }) => {
+    const visitedPlacesIds = await getVisitedPlacesIdsByUserId(
+      ctx.session?.user.id
+    )
+
     const result = await getPlace.execute({
       locale: input.locale,
       id: input.id,
+      userId: ctx.session?.user.id,
     })
-    return result ? calculateLocation({ ...result, images: [] }) : undefined
+    return result
+      ? calculateLocation({
+          ...result,
+          images: [],
+          visited: visitedPlacesIds.has(input.id),
+        })
+      : undefined
   }),
   listCategories: procedure
     .input(listCategoriesSchema)

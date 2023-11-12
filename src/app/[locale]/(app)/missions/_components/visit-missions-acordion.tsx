@@ -53,8 +53,7 @@ export const VisitMissionsAcordion: FC<{
               <PlaceCategoryIconWithProgress
                 icon={category.icon}
                 progress={
-                  places.filter((place) => place.missionStatus.visited).length /
-                  places.length
+                  places.filter((place) => place.visited).length / places.length
                 }
                 color={category.color}
                 label={category.namePlural}
@@ -91,13 +90,13 @@ export const VisitMissionsAcordion: FC<{
                       onOpen()
                     }}
                   >
-                    {place.missionStatus.verified ? (
+                    {place.verifications.length > 0 ? (
                       <IconDiscountCheckFilled
                         size={24}
                         className="text-blue-400"
                         aria-label={t('verified')}
                       />
-                    ) : place.missionStatus.visited ? (
+                    ) : place.visited ? (
                       <IconCircleCheckFilled
                         size={24}
                         className="text-blue-400"
