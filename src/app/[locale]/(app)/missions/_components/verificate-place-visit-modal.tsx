@@ -36,7 +36,7 @@ import {
 import { trpc } from '~/trpc'
 import { useLocationValidator } from '../_hooks/useLocationValidator'
 
-type OnVerificate = (
+export type OnVerificate = (
   hasBeenVerified: boolean,
   verificationData: {
     location: MapPoint | null
@@ -46,7 +46,7 @@ type OnVerificate = (
 
 export const VerificatePlaceVisitModal: FC<
   Omit<ModalProps, 'children'> & {
-    onVerificate: OnVerificate
+    onVerificate?: OnVerificate
     expectedLocation: MapPoint
     placeId: number
     isAlreadyVisited: boolean
@@ -92,8 +92,8 @@ export const VerificatePlaceVisitModal: FC<
       })
     }
 
+    await onVerificate?.(hasBeenVerified, verificationData)
     router.refresh()
-    await onVerificate(hasBeenVerified, verificationData)
   }
 
   const handleSubmit = async ({

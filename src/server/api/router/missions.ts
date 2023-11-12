@@ -87,9 +87,18 @@ const getVisitMissions = flattenTranslationsOnExecute(
                     },
                   }),
                   verifications: {
+                    columns: {
+                      id: true,
+                      validatedOn: true,
+                    },
                     orderBy: (verifications, { desc }) => [
                       desc(verifications.validatedOn),
                     ],
+                    where: (verification, { or, isNull, eq }) =>
+                      or(
+                        isNull(sql.placeholder('userId')),
+                        eq(verification.userId, sql.placeholder('userId'))
+                      ),
                     limit: 1,
                   },
                   verificationRequirements: true,
@@ -129,9 +138,18 @@ const getVisitMissions = flattenTranslationsOnExecute(
                 },
               }),
               verifications: {
+                columns: {
+                  id: true,
+                  validatedOn: true,
+                },
                 orderBy: (verifications, { desc }) => [
                   desc(verifications.validatedOn),
                 ],
+                where: (verification, { or, isNull, eq }) =>
+                  or(
+                    isNull(sql.placeholder('userId')),
+                    eq(verification.userId, sql.placeholder('userId'))
+                  ),
                 limit: 1,
               },
               verificationRequirements: true,
@@ -150,6 +168,7 @@ export const missionsRouter = router({
       const result = await getVisitMissions.execute({
         locale: input.locale,
         placeId: input.placeId,
+        userId: ctx.session?.user.id,
       })
 
       const visitedPlacesIds = await getVisitedPlacesIdsByUserId(
@@ -166,27 +185,16 @@ export const missionsRouter = router({
               ...places
                 .map(({ place }) => place)
                 .filter((place) => !mainPlacesIds.includes(place.id)),
-            ].map(({ location, categories, verifications, ...place }) => {
-              const hasBeenVisited = visitedPlacesIds.has(place.id)
-              const lastVerification =
-                verifications.length > 0 ? verifications[0] : null
-              const isVerificationRequired =
-                place.verificationRequirements &&
-                place.verificationRequirements.isLocationRequired
-              return {
-                ...place,
-                location: getPoint(location),
-                categories: categories.map(({ category }) => category),
-                images: [],
-                missionStatus: {
-                  visited: hasBeenVisited,
-                  verified: isVerificationRequired
-                    ? Boolean(lastVerification)
-                    : hasBeenVisited,
-                },
-                lastVerification,
-              }
-            }),
+            ].map(({ location, categories, verifications, ...place }) => ({
+              ...place,
+              location: getPoint(location),
+              categories: categories.map(({ category }) => category),
+              images: [],
+              missionStatus: {
+                visited: visitedPlacesIds.has(place.id),
+                verified: verifications.length > 0,
+              },
+            })),
           }
         })
         .filter(({ places }) => places.length > 0)

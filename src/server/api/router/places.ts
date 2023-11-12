@@ -138,6 +138,22 @@ const getPlace = flattenTranslationsOnExecute(
             },
           }),
           features: withTranslations({}),
+          verifications: {
+            columns: {
+              id: true,
+              validatedOn: true,
+            },
+            orderBy: (verifications, { desc }) => [
+              desc(verifications.validatedOn),
+            ],
+            where: (verification, { or, isNull, eq }) =>
+              or(
+                isNull(sql.placeholder('userId')),
+                eq(verification.userId, sql.placeholder('userId'))
+              ),
+            limit: 1,
+          },
+          verificationRequirements: true,
         },
       })
     )
@@ -175,10 +191,11 @@ export const placesRouter = router({
       })
     ).map(calculateLocation)
   }),
-  get: procedure.input(getPlacesSchema).query(async ({ input }) => {
+  get: procedure.input(getPlacesSchema).query(async ({ input, ctx }) => {
     const result = await getPlace.execute({
       locale: input.locale,
       id: input.id,
+      userId: ctx.session?.user.id,
     })
     return result ? calculateLocation({ ...result, images: [] }) : undefined
   }),

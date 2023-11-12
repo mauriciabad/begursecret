@@ -1,4 +1,5 @@
-import { Button } from '@nextui-org/button'
+'use client'
+
 import { Image } from '@nextui-org/image'
 import {
   Modal,
@@ -8,12 +9,7 @@ import {
   ModalHeader,
   ModalProps,
 } from '@nextui-org/modal'
-import { useDisclosure } from '@nextui-org/react'
-import {
-  IconChevronRight,
-  IconDiscountCheckFilled,
-  IconInfoCircle,
-} from '@tabler/icons-react'
+import { IconChevronRight, IconInfoCircle } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import Link from 'next-intl/link'
 import { FC } from 'react'
@@ -23,7 +19,7 @@ import { PlaceCategoryTagList } from '~/components/place-category-tags/place-cat
 import { shotConfettiStars } from '~/helpers/confetti'
 import { makeImageUrl } from '~/helpers/images'
 import { VisitMissionPlace } from '~/server/db/constants/missions'
-import { VerificatePlaceVisitModal } from './verificate-place-visit-modal'
+import { VerificateButton } from './verificate-button'
 
 export const PlacePreviewModal: FC<
   Omit<ModalProps, 'children'> & {
@@ -37,12 +33,6 @@ export const PlacePreviewModal: FC<
       place.location.lng > 3.24022 ||
       place.location.lat < 41.920697 ||
       place.location.lat > 41.984129)
-
-  const {
-    isOpen: isVerificateModalOpen,
-    onOpen: onVerificateModalOpen,
-    onOpenChange: onVerificateModalOpenChange,
-  } = useDisclosure()
 
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -125,40 +115,18 @@ export const PlacePreviewModal: FC<
                   </span>
                 </LinkButton>
 
-                {place.missionStatus.verified ? (
-                  <Button
-                    fullWidth
-                    color="primary"
-                    isDisabled
-                    onPress={onVerificateModalOpen}
-                    startContent={<IconDiscountCheckFilled size={20} />}
-                  >
-                    {t('visit-already-verified')}
-                  </Button>
-                ) : (
-                  <Button
-                    color="primary"
-                    fullWidth
-                    onPress={onVerificateModalOpen}
-                    startContent={<IconDiscountCheckFilled size={20} />}
-                  >
-                    {t('verificate-visit')}
-                  </Button>
-                )}
+                <VerificateButton
+                  expectedLocation={place.location}
+                  placeId={place.id}
+                  isAlreadyVisited={place.missionStatus.visited}
+                  isAlreadyVerified={place.missionStatus.verified}
+                  verificationRequirements={place.verificationRequirements}
+                  onVerificate={(verificated) => {
+                    shotConfettiStars({ withStars: verificated })
+                    onClose()
+                  }}
+                />
               </ModalFooter>
-
-              <VerificatePlaceVisitModal
-                isOpen={isVerificateModalOpen}
-                onOpenChange={onVerificateModalOpenChange}
-                expectedLocation={place.location}
-                placeId={place.id}
-                onVerificate={(verificated) => {
-                  shotConfettiStars({ withStars: verificated })
-                  onClose()
-                }}
-                isAlreadyVisited={place.missionStatus.visited}
-                verificationRequirements={place.verificationRequirements}
-              />
             </>
           ) : (
             <ModalBody className="">

@@ -9,9 +9,11 @@ import { MapPoint } from '~/helpers/spatial-data'
 import { Features } from '~/server/db/constants/features'
 import { VisitMission } from '~/server/db/constants/missions'
 import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
+import { VerificationRequirements } from '~/server/db/constants/verifications'
 import { PlaceCategoryTagList } from '../../../../../components/place-category-tags/place-category-tag-list'
 import { VisitMissionsAcordion } from '../../missions/_components/visit-missions-acordion'
 import { FeaturesBlock } from './features-block'
+import { PlaceDetailsVerificateButton } from './place-details-verificate-button'
 import { ViewMoreImagesButtonAndDialog } from './view-more-images-button-and-dialog'
 
 export const PlaceDetails: FC<{
@@ -36,6 +38,11 @@ export const PlaceDetails: FC<{
       }
     }[]
     features: Features | null
+    verificationRequirements: VerificationRequirements | null
+    verifications: {
+      id: number
+      validatedOn: Date
+    }[]
   }
   visitMissions: VisitMission[]
 }> = ({ placeFullInfo: place, visitMissions }) => {
@@ -48,6 +55,16 @@ export const PlaceDetails: FC<{
       {place.description && (
         <p className="text-stone-800">{place.description}</p>
       )}
+
+      <PlaceDetailsVerificateButton
+        expectedLocation={place.location}
+        placeId={place.id}
+        verificationRequirements={place.verificationRequirements}
+        isAlreadyVisited={false} // TODO: query user's placeLists (visited, to-do, fav) to check if place is already visited
+        isAlreadyVerified={place.verifications.length > 0}
+        hideIfDone
+        className="mt-4"
+      />
 
       {place.images && place.images.length >= 1 ? (
         <div className="mt-4 grid grid-cols-[2fr_1fr] grid-rows-2 gap-2">
