@@ -173,7 +173,7 @@
     "tabs": {
       "merits": {
         "tab-title": "Mèrits",
-        "under-construction": "Pàgina en construcció..."
+        "visited-places": "<part><highlight>Llocs</highlight></part><part>visitats</part>"
       },
       "journal": {
         "tab-title": "Diari",

@@ -176,7 +176,7 @@
     "tabs": {
       "merits": {
         "tab-title": "Merits",
-        "under-construction": "Page under construction..."
+        "visited-places": "<part>Visited</part><part><highlight>places</highlight></part>"
       },
       "journal": {
         "tab-title": "Journal",
