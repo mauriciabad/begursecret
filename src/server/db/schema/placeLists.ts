@@ -7,6 +7,7 @@ import {
   timestamp,
 } from 'drizzle-orm/mysql-core'
 import { userIdColumnType } from '../utilities'
+import { places } from './places'
 import { users } from './users'
 
 export const placeLists = mysqlTable('placeList', {
@@ -35,5 +36,16 @@ export const placeListRelations = relations(placeLists, (r) => ({
   owner: r.one(users, {
     fields: [placeLists.userId],
     references: [users.id],
+  }),
+}))
+
+export const placeListToPlaceRelations = relations(placeListToPlace, (r) => ({
+  place: r.one(places, {
+    fields: [placeListToPlace.placeId],
+    references: [places.id],
+  }),
+  placeList: r.one(placeLists, {
+    fields: [placeListToPlace.placeListId],
+    references: [placeLists.id],
   }),
 }))

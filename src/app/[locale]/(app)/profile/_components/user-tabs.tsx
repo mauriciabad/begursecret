@@ -8,7 +8,7 @@ import { FC } from 'react'
 import { useCreateUrl } from '~/helpers/useCreateUrl'
 import { JournalTab } from './tabs/journal-tab'
 import { MeritsTab } from './tabs/merits-tab'
-import { SavedTab } from './tabs/saved-tab'
+import { VisitedTab } from './tabs/visited-tab'
 
 export const UserTabs: FC = () => {
   const t = useTranslations('profile.tabs')
@@ -35,10 +35,10 @@ export const UserTabs: FC = () => {
       content: JournalTab,
     },
     {
-      key: 'saved',
+      key: 'visited',
       icon: IconBookmark,
-      title: t('saved.tab-title'),
-      content: SavedTab,
+      title: t('visited.tab-title'),
+      content: VisitedTab,
     },
   ]
 
@@ -52,6 +52,7 @@ export const UserTabs: FC = () => {
         classNames={{
           tabList: 'w-full p-0 overflow-visible mx-auto max-w-2xl',
           tabContent: 'group-data-[selected=true]:font-semibold',
+          panel: 'p-0',
         }}
         items={tabs}
       >
@@ -70,7 +71,7 @@ export const UserTabs: FC = () => {
               }
               href={createUrlWithSearchParams({ tab: item.key })}
             >
-              <main className="mx-auto w-full max-w-2xl px-6 py-3">
+              <main className="mx-auto w-full max-w-2xl py-3">
                 <Content />
               </main>
             </Tab>
