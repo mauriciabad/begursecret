@@ -1,4 +1,4 @@
-import { useLocale,useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { FC } from 'react'
 import { onlyTranslatableLocales } from '~/i18n'
 import { trpc } from '~/trpc'
