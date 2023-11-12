@@ -18,9 +18,9 @@ export const VisitedTab: FC = () => {
       </h2>
 
       {!places ? (
-        <p className="text-center text-gray-400">{t('loading')}</p>
+        <p className="mt-2 text-center text-gray-400">{t('loading')}</p>
       ) : places.length === 0 ? (
-        <p className="text-center text-gray-400">{t('no-places')}</p>
+        <p className="mt-2 text-center text-gray-400">{t('no-places')}</p>
       ) : (
         <PlaceList places={places} />
       )}
