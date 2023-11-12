@@ -30,7 +30,7 @@ export type VisitMissionPlace = {
   visited: boolean
   verifications: {
     id: number
-    validatedOn: string
+    validatedOn: Date
   }[]
   verificationRequirements: VerificationRequirements | null
 }
