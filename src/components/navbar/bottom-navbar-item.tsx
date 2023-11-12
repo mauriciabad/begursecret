@@ -18,11 +18,10 @@ export const BottomNavbarItem: FC<{
     <li>
       <LinkButton
         href={url}
-        className="opacity-1 flex h-full items-center justify-center"
+        className="flex h-full items-center justify-center"
         aria-label={label}
         variant="light"
         radius="none"
-        isDisabled={isActive}
       >
         {!!iconActive && isActive ? iconActive : icon}
       </LinkButton>

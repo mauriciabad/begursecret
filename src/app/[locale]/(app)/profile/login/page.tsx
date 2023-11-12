@@ -3,8 +3,7 @@ import { getTranslator, redirect } from 'next-intl/server'
 import type { FC } from 'react'
 import type { LocaleRouteParams } from '~/i18n'
 import { getSession } from '~/server/get-server-thing'
-import { UserPreview } from './_components/user-preview'
-import { UserTabs } from './_components/user-tabs'
+import { ProfileLogin } from './_components/profile-login'
 
 export async function generateMetadata({
   params,
@@ -16,18 +15,14 @@ export async function generateMetadata({
   }
 }
 
-const ProfilePage: FC<LocaleRouteParams> = async () => {
+const LoginPage: FC<LocaleRouteParams> = async () => {
   const session = await getSession()
-  if (!session) {
-    redirect('/profile/login')
+
+  if (session) {
+    redirect('/profile')
   }
 
-  return (
-    <>
-      <UserPreview user={session.user} className="bg-white p-4" />
-      <UserTabs />
-    </>
-  )
+  return <ProfileLogin />
 }
 
-export default ProfilePage
+export default LoginPage

@@ -169,6 +169,20 @@
       "description": "Completa el teu perfil",
       "change-profile-image": "Canviar foto de perfil",
       "leave-empty-to-remove-profile-image": "Deixa-ho buit per eliminar la foto de perfil"
+    },
+    "tabs": {
+      "merits": {
+        "tab-title": "Mèrits",
+        "under-construction": "Pàgina en construcció..."
+      },
+      "journal": {
+        "tab-title": "Diari",
+        "under-construction": "Pàgina en construcció..."
+      },
+      "saved": {
+        "tab-title": "Guardats",
+        "under-construction": "Pàgina en construcció..."
+      }
     }
   },
   "auth": {

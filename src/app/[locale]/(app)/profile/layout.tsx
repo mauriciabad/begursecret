@@ -29,7 +29,7 @@ const ProfileLayout: FC<ProfileLayoutProps> = ({ children }) => {
         </NavbarContent>
       </Navbar>
 
-      <main className="mx-auto max-w-2xl px-6 py-3">{children}</main>
+      {children}
     </>
   )
 }

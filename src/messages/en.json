@@ -172,6 +172,20 @@
       "description": "Complete your profile",
       "change-profile-image": "Change profile image",
       "leave-empty-to-remove-profile-image": "Leave empty to remove profile image"
+    },
+    "tabs": {
+      "merits": {
+        "tab-title": "Merits",
+        "under-construction": "Page under construction..."
+      },
+      "journal": {
+        "tab-title": "Journal",
+        "under-construction": "Page under construction..."
+      },
+      "saved": {
+        "tab-title": "Saved",
+        "under-construction": "Page under construction..."
+      }
     }
   },
   "auth": {
