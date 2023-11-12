@@ -185,15 +185,12 @@ export const missionsRouter = router({
               ...places
                 .map(({ place }) => place)
                 .filter((place) => !mainPlacesIds.includes(place.id)),
-            ].map(({ location, categories, verifications, ...place }) => ({
+            ].map(({ location, categories, ...place }) => ({
               ...place,
               location: getPoint(location),
               categories: categories.map(({ category }) => category),
               images: [],
-              missionStatus: {
-                visited: visitedPlacesIds.has(place.id),
-                verified: verifications.length > 0,
-              },
+              visited: visitedPlacesIds.has(place.id),
             })),
           }
         })

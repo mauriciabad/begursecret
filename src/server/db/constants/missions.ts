@@ -27,10 +27,11 @@ export type VisitMissionPlace = {
     icon: PlaceCategoryIconType
     name: string
   }[]
-  missionStatus: {
-    visited: boolean
-    verified: boolean
-  }
+  visited: boolean
+  verifications: {
+    id: number
+    validatedOn: string
+  }[]
   verificationRequirements: VerificationRequirements | null
 }
 

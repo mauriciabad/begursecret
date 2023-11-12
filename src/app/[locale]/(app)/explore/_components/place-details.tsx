@@ -30,6 +30,7 @@ export const PlaceDetails: FC<{
       icon: PlaceCategoryIconType | null
       name: string
     }
+    visited: boolean
     categories: {
       category: {
         id: number
@@ -60,7 +61,7 @@ export const PlaceDetails: FC<{
         expectedLocation={place.location}
         placeId={place.id}
         verificationRequirements={place.verificationRequirements}
-        isAlreadyVisited={false} // TODO: query user's placeLists (visited, to-do, fav) to check if place is already visited
+        isAlreadyVisited={place.visited}
         isAlreadyVerified={place.verifications.length > 0}
         hideIfDone
         className="mt-4"

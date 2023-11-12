@@ -118,8 +118,8 @@ export const PlacePreviewModal: FC<
                 <VerificateButton
                   expectedLocation={place.location}
                   placeId={place.id}
-                  isAlreadyVisited={place.missionStatus.visited}
-                  isAlreadyVerified={place.missionStatus.verified}
+                  isAlreadyVisited={place.visited}
+                  isAlreadyVerified={place.verifications.length > 0}
                   verificationRequirements={place.verificationRequirements}
                   onVerificate={(verificated) => {
                     shotConfettiStars({ withStars: verificated })
