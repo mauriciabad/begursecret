@@ -72,6 +72,16 @@ const getPlacesFromPlaceListQuery = flattenTranslationsOnExecute(
     .prepare()
 )
 
+const getPlacesFromPlaceListCountQuery = db.query.placeListToPlace
+  .findMany({
+    columns: {
+      placeId: true,
+    },
+    where: (placeList, { eq }) =>
+      eq(placeList.placeListId, sql.placeholder('placeListId')),
+  })
+  .prepare()
+
 export const placeListsRouter = router({
   addToVisitedPlacesList: protectedProcedure
     .input(addToVisitedPlacesListSchema)
@@ -103,4 +113,16 @@ export const placeListsRouter = router({
         addedAt,
       }))
     }),
+
+  getVisitedPlacesCount: protectedProcedure.query(async ({ ctx }) => {
+    const visitedPlaceListId = await getVisitedPlaceListIdByUserId(
+      ctx.session.user.id
+    )
+
+    const result = await getPlacesFromPlaceListCountQuery.execute({
+      placeListId: visitedPlaceListId,
+    })
+
+    return result.length
+  }),
 })
