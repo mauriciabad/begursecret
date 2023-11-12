@@ -1,18 +1,11 @@
 'use client'
 
 import { Tab, Tabs } from '@nextui-org/tabs'
-import {
-  Icon,
-  IconBook,
-  IconBookmark,
-  IconHeartHandshake,
-  IconMedal2,
-} from '@tabler/icons-react'
+import { Icon, IconBook, IconBookmark, IconMedal2 } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { useSearchParams } from 'next/navigation'
 import { FC } from 'react'
 import { useCreateUrl } from '~/helpers/useCreateUrl'
-import { ContributionsTab } from './tabs/contributions-tab'
 import { JournalTab } from './tabs/journal-tab'
 import { MeritsTab } from './tabs/merits-tab'
 import { SavedTab } from './tabs/saved-tab'
@@ -34,12 +27,6 @@ export const UserTabs: FC = () => {
       icon: IconMedal2,
       title: t('merits.tab-title'),
       content: MeritsTab,
-    },
-    {
-      key: 'contributions',
-      icon: IconHeartHandshake,
-      title: t('contributions.tab-title'),
-      content: ContributionsTab,
     },
     {
       key: 'journal',
