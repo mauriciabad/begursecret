@@ -42,7 +42,7 @@ export const PlaceDetails: FC<{
     verificationRequirements: VerificationRequirements | null
     verifications: {
       id: number
-      validatedOn: Date
+      validatedOn: string
     }[]
   }
   visitMissions: VisitMission[]
