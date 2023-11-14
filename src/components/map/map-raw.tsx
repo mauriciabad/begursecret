@@ -36,6 +36,7 @@ export const MapRaw: FC<{
     controls?: string
   }
   defaultLayer?: LayerId
+  innerRef?: (instance: LeafletMap | null) => void
 }> = ({
   center = DEFAULT_CENTER,
   className,
@@ -44,6 +45,7 @@ export const MapRaw: FC<{
   zoom: initialZoom = 14,
   classNames = {},
   defaultLayer,
+  innerRef,
 }) => {
   const router = useRouter()
   const [map, setMap] = useState<LeafletMap | null>(null)
@@ -63,7 +65,10 @@ export const MapRaw: FC<{
       dragging={fullControl}
       keyboard={fullControl}
       className={cn(mapContainerClassName, className)}
-      ref={setMap}
+      ref={(value) => {
+        innerRef?.(value)
+        setMap(value)
+      }}
       attributionControl={false}
       zoomSnap={0.5}
     >

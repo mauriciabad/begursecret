@@ -38,7 +38,6 @@ const getAllPlaces = flattenTranslationsOnExecute(
                 columns: {
                   id: true,
                   icon: true,
-                  name: true,
                 },
               }),
             },
@@ -48,7 +47,6 @@ const getAllPlaces = flattenTranslationsOnExecute(
               id: true,
               icon: true,
               color: true,
-              name: true,
             },
           }),
         },
