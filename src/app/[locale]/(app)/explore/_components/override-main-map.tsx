@@ -1,14 +1,21 @@
 'use client'
 
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import { MapPoint } from '~/helpers/spatial-data'
 import { useMainMap } from './main-map'
 
-export const OverrideMainMap: FC<{
+export type OverrideMainMapProps = {
   center?: MapPoint
   zoom?: number
-}> = ({ center, zoom }) => {
-  const map = useMainMap()
+  emphasizedPlaces?: Set<number>
+}
+
+export const OverrideMainMap: FC<OverrideMainMapProps> = ({
+  center,
+  zoom,
+  emphasizedPlaces,
+}) => {
+  const { map, originalMarkers, setMarkers } = useMainMap()
 
   if (map) {
     if (center && center) {
@@ -22,6 +29,26 @@ export const OverrideMainMap: FC<{
       }
     }
   }
+
+  useEffect(() => {
+    setMarkers(
+      emphasizedPlaces
+        ? originalMarkers.map((marker) => {
+            const isEmphasized =
+              marker.placeId && emphasizedPlaces.has(marker.placeId)
+            return {
+              ...marker,
+              size: isEmphasized ? 'normal' : 'tiny',
+              zIndexOffset: isEmphasized ? 1000 : 0,
+            }
+          })
+        : originalMarkers
+    )
+
+    return () => {
+      setMarkers(originalMarkers)
+    }
+  }, [emphasizedPlaces, originalMarkers])
 
   return null
 }

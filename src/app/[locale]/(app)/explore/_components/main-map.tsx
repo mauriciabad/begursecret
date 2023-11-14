@@ -9,17 +9,27 @@ import {
   useState,
 } from 'react'
 import { Map } from '~/components/map/map'
+import { MapMarker } from '~/components/map/map-raw'
 import { cn } from '~/helpers/cn'
 
-const MainMapCtx = createContext<LeafletMap | null>(null)
+const MainMapCtx = createContext<{
+  map: LeafletMap | null
+  originalMarkers: MapMarker[]
+  setMarkers: (markers: MapMarker[]) => void
+}>({
+  map: null,
+  originalMarkers: [],
+  setMarkers: () => {},
+})
 
 export const useMainMap = () => useContext(MainMapCtx)
 
-export const MainMap: FC<PropsWithChildren<{ places: any[] }>> = ({
-  places,
+export const MainMap: FC<PropsWithChildren<{ markers: MapMarker[] }>> = ({
+  markers: originalMarkers,
   children,
 }) => {
   const [map, setMap] = useState<LeafletMap | null>(null)
+  const [markers, setMarkers] = useState<MapMarker[]>(originalMarkers)
 
   return (
     <>
@@ -34,16 +44,13 @@ export const MainMap: FC<PropsWithChildren<{ places: any[] }>> = ({
         }}
         fullControl
         zoom={14}
-        markers={places.map((place) => ({
-          location: place.location,
-          icon: place.mainCategory.icon,
-          color: place.mainCategory.color,
-          url: `/explore/places/${place.id}`,
-        }))}
+        markers={markers}
         innerRef={setMap}
       />
 
-      <MainMapCtx.Provider value={map}>{children}</MainMapCtx.Provider>
+      <MainMapCtx.Provider value={{ map, originalMarkers, setMarkers }}>
+        {children}
+      </MainMapCtx.Provider>
     </>
   )
 }

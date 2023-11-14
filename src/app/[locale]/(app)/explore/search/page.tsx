@@ -4,6 +4,7 @@ import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
 import { LocaleParams, onlyTranslatableLocales } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
+import { OverrideMainMap } from '../_components/override-main-map'
 import { PlaceList } from '../_components/place-list'
 
 type PageParams = {
@@ -30,10 +31,11 @@ const ExplorePage: FC<PageParams> = async ({ searchParams }) => {
     category: Number(searchParams.category),
   })
 
-  // TODO: Filter places by {searchParams.category}
+  const placeIds = new Set(places.map((place) => place.id))
 
   return (
     <>
+      <OverrideMainMap emphasizedPlaces={placeIds} />
       <PlaceList places={places} />
     </>
   )

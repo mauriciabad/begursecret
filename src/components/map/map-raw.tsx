@@ -23,15 +23,20 @@ const DEFAULT_CENTER = {
 
 export const mapContainerClassName = 'z-0 h-64 w-full'
 
+export type MapMarker = PlaceMarkerProps & {
+  zIndexOffset?: number
+} & {
+  placeId?: number
+  location: MapPoint
+  url?: string
+}
+
 export const MapRaw: FC<{
   center?: MapPoint
   className?: string
   zoom?: number
   fullControl?: boolean
-  markers?: (PlaceMarkerProps & {
-    location: MapPoint
-    url?: string
-  })[]
+  markers?: MapMarker[]
   classNames?: {
     controls?: string
   }
@@ -73,9 +78,17 @@ export const MapRaw: FC<{
       zoomSnap={0.5}
     >
       {markers?.map(
-        ({ location, url: markerUrl, size, ...placeMarkerProps }) => (
+        ({
+          placeId,
+          location,
+          url: markerUrl,
+          size,
+          zIndexOffset,
+          ...placeMarkerProps
+        }) => (
           <Marker
-            key={`${location.lat}-${location.lng}`}
+            zIndexOffset={zIndexOffset}
+            key={`${location.lat}-${location.lng}-${placeId}`}
             position={location}
             icon={divIcon({
               html: renderToStaticMarkup(

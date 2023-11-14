@@ -20,7 +20,15 @@ const ExploreLayout: FC<ExploreLayoutProps> = async ({ children }) => {
       <ExploreTopbar />
 
       <main className="relative flex grow flex-col">
-        <MainMap places={places}>
+        <MainMap
+          markers={places.map((place) => ({
+            placeId: place.id,
+            location: place.location,
+            icon: place.mainCategory.icon,
+            color: place.mainCategory.color,
+            url: `/explore/places/${place.id}`,
+          }))}
+        >
           <MapDrawer
             classNames={{
               wrapper: 'rounded-t-lg',
