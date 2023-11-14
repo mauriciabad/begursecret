@@ -4,7 +4,6 @@ import { Button } from '@nextui-org/button'
 import { useTranslations } from 'next-intl'
 import { useEffect } from 'react'
 import { LinkButtonCustom } from '~/components/links/link-button-custom'
-import { env } from '~/env.mjs'
 
 export default function Error({
   error,
