@@ -22,7 +22,11 @@ const LoginPage: FC<LocaleRouteParams> = async () => {
     redirect('/profile')
   }
 
-  return <ProfileLogin />
+  return (
+    <main className="mx-auto w-full max-w-2xl py-3">
+      <ProfileLogin />
+    </main>
+  )
 }
 
 export default LoginPage
