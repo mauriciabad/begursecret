@@ -2,11 +2,9 @@ import type { Metadata } from 'next'
 import { useLocale } from 'next-intl'
 import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
-import { Map } from '~/components/map/map'
-import { cn } from '~/helpers/cn'
 import { LocaleParams, onlyTranslatableLocales } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
-import { MapDrawer } from '../_components/map-drawer'
+import { OverrideMainMap } from '../_components/override-main-map'
 import { PlaceList } from '../_components/place-list'
 
 type PageParams = {
@@ -33,35 +31,12 @@ const ExplorePage: FC<PageParams> = async ({ searchParams }) => {
     category: Number(searchParams.category),
   })
 
+  const placeIds = new Set(places.map((place) => place.id))
+
   return (
     <>
-      <Map
-        className={cn(
-          'min-h-[calc(100dvh_-_192px)]',
-          'sticky top-16 grow',
-          '-mb-2 box-content pb-2'
-        )}
-        classNames={{
-          controls: 'bottom-6',
-        }}
-        fullControl
-        zoom={14}
-        markers={places.map((place) => ({
-          location: place.location,
-          icon: place.mainCategory.icon,
-          color: place.mainCategory.color,
-          url: `/explore/places/${place.id}`,
-        }))}
-      />
-
-      <MapDrawer
-        classNames={{
-          wrapper: 'rounded-t-lg',
-          contents: 'pb-8',
-        }}
-      >
-        <PlaceList places={places} />
-      </MapDrawer>
+      <OverrideMainMap emphasizedPlaces={placeIds} />
+      <PlaceList places={places} />
     </>
   )
 }

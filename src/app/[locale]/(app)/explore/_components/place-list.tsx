@@ -34,7 +34,7 @@ export const PlaceList: FC<{
   return (
     <ul className="py-2">
       {places?.map((place) => (
-        <li>
+        <li key={place.id}>
           <Card
             as={Link}
             shadow="none"

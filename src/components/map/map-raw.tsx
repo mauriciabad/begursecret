@@ -23,19 +23,25 @@ const DEFAULT_CENTER = {
 
 export const mapContainerClassName = 'z-0 h-64 w-full'
 
+export type MapMarker = PlaceMarkerProps & {
+  zIndexOffset?: number
+} & {
+  placeId?: number
+  location: MapPoint
+  url?: string
+}
+
 export const MapRaw: FC<{
   center?: MapPoint
   className?: string
   zoom?: number
   fullControl?: boolean
-  markers?: (PlaceMarkerProps & {
-    location: MapPoint
-    url?: string
-  })[]
+  markers?: MapMarker[]
   classNames?: {
     controls?: string
   }
   defaultLayer?: LayerId
+  innerRef?: (instance: LeafletMap | null) => void
 }> = ({
   center = DEFAULT_CENTER,
   className,
@@ -44,6 +50,7 @@ export const MapRaw: FC<{
   zoom: initialZoom = 14,
   classNames = {},
   defaultLayer,
+  innerRef,
 }) => {
   const router = useRouter()
   const [map, setMap] = useState<LeafletMap | null>(null)
@@ -63,14 +70,25 @@ export const MapRaw: FC<{
       dragging={fullControl}
       keyboard={fullControl}
       className={cn(mapContainerClassName, className)}
-      ref={setMap}
+      ref={(value) => {
+        innerRef?.(value)
+        setMap(value)
+      }}
       attributionControl={false}
       zoomSnap={0.5}
     >
       {markers?.map(
-        ({ location, url: markerUrl, size, ...placeMarkerProps }) => (
+        ({
+          placeId,
+          location,
+          url: markerUrl,
+          size,
+          zIndexOffset,
+          ...placeMarkerProps
+        }) => (
           <Marker
-            key={`${location.lat}-${location.lng}`}
+            zIndexOffset={zIndexOffset}
+            key={`${location.lat}-${location.lng}-${placeId}`}
             position={location}
             icon={divIcon({
               html: renderToStaticMarkup(

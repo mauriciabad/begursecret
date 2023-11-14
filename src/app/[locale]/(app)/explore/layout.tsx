@@ -1,28 +1,41 @@
-import { Navbar, NavbarContent, NavbarItem } from '@nextui-org/navbar'
-import { useTranslations } from 'next-intl'
 import type { FC, PropsWithChildren } from 'react'
 import type { LocaleRouteParams } from '~/i18n'
+import { getTrpc } from '~/server/get-server-thing'
+import { ExploreTopbar } from './_components/explore-topbar'
+import { MainMap } from './_components/main-map'
+import { MapDrawer } from './_components/map-drawer'
 
 type ExploreLayoutProps = PropsWithChildren<LocaleRouteParams>
 
-const ExploreLayout: FC<ExploreLayoutProps> = ({ children }) => {
-  const t = useTranslations('explore')
+const ExploreLayout: FC<ExploreLayoutProps> = async ({ children }) => {
+  const trpc = await getTrpc()
+
+  const places = await trpc.places.listForMap()
 
   return (
     <>
-      <Navbar
-        isBlurred={false}
-        isBordered
-        classNames={{ wrapper: 'max-w-2xl' }}
-      >
-        <NavbarContent justify="start">
-          <NavbarItem>
-            <h1 className="font-title">{t('heading')}</h1>
-          </NavbarItem>
-        </NavbarContent>
-      </Navbar>
+      <ExploreTopbar />
 
-      <main className="relative flex grow flex-col">{children}</main>
+      <main className="relative flex grow flex-col">
+        <MainMap
+          markers={places.map((place) => ({
+            placeId: place.id,
+            location: place.location,
+            icon: place.mainCategory.icon,
+            color: place.mainCategory.color,
+            url: `/explore/places/${place.id}`,
+          }))}
+        >
+          <MapDrawer
+            classNames={{
+              wrapper: 'rounded-t-lg',
+              contents: 'pb-8',
+            }}
+          >
+            {children}
+          </MapDrawer>
+        </MainMap>
+      </main>
     </>
   )
 }
