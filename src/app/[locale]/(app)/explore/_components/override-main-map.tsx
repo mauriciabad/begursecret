@@ -1,6 +1,6 @@
 'use client'
 
-import { FC,useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { MapPoint } from '~/helpers/spatial-data'
 import { useMainMap } from './main-map'
 
@@ -24,7 +24,7 @@ export const OverrideMainMap: FC<OverrideMainMapProps> = ({
       map.setView(center, zoom)
     } else {
       if (center) {
-        map.setView(center, zoom)
+        map.setView(center)
       }
       if (zoom) {
         map.setZoom(zoom)
