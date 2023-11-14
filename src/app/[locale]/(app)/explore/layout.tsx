@@ -1,6 +1,5 @@
 import type { FC, PropsWithChildren } from 'react'
 import type { LocaleRouteParams } from '~/i18n'
-import { onlyTranslatableLocales } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
 import { ExploreTopbar } from './_components/explore-topbar'
 import { MainMap } from './_components/main-map'
@@ -11,9 +10,7 @@ type ExploreLayoutProps = PropsWithChildren<LocaleRouteParams>
 const ExploreLayout: FC<ExploreLayoutProps> = async ({ children }) => {
   const trpc = await getTrpc()
 
-  const places = await trpc.places.list({
-    locale: onlyTranslatableLocales('ca'),
-  })
+  const places = await trpc.places.listForMap()
 
   return (
     <>
