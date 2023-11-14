@@ -38,7 +38,7 @@ export default function Error({
               {error.digest}
             </p>
 
-            {env.NODE_ENV === 'development' && (
+            {process.env.NODE_ENV === 'development' && (
               <>
                 <p className="mb-2 text-lg font-light text-stone-500">
                   {t('error-message')}
