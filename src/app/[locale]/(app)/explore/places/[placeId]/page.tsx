@@ -40,7 +40,11 @@ const PlacePage: FC<{
 
   return (
     <>
-      <OverrideMainMap center={place.location} zoom={18} />
+      <OverrideMainMap
+        center={place.location}
+        zoom={18}
+        veryEmphasizedPlaces={new Set([placeId])}
+      />
       <PlaceDetails placeFullInfo={place} visitMissions={visitMissions} />
     </>
   )
