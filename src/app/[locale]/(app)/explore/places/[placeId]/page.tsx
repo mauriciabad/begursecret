@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import { getTranslator } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import type { FC } from 'react'
-import { OverrideMainMap } from '~/components/map/override-main-map'
 import { LocaleParams, onlyTranslatableLocales } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
+import { OverrideMainMap } from '../../_components/override-main-map'
 import { PlaceDetails } from '../../_components/place-details'
 
 type Params = LocaleParams & { placeId: string }

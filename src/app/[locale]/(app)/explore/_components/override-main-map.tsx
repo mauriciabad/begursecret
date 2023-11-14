@@ -1,8 +1,8 @@
 'use client'
 
 import { FC } from 'react'
-import { useMainMap } from '~/app/[locale]/(app)/explore/_components/main-map'
 import { MapPoint } from '~/helpers/spatial-data'
+import { useMainMap } from './main-map'
 
 export const OverrideMainMap: FC<{
   center?: MapPoint
