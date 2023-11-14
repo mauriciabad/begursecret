@@ -1,6 +1,6 @@
 'use client'
 
-import { FC,useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { MapPoint } from '~/helpers/spatial-data'
 import { useMainMap } from './main-map'
 
