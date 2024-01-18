@@ -12,6 +12,8 @@ export type PlaceMarkerProps = {
   className?: string
   size?: 'normal' | 'tiny'
   animated?: boolean
+  name?: string
+  showName?: boolean
 }
 
 export const PlaceMarker: FC<PlaceMarkerProps> = ({
@@ -20,6 +22,8 @@ export const PlaceMarker: FC<PlaceMarkerProps> = ({
   color,
   size = 'normal',
   animated,
+  name,
+  showName,
 }) => {
   const colorClassName = {
     'border-gray-800 bg-gray-700 before:bg-gray-700': color === 'gray',
@@ -73,6 +77,20 @@ export const PlaceMarker: FC<PlaceMarkerProps> = ({
             colorClassName
           )}
         >
+          {showName && name && (
+            <div className="absolute bottom-full left-1/2 -translate-x-1/2 -translate-y-2 text-nowrap rounded-xl bg-white px-4 py-1 text-xs text-black shadow-md">
+              {name}
+              <svg
+                className="absolute left-0 top-full h-2 w-full text-white"
+                viewBox="0 0 255 255"
+              >
+                <polygon
+                  className="fill-current"
+                  points="0,0 127.5,127.5 255,0"
+                />
+              </svg>
+            </div>
+          )}
           <PlaceCategoryIcon
             icon={icon}
             className="text-white"

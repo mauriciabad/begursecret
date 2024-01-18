@@ -43,6 +43,7 @@ export const OverrideMainMap: FC<OverrideMainMapProps> = ({
           ...marker,
           size: isEmphasized ? 'normal' : 'tiny',
           zIndexOffset: isEmphasized ? 1000 : 0,
+          showName: !!isEmphasized,
         }
       })
     }
@@ -57,6 +58,7 @@ export const OverrideMainMap: FC<OverrideMainMapProps> = ({
             animated: true,
             zIndexOffset: 2000,
             size: 'normal',
+            showName: true,
           }),
         }
       })
