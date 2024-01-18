@@ -63,7 +63,9 @@ export const PlaceMarker: FC<PlaceMarkerProps> = ({
             colorClassName,
             'border-white'
           )}
-        />
+        >
+          {name && <MarkerTooltip name={name} showAlways={showName} />}
+        </div>
       ) : (
         <div
           className={cn(
@@ -77,27 +79,7 @@ export const PlaceMarker: FC<PlaceMarkerProps> = ({
             colorClassName
           )}
         >
-          {name && (
-            <div
-              className={cn(
-                'absolute bottom-full left-1/2 -translate-x-1/2 -translate-y-1',
-                'pointer-events-none rounded-full border border-stone-600 bg-white px-2 py-0.5 text-xs text-black shadow-md',
-                'text-nowrap',
-                { 'hidden group-hover:block': !showName }
-              )}
-            >
-              {name}
-              <svg
-                className="absolute left-0 top-full h-2 w-full text-white"
-                viewBox="0 0 255 255"
-              >
-                <polygon
-                  className="fill-current"
-                  points="0,0 127.5,127.5 255,0"
-                />
-              </svg>
-            </div>
-          )}
+          {name && <MarkerTooltip name={name} showAlways={showName} />}
           <PlaceCategoryIcon
             icon={icon}
             className="text-white"
@@ -107,5 +89,29 @@ export const PlaceMarker: FC<PlaceMarkerProps> = ({
         </div>
       )}
     </>
+  )
+}
+
+const MarkerTooltip: FC<{
+  name: string
+  showAlways?: boolean
+}> = ({ name, showAlways = true }) => {
+  return (
+    <div
+      className={cn(
+        'absolute bottom-full left-1/2 -translate-x-1/2 -translate-y-1',
+        'pointer-events-none rounded-full border border-stone-600 bg-white px-2 py-0.5 text-xs text-black shadow-md',
+        'text-nowrap',
+        { 'hidden group-hover:block': !showAlways }
+      )}
+    >
+      {name}
+      <svg
+        className="absolute left-0 top-full h-2 w-full text-white"
+        viewBox="0 0 255 255"
+      >
+        <polygon className="fill-current" points="0,0 127.5,127.5 255,0" />
+      </svg>
+    </div>
   )
 }
