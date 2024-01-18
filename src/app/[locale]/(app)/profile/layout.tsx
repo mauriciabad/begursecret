@@ -2,7 +2,7 @@ import { Navbar, NavbarContent, NavbarItem } from '@nextui-org/navbar'
 import { useTranslations } from 'next-intl'
 import type { FC, PropsWithChildren } from 'react'
 import type { LocaleRouteParams } from '~/i18n'
-import { MoreOptionsModal } from './_components/more-options-modal'
+import { MoreOptions } from './_components/more-options'
 
 type ProfileLayoutProps = PropsWithChildren<LocaleRouteParams>
 
@@ -24,7 +24,7 @@ const ProfileLayout: FC<ProfileLayoutProps> = ({ children }) => {
         </NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem>
-            <MoreOptionsModal />
+            <MoreOptions />
           </NavbarItem>
         </NavbarContent>
       </Navbar>
