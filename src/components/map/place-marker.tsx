@@ -58,7 +58,7 @@ export const PlaceMarker: FC<PlaceMarkerProps> = ({
                 animated,
             },
             className,
-            'relative box-border h-3 w-3 rounded-full border shadow',
+            'group relative box-border h-3 w-3 rounded-full border shadow',
             'border-gray-800 bg-gray-700',
             colorClassName,
             'border-white'
@@ -72,13 +72,20 @@ export const PlaceMarker: FC<PlaceMarkerProps> = ({
                 animated,
             },
             className,
-            'relative inline-block rounded-full border p-[3px] shadow',
+            'group relative inline-block rounded-full border p-[3px] shadow',
             'border-gray-800 bg-gray-700',
             colorClassName
           )}
         >
-          {showName && name && (
-            <div className="absolute bottom-full left-1/2 -translate-x-1/2 -translate-y-2 text-nowrap rounded-xl bg-white px-4 py-1 text-xs text-black shadow-md">
+          {name && (
+            <div
+              className={cn(
+                'absolute bottom-full left-1/2 -translate-x-1/2 -translate-y-1',
+                'pointer-events-none rounded-full border border-stone-600 bg-white px-2 py-0.5 text-xs text-black shadow-md',
+                'text-nowrap',
+                { 'hidden group-hover:block': !showName }
+              )}
+            >
               {name}
               <svg
                 className="absolute left-0 top-full h-2 w-full text-white"
