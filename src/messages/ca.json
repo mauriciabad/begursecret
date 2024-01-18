@@ -9,6 +9,19 @@
     "subtitle": "Descobreix llocs increïbles d'és teu poble.",
     "launch-app": "Obrir App"
   },
+  "admin": {
+    "meta": {
+      "title": "Admin",
+      "description": "Àrea privada d'administració"
+    },
+    "heading": "Admin",
+    "subtitle": "Àrea privada d'administració",
+    "more-options": {
+      "title": "Més opcions",
+      "go-to-app": "Anar a l'app",
+      "logout": "Tanca sessió"
+    }
+  },
   "signIn": {
     "meta": {
       "title": "Inicia sessió",

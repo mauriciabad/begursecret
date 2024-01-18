@@ -9,6 +9,19 @@
     "subtitle": "Discover incredible places in this beautiful town.",
     "launch-app": "Launch App"
   },
+  "admin": {
+    "meta": {
+      "title": "Admin",
+      "description": "Private admin area"
+    },
+    "heading": "Admin",
+    "subtitle": "Private admin area",
+    "more-options": {
+      "title": "More options",
+      "go-to-app": "Go to app",
+      "logout": "Logout"
+    }
+  },
   "signIn": {
     "meta": {
       "title": "Sign In",
