@@ -22,6 +22,10 @@
       "logout": "Logout"
     }
   },
+  "admin-login": {
+    "heading": "Admin",
+    "subtitle": "You need to be logged in, and have admin permissions, to access this page."
+  },
   "signIn": {
     "meta": {
       "title": "Sign In",

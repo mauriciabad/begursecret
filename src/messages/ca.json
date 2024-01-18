@@ -22,6 +22,10 @@
       "logout": "Tanca sessió"
     }
   },
+  "admin-login": {
+    "heading": "Admin",
+    "subtitle": "Has d'iniciar sessió, i tenir permisos d'administrador, per accedir a aquesta pàgina."
+  },
   "signIn": {
     "meta": {
       "title": "Inicia sessió",
