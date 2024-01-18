@@ -87,7 +87,7 @@ export const MapRaw: FC<{
           ...placeMarkerProps
         }) => (
           <Marker
-            zIndexOffset={zIndexOffset}
+            zIndexOffset={zIndexOffset ?? 0}
             key={`${location.lat}-${location.lng}-${placeId}`}
             position={location}
             icon={divIcon({

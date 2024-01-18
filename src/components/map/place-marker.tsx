@@ -12,6 +12,8 @@ export type PlaceMarkerProps = {
   className?: string
   size?: 'normal' | 'tiny'
   animated?: boolean
+  name?: string
+  showName?: boolean
 }
 
 export const PlaceMarker: FC<PlaceMarkerProps> = ({
@@ -20,6 +22,8 @@ export const PlaceMarker: FC<PlaceMarkerProps> = ({
   color,
   size = 'normal',
   animated,
+  name,
+  showName,
 }) => {
   const colorClassName = {
     'border-gray-800 bg-gray-700 before:bg-gray-700': color === 'gray',
@@ -54,12 +58,19 @@ export const PlaceMarker: FC<PlaceMarkerProps> = ({
                 animated,
             },
             className,
-            'relative box-border h-3 w-3 rounded-full border shadow',
+            'group relative box-border h-3 w-3 rounded-full border shadow',
             'border-gray-800 bg-gray-700',
             colorClassName,
             'border-white'
           )}
-        />
+        >
+          {name && (
+            <MarkerTooltip
+              name={name}
+              className={cn({ 'hidden group-hover:block': !showName })}
+            />
+          )}
+        </div>
       ) : (
         <div
           className={cn(
@@ -68,11 +79,17 @@ export const PlaceMarker: FC<PlaceMarkerProps> = ({
                 animated,
             },
             className,
-            'relative inline-block rounded-full border p-[3px] shadow',
+            'group relative inline-block rounded-full border p-[3px] shadow',
             'border-gray-800 bg-gray-700',
             colorClassName
           )}
         >
+          {name && (
+            <MarkerTooltip
+              name={name}
+              className={cn({ 'hidden group-hover:block': !showName })}
+            />
+          )}
           <PlaceCategoryIcon
             icon={icon}
             className="text-white"
@@ -82,5 +99,29 @@ export const PlaceMarker: FC<PlaceMarkerProps> = ({
         </div>
       )}
     </>
+  )
+}
+
+const MarkerTooltip: FC<{
+  name: string
+  className?: string
+}> = ({ name, className }) => {
+  return (
+    <div
+      className={cn(
+        'absolute bottom-full left-1/2 -translate-x-1/2 -translate-y-1',
+        'pointer-events-none rounded-full border border-black/50 bg-white px-2 py-0.5 shadow-md',
+        'whitespace-nowrap  bg-white/90 text-xs text-black',
+        className
+      )}
+    >
+      {name}
+      <svg
+        className="absolute left-0 top-full h-2 w-full"
+        viewBox="0 0 255 255"
+      >
+        <polygon className="fill-white/90" points="0,0 127.5,127.5 255,0" />
+      </svg>
+    </div>
   )
 }

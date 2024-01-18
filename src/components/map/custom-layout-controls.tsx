@@ -162,7 +162,7 @@ const LayerButton: FC<{
         radius="none"
       />
       <CardBody className="absolute inset-0 top-auto z-10 p-1">
-        <span className="text-center font-title text-xs font-bold leading-none text-black opacity-70 text-border-white">
+        <span className="text-center font-title text-xs font-bold leading-none text-black opacity-70 txt-stroke-white">
           {layer.attribution.name}
         </span>
       </CardBody>

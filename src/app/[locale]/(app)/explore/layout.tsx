@@ -24,6 +24,7 @@ const ExploreLayout: FC<ExploreLayoutProps> = async ({ children }) => {
             icon: place.mainCategory.icon,
             color: place.mainCategory.color,
             url: `/explore/places/${place.id}`,
+            name: place.name,
           }))}
         >
           <MapDrawer

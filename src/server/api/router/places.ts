@@ -59,6 +59,7 @@ const getAllPlacesForMap = db.query.places
   .findMany({
     columns: {
       id: true,
+      name: true,
     },
     extras: {
       location: selectPoint('location', places.location),
