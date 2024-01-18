@@ -1,8 +1,8 @@
 import { Navbar, NavbarContent, NavbarItem } from '@nextui-org/navbar'
 import { useTranslations } from 'next-intl'
 import type { FC, PropsWithChildren } from 'react'
-import { MoreOptions } from './_components/more-options'
 import type { LocaleRouteParams } from '~/i18n'
+import { MoreOptions } from './_components/more-options'
 
 type ProfileLayoutProps = PropsWithChildren<LocaleRouteParams>
 
