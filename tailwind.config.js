@@ -74,17 +74,35 @@ const config = {
   plugins: [
     nextui(),
     typography,
-    plugin(function ({ addUtilities }) {
-      addUtilities({
-        '.text-border-white': {
-          'text-shadow': `
-             1px  1px 0 white,
-            -1px -1px 0 white,
-             1px -1px 0 white,
-            -1px  1px 0 white;
+    plugin(function ({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          'txt-stroke': (value) => ({
+            textShadow: `
+                0         0.1em    0 ${value},
+               -0.0707em  0.0707em 0 ${value},
+                0.0707em  0.0707em 0 ${value},
+                0.1em     0        0 ${value},
+               -0.1em     0        0 ${value},
+               -0.0382em  0.0924em 0 ${value},
+                0.0382em  0.0924em 0 ${value},
+               -0.0923em  0.0383em 0 ${value},
+                0.0923em  0.0383em 0 ${value},
+                0         -0.1em    0 ${value},
+               -0.0707em  -0.0707em 0 ${value},
+                0.0707em  -0.0707em 0 ${value},
+               -0.0382em  -0.0924em 0 ${value},
+                0.0382em  -0.0924em 0 ${value},
+               -0.0923em  -0.0383em 0 ${value},
+                0.0923em  -0.0383em 0 ${value};
           `,
+          }),
         },
-      })
+        {
+          values: theme('colors'),
+          type: 'color',
+        }
+      )
     }),
   ],
 }
