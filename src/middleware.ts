@@ -1,13 +1,27 @@
-import type { NextRequest } from 'next/server'
+import 'server-only'
 
-import { authI18nMiddleware } from './server/auth-i18n-middleware'
+import { NextRequestWithAuth } from 'next-auth/middleware'
+import { NextFetchEvent } from 'next/server'
+import { authI18nMiddleware } from './server/helpers/auth/auth-i18n-middleware'
+import { adminAuthMiddleware } from './server/helpers/auth/auth-middleware'
 import { i18nMiddleware } from './server/i18n-middleware'
 
-export const middleware = (request: NextRequest) => {
+const AdminPagePathPattern = /^\/[^/\s]+\/admin(\/.*)?$/
+
+export const middleware = (
+  request: NextRequestWithAuth,
+  event: NextFetchEvent
+) => {
+  if (AdminPagePathPattern.test(request.nextUrl.pathname)) {
+    return adminAuthMiddleware(request, event, (request) => {
+      return i18nMiddleware(request)
+    })
+  }
+
   const authI18nResponse = authI18nMiddleware(request)
   if (authI18nResponse) return authI18nResponse
-  const response = i18nMiddleware(request)
-  return response
+
+  return i18nMiddleware(request)
 }
 
 export const config = {
