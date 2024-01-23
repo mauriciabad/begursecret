@@ -100,7 +100,6 @@ export const placesToPlaceCategories = mysqlTable(
   (table) => {
     return {
       pk: primaryKey({
-        name: 'categoryId_placeId',
         columns: [table.categoryId, table.placeId],
       }),
     }

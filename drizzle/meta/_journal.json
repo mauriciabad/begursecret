@@ -99,6 +99,13 @@
       "when": 1706044813942,
       "tag": "0013_naive_tempest",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "5",
+      "when": 1706045054210,
+      "tag": "0014_regular_warstar",
+      "breakpoints": true
     }
   ]
 }
