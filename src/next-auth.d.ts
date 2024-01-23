@@ -1,13 +1,12 @@
-import type { DefaultSession } from 'next-auth'
+import 'next-auth'
+import { UserRoles } from './db/constants/users'
 
 declare module 'next-auth' {
+  interface User {
+    role: UserRoles
+  }
   interface Session {
-    user: {
-      id: string
-      email: string
-      image: Required<DefaultSession>['user']['image']
-      name: Required<DefaultSession>['user']['name']
-    }
+    user: User
   }
 }
 

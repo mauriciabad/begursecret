@@ -8,16 +8,9 @@ import GoogleProvider from 'next-auth/providers/google'
 import { env } from '~/env.mjs'
 import { loginSchema } from '~/schemas/auth'
 import { updateSessionSchema } from '~/schemas/profile'
-import { UserRoles } from './db/constants/users'
 import { db } from './db/db'
 import { users } from './db/schema'
 import { CustomAdapter } from './helpers/auth/custom-adapter'
-
-declare module 'next-auth' {
-  interface User {
-    role: UserRoles
-  }
-}
 
 export const authOptions: AuthOptions = {
   adapter: CustomAdapter,
