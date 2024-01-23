@@ -166,7 +166,8 @@
       "logout": "Tanca sessió",
       "login": "Iniciar sessió",
       "support": "Suport",
-      "feedback": "Suggerencies i errors"
+      "feedback": "Suggerencies i errors",
+      "go-to-admin": "Anar a l'àrea d'administració"
     },
     "completeProfile": {
       "meta": {

@@ -2,6 +2,7 @@
 
 import {
   IconAdjustmentsHorizontal,
+  IconBolt,
   IconEdit,
   IconHelpCircle,
   IconLogout,
@@ -45,6 +46,14 @@ export const MoreOptions: FC = () => {
         text={t('app-settings')}
         icon={<IconSettings />}
       />
+      {session?.user.role === 'admin' && (
+        <MoreOptionsModalButton
+          url="/admin"
+          text={t('go-to-admin')}
+          icon={<IconBolt />}
+          isPrivate
+        />
+      )}
       {session && (
         <MoreOptionsModalButton
           onClick={() => signOut({ callbackUrl: '/' })}

@@ -169,7 +169,8 @@
       "logout": "Logout",
       "login": "Login",
       "support": "Support",
-      "feedback": "Feedback and errors"
+      "feedback": "Feedback and errors",
+      "go-to-admin": "Go to admin"
     },
     "completeProfile": {
       "meta": {
