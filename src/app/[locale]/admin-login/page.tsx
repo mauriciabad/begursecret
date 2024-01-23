@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl'
 import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
 import type { LocaleRouteParams } from '~/i18n'
-import { ProfileLogin } from './(app)/profile/login/_components/profile-login'
+import { ProfileLogin } from '../(app)/profile/login/_components/profile-login'
 
 export async function generateMetadata({
   params,
