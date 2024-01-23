@@ -5,12 +5,14 @@ import { ContinueWithEmail } from './continue-with-email'
 import { ContinueWithProvider } from './continue-with-provider'
 import { RegisterBanner } from './register-banner'
 
-export const ProfileLogin: FC = () => {
+export const ProfileLogin: FC<{ registerDisabled?: boolean }> = ({
+  registerDisabled,
+}) => {
   const t = useTranslations('auth')
 
   return (
     <>
-      <RegisterBanner />
+      {!registerDisabled && <RegisterBanner />}
 
       <div className="mx-auto mt-10  max-w-sm">
         <h2 className="mb-2 text-center font-title text-2xl font-semibold uppercase text-stone-800">
@@ -27,12 +29,21 @@ export const ProfileLogin: FC = () => {
         </div>
         <ContinueWithProvider />
 
-        <h2 className="mb-2 mt-10 text-center font-title text-2xl font-semibold uppercase text-stone-800">
-          {t('register')}
-        </h2>
-        <LinkButton href="/register" variant="solid" color="primary" fullWidth>
-          {t('register')}
-        </LinkButton>
+        {!registerDisabled && (
+          <>
+            <h2 className="mb-2 mt-10 text-center font-title text-2xl font-semibold uppercase text-stone-800">
+              {t('register')}
+            </h2>
+            <LinkButton
+              href="/register"
+              variant="solid"
+              color="primary"
+              fullWidth
+            >
+              {t('register')}
+            </LinkButton>
+          </>
+        )}
       </div>
     </>
   )

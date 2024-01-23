@@ -1,10 +1,12 @@
 import { IconBarrierBlockOff } from '@tabler/icons-react'
 import type { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
-import { getTranslator } from 'next-intl/server'
+import { getTranslator, redirect } from 'next-intl/server'
 import type { FC } from 'react'
 import type { LocaleRouteParams } from '~/i18n'
+import { getSession } from '~/server/get-server-thing'
 import { ProfileLogin } from '../(app)/profile/login/_components/profile-login'
+import { LogoutButton } from './__components/logout-button'
 
 export async function generateMetadata({
   params,
@@ -19,7 +21,19 @@ export async function generateMetadata({
   }
 }
 
-const AdminLoginPage: FC<LocaleRouteParams> = () => {
+const AdminLoginPage: FC<LocaleRouteParams> = async () => {
+  const session = await getSession()
+
+  if (session?.user.role === 'admin') {
+    redirect('/admin')
+  }
+
+  return <NestedAdminLoginPage isLoggedInAsNotAdmin={!!session} />
+}
+
+const NestedAdminLoginPage: FC<{ isLoggedInAsNotAdmin: boolean }> = ({
+  isLoggedInAsNotAdmin,
+}) => {
   const t = useTranslations('admin-login')
 
   return (
@@ -36,8 +50,11 @@ const AdminLoginPage: FC<LocaleRouteParams> = () => {
         </h1>
 
         <p className="mt-4 text-xl">{t('subtitle')}</p>
-
-        <ProfileLogin />
+        {isLoggedInAsNotAdmin ? (
+          <LogoutButton />
+        ) : (
+          <ProfileLogin registerDisabled={true} />
+        )}
       </main>
     </>
   )

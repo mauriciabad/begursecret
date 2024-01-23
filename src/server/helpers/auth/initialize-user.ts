@@ -1,3 +1,5 @@
+import 'server-only'
+
 import bcrypt from 'bcryptjs'
 import { eq } from 'drizzle-orm'
 import { v4 as uuidv4 } from 'uuid'

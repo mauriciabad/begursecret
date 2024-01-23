@@ -1,5 +1,3 @@
-import 'server-only'
-
 import { NextRequestWithAuth } from 'next-auth/middleware'
 import { NextFetchEvent } from 'next/server'
 import { authI18nMiddleware } from './server/helpers/auth/auth-i18n-middleware'

@@ -1,5 +1,3 @@
-import 'server-only'
-
 import { NextResponse, type NextRequest } from 'next/server'
 import { defaultLocale, getLocale } from '~/i18n'
 
