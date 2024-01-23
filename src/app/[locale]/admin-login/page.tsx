@@ -5,7 +5,7 @@ import { getTranslator, redirect } from 'next-intl/server'
 import type { FC } from 'react'
 import type { LocaleRouteParams } from '~/i18n'
 import { getSession } from '~/server/get-server-thing'
-import { ProfileLogin } from '../(app)/profile/login/_components/profile-login'
+import { LoginForm } from '../../../components/login-form/login-form'
 import { LogoutButton } from './__components/logout-button'
 
 export async function generateMetadata({
@@ -56,7 +56,7 @@ const NestedAdminLoginPage: FC<{ isLoggedInAsNotAdmin: boolean }> = ({
           </>
         ) : (
           <div className="mb-24">
-            <ProfileLogin
+            <LoginForm
               registerDisabled={true}
               title={t('login-title')}
               icon={IconBolt}

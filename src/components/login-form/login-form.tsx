@@ -6,7 +6,7 @@ import { ContinueWithEmail } from './continue-with-email'
 import { ContinueWithProvider } from './continue-with-provider'
 import { RegisterBanner } from './register-banner'
 
-export const ProfileLogin: FC<{
+export const LoginForm: FC<{
   registerDisabled?: boolean
   title?: string
   icon?: Icon
