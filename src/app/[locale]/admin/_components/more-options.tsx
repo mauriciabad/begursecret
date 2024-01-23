@@ -17,7 +17,7 @@ export const MoreOptions: FC = () => {
   return (
     <MoreOptionsModal title={t('title')}>
       <MoreOptionsModalButton
-        onClick={() => signOut({ callbackUrl: '/' })}
+        onClick={() => signOut({ callbackUrl: '/admin-login' })}
         text={t('logout')}
         icon={<IconLogout />}
       />

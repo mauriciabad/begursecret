@@ -1,4 +1,4 @@
-import { IconBarrierBlockOff } from '@tabler/icons-react'
+import { IconBarrierBlock, IconBolt } from '@tabler/icons-react'
 import type { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
 import { getTranslator, redirect } from 'next-intl/server'
@@ -39,21 +39,29 @@ const NestedAdminLoginPage: FC<{ isLoggedInAsNotAdmin: boolean }> = ({
   return (
     <>
       <main className="mx-auto flex min-h-screen max-w-2xl flex-col items-center justify-center p-4 text-center text-stone-800">
-        <IconBarrierBlockOff
-          className="mx-auto mb-4 text-brand-600"
-          stroke={1.25}
-          size={96}
-        />
-
-        <h1 className="font-title text-4xl font-bold uppercase text-stone-800">
-          {t('heading')}
-        </h1>
-
-        <p className="mt-4 text-xl">{t('subtitle')}</p>
         {isLoggedInAsNotAdmin ? (
-          <LogoutButton />
+          <>
+            <IconBarrierBlock
+              className="mx-auto mb-4 text-brand-600"
+              stroke={1.25}
+              size={96}
+            />
+
+            <h1 className="font-title text-4xl font-bold uppercase text-stone-800">
+              {t('heading')}
+            </h1>
+
+            <p className="mt-4 text-xl">{t('subtitle')}</p>
+            <LogoutButton />
+          </>
         ) : (
-          <ProfileLogin registerDisabled={true} />
+          <div className="mb-24">
+            <ProfileLogin
+              registerDisabled={true}
+              title={t('login-title')}
+              icon={IconBolt}
+            />
+          </div>
         )}
       </main>
     </>

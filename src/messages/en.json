@@ -23,8 +23,9 @@
     }
   },
   "admin-login": {
-    "heading": "Admin",
-    "subtitle": "You need to be logged in, and have admin permissions, to access this page."
+    "heading": "Access denied",
+    "subtitle": "You don't have permission to continue",
+    "login-title": "Admin login"
   },
   "signIn": {
     "meta": {

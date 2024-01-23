@@ -23,8 +23,9 @@
     }
   },
   "admin-login": {
-    "heading": "Admin",
-    "subtitle": "Has d'iniciar sessió, i tenir permisos d'administrador, per accedir a aquesta pàgina."
+    "heading": "Accés denegat",
+    "subtitle": "No tens permisos per continuar",
+    "login-title": "Iniciar sessió com administrador"
   },
   "signIn": {
     "meta": {
