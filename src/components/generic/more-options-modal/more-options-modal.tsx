@@ -9,7 +9,7 @@ import {
   ModalHeader,
   useDisclosure,
 } from '@nextui-org/modal'
-import { IconExternalLink, IconMenu2 } from '@tabler/icons-react'
+import { IconExternalLink, IconLock, IconMenu2 } from '@tabler/icons-react'
 import Link from 'next-intl/link'
 import { FC, PropsWithChildren, ReactNode } from 'react'
 import { LanguageSwitcher } from '~/components/inputs/language-switcher'
@@ -64,7 +64,8 @@ export const MoreOptionsModalButton: FC<{
   text: string
   icon: ReactNode
   isExternal?: boolean
-}> = ({ url, icon, text, isExternal, onClick }) => {
+  isPrivate?: boolean
+}> = ({ url, icon, text, isExternal, onClick, isPrivate }) => {
   if (url && onClick) throw new Error('You can only use one of url or onClick')
 
   return (
@@ -76,8 +77,12 @@ export const MoreOptionsModalButton: FC<{
       fullWidth
       startContent={icon}
       endContent={
-        isExternal && (
+        isExternal ? (
           <IconExternalLink className="text-stone-400 transition-colors group-hover:text-stone-800" />
+        ) : (
+          isPrivate && (
+            <IconLock className="text-stone-400 transition-colors group-hover:text-stone-800" />
+          )
         )
       }
     >
