@@ -89,22 +89,8 @@
     {
       "idx": 12,
       "version": "5",
-      "when": 1706031770924,
-      "tag": "0012_late_terror",
-      "breakpoints": true
-    },
-    {
-      "idx": 13,
-      "version": "5",
-      "when": 1706044813942,
-      "tag": "0013_naive_tempest",
-      "breakpoints": true
-    },
-    {
-      "idx": 14,
-      "version": "5",
-      "when": 1706045054210,
-      "tag": "0014_regular_warstar",
+      "when": 1706045234760,
+      "tag": "0012_sad_wilson_fisk",
       "breakpoints": true
     }
   ]

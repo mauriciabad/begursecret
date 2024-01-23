@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "dbc853de-a21a-46b3-a0f0-8a1ac1a49e5e",
+  "id": "57b906be-0049-4125-8cfa-aacf3e136db8",
   "prevId": "fac06220-5550-41f5-a96a-1a2d15e2215d",
   "tables": {
     "account": {
@@ -624,11 +624,11 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {
-        "placeToPlaceCategory_placeId_categoryId_pk": {
-          "name": "placeToPlaceCategory_placeId_categoryId_pk",
+        "placeToPlaceCategory_categoryId_placeId_pk": {
+          "name": "placeToPlaceCategory_categoryId_placeId_pk",
           "columns": [
-            "placeId",
-            "categoryId"
+            "categoryId",
+            "placeId"
           ]
         }
       },
