@@ -23,10 +23,12 @@ export const LoginForm: FC<{
         {Icon && (
           <Icon className="mx-auto mb-4 text-brand-600" stroke={1} size={72} />
         )}
-        <h2 className="mb-2 text-center font-title text-2xl font-semibold uppercase text-stone-800">
+        <h2 className="text-center font-title text-2xl font-semibold uppercase text-stone-800">
           {title ? title : t('login')}
         </h2>
+
         <ContinueWithEmail />
+
         <div className="mb-2 mt-4 flex items-center gap-2">
           <div className="flex-1 border-t border-stone-300" aria-hidden />
           <h3 className=" inline-block font-title text-sm font-medium uppercase text-stone-600">
@@ -34,7 +36,9 @@ export const LoginForm: FC<{
           </h3>
           <div className="flex-1 border-t border-stone-300" aria-hidden />
         </div>
+
         <ContinueWithProvider />
+
         {!registerDisabled && (
           <>
             <h2 className="mb-2 mt-10 text-center font-title text-2xl font-semibold uppercase text-stone-800">

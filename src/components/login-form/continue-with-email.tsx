@@ -75,9 +75,9 @@ export const ContinueWithEmail: FC<{
         isInvalid={error === 'userDoesNotExist'}
         errorMessage={error === 'userDoesNotExist' && t(`errors.${error}`)}
       />
-      <div className="flex items-start gap-4">
+      <div className="mt-2 flex items-start gap-4">
         <Input
-          className="mt-2 flex-grow"
+          className="flex-grow"
           label={t('inputs.password')}
           variant="bordered"
           labelPlacement="outside"
@@ -104,12 +104,7 @@ export const ContinueWithEmail: FC<{
           errorMessage={error === 'incorrectPassword' && t(`errors.${error}`)}
         />
 
-        <Button
-          className="mt-[34px]"
-          variant="solid"
-          color="primary"
-          type="submit"
-        >
+        <Button className="mt-6" variant="solid" color="primary" type="submit">
           {t('send')}
         </Button>
       </div>
