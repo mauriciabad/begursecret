@@ -1,6 +1,5 @@
 import 'server-only'
 
-import { DrizzleAdapter } from '@auth/drizzle-adapter'
 import bcrypt from 'bcryptjs'
 import { eq } from 'drizzle-orm'
 import { type AuthOptions } from 'next-auth'
@@ -11,16 +10,10 @@ import { loginSchema } from '~/schemas/auth'
 import { updateSessionSchema } from '~/schemas/profile'
 import { db } from './db/db'
 import { users } from './db/schema'
-import { initializeUserInDatabase } from './helpers/auth/initialize-user'
+import { CustomAdapter } from './helpers/auth/custom-adapter'
 
 export const authOptions: AuthOptions = {
-  adapter: {
-    ...DrizzleAdapter(db),
-
-    async createUser(data) {
-      return await initializeUserInDatabase(data)
-    },
-  },
+  adapter: CustomAdapter,
   providers: [
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
@@ -54,6 +47,7 @@ export const authOptions: AuthOptions = {
           name: user.name,
           emailVerified: user.emailVerified,
           image: user.image,
+          role: user.role,
         }
       },
     }),
@@ -72,7 +66,7 @@ export const authOptions: AuthOptions = {
         return { ...token, ...validatedSession }
       }
       if (trigger === 'signIn' || trigger === 'signUp') {
-        return { ...token, id: user.id }
+        return { ...token, id: user.id, role: user.role }
       }
       return token
     },
@@ -80,6 +74,7 @@ export const authOptions: AuthOptions = {
       session.user = {
         ...session.user,
         id: token.id,
+        role: token.role,
       }
       return session
     },

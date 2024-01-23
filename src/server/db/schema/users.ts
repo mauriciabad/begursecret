@@ -1,5 +1,6 @@
 import { relations } from 'drizzle-orm'
 import { int, mysqlTable, timestamp, varchar } from 'drizzle-orm/mysql-core'
+import { userRoles } from '../constants/users'
 import { userIdColumnType } from '../utilities'
 import { placeLists } from './placeLists'
 import { verifications } from './verifications'
@@ -14,6 +15,12 @@ export const users = mysqlTable('user', {
     fsp: 3,
   }),
   image: varchar('image', { length: 255 }),
+  role: varchar('role', {
+    length: 255,
+    enum: userRoles,
+  })
+    .default('user')
+    .notNull(),
 
   visitedPlaceListId: int('visitedPlaceListId').notNull(),
 })

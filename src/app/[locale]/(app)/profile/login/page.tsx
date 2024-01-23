@@ -3,7 +3,7 @@ import { getTranslator, redirect } from 'next-intl/server'
 import type { FC } from 'react'
 import type { LocaleRouteParams } from '~/i18n'
 import { getSession } from '~/server/get-server-thing'
-import { ProfileLogin } from './_components/profile-login'
+import { LoginForm } from '../../../../../components/login-form/login-form'
 
 export async function generateMetadata({
   params,
@@ -24,7 +24,7 @@ const LoginPage: FC<LocaleRouteParams> = async () => {
 
   return (
     <main className="mx-auto w-full max-w-2xl py-3">
-      <ProfileLogin />
+      <LoginForm />
     </main>
   )
 }

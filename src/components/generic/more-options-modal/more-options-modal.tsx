@@ -66,6 +66,7 @@ export const MoreOptionsModalButton: FC<{
   isExternal?: boolean
 }> = ({ url, icon, text, isExternal, onClick }) => {
   if (url && onClick) throw new Error('You can only use one of url or onClick')
+
   return (
     <Button
       as={url ? Link : undefined}

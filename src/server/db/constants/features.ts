@@ -9,7 +9,7 @@ export const amountOfPeople = [
   'many',
   'crowded',
 ] as const
-export type AmountOfPeople = keyof typeof amountOfPeople
+export type AmountOfPeople = (typeof amountOfPeople)[number]
 
 // Don't reorder these values, they are used to generate the database enum.
 export const difficulty = [
@@ -19,10 +19,10 @@ export const difficulty = [
   'hard',
   'dangerous',
 ] as const
-export type Difficulty = keyof typeof difficulty
+export type Difficulty = (typeof difficulty)[number]
 
 // Don't reorder these values, they are used to generate the database enum.
 export const groundType = ['sand', 'pebbles', 'rocks', 'concrete'] as const
-export type GroundType = keyof typeof groundType
+export type GroundType = (typeof groundType)[number]
 
 export type Features = InferSelectModel<typeof features>

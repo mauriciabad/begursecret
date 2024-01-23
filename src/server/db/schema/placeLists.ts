@@ -26,7 +26,9 @@ export const placeListToPlace = mysqlTable(
   },
   (table) => {
     return {
-      pk: primaryKey(table.placeId, table.placeListId),
+      pk: primaryKey({
+        columns: [table.placeId, table.placeListId],
+      }),
     }
   }
 )
