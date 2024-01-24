@@ -80,12 +80,13 @@ type ArrayType = ValidType[]
 
 type IsAny<T> = unknown extends T & string ? true : false
 
-type SimpleType<T extends ValidType> = IsAny<T> extends true
-  ? any
-  : T extends UntouchedType
-  ? T
-  : T extends [...infer Ar extends ValidType[]]
-  ? { [Index in keyof Ar]: SimpleType<Ar[Index]> }
-  : T extends ObjectType
-  ? { [key in Exclude<keyof T, 'translations'>]: SimpleType<T[key]> }
-  : T
+type SimpleType<T extends ValidType> =
+  IsAny<T> extends true
+    ? any
+    : T extends UntouchedType
+      ? T
+      : T extends [...infer Ar extends ValidType[]]
+        ? { [Index in keyof Ar]: SimpleType<Ar[Index]> }
+        : T extends ObjectType
+          ? { [key in Exclude<keyof T, 'translations'>]: SimpleType<T[key]> }
+          : T

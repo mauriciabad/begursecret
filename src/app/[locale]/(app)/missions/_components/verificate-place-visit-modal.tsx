@@ -198,8 +198,8 @@ export const VerificatePlaceVisitModal: FC<
                         {loadingDeviceLocation
                           ? t('accessing-location')
                           : addToVisitedPlacesMutation.isLoading
-                          ? t('loading')
-                          : t('verificate-visit')}
+                            ? t('loading')
+                            : t('verificate-visit')}
                       </Button>
 
                       {!isAlreadyVisited && (

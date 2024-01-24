@@ -31,9 +31,8 @@ export const POST = withAxiom(async (request) => {
   return NextResponse.json({ imageUrl })
 })
 
-type ExtractGenericFromNextResponse<Type> = Type extends NextResponse<infer X>
-  ? X
-  : never
+type ExtractGenericFromNextResponse<Type> =
+  Type extends NextResponse<infer X> ? X : never
 export type UploadProfileImageResponse = ExtractGenericFromNextResponse<
   Awaited<ReturnType<typeof POST>>
 >
