@@ -23,6 +23,25 @@
       "logout": "Tanca sessió"
     }
   },
+  "admin-places": {
+    "search-placeholder": "Cercar per nom...",
+    "total": "Total {total}",
+    "columns": {
+      "id": "ID",
+      "name": "Nom",
+      "location": "Ubicació",
+      "mainCategory": "Categoria principal",
+      "categories": "Categories",
+      "actions": "Accions"
+    },
+    "add-new": "Crear nou",
+    "no-places-found": "No s'han trobat llocs",
+    "actions": {
+      "view": "Veure",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    }
+  },
   "admin-login": {
     "heading": "Accés denegat",
     "subtitle": "No tens permisos per continuar",

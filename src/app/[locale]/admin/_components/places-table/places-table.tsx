@@ -26,6 +26,7 @@ import {
   IconSearch,
   IconTrash,
 } from '@tabler/icons-react'
+import { useTranslations } from 'next-intl'
 import Link from 'next-intl/link'
 import { FC, useCallback, useMemo, useState } from 'react'
 import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
@@ -55,51 +56,44 @@ type Place = {
 
 const columns = [
   {
-    name: 'Id',
-    uid: 'id',
+    key: 'id',
     sortable: true,
     align: 'end',
   },
   {
-    name: 'Name',
-    uid: 'name',
+    key: 'name',
     sortable: true,
     align: 'start',
   },
   {
-    name: 'Location',
-    uid: 'location',
+    key: 'location',
     sortable: false,
     align: 'start',
   },
   {
-    name: 'Main Category',
-    uid: 'mainCategory',
+    key: 'mainCategory',
     sortable: true,
     align: 'start',
   },
   {
-    name: 'Categories',
-    uid: 'categories',
+    key: 'categories',
     sortable: false,
     align: 'start',
   },
   {
-    name: 'Actions',
-    uid: 'actions',
+    key: 'actions',
     sortable: false,
     align: 'center',
   },
 ] as const satisfies {
-  name: string
-  uid: keyof Place | 'actions'
+  key: keyof Place | 'actions'
   sortable: boolean
   align: 'center' | 'start' | 'end' | undefined
 }[]
 
 type Column = (typeof columns)[number]
-type ColumnKey = Column['uid']
-type SortableColumnKey<T = Column> = T extends { sortable: true; uid: infer ID }
+type ColumnKey = Column['key']
+type SortableColumnKey<T = Column> = T extends { sortable: true; key: infer ID }
   ? ID
   : never
 
@@ -117,6 +111,8 @@ export const PlacesTable: FC<{
   categories: Category[]
   className?: string
 }> = ({ className, places, categories }) => {
+  const t = useTranslations('admin-places')
+
   const [filterValue, setFilterValue] = useState('')
 
   const [mainCategoryFilter, setMainCategoryFilter] = useState<Selection>(
@@ -201,7 +197,7 @@ export const PlacesTable: FC<{
       case 'actions':
         return (
           <div className="relative flex items-center">
-            <Tooltip content="View">
+            <Tooltip content={t('actions.view')}>
               <Button
                 href={`/explore/places/${place.id}`}
                 as={Link}
@@ -213,7 +209,7 @@ export const PlacesTable: FC<{
                 <IconEye />
               </Button>
             </Tooltip>
-            <Tooltip content="Edit">
+            <Tooltip content={t('actions.edit')}>
               <Button
                 href={`/admin/places/${place.id}`}
                 as={Link}
@@ -225,10 +221,10 @@ export const PlacesTable: FC<{
                 <IconEdit />
               </Button>
             </Tooltip>
-            <Tooltip color="danger" content="Delete">
+            <Tooltip color="danger" content={t('actions.delete')}>
               <Button
                 onPress={() => {
-                  alert('Delete')
+                  alert(t('actions.delete'))
                 }}
                 variant="light"
                 radius="sm"
@@ -247,11 +243,7 @@ export const PlacesTable: FC<{
   }, [])
 
   const onSearchChange = useCallback((value?: string) => {
-    if (value) {
-      setFilterValue(value)
-    } else {
-      setFilterValue('')
-    }
+    setFilterValue(value ?? '')
   }, [])
 
   const onClear = useCallback(() => {
@@ -268,7 +260,7 @@ export const PlacesTable: FC<{
             classNames={{
               inputWrapper: 'h-unit-10',
             }}
-            placeholder="Search by name..."
+            placeholder={t('search-placeholder')}
             startContent={<IconSearch />}
             value={filterValue}
             onClear={() => onClear()}
@@ -276,7 +268,7 @@ export const PlacesTable: FC<{
           />
           <div className="flex items-center gap-3">
             <span className="hidden whitespace-nowrap text-right text-small text-default-400 sm:inline-block">
-              Total {sortedItems.length}
+              {t('total', { total: sortedItems.length })}
             </span>
             <Dropdown>
               <DropdownTrigger>
@@ -284,11 +276,10 @@ export const PlacesTable: FC<{
                   endContent={<IconChevronDown className="text-small" />}
                   variant="flat"
                 >
-                  Main Category
+                  {t('columns.mainCategory')}
                 </Button>
               </DropdownTrigger>
               <DropdownMenu
-                aria-label="Table Columns"
                 closeOnSelect={false}
                 selectedKeys={mainCategoryFilter}
                 selectionMode="multiple"
@@ -318,7 +309,7 @@ export const PlacesTable: FC<{
               color="primary"
               endContent={<IconPlus />}
             >
-              Add New
+              {t('add-new')}
             </Button>
           </div>
         </div>
@@ -345,16 +336,16 @@ export const PlacesTable: FC<{
       <TableHeader columns={columns}>
         {(column) => (
           <TableColumn
-            key={column.uid}
+            key={column.key}
             align={column.align}
             allowsSorting={column.sortable}
             className="uppercase"
           >
-            {column.name}
+            {t(`columns.${column.key}`)}
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={'No users found'} items={sortedItems}>
+      <TableBody emptyContent={t('no-places-found')} items={sortedItems}>
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => (
