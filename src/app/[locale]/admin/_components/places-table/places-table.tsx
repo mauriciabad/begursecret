@@ -9,7 +9,6 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Input,
-  Pagination,
   Selection,
   SortDescriptor,
   Table,
@@ -26,7 +25,7 @@ import {
   IconPlus,
   IconSearch,
 } from '@tabler/icons-react'
-import { ChangeEvent, FC, Key, useCallback, useMemo, useState } from 'react'
+import { FC, Key, useCallback, useMemo, useState } from 'react'
 import { cn } from '~/helpers/cn'
 import { columns, statusOptions, users } from './data'
 
@@ -42,18 +41,14 @@ type User = (typeof users)[0]
 
 export const PlacesTable: FC<{ className?: string }> = ({ className }) => {
   const [filterValue, setFilterValue] = useState('')
-  const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set([]))
   const [visibleColumns, setVisibleColumns] = useState<Selection>(
     new Set(INITIAL_VISIBLE_COLUMNS)
   )
   const [statusFilter, setStatusFilter] = useState<Selection>('all')
-  const [rowsPerPage, setRowsPerPage] = useState(5)
   const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
     column: 'age',
     direction: 'ascending',
   })
-
-  const [page, setPage] = useState(1)
 
   const hasSearchFilter = Boolean(filterValue)
 
@@ -85,24 +80,15 @@ export const PlacesTable: FC<{ className?: string }> = ({ className }) => {
     return filteredUsers
   }, [users, filterValue, statusFilter])
 
-  const pages = Math.ceil(filteredItems.length / rowsPerPage)
-
-  const items = useMemo(() => {
-    const start = (page - 1) * rowsPerPage
-    const end = start + rowsPerPage
-
-    return filteredItems.slice(start, end)
-  }, [page, filteredItems, rowsPerPage])
-
   const sortedItems = useMemo(() => {
-    return [...items].sort((a: User, b: User) => {
+    return [...filteredItems].sort((a: User, b: User) => {
       const first = a[sortDescriptor.column as keyof User] as number
       const second = b[sortDescriptor.column as keyof User] as number
       const cmp = first < second ? -1 : first > second ? 1 : 0
 
       return sortDescriptor.direction === 'descending' ? -cmp : cmp
     })
-  }, [sortDescriptor, items])
+  }, [sortDescriptor, filteredItems])
 
   const renderCell = useCallback((user: User, columnKey: Key) => {
     const cellValue = user[columnKey as keyof User]
@@ -160,30 +146,9 @@ export const PlacesTable: FC<{ className?: string }> = ({ className }) => {
     }
   }, [])
 
-  const onNextPage = useCallback(() => {
-    if (page < pages) {
-      setPage(page + 1)
-    }
-  }, [page, pages])
-
-  const onPreviousPage = useCallback(() => {
-    if (page > 1) {
-      setPage(page - 1)
-    }
-  }, [page])
-
-  const onRowsPerPageChange = useCallback(
-    (e: ChangeEvent<HTMLSelectElement>) => {
-      setRowsPerPage(Number(e.target.value))
-      setPage(1)
-    },
-    []
-  )
-
   const onSearchChange = useCallback((value?: string) => {
     if (value) {
       setFilterValue(value)
-      setPage(1)
     } else {
       setFilterValue('')
     }
@@ -191,7 +156,6 @@ export const PlacesTable: FC<{ className?: string }> = ({ className }) => {
 
   const onClear = useCallback(() => {
     setFilterValue('')
-    setPage(1)
   }, [])
 
   const topContent = useMemo(() => {
@@ -210,7 +174,10 @@ export const PlacesTable: FC<{ className?: string }> = ({ className }) => {
             onClear={() => onClear()}
             onValueChange={onSearchChange}
           />
-          <div className="flex gap-3">
+          <div className="flex items-center gap-3">
+            <span className="hidden whitespace-nowrap text-right text-small text-default-400 sm:inline-block">
+              Total {sortedItems.length}
+            </span>
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button
@@ -264,88 +231,25 @@ export const PlacesTable: FC<{ className?: string }> = ({ className }) => {
             </Button>
           </div>
         </div>
-        <div className="flex items-center justify-between">
-          <span className="text-small text-default-400">
-            Total {users.length} users
-          </span>
-          <label className="flex items-center text-small text-default-400">
-            Rows per page:
-            <select
-              className="bg-transparent text-small text-default-400 outline-none"
-              onChange={onRowsPerPageChange}
-            >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-            </select>
-          </label>
-        </div>
       </div>
     )
   }, [
     filterValue,
+    sortedItems,
     statusFilter,
     visibleColumns,
     onSearchChange,
-    onRowsPerPageChange,
-    users.length,
     hasSearchFilter,
   ])
-
-  const bottomContent = useMemo(() => {
-    return (
-      <div className="flex items-center justify-between px-2 py-2">
-        <span className="w-[30%] text-small text-default-400">
-          {selectedKeys === 'all'
-            ? 'All items selected'
-            : `${selectedKeys.size} of ${filteredItems.length} selected`}
-        </span>
-        <Pagination
-          isCompact
-          showControls
-          showShadow
-          color="primary"
-          page={page}
-          total={pages}
-          onChange={setPage}
-        />
-        <div className="hidden w-[30%] justify-end gap-2 sm:flex">
-          <Button
-            isDisabled={pages === 1}
-            size="sm"
-            variant="flat"
-            onPress={onPreviousPage}
-          >
-            Previous
-          </Button>
-          <Button
-            isDisabled={pages === 1}
-            size="sm"
-            variant="flat"
-            onPress={onNextPage}
-          >
-            Next
-          </Button>
-        </div>
-      </div>
-    )
-  }, [selectedKeys, items.length, page, pages, hasSearchFilter])
 
   return (
     <Table
       aria-label="Example table with custom cells, pagination and sorting"
       isHeaderSticky
-      bottomContent={bottomContent}
-      bottomContentPlacement="outside"
-      classNames={{
-        wrapper: 'max-h-[382px]',
-      }}
-      selectedKeys={selectedKeys}
       selectionMode="multiple"
       sortDescriptor={sortDescriptor}
       topContent={topContent}
       topContentPlacement="outside"
-      onSelectionChange={setSelectedKeys}
       onSortChange={setSortDescriptor}
     >
       <TableHeader columns={headerColumns}>
