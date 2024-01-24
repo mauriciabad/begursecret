@@ -16,7 +16,7 @@ import {
   flattenTranslationsOnExecute,
   withTranslations,
 } from '~/server/helpers/translations/query/with-translations'
-import { procedure, router } from '~/server/trpc'
+import { publicProcedure, router } from '~/server/trpc'
 
 const getAllPlaces = flattenTranslationsOnExecute(
   db.query.places
@@ -198,15 +198,15 @@ const listCategories = flattenTranslationsOnExecute(
 )
 
 export const placesRouter = router({
-  list: procedure.input(listPlacesSchema).query(async ({ input }) => {
+  list: publicProcedure.input(listPlacesSchema).query(async ({ input }) => {
     return (await getAllPlaces.execute({ locale: input.locale })).map(
       calculateLocation
     )
   }),
-  listForMap: procedure.query(async () => {
+  listForMap: publicProcedure.query(async () => {
     return (await getAllPlacesForMap.execute()).map(calculateLocation)
   }),
-  search: procedure.input(searchPlacesSchema).query(async ({ input }) => {
+  search: publicProcedure.input(searchPlacesSchema).query(async ({ input }) => {
     return (
       await searchPlaces.execute({
         locale: input.locale,
@@ -214,7 +214,7 @@ export const placesRouter = router({
       })
     ).map(calculateLocation)
   }),
-  get: procedure.input(getPlacesSchema).query(async ({ input, ctx }) => {
+  get: publicProcedure.input(getPlacesSchema).query(async ({ input, ctx }) => {
     const visitedPlacesIds = await getVisitedPlacesIdsByUserId(
       ctx.session?.user.id
     )
@@ -232,7 +232,7 @@ export const placesRouter = router({
         })
       : undefined
   }),
-  listCategories: procedure
+  listCategories: publicProcedure
     .input(listCategoriesSchema)
     .query(async ({ input }) => {
       return await listCategories.execute({ locale: input.locale })

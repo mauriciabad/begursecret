@@ -9,7 +9,7 @@ import {
   flattenTranslationsOnExecute,
   withTranslations,
 } from '~/server/helpers/translations/query/with-translations'
-import { procedure, router } from '~/server/trpc'
+import { adminProcedure, router } from '~/server/trpc'
 
 const getAllPlaces = flattenTranslationsOnExecute(
   db.query.places
@@ -69,12 +69,12 @@ const listCategories = flattenTranslationsOnExecute(
 )
 
 export const placesAdminRouter = router({
-  list: procedure.input(listPlacesSchema).query(async ({ input }) => {
+  list: adminProcedure.input(listPlacesSchema).query(async ({ input }) => {
     return (await getAllPlaces.execute({ locale: input.locale })).map(
       calculateLocation
     )
   }),
-  listCategories: procedure
+  listCategories: adminProcedure
     .input(listCategoriesSchema)
     .query(async ({ input }) => {
       return await listCategories.execute({ locale: input.locale })

@@ -15,21 +15,37 @@ const t = initTRPC.context<typeof createContext>().create({
 })
 
 export const router = t.router
-export const procedure = t.procedure
+export const publicProcedure = t.procedure
 export const middleware = t.middleware
 
-const authenticatedMiddleware = middleware(({ ctx, next }) => {
-  if (!ctx.session) {
-    throw new TRPCError({
-      code: 'UNAUTHORIZED',
-      message: 'Procedure requires authentication',
+export const protectedProcedure = publicProcedure.use(
+  middleware(({ ctx, next }) => {
+    if (!ctx.session) {
+      throw new TRPCError({
+        code: 'UNAUTHORIZED',
+        message: 'Procedure requires authentication',
+      })
+    }
+    return next({
+      ctx: {
+        session: ctx.session,
+      },
     })
-  }
-  return next({
-    ctx: {
-      session: ctx.session,
-    },
   })
-})
+)
 
-export const protectedProcedure = procedure.use(authenticatedMiddleware)
+export const adminProcedure = publicProcedure.use(
+  middleware(({ ctx, next }) => {
+    if (ctx.session?.user.role !== 'admin') {
+      throw new TRPCError({
+        code: 'UNAUTHORIZED',
+        message: 'Procedure requires authentication and admin permissions',
+      })
+    }
+    return next({
+      ctx: {
+        session: ctx.session,
+      },
+    })
+  })
+)
