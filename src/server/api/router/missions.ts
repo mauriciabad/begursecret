@@ -12,7 +12,7 @@ import {
   flattenTranslationsOnExecute,
   withTranslations,
 } from '~/server/helpers/translations/query/with-translations'
-import { procedure, router } from '~/server/trpc'
+import { publicProcedure, router } from '~/server/trpc'
 
 const getVisitMissions = flattenTranslationsOnExecute(
   db.query.placeCategories
@@ -162,7 +162,7 @@ const getVisitMissions = flattenTranslationsOnExecute(
 )
 
 export const missionsRouter = router({
-  getVisitMissions: procedure
+  getVisitMissions: publicProcedure
     .input(getVisitMissionsSchema)
     .query(async ({ input, ctx }) => {
       const result = await getVisitMissions.execute({

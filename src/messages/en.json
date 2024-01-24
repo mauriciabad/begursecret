@@ -16,10 +16,30 @@
     },
     "heading": "Admin",
     "subtitle": "Private admin area",
+    "places": "Places",
     "more-options": {
       "title": "More options",
       "go-to-app": "Go to app",
       "logout": "Logout"
+    }
+  },
+  "admin-places": {
+    "search-placeholder": "Search by name...",
+    "total": "Total {total}",
+    "columns": {
+      "id": "ID",
+      "name": "Name",
+      "location": "Location",
+      "mainCategory": "Main category",
+      "categories": "Categories",
+      "actions": "Actions"
+    },
+    "add-new": "Add new",
+    "no-places-found": "No places found",
+    "actions": {
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete"
     }
   },
   "admin-login": {

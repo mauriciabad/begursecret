@@ -4,12 +4,12 @@ import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constant
 import { PlaceCategoryTag } from './place-category-tag'
 
 export const PlaceCategoryTagList: FC<{
-  mainCategory: {
+  mainCategory?: {
     id: number
     icon: PlaceCategoryIconType | null
     name: string
   } | null
-  categories: {
+  categories?: {
     id: number
     icon: PlaceCategoryIconType | null
     name: string
@@ -29,11 +29,11 @@ export const PlaceCategoryTagList: FC<{
     >
       {mainCategory && <PlaceCategoryTag category={mainCategory} />}
 
-      {mainCategory && categories.length >= 1 && (
+      {mainCategory && categories !== undefined && categories.length >= 1 && (
         <span className="h-4 w-[1px] bg-stone-200" />
       )}
 
-      {categories.map((category) => (
+      {categories?.map((category) => (
         <PlaceCategoryTag key={category.id} category={category} />
       ))}
     </div>

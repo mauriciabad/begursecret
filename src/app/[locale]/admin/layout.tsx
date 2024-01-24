@@ -1,4 +1,5 @@
 import { Navbar, NavbarContent, NavbarItem } from '@nextui-org/navbar'
+import { IconBolt } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import type { FC, PropsWithChildren } from 'react'
 import type { LocaleRouteParams } from '~/i18n'
@@ -15,11 +16,14 @@ const AdminLayout: FC<AdminLayoutProps> = ({ children }) => {
         shouldHideOnScroll
         isBlurred={false}
         isBordered
-        classNames={{ wrapper: 'max-w-2xl' }}
+        classNames={{ wrapper: 'max-w-7xl' }}
       >
         <NavbarContent justify="start">
           <NavbarItem>
-            <h1 className="font-title">{t('heading')}</h1>
+            <h1 className="font-title">
+              <IconBolt className="mr-1 inline-block text-yellow-600" />
+              <span>{t('heading')}</span>
+            </h1>
           </NavbarItem>
         </NavbarContent>
         <NavbarContent justify="end">

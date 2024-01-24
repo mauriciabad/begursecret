@@ -16,10 +16,30 @@
     },
     "heading": "Admin",
     "subtitle": "Àrea privada d'administració",
+    "places": "Llocs",
     "more-options": {
       "title": "Més opcions",
       "go-to-app": "Anar a l'app",
       "logout": "Tanca sessió"
+    }
+  },
+  "admin-places": {
+    "search-placeholder": "Cercar per nom...",
+    "total": "Total {total}",
+    "columns": {
+      "id": "ID",
+      "name": "Nom",
+      "location": "Ubicació",
+      "mainCategory": "Categoria principal",
+      "categories": "Categories",
+      "actions": "Accions"
+    },
+    "add-new": "Crear nou",
+    "no-places-found": "No s'han trobat llocs",
+    "actions": {
+      "view": "Veure",
+      "edit": "Editar",
+      "delete": "Eliminar"
     }
   },
   "admin-login": {
