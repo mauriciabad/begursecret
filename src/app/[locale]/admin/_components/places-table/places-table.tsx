@@ -197,7 +197,7 @@ export const PlacesTable: FC<{ className?: string }> = ({ className }) => {
               >
                 {statusOptions.map((status) => (
                   <DropdownItem key={status.uid} className="capitalize">
-                    status.name
+                    {status.name}
                   </DropdownItem>
                 ))}
               </DropdownMenu>
@@ -221,7 +221,7 @@ export const PlacesTable: FC<{ className?: string }> = ({ className }) => {
               >
                 {columns.map((column) => (
                   <DropdownItem key={column.uid} className="capitalize">
-                    column.name
+                    {column.name}
                   </DropdownItem>
                 ))}
               </DropdownMenu>
@@ -258,6 +258,7 @@ export const PlacesTable: FC<{ className?: string }> = ({ className }) => {
             key={column.uid}
             align={column.uid === 'actions' ? 'center' : 'start'}
             allowsSorting={column.sortable}
+            className="uppercase"
           >
             {column.name}
           </TableColumn>
