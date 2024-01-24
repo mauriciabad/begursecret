@@ -27,7 +27,41 @@ import {
 } from '@tabler/icons-react'
 import { FC, Key, useCallback, useMemo, useState } from 'react'
 import { cn } from '~/helpers/cn'
-import { columns, statusOptions, users } from './data'
+
+type Item = {
+  id: number
+  name: string
+  role: string
+  team: string
+  status: string
+  age: string
+  avatar: string
+  email: string
+}
+
+const columns = [
+  { name: 'Id', uid: 'id', sortable: true },
+  { name: 'Name', uid: 'name', sortable: true },
+  { name: 'Age', uid: 'age', sortable: true },
+  { name: 'Role', uid: 'role', sortable: true },
+  { name: 'Team', uid: 'team', sortable: false },
+  { name: 'Email', uid: 'email', sortable: false },
+  { name: 'Status', uid: 'status', sortable: true },
+  { name: 'Actions', uid: 'actions', sortable: false },
+] as const satisfies {
+  name: string
+  uid: keyof Item | 'actions'
+  sortable: boolean
+}[]
+
+const statusOptions = [
+  { name: 'Active', uid: 'active' },
+  { name: 'Paused', uid: 'paused' },
+  { name: 'Vacation', uid: 'vacation' },
+] as const satisfies {
+  name: string
+  uid: string
+}[]
 
 const statusColorMap: Record<string, ChipProps['color']> = {
   active: 'success',
@@ -37,9 +71,10 @@ const statusColorMap: Record<string, ChipProps['color']> = {
 
 const INITIAL_VISIBLE_COLUMNS = ['name', 'role', 'status', 'actions']
 
-type User = (typeof users)[0]
-
-export const PlacesTable: FC<{ className?: string }> = ({ className }) => {
+export const PlacesTable: FC<{
+  data: Item[]
+  className?: string
+}> = ({ className, data }) => {
   const [filterValue, setFilterValue] = useState('')
   const [visibleColumns, setVisibleColumns] = useState<Selection>(
     new Set(INITIAL_VISIBLE_COLUMNS)
@@ -61,7 +96,7 @@ export const PlacesTable: FC<{ className?: string }> = ({ className }) => {
   }, [visibleColumns])
 
   const filteredItems = useMemo(() => {
-    let filteredUsers = [...users]
+    let filteredUsers = [...data]
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) =>
@@ -78,20 +113,20 @@ export const PlacesTable: FC<{ className?: string }> = ({ className }) => {
     }
 
     return filteredUsers
-  }, [users, filterValue, statusFilter])
+  }, [data, filterValue, statusFilter])
 
   const sortedItems = useMemo(() => {
-    return [...filteredItems].sort((a: User, b: User) => {
-      const first = a[sortDescriptor.column as keyof User] as number
-      const second = b[sortDescriptor.column as keyof User] as number
+    return [...filteredItems].sort((a: Item, b: Item) => {
+      const first = a[sortDescriptor.column as keyof Item] as number
+      const second = b[sortDescriptor.column as keyof Item] as number
       const cmp = first < second ? -1 : first > second ? 1 : 0
 
       return sortDescriptor.direction === 'descending' ? -cmp : cmp
     })
   }, [sortDescriptor, filteredItems])
 
-  const renderCell = useCallback((user: User, columnKey: Key) => {
-    const cellValue = user[columnKey as keyof User]
+  const renderCell = useCallback((user: Item, columnKey: Key) => {
+    const cellValue = user[columnKey as keyof Item]
 
     switch (columnKey) {
       case 'name':
@@ -196,9 +231,7 @@ export const PlacesTable: FC<{ className?: string }> = ({ className }) => {
                 onSelectionChange={setStatusFilter}
               >
                 {statusOptions.map((status) => (
-                  <DropdownItem key={status.uid} className="capitalize">
-                    {status.name}
-                  </DropdownItem>
+                  <DropdownItem key={status.uid}>{status.name}</DropdownItem>
                 ))}
               </DropdownMenu>
             </Dropdown>
@@ -220,9 +253,7 @@ export const PlacesTable: FC<{ className?: string }> = ({ className }) => {
                 onSelectionChange={setVisibleColumns}
               >
                 {columns.map((column) => (
-                  <DropdownItem key={column.uid} className="capitalize">
-                    {column.name}
-                  </DropdownItem>
+                  <DropdownItem key={column.uid}>{column.name}</DropdownItem>
                 ))}
               </DropdownMenu>
             </Dropdown>
@@ -246,7 +277,6 @@ export const PlacesTable: FC<{ className?: string }> = ({ className }) => {
     <Table
       aria-label="Example table with custom cells, pagination and sorting"
       isHeaderSticky
-      selectionMode="multiple"
       sortDescriptor={sortDescriptor}
       topContent={topContent}
       topContentPlacement="outside"

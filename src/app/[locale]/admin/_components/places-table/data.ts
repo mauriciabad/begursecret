@@ -1,21 +1,4 @@
-const columns = [
-  { name: 'id', uid: 'id', sortable: true },
-  { name: 'name', uid: 'name', sortable: true },
-  { name: 'age', uid: 'age', sortable: true },
-  { name: 'role', uid: 'role', sortable: true },
-  { name: 'team', uid: 'team' },
-  { name: 'email', uid: 'email' },
-  { name: 'status', uid: 'status', sortable: true },
-  { name: 'actions', uid: 'actions' },
-]
-
-const statusOptions = [
-  { name: 'Active', uid: 'active' },
-  { name: 'Paused', uid: 'paused' },
-  { name: 'Vacation', uid: 'vacation' },
-]
-
-const users = [
+export const data = [
   {
     id: 1,
     name: 'Tony Reichert',
@@ -217,5 +200,3 @@ const users = [
     email: 'mia.robinson@example.com',
   },
 ]
-
-export { columns, statusOptions, users }
