@@ -7,7 +7,6 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Input,
-  Link,
   Selection,
   SortDescriptor,
   Table,
@@ -27,6 +26,7 @@ import {
   IconSearch,
   IconTrash,
 } from '@tabler/icons-react'
+import Link from 'next-intl/link'
 import { FC, useCallback, useMemo, useState } from 'react'
 import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
 import { PlaceCategoryTagList } from '~/components/place-category-tags/place-category-tag-list'
@@ -312,7 +312,12 @@ export const PlacesTable: FC<{
               </DropdownMenu>
             </Dropdown>
 
-            <Button color="primary" endContent={<IconPlus />}>
+            <Button
+              href="/admin/places/new"
+              as={Link}
+              color="primary"
+              endContent={<IconPlus />}
+            >
               Add New
             </Button>
           </div>
