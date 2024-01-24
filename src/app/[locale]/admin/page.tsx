@@ -22,10 +22,10 @@ export async function generateMetadata({
 const AdminPage: FC<LocaleRouteParams> = async () => {
   const locale = useLocale()
   const trpc = await getTrpc()
-  const places = await trpc.places.list({
+  const places = await trpc.admin.places.list({
     locale: onlyTranslatableLocales(locale),
   })
-  const categories = await trpc.places.listCategories({
+  const categories = await trpc.admin.places.listCategories({
     locale: onlyTranslatableLocales(locale),
   })
 

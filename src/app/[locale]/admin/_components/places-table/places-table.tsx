@@ -7,6 +7,7 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Input,
+  Link,
   Selection,
   SortDescriptor,
   Table,
@@ -15,19 +16,30 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
+  Tooltip,
   User,
 } from '@nextui-org/react'
 import {
   IconChevronDown,
-  IconDotsVertical,
+  IconEdit,
+  IconEye,
   IconPlus,
   IconSearch,
+  IconTrash,
 } from '@tabler/icons-react'
 import { FC, useCallback, useMemo, useState } from 'react'
+import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
 import { PlaceCategoryTagList } from '~/components/place-category-tags/place-category-tag-list'
 import { cn } from '~/helpers/cn'
+import { makeImageUrl } from '~/helpers/images'
 import { MapPoint } from '~/helpers/spatial-data'
 import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
+
+type Category = {
+  id: number
+  icon: PlaceCategoryIconType | null
+  name: string
+}
 
 type Place = {
   id: number
@@ -35,76 +47,87 @@ type Place = {
   location: MapPoint
   name: string
   description: string | null
-  mainCategory: {
-    id: number
-    icon: PlaceCategoryIconType | null
-    name: string
-  }
+  mainCategory: Category
   categories: {
-    category: {
-      id: number
-      icon: PlaceCategoryIconType | null
-      name: string
-    }
+    category: Category
   }[]
 }
 
 const columns = [
-  { name: 'Id', uid: 'id', sortable: true },
-  { name: 'Name', uid: 'name', sortable: true },
-  { name: 'Location', uid: 'location', sortable: false },
-  { name: 'Main Category', uid: 'mainCategory', sortable: true },
-  { name: 'Categories', uid: 'categories', sortable: false },
-  { name: 'Actions', uid: 'actions', sortable: false },
+  {
+    name: 'Id',
+    uid: 'id',
+    sortable: true,
+    align: 'end',
+  },
+  {
+    name: 'Name',
+    uid: 'name',
+    sortable: true,
+    align: 'start',
+  },
+  {
+    name: 'Location',
+    uid: 'location',
+    sortable: false,
+    align: 'start',
+  },
+  {
+    name: 'Main Category',
+    uid: 'mainCategory',
+    sortable: true,
+    align: 'start',
+  },
+  {
+    name: 'Categories',
+    uid: 'categories',
+    sortable: false,
+    align: 'start',
+  },
+  {
+    name: 'Actions',
+    uid: 'actions',
+    sortable: false,
+    align: 'center',
+  },
 ] as const satisfies {
   name: string
   uid: keyof Place | 'actions'
   sortable: boolean
+  align: 'center' | 'start' | 'end' | undefined
 }[]
 
-type ColumnKey = (typeof columns)[number]['uid']
+type Column = (typeof columns)[number]
+type ColumnKey = Column['uid']
+type SortableColumnKey<T = Column> = T extends { sortable: true; uid: infer ID }
+  ? ID
+  : never
 
-const INITIAL_VISIBLE_COLUMNS = [
-  'id',
-  'name',
-  'location',
-  'mainCategory',
-  'categories',
-  'actions',
-]
-
-const mainCategoryOptions = [
-  { name: 'Active', uid: 'active' },
-  { name: 'Paused', uid: 'paused' },
-  { name: 'Vacation', uid: 'vacation' },
-] as const satisfies {
-  name: string
-  uid: string
-}[]
+const getSortValue = (item: Place, columnKey: SortableColumnKey) => {
+  switch (columnKey) {
+    case 'mainCategory':
+      return item.mainCategory.name
+    default:
+      return item[columnKey]
+  }
+}
 
 export const PlacesTable: FC<{
   places: Place[]
+  categories: Category[]
   className?: string
-}> = ({ className, places }) => {
+}> = ({ className, places, categories }) => {
   const [filterValue, setFilterValue] = useState('')
-  const [visibleColumns, setVisibleColumns] = useState<Selection>(
-    new Set(INITIAL_VISIBLE_COLUMNS)
+
+  const [mainCategoryFilter, setMainCategoryFilter] = useState<Selection>(
+    new Set()
   )
-  const [mainCategoryFilter, setMainCategoryFilter] = useState<Selection>('all')
   const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
-    column: 'age',
+    column: 'id',
     direction: 'ascending',
   })
 
   const hasSearchFilter = Boolean(filterValue)
-
-  const headerColumns = useMemo(() => {
-    if (visibleColumns === 'all') return columns
-
-    return columns.filter((column) =>
-      Array.from(visibleColumns).includes(column.uid)
-    )
-  }, [visibleColumns])
 
   const filteredItems = useMemo(() => {
     let filteredUsers = [...places]
@@ -116,10 +139,11 @@ export const PlacesTable: FC<{
     }
     if (
       mainCategoryFilter !== 'all' &&
-      Array.from(mainCategoryFilter).length !== mainCategoryOptions.length
+      mainCategoryFilter.size !== 0 &&
+      mainCategoryFilter.size !== categories.length
     ) {
       filteredUsers = filteredUsers.filter((place) =>
-        Array.from(mainCategoryFilter).includes(place.mainCategory.id)
+        mainCategoryFilter.has(place.mainCategory.id.toString())
       )
     }
 
@@ -128,8 +152,9 @@ export const PlacesTable: FC<{
 
   const sortedItems = useMemo(() => {
     return [...filteredItems].sort((a: Place, b: Place) => {
-      const first = a[sortDescriptor.column as keyof Place] as number
-      const second = b[sortDescriptor.column as keyof Place] as number
+      const columnKey = sortDescriptor.column as SortableColumnKey
+      const first = getSortValue(a, columnKey)
+      const second = getSortValue(b, columnKey)
       const cmp = first < second ? -1 : first > second ? 1 : 0
 
       return sortDescriptor.direction === 'descending' ? -cmp : cmp
@@ -141,8 +166,16 @@ export const PlacesTable: FC<{
       case 'name':
         return (
           <User
-            avatarProps={{ radius: 'lg', src: place.mainImage ?? undefined }}
-            description={place.description}
+            avatarProps={{
+              classNames: {
+                base: 'flex-shrink-0',
+              },
+              radius: 'sm',
+              src: makeImageUrl(place.mainImage),
+            }}
+            description={
+              <p className="line-clamp-2 max-w-[40ch]">{place.description}</p>
+            }
             name={place.name}
           >
             {place.name}
@@ -152,7 +185,7 @@ export const PlacesTable: FC<{
         return (
           <div className="flex flex-col">
             <p className="text-bold font-mono text-tiny text-default-400">
-              {`{ lat: ${place.location.lat}, lng: ${place.location.lng} }`}
+              {`${place.location.lat.toFixed(6)}, ${place.location.lng.toFixed(6)}`}
             </p>
           </div>
         )
@@ -167,19 +200,45 @@ export const PlacesTable: FC<{
         )
       case 'actions':
         return (
-          <div className="relative flex items-center justify-end gap-2">
-            <Dropdown>
-              <DropdownTrigger>
-                <Button isIconOnly size="sm" variant="light">
-                  <IconDotsVertical className="text-default-300" />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem>View</DropdownItem>
-                <DropdownItem>Edit</DropdownItem>
-                <DropdownItem>Delete</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+          <div className="relative flex items-center">
+            <Tooltip content="View">
+              <Button
+                href={`/explore/places/${place.id}`}
+                as={Link}
+                variant="light"
+                radius="sm"
+                isIconOnly
+                className="h-unit-8 w-unit-8 min-w-unit-8 text-default-600"
+              >
+                <IconEye />
+              </Button>
+            </Tooltip>
+            <Tooltip content="Edit">
+              <Button
+                href={`/admin/places/${place.id}`}
+                as={Link}
+                variant="light"
+                radius="sm"
+                isIconOnly
+                className="h-unit-8 w-unit-8 min-w-unit-8 text-default-600"
+              >
+                <IconEdit />
+              </Button>
+            </Tooltip>
+            <Tooltip color="danger" content="Delete">
+              <Button
+                onPress={() => {
+                  alert('Delete')
+                }}
+                variant="light"
+                radius="sm"
+                isIconOnly
+                color="danger"
+                className="h-unit-8 w-unit-8 min-w-unit-8 text-default-600 hover:text-danger"
+              >
+                <IconTrash />
+              </Button>
+            </Tooltip>
           </div>
         )
       default:
@@ -202,12 +261,12 @@ export const PlacesTable: FC<{
   const topContent = useMemo(() => {
     return (
       <div className={cn('flex flex-col gap-4', className)}>
-        <div className="flex items-end justify-between gap-3">
+        <div className="flex flex-col-reverse items-end justify-between gap-3 xs:flex-row">
           <Input
             isClearable
             className="w-full sm:max-w-[44%]"
             classNames={{
-              inputWrapper: 'h-10',
+              inputWrapper: 'h-unit-10',
             }}
             placeholder="Search by name..."
             startContent={<IconSearch />}
@@ -220,51 +279,39 @@ export const PlacesTable: FC<{
               Total {sortedItems.length}
             </span>
             <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
+              <DropdownTrigger>
                 <Button
                   endContent={<IconChevronDown className="text-small" />}
                   variant="flat"
                 >
-                  MainCategory
+                  Main Category
                 </Button>
               </DropdownTrigger>
               <DropdownMenu
-                disallowEmptySelection
                 aria-label="Table Columns"
                 closeOnSelect={false}
                 selectedKeys={mainCategoryFilter}
                 selectionMode="multiple"
                 onSelectionChange={setMainCategoryFilter}
               >
-                {mainCategoryOptions.map((mainCategory) => (
-                  <DropdownItem key={mainCategory.uid}>
-                    {mainCategory.name}
+                {categories.map((category) => (
+                  <DropdownItem
+                    key={category.id}
+                    startContent={
+                      <PlaceCategoryIcon
+                        icon={category.icon}
+                        size={20}
+                        stroke={1.5}
+                        className="text-default-700"
+                      />
+                    }
+                  >
+                    {category.name}
                   </DropdownItem>
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button
-                  endContent={<IconChevronDown className="text-small" />}
-                  variant="flat"
-                >
-                  Columns
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={visibleColumns}
-                selectionMode="multiple"
-                onSelectionChange={setVisibleColumns}
-              >
-                {columns.map((column) => (
-                  <DropdownItem key={column.uid}>{column.name}</DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
+
             <Button color="primary" endContent={<IconPlus />}>
               Add New
             </Button>
@@ -276,25 +323,25 @@ export const PlacesTable: FC<{
     filterValue,
     sortedItems,
     mainCategoryFilter,
-    visibleColumns,
     onSearchChange,
     hasSearchFilter,
   ])
 
   return (
     <Table
-      aria-label="Example table with custom cells, pagination and sorting"
+      selectionMode="single"
+      selectionBehavior="replace"
       isHeaderSticky
       sortDescriptor={sortDescriptor}
       topContent={topContent}
       topContentPlacement="outside"
       onSortChange={setSortDescriptor}
     >
-      <TableHeader columns={headerColumns}>
+      <TableHeader columns={columns}>
         {(column) => (
           <TableColumn
             key={column.uid}
-            align={column.uid === 'actions' ? 'center' : 'start'}
+            align={column.align}
             allowsSorting={column.sortable}
             className="uppercase"
           >
