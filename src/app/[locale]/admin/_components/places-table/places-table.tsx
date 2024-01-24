@@ -2,8 +2,6 @@
 
 import {
   Button,
-  Chip,
-  ChipProps,
   Dropdown,
   DropdownItem,
   DropdownMenu,
@@ -25,36 +23,57 @@ import {
   IconPlus,
   IconSearch,
 } from '@tabler/icons-react'
-import { FC, Key, useCallback, useMemo, useState } from 'react'
+import { FC, useCallback, useMemo, useState } from 'react'
+import { PlaceCategoryTagList } from '~/components/place-category-tags/place-category-tag-list'
 import { cn } from '~/helpers/cn'
+import { MapPoint } from '~/helpers/spatial-data'
+import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
 
-type Item = {
+type Place = {
   id: number
+  mainImage: string | null
+  location: MapPoint
   name: string
-  role: string
-  team: string
-  status: string
-  age: string
-  avatar: string
-  email: string
+  description: string | null
+  mainCategory: {
+    id: number
+    icon: PlaceCategoryIconType | null
+    name: string
+  }
+  categories: {
+    category: {
+      id: number
+      icon: PlaceCategoryIconType | null
+      name: string
+    }
+  }[]
 }
 
 const columns = [
   { name: 'Id', uid: 'id', sortable: true },
   { name: 'Name', uid: 'name', sortable: true },
-  { name: 'Age', uid: 'age', sortable: true },
-  { name: 'Role', uid: 'role', sortable: true },
-  { name: 'Team', uid: 'team', sortable: false },
-  { name: 'Email', uid: 'email', sortable: false },
-  { name: 'Status', uid: 'status', sortable: true },
+  { name: 'Location', uid: 'location', sortable: false },
+  { name: 'Main Category', uid: 'mainCategory', sortable: true },
+  { name: 'Categories', uid: 'categories', sortable: false },
   { name: 'Actions', uid: 'actions', sortable: false },
 ] as const satisfies {
   name: string
-  uid: keyof Item | 'actions'
+  uid: keyof Place | 'actions'
   sortable: boolean
 }[]
 
-const statusOptions = [
+type ColumnKey = (typeof columns)[number]['uid']
+
+const INITIAL_VISIBLE_COLUMNS = [
+  'id',
+  'name',
+  'location',
+  'mainCategory',
+  'categories',
+  'actions',
+]
+
+const mainCategoryOptions = [
   { name: 'Active', uid: 'active' },
   { name: 'Paused', uid: 'paused' },
   { name: 'Vacation', uid: 'vacation' },
@@ -63,23 +82,15 @@ const statusOptions = [
   uid: string
 }[]
 
-const statusColorMap: Record<string, ChipProps['color']> = {
-  active: 'success',
-  paused: 'danger',
-  vacation: 'warning',
-}
-
-const INITIAL_VISIBLE_COLUMNS = ['name', 'role', 'status', 'actions']
-
 export const PlacesTable: FC<{
-  data: Item[]
+  places: Place[]
   className?: string
-}> = ({ className, data }) => {
+}> = ({ className, places }) => {
   const [filterValue, setFilterValue] = useState('')
   const [visibleColumns, setVisibleColumns] = useState<Selection>(
     new Set(INITIAL_VISIBLE_COLUMNS)
   )
-  const [statusFilter, setStatusFilter] = useState<Selection>('all')
+  const [mainCategoryFilter, setMainCategoryFilter] = useState<Selection>('all')
   const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
     column: 'age',
     direction: 'ascending',
@@ -96,68 +107,63 @@ export const PlacesTable: FC<{
   }, [visibleColumns])
 
   const filteredItems = useMemo(() => {
-    let filteredUsers = [...data]
+    let filteredUsers = [...places]
 
     if (hasSearchFilter) {
-      filteredUsers = filteredUsers.filter((user) =>
-        user.name.toLowerCase().includes(filterValue.toLowerCase())
+      filteredUsers = filteredUsers.filter((place) =>
+        place.name.toLowerCase().includes(filterValue.toLowerCase())
       )
     }
     if (
-      statusFilter !== 'all' &&
-      Array.from(statusFilter).length !== statusOptions.length
+      mainCategoryFilter !== 'all' &&
+      Array.from(mainCategoryFilter).length !== mainCategoryOptions.length
     ) {
-      filteredUsers = filteredUsers.filter((user) =>
-        Array.from(statusFilter).includes(user.status)
+      filteredUsers = filteredUsers.filter((place) =>
+        Array.from(mainCategoryFilter).includes(place.mainCategory.id)
       )
     }
 
     return filteredUsers
-  }, [data, filterValue, statusFilter])
+  }, [places, filterValue, mainCategoryFilter])
 
   const sortedItems = useMemo(() => {
-    return [...filteredItems].sort((a: Item, b: Item) => {
-      const first = a[sortDescriptor.column as keyof Item] as number
-      const second = b[sortDescriptor.column as keyof Item] as number
+    return [...filteredItems].sort((a: Place, b: Place) => {
+      const first = a[sortDescriptor.column as keyof Place] as number
+      const second = b[sortDescriptor.column as keyof Place] as number
       const cmp = first < second ? -1 : first > second ? 1 : 0
 
       return sortDescriptor.direction === 'descending' ? -cmp : cmp
     })
   }, [sortDescriptor, filteredItems])
 
-  const renderCell = useCallback((user: Item, columnKey: Key) => {
-    const cellValue = user[columnKey as keyof Item]
-
+  const renderCell = useCallback((place: Place, columnKey: ColumnKey) => {
     switch (columnKey) {
       case 'name':
         return (
           <User
-            avatarProps={{ radius: 'lg', src: user.avatar }}
-            description={user.email}
-            name={cellValue}
+            avatarProps={{ radius: 'lg', src: place.mainImage ?? undefined }}
+            description={place.description}
+            name={place.name}
           >
-            {user.email}
+            {place.name}
           </User>
         )
-      case 'role':
+      case 'location':
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">{cellValue}</p>
-            <p className="text-bold text-tiny capitalize text-default-400">
-              {user.team}
+            <p className="text-bold font-mono text-tiny text-default-400">
+              {`{ lat: ${place.location.lat}, lng: ${place.location.lng} }`}
             </p>
           </div>
         )
-      case 'status':
+      case 'mainCategory':
+        return <PlaceCategoryTagList mainCategory={place.mainCategory} wrap />
+      case 'categories':
         return (
-          <Chip
-            className="capitalize"
-            color={statusColorMap[user.status]}
-            size="sm"
-            variant="flat"
-          >
-            {cellValue}
-          </Chip>
+          <PlaceCategoryTagList
+            categories={place.categories.map((c) => c.category)}
+            wrap
+          />
         )
       case 'actions':
         return (
@@ -177,7 +183,7 @@ export const PlacesTable: FC<{
           </div>
         )
       default:
-        return cellValue
+        return place[columnKey]
     }
   }, [])
 
@@ -219,19 +225,21 @@ export const PlacesTable: FC<{
                   endContent={<IconChevronDown className="text-small" />}
                   variant="flat"
                 >
-                  Status
+                  MainCategory
                 </Button>
               </DropdownTrigger>
               <DropdownMenu
                 disallowEmptySelection
                 aria-label="Table Columns"
                 closeOnSelect={false}
-                selectedKeys={statusFilter}
+                selectedKeys={mainCategoryFilter}
                 selectionMode="multiple"
-                onSelectionChange={setStatusFilter}
+                onSelectionChange={setMainCategoryFilter}
               >
-                {statusOptions.map((status) => (
-                  <DropdownItem key={status.uid}>{status.name}</DropdownItem>
+                {mainCategoryOptions.map((mainCategory) => (
+                  <DropdownItem key={mainCategory.uid}>
+                    {mainCategory.name}
+                  </DropdownItem>
                 ))}
               </DropdownMenu>
             </Dropdown>
@@ -267,7 +275,7 @@ export const PlacesTable: FC<{
   }, [
     filterValue,
     sortedItems,
-    statusFilter,
+    mainCategoryFilter,
     visibleColumns,
     onSearchChange,
     hasSearchFilter,
@@ -298,7 +306,7 @@ export const PlacesTable: FC<{
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => (
-              <TableCell>{renderCell(item, columnKey)}</TableCell>
+              <TableCell>{renderCell(item, columnKey as ColumnKey)}</TableCell>
             )}
           </TableRow>
         )}
