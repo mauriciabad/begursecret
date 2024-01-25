@@ -40,6 +40,7 @@
     },
     "add-new": "Crear nou",
     "create-place": "Crear lloc",
+    "stay-on-page-after-submit": "Quedar-se a la pàgina després d'enviar",
     "no-places-found": "No s'han trobat llocs",
     "actions": {
       "view": "Veure",

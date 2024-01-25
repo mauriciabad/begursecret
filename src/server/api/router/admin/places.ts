@@ -86,11 +86,13 @@ export const placesAdminRouter = router({
   createPlace: adminProcedure
     .input(createPlaceSchema)
     .mutation(async ({ input }) => {
-      return await db.insert(places).values({
+      const result = await db.insert(places).values({
         name: input.name,
         description: input.description,
         mainCategoryId: input.mainCategory,
         location: pointToString(input.location),
       })
+
+      return result.insertId
     }),
 })

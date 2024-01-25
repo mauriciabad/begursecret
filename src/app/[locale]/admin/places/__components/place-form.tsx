@@ -1,9 +1,11 @@
 'use client'
 
+import { Checkbox } from '@nextui-org/checkbox'
 import { Input } from '@nextui-org/input'
 import { Select, SelectItem } from '@nextui-org/select'
 import { useTranslations } from 'next-intl'
-import { FC } from 'react'
+import { useRouter } from 'next-intl/client'
+import { FC, useState } from 'react'
 import {
   SafeForm,
   SafeSubmitButton,
@@ -25,6 +27,7 @@ export const PlaceForm: FC<{
   className?: string
 }> = ({ className, categories }) => {
   const t = useTranslations('admin-places')
+  const router = useRouter()
 
   const createPlaceMutation = trpc.admin.places.createPlace.useMutation()
 
@@ -34,10 +37,12 @@ export const PlaceForm: FC<{
       name: undefined,
       description: undefined,
       mainCategory: undefined,
-      categories: undefined,
+      categories: '',
       location: undefined,
     },
   })
+
+  const [stayOnPage, setStayOnPage] = useState(false)
 
   return (
     <>
@@ -49,6 +54,10 @@ export const PlaceForm: FC<{
         handleSubmit={async (values) => {
           await createPlaceMutation.mutateAsync(values)
           form.reset()
+
+          if (!stayOnPage) {
+            return router.push('/admin/places/')
+          }
         }}
         className={cn(className)}
       >
@@ -92,7 +101,12 @@ export const PlaceForm: FC<{
           labelPlacement="outside"
         />
 
-        <SafeSubmitButton />
+        <div className="mt-8 flex items-center justify-start gap-4">
+          <SafeSubmitButton color="primary" size="lg" />
+          <Checkbox isSelected={stayOnPage} onValueChange={setStayOnPage}>
+            {t('stay-on-page-after-submit')}
+          </Checkbox>
+        </div>
       </SafeForm>
     </>
   )
