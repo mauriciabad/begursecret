@@ -1,5 +1,8 @@
 {
-  "common": {},
+  "common": {
+    "save": "Guardar",
+    "loading": "Carregant..."
+  },
   "home": {
     "meta": {
       "title": "Descobreix Begur App",
@@ -29,12 +32,14 @@
     "columns": {
       "id": "ID",
       "name": "Nom",
+      "description": "Descripció",
       "location": "Ubicació",
       "mainCategory": "Categoria principal",
       "categories": "Categories",
       "actions": "Accions"
     },
     "add-new": "Crear nou",
+    "create-place": "Crear lloc",
     "no-places-found": "No s'han trobat llocs",
     "actions": {
       "view": "Veure",

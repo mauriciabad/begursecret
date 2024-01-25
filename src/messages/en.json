@@ -1,5 +1,8 @@
 {
-  "common": {},
+  "common": {
+    "save": "Save",
+    "loading": "Loading..."
+  },
   "home": {
     "meta": {
       "title": "Descobreix Begur App",
@@ -29,12 +32,14 @@
     "columns": {
       "id": "ID",
       "name": "Name",
+      "description": "Description",
       "location": "Location",
       "mainCategory": "Main category",
       "categories": "Categories",
       "actions": "Actions"
     },
     "add-new": "Add new",
+    "create-place": "Create place",
     "no-places-found": "No places found",
     "actions": {
       "view": "View",

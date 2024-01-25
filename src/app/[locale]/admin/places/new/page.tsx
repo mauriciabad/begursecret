@@ -1,8 +1,10 @@
-import { IconPlus } from '@tabler/icons-react'
 import type { Metadata } from 'next'
+import { useLocale } from 'next-intl'
 import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
-import { type LocaleRouteParams } from '~/i18n'
+import { onlyTranslatableLocales, type LocaleRouteParams } from '~/i18n'
+import { getTrpc } from '~/server/get-server-thing'
+import { PlaceForm } from '../__components/place-form'
 
 export async function generateMetadata({
   params,
@@ -17,18 +19,17 @@ export async function generateMetadata({
   }
 }
 
-const AdminNewPlacePage: FC<LocaleRouteParams> = () => {
+const AdminNewPlacePage: FC<LocaleRouteParams> = async () => {
+  const locale = useLocale()
+  const trpc = await getTrpc()
+  const categories = await trpc.admin.places.listCategories({
+    locale: onlyTranslatableLocales(locale),
+  })
+
   return (
     <>
       <main className="mx-auto min-h-screen max-w-7xl p-4 sm:py-8 lg:py-12">
-        <IconPlus
-          className="mx-auto mb-4 h-24 w-24 text-brand-600"
-          stroke={1}
-        />
-
-        <h1 className="text-center font-title text-4xl font-bold uppercase text-stone-800">
-          New place{' '}
-        </h1>
+        <PlaceForm categories={categories} />
       </main>
     </>
   )

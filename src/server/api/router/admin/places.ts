@@ -1,7 +1,11 @@
 import 'server-only'
 
-import { calculateLocation } from '~/helpers/spatial-data'
-import { listCategoriesSchema, listPlacesSchema } from '~/schemas/places'
+import { calculateLocation, pointToString } from '~/helpers/spatial-data'
+import {
+  createPlaceSchema,
+  listCategoriesSchema,
+  listPlacesSchema,
+} from '~/schemas/places'
 import { db } from '~/server/db/db'
 import { places } from '~/server/db/schema'
 import { selectPoint } from '~/server/helpers/spatial-data'
@@ -78,5 +82,15 @@ export const placesAdminRouter = router({
     .input(listCategoriesSchema)
     .query(async ({ input }) => {
       return await listCategories.execute({ locale: input.locale })
+    }),
+  createPlace: adminProcedure
+    .input(createPlaceSchema)
+    .mutation(async ({ input }) => {
+      return await db.insert(places).values({
+        name: input.name,
+        description: input.description,
+        mainCategoryId: input.mainCategory,
+        location: pointToString(input.location),
+      })
     }),
 })
