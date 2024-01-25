@@ -83,7 +83,7 @@ export const PlaceForm: FC<{
             </SelectItem>
           ))}
         </Select>
-        {/* <Select
+        <Select
           {...nextuiRegister('categories')}
           label={t('columns.categories')}
           labelPlacement="outside"
@@ -94,7 +94,7 @@ export const PlaceForm: FC<{
               {category.name}
             </SelectItem>
           ))}
-        </Select> */}
+        </Select>
         <Input
           {...nextuiRegister('location')}
           label={t('columns.location')}

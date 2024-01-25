@@ -7,7 +7,7 @@ import {
   listPlacesSchema,
 } from '~/schemas/places'
 import { db } from '~/server/db/db'
-import { places } from '~/server/db/schema'
+import { places, placesToPlaceCategories } from '~/server/db/schema'
 import { selectPoint } from '~/server/helpers/spatial-data'
 import {
   flattenTranslationsOnExecute,
@@ -86,13 +86,23 @@ export const placesAdminRouter = router({
   createPlace: adminProcedure
     .input(createPlaceSchema)
     .mutation(async ({ input }) => {
-      const result = await db.insert(places).values({
-        name: input.name,
-        description: input.description,
-        mainCategoryId: input.mainCategory,
-        location: pointToString(input.location),
-      })
+      await db.transaction(async (tx) => {
+        const insertPlaceResult = await tx.insert(places).values({
+          name: input.name,
+          description: input.description,
+          mainCategoryId: input.mainCategory,
+          location: pointToString(input.location),
+        })
+        const newPlaceId = Number(insertPlaceResult.insertId)
 
-      return result.insertId
+        await tx.insert(placesToPlaceCategories).values(
+          input.categories.map((categoryId) => ({
+            placeId: newPlaceId,
+            categoryId: categoryId,
+          }))
+        )
+
+        return newPlaceId
+      })
     }),
 })
