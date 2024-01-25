@@ -1,9 +1,13 @@
 import 'server-only'
 
-import { calculateLocation } from '~/helpers/spatial-data'
-import { listCategoriesSchema, listPlacesSchema } from '~/schemas/places'
+import { calculateLocation, pointToString } from '~/helpers/spatial-data'
+import {
+  createPlaceSchema,
+  listCategoriesSchema,
+  listPlacesSchema,
+} from '~/schemas/places'
 import { db } from '~/server/db/db'
-import { places } from '~/server/db/schema'
+import { places, placesToPlaceCategories } from '~/server/db/schema'
 import { selectPoint } from '~/server/helpers/spatial-data'
 import {
   flattenTranslationsOnExecute,
@@ -78,5 +82,27 @@ export const placesAdminRouter = router({
     .input(listCategoriesSchema)
     .query(async ({ input }) => {
       return await listCategories.execute({ locale: input.locale })
+    }),
+  createPlace: adminProcedure
+    .input(createPlaceSchema)
+    .mutation(async ({ input }) => {
+      await db.transaction(async (tx) => {
+        const insertPlaceResult = await tx.insert(places).values({
+          name: input.name,
+          description: input.description,
+          mainCategoryId: input.mainCategory,
+          location: pointToString(input.location),
+        })
+        const newPlaceId = Number(insertPlaceResult.insertId)
+
+        await tx.insert(placesToPlaceCategories).values(
+          input.categories.map((categoryId) => ({
+            placeId: newPlaceId,
+            categoryId: categoryId,
+          }))
+        )
+
+        return newPlaceId
+      })
     }),
 })
