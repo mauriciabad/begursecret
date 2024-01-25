@@ -54,6 +54,7 @@ export function useSafeForm<TSchema extends z.ZodType>(
   return { form, nextuiRegister }
 }
 
+// eslint-disable-next-line  @typescript-eslint/no-explicit-any
 type AnyZodForm = UseZodForm<any>
 
 export function SafeForm<TInput extends FieldValues>(
