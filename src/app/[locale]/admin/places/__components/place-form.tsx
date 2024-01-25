@@ -1,7 +1,7 @@
 'use client'
 
 import { Checkbox } from '@nextui-org/checkbox'
-import { Input } from '@nextui-org/input'
+import { Input, Textarea } from '@nextui-org/input'
 import { Select, SelectItem } from '@nextui-org/select'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next-intl/client'
@@ -12,6 +12,7 @@ import {
   useSafeForm,
 } from '~/components/generic/safe-form'
 import { cn } from '~/helpers/cn'
+import { MapPoint } from '~/helpers/spatial-data'
 import { createPlaceSchema } from '~/schemas/places'
 import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
 import { trpc } from '~/trpc'
@@ -21,6 +22,11 @@ type Category = {
   icon: PlaceCategoryIconType | null
   name: string
 }
+
+export const DEFAULT_LOCATION = {
+  lat: 41.953,
+  lng: 3.2137,
+} as const satisfies MapPoint
 
 export const PlaceForm: FC<{
   categories: Category[]
@@ -38,7 +44,7 @@ export const PlaceForm: FC<{
       description: undefined,
       mainCategory: undefined,
       categories: '',
-      location: undefined,
+      location: `${DEFAULT_LOCATION.lat},${DEFAULT_LOCATION.lng}`,
     },
   })
 
@@ -63,42 +69,47 @@ export const PlaceForm: FC<{
       >
         <Input
           {...nextuiRegister('name')}
+          className="mt-4"
           label={t('columns.name')}
-          labelPlacement="outside"
-        />
-        <Input
-          {...nextuiRegister('description')}
-          label={t('columns.description')}
-          labelPlacement="outside"
         />
 
-        <Select
-          {...nextuiRegister('mainCategory')}
-          label={t('columns.mainCategory')}
-          labelPlacement="outside"
-        >
-          {categories.map((category) => (
-            <SelectItem key={category.id} value={category.id}>
-              {category.name}
-            </SelectItem>
-          ))}
-        </Select>
-        <Select
-          {...nextuiRegister('categories')}
-          label={t('columns.categories')}
-          labelPlacement="outside"
-          selectionMode="multiple"
-        >
-          {categories.map((category) => (
-            <SelectItem key={category.id} value={category.id}>
-              {category.name}
-            </SelectItem>
-          ))}
-        </Select>
+        <Textarea
+          {...nextuiRegister('description')}
+          className="mt-4"
+          label={t('columns.description')}
+        />
+
+        <div className="mt-4 grid gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          <Select
+            {...nextuiRegister('mainCategory')}
+            label={t('columns.mainCategory')}
+          >
+            {categories.map((category) => (
+              <SelectItem key={category.id} value={category.id}>
+                {category.name}
+              </SelectItem>
+            ))}
+          </Select>
+
+          <Select
+            {...nextuiRegister('categories')}
+            label={t('columns.categories')}
+            selectionMode="multiple"
+            className="sm:col-span-2 lg:col-span-3"
+          >
+            {categories.map((category) => (
+              <SelectItem key={category.id} value={category.id}>
+                {category.name}
+              </SelectItem>
+            ))}
+          </Select>
+        </div>
+
         <Input
           {...nextuiRegister('location')}
+          className="mt-4"
           label={t('columns.location')}
-          labelPlacement="outside"
+          placeholder="Lat, Lng"
         />
 
         <div className="mt-8 flex items-center justify-start gap-4">
