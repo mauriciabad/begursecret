@@ -12,7 +12,6 @@ import {
   useSafeForm,
 } from '~/components/generic/safe-form'
 import { cn } from '~/helpers/cn'
-import { MapPoint } from '~/helpers/spatial-data'
 import { createPlaceSchema } from '~/schemas/places'
 import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
 import { trpc } from '~/trpc'
@@ -22,11 +21,6 @@ type Category = {
   icon: PlaceCategoryIconType | null
   name: string
 }
-
-export const DEFAULT_LOCATION = {
-  lat: 41.953,
-  lng: 3.2137,
-} as const satisfies MapPoint
 
 export const PlaceForm: FC<{
   categories: Category[]
@@ -44,7 +38,7 @@ export const PlaceForm: FC<{
       description: undefined,
       mainCategory: undefined,
       categories: '',
-      location: `${DEFAULT_LOCATION.lat},${DEFAULT_LOCATION.lng}`,
+      location: undefined,
     },
   })
 
