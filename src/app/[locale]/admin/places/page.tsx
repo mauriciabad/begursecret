@@ -4,7 +4,7 @@ import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
 import { onlyTranslatableLocales, type LocaleRouteParams } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
-import { PlacesTable } from './__components/places-table/places-table'
+import { PlacesTable } from './__components/places-table'
 
 export async function generateMetadata({
   params,
