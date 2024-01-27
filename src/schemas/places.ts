@@ -39,6 +39,7 @@ export const createPlaceSchema = z.object({
         lng: z.number(),
       })
     ),
+  mainImage: z.string(),
 })
 
 export type ListPlacesInputData = z.infer<typeof listPlacesSchema>

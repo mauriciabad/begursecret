@@ -1,11 +1,15 @@
 import { eq } from 'drizzle-orm'
 import { withAxiom } from 'next-axiom'
 import { NextResponse } from 'next/server'
-import sharp from 'sharp'
-import { deleteFromS3, uploadToS3 } from '~/server/aws'
 import { db } from '~/server/db/db'
 import { users } from '~/server/db/schema'
 import { getSession } from '~/server/get-server-thing'
+import { proccessAndUploadOrDeleteFromS3 } from '~/server/helpers/upload-images'
+
+// TODO: Replace when issue gets solved
+// https://github.com/axiomhq/next-axiom/pull/162
+// export type UploadProfileImageResponse = NextResponseType<typeof POST>
+export type UploadProfileImageResponse = { imageUrl: string }
 
 export const POST = withAxiom(async (request) => {
   const session = await getSession()
@@ -16,9 +20,10 @@ export const POST = withAxiom(async (request) => {
   const formData = await request.formData()
   const imageFile = formData.get('image') as unknown as File | null
 
-  const imageUrl = await uploadOrDeleteFromS3(
+  const imageUrl = await proccessAndUploadOrDeleteFromS3(
     imageFile,
-    `profile-images/${session.user.id}`
+    `profile-images/${session.user.id}`,
+    (sharpImg) => sharpImg.resize({ height: 256, width: 256, fit: 'cover' })
   )
 
   await db
@@ -30,34 +35,3 @@ export const POST = withAxiom(async (request) => {
 
   return NextResponse.json({ imageUrl })
 })
-
-type ExtractGenericFromNextResponse<Type> =
-  Type extends NextResponse<infer X> ? X : never
-export type UploadProfileImageResponse = ExtractGenericFromNextResponse<
-  Awaited<ReturnType<typeof POST>>
->
-
-async function uploadOrDeleteFromS3<K extends string>(
-  file: File | null,
-  key: K
-) {
-  if (file) {
-    const imageBuffer = Buffer.from(await file.arrayBuffer())
-
-    const editedImageBuffer = await sharp(imageBuffer)
-      .resize({ height: 256, width: 256, fit: 'cover' })
-      .toBuffer()
-
-    return await uploadToS3({
-      buffer: editedImageBuffer,
-      key,
-      contentType: file.type,
-    })
-  } else {
-    await deleteFromS3({
-      key,
-    })
-
-    return null
-  }
-}

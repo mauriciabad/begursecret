@@ -15,6 +15,7 @@ import { cn } from '~/helpers/cn'
 import { createPlaceSchema } from '~/schemas/places'
 import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
 import { trpc } from '~/trpc'
+import { UploadPlaceImageModal } from './upload-place-image-modal'
 
 type Category = {
   id: number
@@ -39,6 +40,7 @@ export const PlaceForm: FC<{
       mainCategory: undefined,
       categories: '',
       location: undefined,
+      mainImage: undefined,
     },
   })
 
@@ -104,6 +106,11 @@ export const PlaceForm: FC<{
           className="mt-4"
           label={t('columns.location')}
           placeholder="Lat, Lng"
+        />
+
+        <UploadPlaceImageModal
+          {...nextuiRegister('mainImage')}
+          label={t('columns.mainImage')}
         />
 
         <div className="mt-8 flex items-center justify-start gap-4">

@@ -36,12 +36,20 @@
       "location": "Ubicació",
       "mainCategory": "Categoria principal",
       "categories": "Categories",
+      "mainImage": "Imatge principal",
       "actions": "Accions"
     },
     "add-new": "Crear nou",
     "create-place": "Crear lloc",
     "stay-on-page-after-submit": "Quedar-se a la pàgina després d'enviar",
     "no-places-found": "No s'han trobat llocs",
+    "change-image": {
+      "save": "Guardar",
+      "remove-image": "Eliminar imatge",
+      "change-main-image": "Canviar imatge principal",
+      "upload-new-image": "Pujar nova imatge",
+      "leave-empty-to-remove-main-image": "Deixa-ho buit per eliminar la imatge principal"
+    },
     "actions": {
       "view": "Veure",
       "edit": "Editar",
