@@ -1,5 +1,6 @@
 import '~/globals.css'
 
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import type { Metadata } from 'next'
 import { AxiomWebVitals } from 'next-axiom'
 import { NextIntlClientProvider, useLocale } from 'next-intl'
@@ -84,6 +85,7 @@ const RootLayout: FC<RootLayoutProps> = async ({ children }) => {
             data-website-id="05dcd962-e08b-4cff-82a6-b0a62c4177a3"
           />
         )}
+        <SpeedInsights />
       </body>
     </html>
   )
