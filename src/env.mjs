@@ -20,7 +20,6 @@ const server = z.object({
     .regex(/[\w\d-]+(\.[\w\d-]+)*/)
     .optional(),
 
-  DATABASE_LABEL: z.enum(['local', 'stage', 'prod']).optional(),
   USE_LOCAL_DB: z.union([z.literal('true'), z.literal('false')]).optional(),
   DATABASE_HOST: z.string().min(1),
   DATABASE_USERNAME: z.string().min(1),
@@ -50,7 +49,11 @@ const refineServer = (obj) => obj
  * This way you can ensure the app isn't built with invalid env vars.
  * To expose them to the client, prefix them with `NEXT_PUBLIC_`.
  */
-const client = z.object({})
+const client = z.object({
+  NEXT_PUBLIC_ENV_LABEL: z.enum(['local', 'stage', 'prod']).optional(),
+  NEXT_PUBLIC_AWS_BUCKET_REGION: z.string().min(1),
+  NEXT_PUBLIC_AWS_BUCKET_NAME: z.string().min(1),
+})
 
 const VERCEL_URL_WITH_PROTOCOL =
   process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`
@@ -79,7 +82,7 @@ const processEnv = {
   VERCEL_URL: process.env.VERCEL_URL,
   NEXTAUTH_URL: process.env.NEXTAUTH_URL ?? VERCEL_URL_WITH_PROTOCOL,
 
-  DATABASE_LABEL: process.env.DATABASE_LABEL,
+  NEXT_PUBLIC_ENV_LABEL: process.env.NEXT_PUBLIC_ENV_LABEL,
   USE_LOCAL_DB: process.env.USE_LOCAL_DB,
   DATABASE_HOST: process.env.DATABASE_HOST,
   DATABASE_USERNAME: process.env.DATABASE_USERNAME,
@@ -88,6 +91,8 @@ const processEnv = {
 
   AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
   AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
+  NEXT_PUBLIC_AWS_BUCKET_REGION: process.env.NEXT_PUBLIC_AWS_BUCKET_REGION,
+  NEXT_PUBLIC_AWS_BUCKET_NAME: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME,
 }
 
 // Don't touch the part below

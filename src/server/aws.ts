@@ -7,8 +7,8 @@ import {
 } from '@aws-sdk/client-s3'
 import { env } from '~/env.mjs'
 
-export const BUCKET_REGION = 'eu-west-1'
-export const BUCKET_NAME = 'descobreix-begur-app-g3qf4o'
+const BUCKET_REGION = env.NEXT_PUBLIC_AWS_BUCKET_REGION
+const BUCKET_NAME = env.NEXT_PUBLIC_AWS_BUCKET_NAME
 
 export const s3 = new S3Client({
   region: BUCKET_REGION,

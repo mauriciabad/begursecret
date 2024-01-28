@@ -1,6 +1,9 @@
+import { env } from '~/env.mjs'
+
+const BUCKET_REGION = env.NEXT_PUBLIC_AWS_BUCKET_REGION
+const BUCKET_NAME = env.NEXT_PUBLIC_AWS_BUCKET_NAME
+const defaultImageKey = 'static/app/content-placeholder.png'
+
 export function makeImageUrl<T extends string>(s3key: T | null) {
-  if (!s3key) {
-    return 'https://descobreix-begur-app-g3qf4o.s3.eu-west-1.amazonaws.com/static/app/content-placeholder.png'
-  }
-  return `https://descobreix-begur-app-g3qf4o.s3.eu-west-1.amazonaws.com/${s3key}` as const
+  return `https://${BUCKET_NAME}.s3.${BUCKET_REGION}.amazonaws.com/${s3key ?? defaultImageKey}` as const
 }

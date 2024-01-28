@@ -2,7 +2,7 @@ import type { FC } from 'react'
 import { env } from '~/env.mjs'
 import { cn } from '~/helpers/cn'
 
-const dbLabel = env.DATABASE_LABEL
+const dbLabel = env.NEXT_PUBLIC_ENV_LABEL
 
 const dbLabelText = {
   local: 'Local DB',

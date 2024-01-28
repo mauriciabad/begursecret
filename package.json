@@ -16,7 +16,7 @@
     "db:studio": "drizzle-kit studio",
     "db:local:studio": "USE_LOCAL_DB=true drizzle-kit studio",
     "db:local:migrate": "USE_LOCAL_DB=true node ./src/server/db/migrate.mjs",
-    "db:local:run-app": "USE_LOCAL_DB=true DATABASE_LABEL=local next dev",
+    "db:local:run-app": "USE_LOCAL_DB=true NEXT_PUBLIC_ENV_LABEL=local next dev",
     "db:local:run-db": "docker run --name descobreix-begur-app-database -e MYSQL_ROOT_PASSWORD=unsafePaswordOnlyForLocalhost -e MYSQL_DATABASE=descobreix-begur-app -p 3306:3306 mysql"
   },
   "dependencies": {
