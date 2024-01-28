@@ -1,7 +1,8 @@
 import { z } from 'zod'
+import { numericIdSchema } from './shared'
 
 export const verificateVisitSchema = z.object({
-  placeId: z.number().min(1).int(),
+  placeId: numericIdSchema,
   deviceLocation: z
     .object({
       lat: z.number(),

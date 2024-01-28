@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { translatableLocales } from '~/i18n'
+import { numericIdSchema } from './shared'
 
 export const listPlacesSchema = z.object({
   locale: z.enum(translatableLocales).nullable(),
@@ -7,12 +8,12 @@ export const listPlacesSchema = z.object({
 
 export const searchPlacesSchema = z.object({
   locale: z.enum(translatableLocales).nullable(),
-  category: z.number().min(1).int().nullable(),
+  category: numericIdSchema.nullable(),
 })
 
 export const getPlacesSchema = z.object({
   locale: z.enum(translatableLocales).nullable(),
-  id: z.number().min(1).int(),
+  id: numericIdSchema,
 })
 
 export const listCategoriesSchema = z.object({
@@ -26,7 +27,7 @@ export const createPlaceSchema = z.object({
   categories: z
     .string()
     .transform((value) => value.split(',').map(Number))
-    .pipe(z.array(z.number())),
+    .pipe(z.array(numericIdSchema)),
   location: z
     .string()
     .transform((value) => {
@@ -39,7 +40,7 @@ export const createPlaceSchema = z.object({
         lng: z.number(),
       })
     ),
-  mainImage: z.string(),
+  mainImage: z.string().optional(),
 })
 
 export type ListPlacesInputData = z.infer<typeof listPlacesSchema>
