@@ -23,10 +23,14 @@ export const listCategoriesSchema = z.object({
 export const createPlaceSchema = z.object({
   name: z.string().min(3),
   description: z.string().min(3).optional(),
-  mainCategory: z.coerce.number(),
+  mainCategory: z.coerce.number().positive('Required').int(),
   categories: z
     .string()
-    .transform((value) => value.split(',').map(Number))
+    .optional()
+    .transform((value) => {
+      if (!value) return []
+      return value.split(',').map(Number)
+    })
     .pipe(z.array(numericIdSchema)),
   location: z
     .string()
