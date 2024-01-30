@@ -37,8 +37,10 @@
       "mainCategory": "Main category",
       "categories": "Categories",
       "mainImage": "Main image",
-      "actions": "Actions"
+      "actions": "Actions",
+      "content": "Content"
     },
+    "markdown-supported": "Markdown supported",
     "add-new": "Add new",
     "create-place": "Create place",
     "stay-on-page-after-submit": "Stay on page after submit",

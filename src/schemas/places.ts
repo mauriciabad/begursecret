@@ -22,7 +22,7 @@ export const listCategoriesSchema = z.object({
 
 export const createPlaceSchema = z.object({
   name: z.string().min(3),
-  description: z.string().min(3).optional(),
+  description: z.string().optional(),
   mainCategory: z.coerce.number().positive('Required').int(),
   categories: z
     .string()
@@ -34,6 +34,7 @@ export const createPlaceSchema = z.object({
     .pipe(z.array(numericIdSchema)),
   location: z
     .string()
+    .min(3, 'Required')
     .transform((value) => {
       const [lat, lng] = value.split(',')
       return { lat: Number(lat), lng: Number(lng) }
@@ -45,6 +46,7 @@ export const createPlaceSchema = z.object({
       })
     ),
   mainImage: z.string().optional(),
+  content: z.string().optional(),
 })
 
 export type ListPlacesInputData = z.infer<typeof listPlacesSchema>

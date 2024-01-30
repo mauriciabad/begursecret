@@ -93,6 +93,7 @@ export const placesAdminRouter = router({
           mainCategoryId: input.mainCategory,
           mainImage: input.mainImage,
           location: pointToString(input.location),
+          content: input.content,
         })
         const newPlaceId = Number(insertPlaceResult.insertId)
 

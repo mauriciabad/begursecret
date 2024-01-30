@@ -37,8 +37,10 @@
       "mainCategory": "Categoria principal",
       "categories": "Categories",
       "mainImage": "Imatge principal",
-      "actions": "Accions"
+      "actions": "Accions",
+      "content": "Contingut"
     },
+    "markdown-supported": "Markdown suportat",
     "add-new": "Crear nou",
     "create-place": "Crear lloc",
     "stay-on-page-after-submit": "Quedar-se a la pàgina després d'enviar",

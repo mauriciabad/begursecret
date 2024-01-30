@@ -40,6 +40,7 @@ export const PlaceForm: FC<{
       categories: '',
       location: undefined,
       mainImage: undefined,
+      content: undefined,
     },
   })
 
@@ -111,6 +112,13 @@ export const PlaceForm: FC<{
         <UploadPlaceImageModal
           {...noRefRegister('mainImage')}
           label={t('columns.mainImage')}
+        />
+
+        <Textarea
+          {...nextuiRegister('content')}
+          className="mt-4"
+          label={t('columns.content')}
+          description={t('markdown-supported')}
         />
 
         <div className="mt-8 flex items-center justify-start gap-4">
