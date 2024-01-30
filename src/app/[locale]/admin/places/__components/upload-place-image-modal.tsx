@@ -39,16 +39,24 @@ export const UploadPlaceImageModal = forwardRef<
     const [mainImage, setMainImage] = useState<string | null>(
       defaultValue || null
     )
+    const [isUploading, setIsUploading] = useState(false)
 
     const uploadNewImage = async () => {
-      const { imageKey } = await uploadImage<UploadPlaceImageResponse>({
-        file,
-        endpoint: '/api/upload/place-image',
-      })
+      setIsUploading(true)
+      try {
+        const { imageKey } = await uploadImage<UploadPlaceImageResponse>({
+          file,
+          endpoint: '/api/upload/place-image',
+        })
 
-      setMainImage(imageKey)
+        setMainImage(imageKey)
 
-      onClose()
+        onClose()
+      } catch (e) {
+        console.error(e)
+      } finally {
+        setIsUploading(false)
+      }
     }
 
     const removeImage = () => {
@@ -66,7 +74,7 @@ export const UploadPlaceImageModal = forwardRef<
         <input
           {...inputProps}
           ref={ref}
-          value={mainImage ?? ''}
+          value={mainImage ?? undefined}
           type="hidden"
           className="hidden"
           aria-hidden
@@ -91,7 +99,11 @@ export const UploadPlaceImageModal = forwardRef<
             </AlertBox>
           )}
         </div>
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <Modal
+          isOpen={isOpen}
+          onOpenChange={onOpenChange}
+          isDismissable={!isUploading}
+        >
           <ModalContent>
             {() => (
               <>
@@ -110,6 +122,9 @@ export const UploadPlaceImageModal = forwardRef<
                     placeholder=" "
                     onChange={handleFileChange}
                     accept="image/*"
+                    isDisabled={isUploading}
+                    isInvalid={isInvalid}
+                    errorMessage={errorMessage}
                   />
                 </ModalBody>
 
@@ -119,6 +134,8 @@ export const UploadPlaceImageModal = forwardRef<
                     variant="solid"
                     fullWidth
                     onPress={removeImage}
+                    isDisabled={isUploading}
+                    isLoading={isUploading}
                   >
                     {t('change-image.remove-image')}
                   </Button>
@@ -128,6 +145,8 @@ export const UploadPlaceImageModal = forwardRef<
                     color="primary"
                     fullWidth
                     onPress={uploadNewImage}
+                    isLoading={isUploading}
+                    isDisabled={isUploading || !file}
                   >
                     {t('change-image.save')}
                   </Button>
