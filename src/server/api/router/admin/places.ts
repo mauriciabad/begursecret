@@ -91,16 +91,19 @@ export const placesAdminRouter = router({
           name: input.name,
           description: input.description,
           mainCategoryId: input.mainCategory,
+          mainImage: input.mainImage,
           location: pointToString(input.location),
         })
         const newPlaceId = Number(insertPlaceResult.insertId)
 
-        await tx.insert(placesToPlaceCategories).values(
-          input.categories.map((categoryId) => ({
-            placeId: newPlaceId,
-            categoryId: categoryId,
-          }))
-        )
+        if (input.categories.length > 0) {
+          await tx.insert(placesToPlaceCategories).values(
+            input.categories.map((categoryId) => ({
+              placeId: newPlaceId,
+              categoryId: categoryId,
+            }))
+          )
+        }
 
         return newPlaceId
       })
