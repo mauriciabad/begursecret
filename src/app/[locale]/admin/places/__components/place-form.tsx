@@ -31,7 +31,7 @@ export const PlaceForm: FC<{
 
   const createPlaceMutation = trpc.admin.places.createPlace.useMutation()
 
-  const { form, nextuiRegister } = useSafeForm({
+  const { form, nextuiRegister, noRefRegister } = useSafeForm({
     schema: createPlaceSchema,
     defaultValues: {
       name: undefined,
@@ -109,7 +109,7 @@ export const PlaceForm: FC<{
         />
 
         <UploadPlaceImageModal
-          {...nextuiRegister('mainImage')}
+          {...noRefRegister('mainImage')}
           label={t('columns.mainImage')}
         />
 
