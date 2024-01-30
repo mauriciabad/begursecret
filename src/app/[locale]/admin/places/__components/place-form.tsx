@@ -11,7 +11,6 @@ import {
   SafeSubmitButton,
   useSafeForm,
 } from '~/components/generic/safe-form'
-import { cn } from '~/helpers/cn'
 import { createPlaceSchema } from '~/schemas/places'
 import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
 import { trpc } from '~/trpc'
@@ -54,6 +53,7 @@ export const PlaceForm: FC<{
       <SafeForm
         form={form}
         handleSubmit={async (values) => {
+          console.log(values)
           await createPlaceMutation.mutateAsync(values)
           form.reset()
 
@@ -61,7 +61,7 @@ export const PlaceForm: FC<{
             return router.push('/admin/places/')
           }
         }}
-        className={cn(className)}
+        className={className}
       >
         <Input
           {...nextuiRegister('name')}
