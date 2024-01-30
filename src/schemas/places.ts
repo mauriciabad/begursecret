@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { translatableLocales } from '~/i18n'
+import { numericIdSchema } from './shared'
 
 export const listPlacesSchema = z.object({
   locale: z.enum(translatableLocales).nullable(),
@@ -7,12 +8,12 @@ export const listPlacesSchema = z.object({
 
 export const searchPlacesSchema = z.object({
   locale: z.enum(translatableLocales).nullable(),
-  category: z.number().min(1).int().nullable(),
+  category: numericIdSchema.nullable(),
 })
 
 export const getPlacesSchema = z.object({
   locale: z.enum(translatableLocales).nullable(),
-  id: z.number().min(1).int(),
+  id: numericIdSchema,
 })
 
 export const listCategoriesSchema = z.object({
@@ -21,14 +22,19 @@ export const listCategoriesSchema = z.object({
 
 export const createPlaceSchema = z.object({
   name: z.string().min(3),
-  description: z.string().min(3).optional(),
-  mainCategory: z.coerce.number(),
+  description: z.string().optional(),
+  mainCategory: z.coerce.number().positive('Required').int(),
   categories: z
     .string()
-    .transform((value) => value.split(',').map(Number))
-    .pipe(z.array(z.number())),
+    .optional()
+    .transform((value) => {
+      if (!value) return []
+      return value.split(',').map(Number)
+    })
+    .pipe(z.array(numericIdSchema)),
   location: z
     .string()
+    .min(3, 'Required')
     .transform((value) => {
       const [lat, lng] = value.split(',')
       return { lat: Number(lat), lng: Number(lng) }
@@ -39,6 +45,8 @@ export const createPlaceSchema = z.object({
         lng: z.number(),
       })
     ),
+  mainImage: z.string().optional(),
+  content: z.string().optional(),
 })
 
 export type ListPlacesInputData = z.infer<typeof listPlacesSchema>

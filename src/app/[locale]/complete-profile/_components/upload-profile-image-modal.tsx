@@ -15,26 +15,8 @@ import { useTranslations } from 'next-intl'
 import { ChangeEvent, FC, FormEvent, useState } from 'react'
 import { UploadProfileImageResponse } from '~/app/api/upload/profile-image/route'
 import { AlertBox } from '~/components/generic/alert-box'
+import { uploadImage } from '~/helpers/upload-images'
 import { UpdateSessionSchemaType } from '~/schemas/profile'
-
-const uploadProfileImage = async ({ file }: { file: File | null }) => {
-  const body = new FormData()
-
-  if (file) body.set('image', file)
-
-  const response = await fetch('/api/upload/profile-image', {
-    method: 'POST',
-    body,
-  })
-
-  if (!response.ok) {
-    throw new Error('Error uploading profile image')
-  }
-
-  const result: UploadProfileImageResponse = await response.json()
-  if (!result) throw new Error('Error uploading profile image')
-  return result
-}
 
 export const UploadProfileImageModal: FC<{
   className?: string
@@ -47,11 +29,10 @@ export const UploadProfileImageModal: FC<{
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    // TODO: Remove when issue gets solved
-    // https://github.com/axiomhq/next-axiom/pull/162
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const { imageUrl } = await uploadProfileImage({ file })
+    const { imageUrl } = await uploadImage<UploadProfileImageResponse>({
+      file,
+      endpoint: '/api/upload/profile-image',
+    })
 
     const updateData: UpdateSessionSchemaType = { picture: imageUrl }
     await update(updateData)

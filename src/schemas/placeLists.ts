@@ -1,8 +1,9 @@
 import { z } from 'zod'
 import { translatableLocales } from '~/i18n'
+import { numericIdSchema } from './shared'
 
 export const addToVisitedPlacesListSchema = z.object({
-  placeId: z.number().int().min(0).optional(),
+  placeId: numericIdSchema.optional(),
 })
 
 export const getVisitedPlacesSchema = z.object({

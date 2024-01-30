@@ -36,12 +36,22 @@
       "location": "Location",
       "mainCategory": "Main category",
       "categories": "Categories",
-      "actions": "Actions"
+      "mainImage": "Main image",
+      "actions": "Actions",
+      "content": "Content"
     },
+    "markdown-supported": "Markdown supported",
     "add-new": "Add new",
     "create-place": "Create place",
     "stay-on-page-after-submit": "Stay on page after submit",
     "no-places-found": "No places found",
+    "change-image": {
+      "save": "Save",
+      "remove-image": "Remove image",
+      "change-main-image": "Change main image",
+      "upload-new-image": "Upload new image",
+      "leave-empty-to-remove-main-image": "Leave empty to remove main image"
+    },
     "actions": {
       "view": "View",
       "edit": "Edit",

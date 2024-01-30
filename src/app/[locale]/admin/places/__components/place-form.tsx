@@ -11,10 +11,10 @@ import {
   SafeSubmitButton,
   useSafeForm,
 } from '~/components/generic/safe-form'
-import { cn } from '~/helpers/cn'
 import { createPlaceSchema } from '~/schemas/places'
 import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
 import { trpc } from '~/trpc'
+import { UploadPlaceImageModal } from './upload-place-image-modal'
 
 type Category = {
   id: number
@@ -31,7 +31,7 @@ export const PlaceForm: FC<{
 
   const createPlaceMutation = trpc.admin.places.createPlace.useMutation()
 
-  const { form, nextuiRegister } = useSafeForm({
+  const { form, nextuiRegister, noRefRegister } = useSafeForm({
     schema: createPlaceSchema,
     defaultValues: {
       name: undefined,
@@ -39,6 +39,8 @@ export const PlaceForm: FC<{
       mainCategory: undefined,
       categories: '',
       location: undefined,
+      mainImage: undefined,
+      content: undefined,
     },
   })
 
@@ -59,7 +61,7 @@ export const PlaceForm: FC<{
             return router.push('/admin/places/')
           }
         }}
-        className={cn(className)}
+        className={className}
       >
         <Input
           {...nextuiRegister('name')}
@@ -104,6 +106,18 @@ export const PlaceForm: FC<{
           className="mt-4"
           label={t('columns.location')}
           placeholder="Lat, Lng"
+        />
+
+        <UploadPlaceImageModal
+          {...noRefRegister('mainImage')}
+          label={t('columns.mainImage')}
+        />
+
+        <Textarea
+          {...nextuiRegister('content')}
+          className="mt-4"
+          label={t('columns.content')}
+          description={t('markdown-supported')}
         />
 
         <div className="mt-8 flex items-center justify-start gap-4">
