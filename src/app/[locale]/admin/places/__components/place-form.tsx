@@ -54,7 +54,6 @@ export const PlaceForm: FC<{
       <SafeForm
         form={form}
         handleSubmit={async (values) => {
-          console.log(values)
           await createPlaceMutation.mutateAsync(values)
           form.reset()
 
