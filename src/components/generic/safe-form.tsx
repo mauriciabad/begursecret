@@ -52,6 +52,7 @@ export function useSafeForm<TSchema extends z.ZodType>(
   }
 
   const noRefRegister = (...args: Parameters<typeof nextuiRegister>) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { ref, ...rest } = nextuiRegister(...args)
     return rest
   }
