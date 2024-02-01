@@ -2,30 +2,22 @@
 
 import { Checkbox } from '@nextui-org/checkbox'
 import { Input, Textarea } from '@nextui-org/input'
-import { Select, SelectItem } from '@nextui-org/select'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next-intl/client'
 import { FC, useState } from 'react'
+import { SelectCategory } from '~/components/admin-only/select-category'
 import {
   SafeForm,
   SafeSubmitButton,
   useSafeForm,
 } from '~/components/generic/safe-form'
 import { createPlaceSchema } from '~/schemas/places'
-import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
 import { trpc } from '~/trpc'
 import { UploadPlaceImageModal } from './upload-place-image-modal'
 
-type Category = {
-  id: number
-  icon: PlaceCategoryIconType | null
-  name: string
-}
-
 export const PlaceForm: FC<{
-  categories: Category[]
   className?: string
-}> = ({ className, categories }) => {
+}> = ({ className }) => {
   const t = useTranslations('admin-places')
   const router = useRouter()
 
@@ -76,29 +68,17 @@ export const PlaceForm: FC<{
         />
 
         <div className="mt-4 grid gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          <Select
+          <SelectCategory
             {...nextuiRegister('mainCategory')}
             label={t('columns.mainCategory')}
-          >
-            {categories.map((category) => (
-              <SelectItem key={category.id} value={category.id}>
-                {category.name}
-              </SelectItem>
-            ))}
-          </Select>
+          />
 
-          <Select
+          <SelectCategory
             {...nextuiRegister('categories')}
             label={t('columns.categories')}
             selectionMode="multiple"
             className="sm:col-span-2 lg:col-span-3"
-          >
-            {categories.map((category) => (
-              <SelectItem key={category.id} value={category.id}>
-                {category.name}
-              </SelectItem>
-            ))}
-          </Select>
+          />
         </div>
 
         <Input

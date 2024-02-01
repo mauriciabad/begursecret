@@ -1,9 +1,7 @@
 import type { Metadata } from 'next'
-import { useLocale } from 'next-intl'
 import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
-import { onlyTranslatableLocales, type LocaleRouteParams } from '~/i18n'
-import { getTrpc } from '~/server/get-server-thing'
+import { type LocaleRouteParams } from '~/i18n'
 import { PlaceForm } from '../__components/place-form'
 
 export async function generateMetadata({
@@ -20,16 +18,10 @@ export async function generateMetadata({
 }
 
 const AdminNewPlacePage: FC<LocaleRouteParams> = async () => {
-  const locale = useLocale()
-  const trpc = await getTrpc()
-  const categories = await trpc.admin.places.listCategories({
-    locale: onlyTranslatableLocales(locale),
-  })
-
   return (
     <>
       <main className="mx-auto min-h-screen max-w-7xl p-4 sm:py-8 lg:py-12">
-        <PlaceForm categories={categories} />
+        <PlaceForm />
       </main>
     </>
   )
