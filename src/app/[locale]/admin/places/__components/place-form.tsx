@@ -12,41 +12,64 @@ import {
   useSafeForm,
 } from '~/components/generic/safe-form'
 import { createPlaceSchema } from '~/schemas/places'
+import { ApiRouterOutput } from '~/server/api/router'
 import { trpc } from '~/trpc'
 import { UploadPlaceImageModal } from './upload-place-image-modal'
 
 export const PlaceForm: FC<{
+  place?: NonNullable<ApiRouterOutput['admin']['places']['get']>
   className?: string
-}> = ({ className }) => {
+}> = ({ className, place }) => {
   const t = useTranslations('admin-places')
   const router = useRouter()
 
   const createPlaceMutation = trpc.admin.places.createPlace.useMutation()
+  const editPlaceMutation = trpc.admin.places.editPlace.useMutation()
 
   const { form, nextuiRegister, noRefRegister } = useSafeForm({
     schema: createPlaceSchema,
-    defaultValues: {
-      name: undefined,
-      description: undefined,
-      mainCategory: undefined,
-      categories: '',
-      location: undefined,
-      mainImage: undefined,
-      content: undefined,
-    },
+    defaultValues: place
+      ? {
+          name: place.name,
+          description: place.description ?? undefined,
+          mainCategory: place.mainCategory.id,
+          categories: place.categories.map((c) => c.category.id).join(','),
+          location: `${place.location.lat},${place.location.lng}`,
+          mainImage: place.mainImage ?? undefined,
+          content: place.content ?? undefined,
+        }
+      : {
+          name: undefined,
+          description: undefined,
+          mainCategory: undefined,
+          categories: '',
+          location: undefined,
+          mainImage: undefined,
+          content: undefined,
+        },
   })
 
   const [stayOnPage, setStayOnPage] = useState(false)
 
   return (
     <>
-      <h1 className="text-2xl font-bold">{t('create-place')}</h1>
+      <h1 className="text-2xl font-bold">
+        {place ? t('edit-place') : t('create-place')}
+      </h1>
       <p className="text-lg text-red-500">CATALAN ONLY</p>
 
       <SafeForm
         form={form}
         handleSubmit={async (values) => {
-          await createPlaceMutation.mutateAsync(values)
+          if (place) {
+            await editPlaceMutation.mutateAsync({
+              ...values,
+              id: place.id,
+            })
+          } else {
+            await createPlaceMutation.mutateAsync(values)
+          }
+
           form.reset()
 
           if (!stayOnPage) {

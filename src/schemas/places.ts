@@ -49,8 +49,13 @@ export const createPlaceSchema = z.object({
   content: z.string().optional(),
 })
 
+export const editPlaceSchema = createPlaceSchema.extend({
+  id: numericIdSchema,
+})
+
 export type ListPlacesInputData = z.infer<typeof listPlacesSchema>
 export type GetPlacesInputData = z.infer<typeof getPlacesSchema>
 export type SearchPlacesInputData = z.infer<typeof searchPlacesSchema>
 export type ListCategoriesInputData = z.infer<typeof listCategoriesSchema>
 export type CreatePlaceInputData = z.infer<typeof createPlaceSchema>
+export type EditPlaceInputData = z.infer<typeof editPlaceSchema>

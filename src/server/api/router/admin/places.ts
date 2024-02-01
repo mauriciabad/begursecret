@@ -1,8 +1,11 @@
+import { eq, sql } from 'drizzle-orm'
 import 'server-only'
 
 import { calculateLocation, pointToString } from '~/helpers/spatial-data'
 import {
   createPlaceSchema,
+  editPlaceSchema,
+  getPlacesSchema,
   listCategoriesSchema,
   listPlacesSchema,
 } from '~/schemas/places'
@@ -72,11 +75,60 @@ const listCategories = flattenTranslationsOnExecute(
     .prepare()
 )
 
+const getPlace = flattenTranslationsOnExecute(
+  db.query.places
+    .findFirst(
+      withTranslations({
+        columns: {
+          id: true,
+          mainImage: true,
+          name: true,
+          description: true,
+          content: true,
+        },
+        extras: {
+          location: selectPoint('location', places.location),
+        },
+        where: (place, { eq }) => eq(place.id, sql.placeholder('id')),
+        with: {
+          categories: {
+            columns: {},
+            with: {
+              category: withTranslations({
+                columns: {
+                  id: true,
+                  icon: true,
+                  name: true,
+                },
+              }),
+            },
+          },
+          mainCategory: withTranslations({
+            columns: {
+              id: true,
+              icon: true,
+              color: true,
+              name: true,
+            },
+          }),
+        },
+      })
+    )
+    .prepare()
+)
+
 export const placesAdminRouter = router({
   list: adminProcedure.input(listPlacesSchema).query(async ({ input }) => {
     return (await getAllPlaces.execute({ locale: input.locale })).map(
       calculateLocation
     )
+  }),
+  get: adminProcedure.input(getPlacesSchema).query(async ({ input }) => {
+    const result = await getPlace.execute({
+      locale: input.locale,
+      id: input.id,
+    })
+    return result ? calculateLocation(result) : undefined
   }),
   listCategories: adminProcedure
     .input(listCategoriesSchema)
@@ -107,6 +159,39 @@ export const placesAdminRouter = router({
         }
 
         return newPlaceId
+      })
+    }),
+  editPlace: adminProcedure
+    .input(editPlaceSchema)
+    .mutation(async ({ input }) => {
+      await db.transaction(async (tx) => {
+        const placeId = Number(input.id)
+
+        await tx
+          .update(places)
+          .set({
+            name: input.name,
+            description: input.description,
+            mainCategoryId: input.mainCategory,
+            mainImage: input.mainImage,
+            location: pointToString(input.location),
+            content: input.content,
+          })
+          .where(eq(places.id, placeId))
+
+        if (input.categories.length > 0) {
+          await tx
+            .delete(placesToPlaceCategories)
+            .where(eq(placesToPlaceCategories.placeId, placeId))
+          await tx.insert(placesToPlaceCategories).values(
+            input.categories.map((categoryId) => ({
+              placeId: placeId,
+              categoryId: categoryId,
+            }))
+          )
+        }
+
+        return placeId
       })
     }),
 })
