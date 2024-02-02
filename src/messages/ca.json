@@ -40,8 +40,8 @@
       "actions": "Accions",
       "content": "Contingut"
     },
-    "markdown-supported": "Markdown suportat",
     "add-new": "Crear nou",
+    "edit-place": "Editar lloc",
     "create-place": "Crear lloc",
     "stay-on-page-after-submit": "Quedar-se a la pàgina després d'enviar",
     "no-places-found": "No s'han trobat llocs",
@@ -56,7 +56,8 @@
       "view": "Veure",
       "edit": "Editar",
       "delete": "Eliminar"
-    }
+    },
+    "delete-unsupported": "Eliminar no està suportat, elimina directament de la base de dades"
   },
   "admin-login": {
     "heading": "Accés denegat",

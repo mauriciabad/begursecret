@@ -2,59 +2,87 @@
 
 import { Checkbox } from '@nextui-org/checkbox'
 import { Input, Textarea } from '@nextui-org/input'
-import { Select, SelectItem } from '@nextui-org/select'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next-intl/client'
 import { FC, useState } from 'react'
+import { Controller } from 'react-hook-form'
+import { SelectCategory } from '~/components/admin-only/select-category'
+import { MarkdownEditor } from '~/components/generic/markdown-editor'
 import {
   SafeForm,
   SafeSubmitButton,
   useSafeForm,
 } from '~/components/generic/safe-form'
 import { createPlaceSchema } from '~/schemas/places'
-import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
+import { ApiRouterOutput } from '~/server/api/router'
 import { trpc } from '~/trpc'
 import { UploadPlaceImageModal } from './upload-place-image-modal'
 
-type Category = {
-  id: number
-  icon: PlaceCategoryIconType | null
-  name: string
-}
-
 export const PlaceForm: FC<{
-  categories: Category[]
+  place?: NonNullable<ApiRouterOutput['admin']['places']['get']>
   className?: string
-}> = ({ className, categories }) => {
+}> = ({ className, place }) => {
   const t = useTranslations('admin-places')
   const router = useRouter()
 
-  const createPlaceMutation = trpc.admin.places.createPlace.useMutation()
-
-  const { form, nextuiRegister, noRefRegister } = useSafeForm({
-    schema: createPlaceSchema,
-    defaultValues: {
-      name: undefined,
-      description: undefined,
-      mainCategory: undefined,
-      categories: '',
-      location: undefined,
-      mainImage: undefined,
-      content: undefined,
+  const utils = trpc.useUtils()
+  const createPlaceMutation = trpc.admin.places.createPlace.useMutation({
+    onSuccess() {
+      utils.admin.places.list.invalidate()
+      utils.admin.places.get.invalidate()
     },
+  })
+  const editPlaceMutation = trpc.admin.places.editPlace.useMutation({
+    onSuccess() {
+      utils.admin.places.list.invalidate()
+      utils.admin.places.get.invalidate()
+    },
+  })
+
+  const form = useSafeForm({
+    schema: createPlaceSchema,
+    defaultValues: place
+      ? {
+          name: place.name,
+          description: place.description ?? undefined,
+          mainCategory: place.mainCategory.id,
+          categories: place.categories.map((c) => c.category.id).join(','),
+          location: `${place.location.lat},${place.location.lng}`,
+          mainImage: place.mainImage ?? undefined,
+          content: place.content ?? undefined,
+        }
+      : {
+          name: undefined,
+          description: undefined,
+          mainCategory: undefined,
+          categories: '',
+          location: undefined,
+          mainImage: undefined,
+          content: undefined,
+        },
   })
 
   const [stayOnPage, setStayOnPage] = useState(false)
 
   return (
     <>
-      <h1 className="text-2xl font-bold">{t('create-place')}</h1>
+      <h1 className="text-2xl font-bold">
+        {place ? t('edit-place') : t('create-place')}
+      </h1>
       <p className="text-lg text-red-500">CATALAN ONLY</p>
 
       <SafeForm
         form={form}
         handleSubmit={async (values) => {
-          await createPlaceMutation.mutateAsync(values)
+          if (place) {
+            await editPlaceMutation.mutateAsync({
+              ...values,
+              id: place.id,
+            })
+          } else {
+            await createPlaceMutation.mutateAsync(values)
+          }
+
           form.reset()
 
           if (!stayOnPage) {
@@ -63,61 +91,116 @@ export const PlaceForm: FC<{
         }}
         className={className}
       >
-        <Input
-          {...nextuiRegister('name')}
-          className="mt-4"
-          label={t('columns.name')}
+        <Controller
+          name="name"
+          control={form.control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input
+              isInvalid={!!form.formState.errors['name']}
+              errorMessage={form.formState.errors['name']?.message}
+              onBlur={onBlur}
+              onChange={onChange}
+              value={value}
+              className="mt-4"
+              label={t('columns.name')}
+            />
+          )}
         />
-
-        <Textarea
-          {...nextuiRegister('description')}
-          className="mt-4"
-          label={t('columns.description')}
+        <Controller
+          name="description"
+          control={form.control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Textarea
+              isInvalid={!!form.formState.errors['name']}
+              errorMessage={form.formState.errors['name']?.message}
+              onBlur={onBlur}
+              onChange={onChange}
+              value={value}
+              className="mt-4"
+              label={t('columns.description')}
+            />
+          )}
         />
 
         <div className="mt-4 grid gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          <Select
-            {...nextuiRegister('mainCategory')}
-            label={t('columns.mainCategory')}
-          >
-            {categories.map((category) => (
-              <SelectItem key={category.id} value={category.id}>
-                {category.name}
-              </SelectItem>
-            ))}
-          </Select>
+          <Controller
+            name="mainCategory"
+            control={form.control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <SelectCategory
+                isInvalid={!!form.formState.errors['mainCategory']}
+                errorMessage={form.formState.errors['mainCategory']?.message}
+                onBlur={onBlur}
+                onChange={onChange}
+                selectedKeys={value ? [String(value)] : []}
+                label={t('columns.mainCategory')}
+              />
+            )}
+          />
 
-          <Select
-            {...nextuiRegister('categories')}
-            label={t('columns.categories')}
-            selectionMode="multiple"
-            className="sm:col-span-2 lg:col-span-3"
-          >
-            {categories.map((category) => (
-              <SelectItem key={category.id} value={category.id}>
-                {category.name}
-              </SelectItem>
-            ))}
-          </Select>
+          <Controller
+            name="categories"
+            control={form.control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <SelectCategory
+                isInvalid={!!form.formState.errors['categories']}
+                errorMessage={form.formState.errors['categories']?.message}
+                onBlur={onBlur}
+                onChange={onChange}
+                selectedKeys={value ? value.split(',') : []}
+                label={t('columns.categories')}
+                selectionMode="multiple"
+                className="sm:col-span-2 lg:col-span-3"
+              />
+            )}
+          />
         </div>
 
-        <Input
-          {...nextuiRegister('location')}
-          className="mt-4"
-          label={t('columns.location')}
-          placeholder="Lat, Lng"
+        <Controller
+          name="location"
+          control={form.control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input
+              isInvalid={!!form.formState.errors['location']}
+              errorMessage={form.formState.errors['location']?.message}
+              onBlur={onBlur}
+              onChange={onChange}
+              value={value}
+              className="mt-4"
+              label={t('columns.location')}
+              placeholder="Lat, Lng"
+            />
+          )}
         />
 
-        <UploadPlaceImageModal
-          {...noRefRegister('mainImage')}
-          label={t('columns.mainImage')}
+        <Controller
+          name="mainImage"
+          control={form.control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <UploadPlaceImageModal
+              isInvalid={!!form.formState.errors['mainImage']}
+              errorMessage={form.formState.errors['mainImage']?.message}
+              onBlur={onBlur}
+              onChange={onChange}
+              value={value}
+              label={t('columns.mainImage')}
+            />
+          )}
         />
 
-        <Textarea
-          {...nextuiRegister('content')}
-          className="mt-4"
-          label={t('columns.content')}
-          description={t('markdown-supported')}
+        <Controller
+          name="content"
+          control={form.control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <MarkdownEditor
+              isInvalid={!!form.formState.errors['content']}
+              errorMessage={form.formState.errors['content']?.message}
+              onBlur={onBlur}
+              onChange={onChange}
+              value={value}
+              label={t('columns.content')}
+            />
+          )}
         />
 
         <div className="mt-8 flex items-center justify-start gap-4">

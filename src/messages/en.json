@@ -40,8 +40,8 @@
       "actions": "Actions",
       "content": "Content"
     },
-    "markdown-supported": "Markdown supported",
     "add-new": "Add new",
+    "edit-place": "Edit place",
     "create-place": "Create place",
     "stay-on-page-after-submit": "Stay on page after submit",
     "no-places-found": "No places found",
@@ -56,7 +56,8 @@
       "view": "View",
       "edit": "Edit",
       "delete": "Delete"
-    }
+    },
+    "delete-unsupported": "Delete is not supported, delete from database directly"
   },
   "admin-login": {
     "heading": "Access denied",

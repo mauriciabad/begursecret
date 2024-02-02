@@ -13,47 +13,42 @@ import {
 } from '@nextui-org/modal'
 import { useTranslations } from 'next-intl'
 import { ChangeEvent, FC, useState } from 'react'
-import { ChangeHandler } from 'react-hook-form'
+import { ControllerRenderProps } from 'react-hook-form'
 import { UploadPlaceImageResponse } from '~/app/api/upload/place-image/route'
 import { AlertBox } from '~/components/generic/alert-box'
 import { cn } from '~/helpers/cn'
 import { makeImageUrl } from '~/helpers/images'
 import { uploadImage } from '~/helpers/upload-images'
 
-export const UploadPlaceImageModal: FC<{
-  onChange: ChangeHandler
-  onBlur: ChangeHandler
-  name: string
-
-  className?: string
-  label: string
-  defaultValue?: string | null
-  isInvalid?: boolean
-  errorMessage?: string
-}> = ({
+export const UploadPlaceImageModal: FC<
+  Pick<
+    ControllerRenderProps<{ mainImage: string | undefined }>,
+    'onBlur' | 'onChange' | 'value'
+  > & {
+    isInvalid?: boolean
+    errorMessage?: string
+    className?: string
+    label: string
+  }
+> = ({
   className,
-  defaultValue,
   label,
   isInvalid,
   errorMessage,
   onChange,
   onBlur,
-  name,
+  value,
 }) => {
   const t = useTranslations('admin-places')
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
   const [file, setFile] = useState<File | null>(null)
-  const setMainImage = (value: string | null) => {
-    setMainImageOriginal(value)
-    const e = {
-      target: { name, value },
-    } satisfies Parameters<ChangeHandler>[0]
-    onChange(e)
-    onBlur(e)
+  const updateValue = (value: string | null) => {
+    onChange?.({
+      target: { value },
+    })
+    onBlur?.()
   }
-  const [mainImage, setMainImageOriginal] = useState<string | null>(
-    defaultValue || null
-  )
+
   const [isUploading, setIsUploading] = useState(false)
 
   const uploadNewImage = async () => {
@@ -64,7 +59,7 @@ export const UploadPlaceImageModal: FC<{
         endpoint: '/api/upload/place-image',
       })
 
-      setMainImage(imageKey)
+      updateValue(imageKey)
 
       onClose()
     } catch (e) {
@@ -75,7 +70,7 @@ export const UploadPlaceImageModal: FC<{
   }
 
   const removeImage = () => {
-    setMainImage(null)
+    updateValue(null)
     onClose()
   }
 
@@ -94,7 +89,7 @@ export const UploadPlaceImageModal: FC<{
           className={cn('w-full max-w-64', {
             'border-2 border-red-500': isInvalid,
           })}
-          src={makeImageUrl(mainImage)}
+          src={makeImageUrl(value)}
         />
         <Button onPress={onOpen} variant="bordered" className={className}>
           {t('change-image.change-main-image')}
