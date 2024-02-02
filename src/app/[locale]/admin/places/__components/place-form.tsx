@@ -7,6 +7,7 @@ import { useRouter } from 'next-intl/client'
 import { FC, useState } from 'react'
 import { Controller } from 'react-hook-form'
 import { SelectCategory } from '~/components/admin-only/select-category'
+import { MarkdownEditor } from '~/components/generic/markdown-editor'
 import {
   SafeForm,
   SafeSubmitButton,
@@ -191,15 +192,13 @@ export const PlaceForm: FC<{
           name="content"
           control={form.control}
           render={({ field: { onChange, onBlur, value } }) => (
-            <Textarea
+            <MarkdownEditor
               isInvalid={!!form.formState.errors['content']}
               errorMessage={form.formState.errors['content']?.message}
               onBlur={onBlur}
               onChange={onChange}
               value={value}
-              className="mt-4"
               label={t('columns.content')}
-              description={t('markdown-supported')}
             />
           )}
         />
