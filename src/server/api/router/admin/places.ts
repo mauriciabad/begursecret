@@ -125,6 +125,7 @@ export const placesAdminRouter = router({
   }),
   get: adminProcedure.input(getPlacesSchema).query(async ({ input }) => {
     const result = await getPlace.execute({
+      locale: input.locale,
       id: input.id,
     })
     return result ? calculateLocation(result) : undefined
