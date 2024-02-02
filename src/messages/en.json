@@ -57,7 +57,8 @@
       "view": "View",
       "edit": "Edit",
       "delete": "Delete"
-    }
+    },
+    "delete-unsupported": "Delete is not supported, delete from database directly"
   },
   "admin-login": {
     "heading": "Access denied",

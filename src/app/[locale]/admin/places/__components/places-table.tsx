@@ -224,7 +224,7 @@ export const PlacesTable: FC<{
             <Tooltip color="danger" content={t('actions.delete')}>
               <Button
                 onPress={() => {
-                  alert(t('actions.delete'))
+                  alert(t('delete-unsupported'))
                 }}
                 variant="light"
                 radius="sm"

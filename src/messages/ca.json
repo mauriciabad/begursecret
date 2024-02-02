@@ -57,7 +57,8 @@
       "view": "Veure",
       "edit": "Editar",
       "delete": "Eliminar"
-    }
+    },
+    "delete-unsupported": "Eliminar no està suportat, elimina directament de la base de dades"
   },
   "admin-login": {
     "heading": "Accés denegat",
