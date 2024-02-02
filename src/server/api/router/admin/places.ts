@@ -146,6 +146,7 @@ export const placesAdminRouter = router({
           mainImage: input.mainImage,
           location: pointToString(input.location),
           content: input.content,
+          verificationRequirementsId: 1,
         })
         const newPlaceId = Number(insertPlaceResult.insertId)
 
