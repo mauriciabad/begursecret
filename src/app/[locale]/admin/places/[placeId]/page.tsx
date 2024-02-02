@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { getTranslator } from 'next-intl/server'
 import type { FC } from 'react'
-import { LocaleParams, onlyTranslatableLocales } from '~/i18n'
+import { LocaleParams } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
 import { PlaceForm } from '../__components/place-form'
 
@@ -28,7 +28,7 @@ const AdminEditPlacePage: FC<{
   const trpc = await getTrpc()
   const place = await trpc.admin.places.get({
     id: Number(params.placeId),
-    locale: onlyTranslatableLocales(params.locale),
+    locale: null,
   })
 
   return (
