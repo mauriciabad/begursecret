@@ -179,10 +179,11 @@ export const placesAdminRouter = router({
           })
           .where(eq(places.id, placeId))
 
+        await tx
+          .delete(placesToPlaceCategories)
+          .where(eq(placesToPlaceCategories.placeId, placeId))
+
         if (input.categories.length > 0) {
-          await tx
-            .delete(placesToPlaceCategories)
-            .where(eq(placesToPlaceCategories.placeId, placeId))
           await tx.insert(placesToPlaceCategories).values(
             input.categories.map((categoryId) => ({
               placeId: placeId,
