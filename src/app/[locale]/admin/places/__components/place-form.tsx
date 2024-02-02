@@ -5,6 +5,7 @@ import { Input, Textarea } from '@nextui-org/input'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next-intl/client'
 import { FC, useState } from 'react'
+import { Controller } from 'react-hook-form'
 import { SelectCategory } from '~/components/admin-only/select-category'
 import {
   SafeForm,
@@ -23,10 +24,21 @@ export const PlaceForm: FC<{
   const t = useTranslations('admin-places')
   const router = useRouter()
 
-  const createPlaceMutation = trpc.admin.places.createPlace.useMutation()
-  const editPlaceMutation = trpc.admin.places.editPlace.useMutation()
+  const utils = trpc.useUtils()
+  const createPlaceMutation = trpc.admin.places.createPlace.useMutation({
+    onSuccess() {
+      utils.admin.places.list.invalidate()
+      utils.admin.places.get.invalidate()
+    },
+  })
+  const editPlaceMutation = trpc.admin.places.editPlace.useMutation({
+    onSuccess() {
+      utils.admin.places.list.invalidate()
+      utils.admin.places.get.invalidate()
+    },
+  })
 
-  const { form, nextuiRegister, noRefRegister } = useSafeForm({
+  const form = useSafeForm({
     schema: createPlaceSchema,
     defaultValues: place
       ? {
@@ -78,49 +90,118 @@ export const PlaceForm: FC<{
         }}
         className={className}
       >
-        <Input
-          {...nextuiRegister('name')}
-          className="mt-4"
-          label={t('columns.name')}
+        <Controller
+          name="name"
+          control={form.control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input
+              isInvalid={!!form.formState.errors['name']}
+              errorMessage={form.formState.errors['name']?.message}
+              onBlur={onBlur}
+              onChange={onChange}
+              value={value}
+              className="mt-4"
+              label={t('columns.name')}
+            />
+          )}
         />
-
-        <Textarea
-          {...nextuiRegister('description')}
-          className="mt-4"
-          label={t('columns.description')}
+        <Controller
+          name="description"
+          control={form.control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Textarea
+              isInvalid={!!form.formState.errors['name']}
+              errorMessage={form.formState.errors['name']?.message}
+              onBlur={onBlur}
+              onChange={onChange}
+              value={value}
+              className="mt-4"
+              label={t('columns.description')}
+            />
+          )}
         />
 
         <div className="mt-4 grid gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          <SelectCategory
-            {...nextuiRegister('mainCategory')}
-            label={t('columns.mainCategory')}
+          <Controller
+            name="mainCategory"
+            control={form.control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <SelectCategory
+                isInvalid={!!form.formState.errors['mainCategory']}
+                errorMessage={form.formState.errors['mainCategory']?.message}
+                onBlur={onBlur}
+                onChange={onChange}
+                selectedKeys={value ? [String(value)] : []}
+                label={t('columns.mainCategory')}
+              />
+            )}
           />
 
-          <SelectCategory
-            {...nextuiRegister('categories')}
-            label={t('columns.categories')}
-            selectionMode="multiple"
-            className="sm:col-span-2 lg:col-span-3"
+          <Controller
+            name="categories"
+            control={form.control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <SelectCategory
+                isInvalid={!!form.formState.errors['categories']}
+                errorMessage={form.formState.errors['categories']?.message}
+                onBlur={onBlur}
+                onChange={onChange}
+                selectedKeys={value ? value.split(',') : []}
+                label={t('columns.categories')}
+                selectionMode="multiple"
+                className="sm:col-span-2 lg:col-span-3"
+              />
+            )}
           />
         </div>
 
-        <Input
-          {...nextuiRegister('location')}
-          className="mt-4"
-          label={t('columns.location')}
-          placeholder="Lat, Lng"
+        <Controller
+          name="location"
+          control={form.control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input
+              isInvalid={!!form.formState.errors['location']}
+              errorMessage={form.formState.errors['location']?.message}
+              onBlur={onBlur}
+              onChange={onChange}
+              value={value}
+              className="mt-4"
+              label={t('columns.location')}
+              placeholder="Lat, Lng"
+            />
+          )}
         />
 
-        <UploadPlaceImageModal
-          {...noRefRegister('mainImage')}
-          label={t('columns.mainImage')}
+        <Controller
+          name="mainImage"
+          control={form.control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <UploadPlaceImageModal
+              isInvalid={!!form.formState.errors['mainImage']}
+              errorMessage={form.formState.errors['mainImage']?.message}
+              onBlur={onBlur}
+              onChange={onChange}
+              value={value}
+              label={t('columns.mainImage')}
+            />
+          )}
         />
 
-        <Textarea
-          {...nextuiRegister('content')}
-          className="mt-4"
-          label={t('columns.content')}
-          description={t('markdown-supported')}
+        <Controller
+          name="content"
+          control={form.control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Textarea
+              isInvalid={!!form.formState.errors['content']}
+              errorMessage={form.formState.errors['content']?.message}
+              onBlur={onBlur}
+              onChange={onChange}
+              value={value}
+              className="mt-4"
+              label={t('columns.content')}
+              description={t('markdown-supported')}
+            />
+          )}
         />
 
         <div className="mt-8 flex items-center justify-start gap-4">

@@ -42,22 +42,7 @@ export function useSafeForm<TSchema extends z.ZodType>(
 
   form.id = useId()
 
-  const nextuiRegister = (...args: Parameters<FormType['register']>) => {
-    const [key, options] = args
-    return {
-      ...form.register(key, options),
-      isInvalid: !!form.formState.errors[key],
-      errorMessage: form.formState.errors[key]?.message,
-    }
-  }
-
-  const noRefRegister = (...args: Parameters<typeof nextuiRegister>) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { ref, ...rest } = nextuiRegister(...args)
-    return rest
-  }
-
-  return { form, nextuiRegister, noRefRegister }
+  return form
 }
 
 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
