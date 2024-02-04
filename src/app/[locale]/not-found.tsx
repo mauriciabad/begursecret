@@ -17,7 +17,7 @@ export async function generateMetadata({
   }
 }
 
-export default function Page() {
+export default function NotFoundPage() {
   const t = useTranslations('error-pages.not-found')
 
   return (
