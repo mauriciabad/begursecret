@@ -1,6 +1,7 @@
 import 'server-only'
 
 import { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
+import { FlattenTranslationsOfDeepestItem } from '~/server/helpers/translations/query/flatten'
 import { router } from '~/server/trpc'
 import { adminRouter } from './admin'
 import { authRouter } from './auth'
@@ -24,4 +25,6 @@ export const apiRouter = router({
 export type ApiRouter = typeof apiRouter
 
 export type ApiRouterInput = inferRouterInputs<ApiRouter>
-export type ApiRouterOutput = inferRouterOutputs<ApiRouter>
+export type ApiRouterOutput = FlattenTranslationsOfDeepestItem<
+  inferRouterOutputs<ApiRouter>
+>

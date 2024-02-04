@@ -7,19 +7,12 @@ import Link from 'next-intl/link'
 import { FC, useState } from 'react'
 import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
 import { cn } from '~/helpers/cn'
-import {
-  PlaceCategoryColor,
-  PlaceCategoryIcon as PlaceCategoryIconType,
-} from '~/server/db/constants/places'
+import { ApiRouterOutput } from '~/server/api/router'
+
+type Categories = ApiRouterOutput['places']['listCategories']
 
 export const CategoriesGrid: FC<{
-  categories: {
-    id: number
-    icon: PlaceCategoryIconType | null
-    name: string
-    namePlural: string
-    color: PlaceCategoryColor
-  }[]
+  categories: Categories
 }> = ({ categories }) => {
   const t = useTranslations('explore')
   const [showingAll, setShowingAll] = useState<boolean>(false)

@@ -90,3 +90,11 @@ type SimpleType<T extends ValidType> =
         : T extends ObjectType
           ? { [key in Exclude<keyof T, 'translations'>]: SimpleType<T[key]> }
           : T
+
+export type FlattenTranslationsOfDeepestItem<T> = T extends object
+  ? {
+      [K in keyof T]: FlattenTranslationsOfDeepestItem<
+        T[K] extends ValidType ? SimpleType<T[K]> : T[K]
+      >
+    }
+  : T

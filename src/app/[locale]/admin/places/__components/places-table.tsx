@@ -16,7 +16,6 @@ import {
   TableHeader,
   TableRow,
   Tooltip,
-  User,
 } from '@nextui-org/react'
 import {
   IconChevronDown,
@@ -29,36 +28,25 @@ import {
 import { useTranslations } from 'next-intl'
 import Link from 'next-intl/link'
 import { FC, useCallback, useMemo, useState } from 'react'
+import { OptimizedImage } from '~/components/generic/optimized-image'
 import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
 import { PlaceCategoryTagList } from '~/components/place-category-tags/place-category-tag-list'
 import { cn } from '~/helpers/cn'
-import { makeImageUrl } from '~/helpers/images'
-import { MapPoint } from '~/helpers/spatial-data'
-import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
+import { ApiRouterOutput } from '~/server/api/router'
 
-type Category = {
-  id: number
-  icon: PlaceCategoryIconType | null
-  name: string
-}
-
-type Place = {
-  id: number
-  mainImage: string | null
-  location: MapPoint
-  name: string
-  description: string | null
-  mainCategory: Category
-  categories: {
-    category: Category
-  }[]
-}
+type Category = ApiRouterOutput['admin']['places']['listCategories'][number]
+type Place = ApiRouterOutput['admin']['places']['list'][number]
 
 const columns = [
   {
     key: 'id',
     sortable: true,
     align: 'end',
+  },
+  {
+    key: 'images',
+    sortable: false,
+    align: 'start',
   },
   {
     key: 'name',
@@ -86,7 +74,7 @@ const columns = [
     align: 'center',
   },
 ] as const satisfies {
-  key: keyof Place | 'actions'
+  key: keyof Place | 'actions' | 'images'
   sortable: boolean
   align: 'center' | 'start' | 'end' | undefined
 }[]
@@ -159,23 +147,26 @@ export const PlacesTable: FC<{
 
   const renderCell = useCallback((place: Place, columnKey: ColumnKey) => {
     switch (columnKey) {
+      case 'images':
+        return (
+          <OptimizedImage
+            image={{
+              key: place.mainImage,
+              width: 123,
+              height: 123,
+            }}
+            radius="sm"
+            className="max-w-12"
+          />
+        )
       case 'name':
         return (
-          <User
-            avatarProps={{
-              classNames: {
-                base: 'flex-shrink-0',
-              },
-              radius: 'sm',
-              src: makeImageUrl(place.mainImage),
-            }}
-            description={
-              <p className="line-clamp-2 max-w-[40ch]">{place.description}</p>
-            }
-            name={place.name}
-          >
-            {place.name}
-          </User>
+          <>
+            <p className="font-semibold">{place.name}</p>
+            <p className="line-clamp-2 text-xs text-gray-600">
+              {place.description}
+            </p>
+          </>
         )
       case 'location':
         return (

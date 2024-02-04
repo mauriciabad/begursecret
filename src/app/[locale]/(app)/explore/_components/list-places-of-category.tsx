@@ -7,25 +7,14 @@ import Link from 'next-intl/link'
 import { FC } from 'react'
 import { OptimizedImage } from '~/components/generic/optimized-image'
 import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
-import {
-  PlaceCategoryColor,
-  PlaceCategoryIcon as PlaceCategoryIconType,
-} from '~/server/db/constants/places'
+import { ApiRouterOutput } from '~/server/api/router'
+
+type Category = ApiRouterOutput['places']['listCategories'][number]
+type Places = ApiRouterOutput['places']['list']
 
 export const ListPlacesOfCategory: FC<{
-  category: {
-    id: number
-    icon: PlaceCategoryIconType | null
-    name: string
-    namePlural: string
-    nameGender: 'masculine' | 'feminine' | null
-    color: PlaceCategoryColor
-  }
-  places: {
-    id: number
-    name: string
-    mainImage: string | null
-  }[]
+  category: Category
+  places: Places
 }> = ({ category, places }) => {
   const t = useTranslations('explore')
   return (

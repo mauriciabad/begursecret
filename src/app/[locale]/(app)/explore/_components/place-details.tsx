@@ -4,48 +4,20 @@ import { FC } from 'react'
 import { IconTitle } from '~/components/generic/icon-title'
 import { MarkdownContent } from '~/components/generic/markdown-content'
 import { OptimizedImage } from '~/components/generic/optimized-image'
-import { MapPoint } from '~/helpers/spatial-data'
-import { Features } from '~/server/db/constants/features'
-import { VisitMission } from '~/server/db/constants/missions'
-import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
-import { VerificationRequirements } from '~/server/db/constants/verifications'
+import { ApiRouterOutput } from '~/server/api/router'
 import { PlaceCategoryTagList } from '../../../../../components/place-category-tags/place-category-tag-list'
 import { VisitMissionsAcordion } from '../../missions/_components/visit-missions-acordion'
 import { FeaturesBlock } from './features-block'
 import { PlaceDetailsVerificateButton } from './place-details-verificate-button'
 import { ViewMoreImagesButtonAndDialog } from './view-more-images-button-and-dialog'
 
+type Place = NonNullable<ApiRouterOutput['places']['get']>
+type VisitMissions = ApiRouterOutput['missions']['getVisitMissions']
+
 export const PlaceDetails: FC<{
-  placeFullInfo: {
-    id: number
-    mainImage: string | null
-    images: { key: string }[]
-    location: MapPoint
-    name: string
-    description: string | null
-    content: string | null
-    mainCategory: {
-      id: number
-      icon: PlaceCategoryIconType | null
-      name: string
-    }
-    visited: boolean
-    categories: {
-      category: {
-        id: number
-        icon: PlaceCategoryIconType | null
-        name: string
-      }
-    }[]
-    features: Features | null
-    verificationRequirements: VerificationRequirements | null
-    verifications: {
-      id: number
-      validatedOn: Date
-    }[]
-  }
-  visitMissions: VisitMission[]
-}> = ({ placeFullInfo: place, visitMissions }) => {
+  place: Place
+  visitMissions: VisitMissions
+}> = ({ place, visitMissions }) => {
   const t = useTranslations('explore')
 
   return (

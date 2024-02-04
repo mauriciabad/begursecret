@@ -4,30 +4,15 @@ import { Card, CardBody } from '@nextui-org/card'
 import Link from 'next-intl/link'
 import { FC } from 'react'
 import { OptimizedImage } from '~/components/generic/optimized-image'
-import { MapPoint } from '~/helpers/spatial-data'
-import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
+import { ApiRouterOutput } from '~/server/api/router'
 import { PlaceCategoryTagList } from '../../../../../components/place-category-tags/place-category-tag-list'
 
+type Places =
+  | ApiRouterOutput['places']['search']
+  | ApiRouterOutput['placeLists']['getVisitedPlaces']
+
 export const PlaceList: FC<{
-  places: {
-    id: number
-    mainImage: string | null
-    location: MapPoint
-    name: string
-    description: string | null
-    mainCategory: {
-      id: number
-      icon: PlaceCategoryIconType | null
-      name: string
-    }
-    categories: {
-      category: {
-        id: number
-        icon: PlaceCategoryIconType | null
-        name: string
-      }
-    }[]
-  }[]
+  places: Places
 }> = ({ places }) => {
   return (
     <ul className="py-2">

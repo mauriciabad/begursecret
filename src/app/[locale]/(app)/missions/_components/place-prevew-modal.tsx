@@ -17,8 +17,11 @@ import { LinkButton } from '~/components/links/link-button'
 import { Map } from '~/components/map/map'
 import { PlaceCategoryTagList } from '~/components/place-category-tags/place-category-tag-list'
 import { shotConfettiStars } from '~/helpers/confetti'
-import { VisitMissionPlace } from '~/server/db/constants/missions'
+import { ApiRouterOutput } from '~/server/api/router'
 import { VerificateButton } from './verificate-button'
+
+type VisitMissionPlace =
+  ApiRouterOutput['missions']['getVisitMissions'][number]['places'][number]
 
 export const PlacePreviewModal: FC<
   Omit<ModalProps, 'children'> & {
