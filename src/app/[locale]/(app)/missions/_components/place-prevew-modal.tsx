@@ -87,7 +87,7 @@ export const PlacePreviewModal: FC<
                         shadow="sm"
                         className="h-full object-cover"
                         image={{
-                          key: image.key,
+                          key: image,
                           width: 123,
                           height: 123,
                         }}
