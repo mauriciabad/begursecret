@@ -31,7 +31,7 @@ const getAllPlaces = flattenTranslationsOnExecute(
           location: selectPoint('location', places.location),
         },
         with: {
-          // mainImage: true,
+          mainImage: true,
           categories: {
             columns: {},
             with: {
@@ -90,7 +90,7 @@ const getPlace = flattenTranslationsOnExecute(
         },
         where: (place, { eq }) => eq(place.id, sql.placeholder('id')),
         with: {
-          // mainImage: true,
+          mainImage: true,
           categories: {
             columns: {},
             with: {
