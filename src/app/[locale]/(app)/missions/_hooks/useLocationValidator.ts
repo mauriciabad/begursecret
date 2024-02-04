@@ -1,6 +1,6 @@
 import haversine from 'haversine-distance'
 import { useCallback, useEffect, useState } from 'react'
-import { MapPoint } from '~/helpers/spatial-data'
+import type { MapPoint } from '~/helpers/spatial-data'
 import { useDevicePermissions } from '~/helpers/useDevicePermissions'
 
 /** In meters */

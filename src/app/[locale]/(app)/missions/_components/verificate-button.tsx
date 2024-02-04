@@ -4,7 +4,7 @@ import { Button, useDisclosure } from '@nextui-org/react'
 import { IconDiscountCheckFilled } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'
-import { MapPoint } from '~/helpers/spatial-data'
+import type { MapPoint } from '~/helpers/spatial-data'
 import { VerificationRequirements } from '~/server/db/constants/verifications'
 import {
   OnVerificate,
