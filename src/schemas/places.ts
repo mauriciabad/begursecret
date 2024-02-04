@@ -45,7 +45,7 @@ export const createPlaceSchema = z.object({
         lng: z.number(),
       })
     ),
-  mainImage: z.string().optional(),
+  mainImageId: z.number().int().optional(),
   content: z.string().optional(),
 })
 

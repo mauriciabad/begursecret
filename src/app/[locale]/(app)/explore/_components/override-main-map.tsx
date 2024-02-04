@@ -1,7 +1,7 @@
 'use client'
 
 import { FC, useEffect } from 'react'
-import { MapPoint } from '~/helpers/spatial-data'
+import type { MapPoint } from '~/helpers/spatial-data'
 import { useMainMap } from './main-map'
 
 export type OverrideMainMapProps = {

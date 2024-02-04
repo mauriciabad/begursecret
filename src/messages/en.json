@@ -32,6 +32,7 @@
     "columns": {
       "id": "ID",
       "name": "Name",
+      "images": "Images",
       "description": "Description",
       "location": "Location",
       "mainCategory": "Main category",

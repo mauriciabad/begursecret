@@ -13,8 +13,9 @@ import {
   placeCategoriesColors,
   placeCategoriesIcons,
 } from '../constants/places'
-import { gender, s3ObjectKey } from '../utilities'
+import { gender } from '../utilities'
 import { features } from './features'
+import { images } from './images'
 import { placeListToPlace } from './placeLists'
 import { verificationRequirements } from './verificationRequirements'
 import { verifications } from './verifications'
@@ -27,7 +28,7 @@ export const {
 } = mysqlTableWithTranslations({
   name: 'place',
   normalColumns: {
-    mainImage: s3ObjectKey('mainImage'),
+    mainImageId: int('mainImageId'),
     location: pointType('location').notNull(),
     mainCategoryId: int('mainCategoryId').notNull(),
     featuresId: int('featuresId'),
@@ -43,13 +44,17 @@ export const {
 export const placesRelations = relations(places, (r) => ({
   ...makePlaceRelations(r),
 
+  mainImage: r.one(images, {
+    fields: [places.mainImageId],
+    references: [images.id],
+  }),
   mainCategory: r.one(placeCategories, {
     fields: [places.mainCategoryId],
     references: [placeCategories.id],
-    relationName: 'main',
+    relationName: 'mainCategory',
   }),
   categories: r.many(placesToPlaceCategories, {
-    relationName: 'secondary',
+    relationName: 'secondaryCategories',
   }),
   features: r.one(features, {
     fields: [places.featuresId],
@@ -85,9 +90,9 @@ export const {
 export const placeCategoriesRelations = relations(placeCategories, (r) => ({
   ...makePlaceCategoryRelations(r),
 
-  mainPlaces: r.many(places, { relationName: 'main' }),
+  mainPlaces: r.many(places, { relationName: 'mainCategory' }),
   places: r.many(placesToPlaceCategories, {
-    relationName: 'secondary',
+    relationName: 'secondaryCategories',
   }),
 }))
 
@@ -112,7 +117,7 @@ export const placesToPlaceCategoriesRelations = relations(
     place: one(places, {
       fields: [placesToPlaceCategories.placeId],
       references: [places.id],
-      relationName: 'secondary',
+      relationName: 'secondaryCategories',
     }),
     category: one(placeCategories, {
       fields: [placesToPlaceCategories.categoryId],

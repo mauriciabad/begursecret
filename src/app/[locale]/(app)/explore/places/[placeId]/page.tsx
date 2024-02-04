@@ -45,7 +45,7 @@ const PlacePage: FC<{
         zoom={18}
         veryEmphasizedPlaces={new Set([placeId])}
       />
-      <PlaceDetails placeFullInfo={place} visitMissions={visitMissions} />
+      <PlaceDetails place={place} visitMissions={visitMissions} />
     </>
   )
 }

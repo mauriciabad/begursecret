@@ -60,12 +60,12 @@ const getVisitMissions = flattenTranslationsOnExecute(
                   id: true,
                   name: true,
                   description: true,
-                  mainImage: true,
                 },
                 extras: {
                   location: selectPoint('location', places.location),
                 },
                 with: {
+                  mainImage: true,
                   categories: {
                     columns: {},
                     with: {
@@ -111,12 +111,12 @@ const getVisitMissions = flattenTranslationsOnExecute(
               id: true,
               name: true,
               description: true,
-              mainImage: true,
             },
             extras: {
               location: selectPoint('location', places.location),
             },
             with: {
+              mainImage: true,
               categories: {
                 columns: {},
                 with: {

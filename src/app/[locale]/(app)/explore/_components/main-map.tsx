@@ -1,6 +1,6 @@
 'use client'
 
-import { Map as LeafletMap } from 'leaflet'
+import type { Map as LeafletMap } from 'leaflet'
 import {
   FC,
   PropsWithChildren,
@@ -9,7 +9,7 @@ import {
   useState,
 } from 'react'
 import { Map } from '~/components/map/map'
-import { MapMarker } from '~/components/map/map-raw'
+import type { MapMarker } from '~/components/map/map-raw'
 import { cn } from '~/helpers/cn'
 
 const MainMapCtx = createContext<{

@@ -1,32 +1,20 @@
 'use client'
 
 import { Card, CardBody } from '@nextui-org/card'
-import { Image } from '@nextui-org/image'
 import { IconChevronRight } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import Link from 'next-intl/link'
 import { FC } from 'react'
+import { OptimizedImage } from '~/components/generic/optimized-image'
 import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
-import { makeImageUrl } from '~/helpers/images'
-import {
-  PlaceCategoryColor,
-  PlaceCategoryIcon as PlaceCategoryIconType,
-} from '~/server/db/constants/places'
+import { ApiRouterOutput } from '~/server/api/router'
+
+type Category = ApiRouterOutput['places']['listCategories'][number]
+type Places = ApiRouterOutput['places']['list']
 
 export const ListPlacesOfCategory: FC<{
-  category: {
-    id: number
-    icon: PlaceCategoryIconType | null
-    name: string
-    namePlural: string
-    nameGender: 'masculine' | 'feminine' | null
-    color: PlaceCategoryColor
-  }
-  places: {
-    id: number
-    name: string
-    mainImage: string | null
-  }[]
+  category: Category
+  places: Places
 }> = ({ category, places }) => {
   const t = useTranslations('explore')
   return (
@@ -69,12 +57,12 @@ export const ListPlacesOfCategory: FC<{
               className="shrink-0"
             >
               <CardBody className="flex w-32 flex-col items-center justify-center gap-2 p-2">
-                <Image
+                <OptimizedImage
                   radius="lg"
                   shadow="sm"
-                  alt={place.name}
                   className="z-0 aspect-[4/3] h-full object-cover"
-                  src={makeImageUrl(place.mainImage)}
+                  image={place.mainImage}
+                  alt={place.name}
                 />
                 <span className="line-clamp-3 grow text-center text-sm font-medium leading-4 text-stone-900">
                   {place.name}

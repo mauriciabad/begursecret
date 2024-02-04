@@ -1,52 +1,23 @@
-import { Image } from '@nextui-org/image'
 import { IconAward } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'
 import { IconTitle } from '~/components/generic/icon-title'
 import { MarkdownContent } from '~/components/generic/markdown-content'
-import { makeImageUrl } from '~/helpers/images'
-import { MapPoint } from '~/helpers/spatial-data'
-import { Features } from '~/server/db/constants/features'
-import { VisitMission } from '~/server/db/constants/missions'
-import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
-import { VerificationRequirements } from '~/server/db/constants/verifications'
+import { OptimizedImage } from '~/components/generic/optimized-image'
+import { ApiRouterOutput } from '~/server/api/router'
 import { PlaceCategoryTagList } from '../../../../../components/place-category-tags/place-category-tag-list'
 import { VisitMissionsAcordion } from '../../missions/_components/visit-missions-acordion'
 import { FeaturesBlock } from './features-block'
 import { PlaceDetailsVerificateButton } from './place-details-verificate-button'
 import { ViewMoreImagesButtonAndDialog } from './view-more-images-button-and-dialog'
 
+type Place = NonNullable<ApiRouterOutput['places']['get']>
+type VisitMissions = ApiRouterOutput['missions']['getVisitMissions']
+
 export const PlaceDetails: FC<{
-  placeFullInfo: {
-    id: number
-    mainImage: string | null
-    images: { key: string }[]
-    location: MapPoint
-    name: string
-    description: string | null
-    content: string | null
-    mainCategory: {
-      id: number
-      icon: PlaceCategoryIconType | null
-      name: string
-    }
-    visited: boolean
-    categories: {
-      category: {
-        id: number
-        icon: PlaceCategoryIconType | null
-        name: string
-      }
-    }[]
-    features: Features | null
-    verificationRequirements: VerificationRequirements | null
-    verifications: {
-      id: number
-      validatedOn: Date
-    }[]
-  }
-  visitMissions: VisitMission[]
-}> = ({ placeFullInfo: place, visitMissions }) => {
+  place: Place
+  visitMissions: VisitMissions
+}> = ({ place, visitMissions }) => {
   const t = useTranslations('explore')
 
   return (
@@ -69,27 +40,27 @@ export const PlaceDetails: FC<{
 
       {place.images && place.images.length >= 1 ? (
         <div className="mt-4 grid grid-cols-[2fr_1fr] grid-rows-2 gap-2">
-          <Image
+          <OptimizedImage
             radius="lg"
             shadow="sm"
-            alt={place.name}
             className="aspect-[4/3] object-cover"
             classNames={{
               wrapper: 'row-span-2',
             }}
-            src={makeImageUrl(place.mainImage)}
+            image={place.mainImage}
+            alt={place.name}
           />
-          <Image
+          <OptimizedImage
             radius="lg"
             shadow="sm"
             alt={place.name}
             className="h-full object-cover"
-            src={makeImageUrl(place.images[0].key)}
+            image={place.images[0]}
           />
           <ViewMoreImagesButtonAndDialog
             images={
               place.mainImage
-                ? [{ key: place.mainImage }, ...place.images]
+                ? [place.mainImage, ...place.images]
                 : place.images
             }
             buttonText={t('see-more')}
@@ -97,12 +68,12 @@ export const PlaceDetails: FC<{
           />
         </div>
       ) : (
-        <Image
+        <OptimizedImage
           radius="lg"
           shadow="sm"
           alt={place.name}
           className="mt-4 aspect-[4/3] object-cover"
-          src={makeImageUrl(place.mainImage)}
+          image={place.mainImage}
         />
       )}
 

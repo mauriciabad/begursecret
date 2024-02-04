@@ -37,7 +37,6 @@ const getPlacesFromPlaceListQuery = flattenTranslationsOnExecute(
         place: withTranslations({
           columns: {
             id: true,
-            mainImage: true,
             name: true,
             description: true,
           },
@@ -45,6 +44,7 @@ const getPlacesFromPlaceListQuery = flattenTranslationsOnExecute(
             location: selectPoint('location', places.location),
           },
           with: {
+            mainImage: true,
             categories: {
               columns: {},
               with: {

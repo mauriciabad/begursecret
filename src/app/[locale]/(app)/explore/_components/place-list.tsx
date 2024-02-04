@@ -1,35 +1,18 @@
 'use client'
 
 import { Card, CardBody } from '@nextui-org/card'
-import { Image } from '@nextui-org/image'
 import Link from 'next-intl/link'
 import { FC } from 'react'
-import { makeImageUrl } from '~/helpers/images'
-import { MapPoint } from '~/helpers/spatial-data'
-
-import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
+import { OptimizedImage } from '~/components/generic/optimized-image'
+import { ApiRouterOutput } from '~/server/api/router'
 import { PlaceCategoryTagList } from '../../../../../components/place-category-tags/place-category-tag-list'
 
+type Places =
+  | ApiRouterOutput['places']['search']
+  | ApiRouterOutput['placeLists']['getVisitedPlaces']
+
 export const PlaceList: FC<{
-  places: {
-    id: number
-    mainImage: string | null
-    location: MapPoint
-    name: string
-    description: string | null
-    mainCategory: {
-      id: number
-      icon: PlaceCategoryIconType | null
-      name: string
-    }
-    categories: {
-      category: {
-        id: number
-        icon: PlaceCategoryIconType | null
-        name: string
-      }
-    }[]
-  }[]
+  places: Places
 }> = ({ places }) => {
   return (
     <ul className="py-2">
@@ -58,11 +41,11 @@ export const PlaceList: FC<{
                   <p className="text-stone-800">{place.description}</p>
                 )}
               </div>
-              <Image
+              <OptimizedImage
                 radius="md"
                 alt={place.name}
                 className="z-0 aspect-[4/3] h-16 object-cover"
-                src={makeImageUrl(place.mainImage)}
+                image={place.mainImage}
               />
             </CardBody>
           </Card>

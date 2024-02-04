@@ -24,7 +24,6 @@ const getAllPlaces = flattenTranslationsOnExecute(
       withTranslations({
         columns: {
           id: true,
-          mainImage: true,
           name: true,
           description: true,
         },
@@ -32,6 +31,7 @@ const getAllPlaces = flattenTranslationsOnExecute(
           location: selectPoint('location', places.location),
         },
         with: {
+          mainImage: true,
           categories: {
             columns: {},
             with: {
@@ -81,7 +81,6 @@ const getPlace = flattenTranslationsOnExecute(
       withTranslations({
         columns: {
           id: true,
-          mainImage: true,
           name: true,
           description: true,
           content: true,
@@ -91,6 +90,7 @@ const getPlace = flattenTranslationsOnExecute(
         },
         where: (place, { eq }) => eq(place.id, sql.placeholder('id')),
         with: {
+          mainImage: true,
           categories: {
             columns: {},
             with: {
@@ -143,7 +143,7 @@ export const placesAdminRouter = router({
           name: input.name,
           description: input.description,
           mainCategoryId: input.mainCategory,
-          mainImage: input.mainImage,
+          mainImageId: input.mainImageId,
           location: pointToString(input.location),
           content: input.content,
           verificationRequirementsId: 1,
@@ -174,7 +174,7 @@ export const placesAdminRouter = router({
             name: input.name,
             description: input.description,
             mainCategoryId: input.mainCategory,
-            mainImage: input.mainImage,
+            mainImageId: input.mainImageId,
             location: pointToString(input.location),
             content: input.content,
           })

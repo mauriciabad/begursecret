@@ -6,7 +6,7 @@ import {
   ModalBody,
   ModalContent,
   ModalHeader,
-  ModalProps,
+  type ModalProps,
 } from '@nextui-org/modal'
 import {
   IconCircleCheck,
@@ -28,7 +28,7 @@ import { AlertBox } from '~/components/generic/alert-box'
 import { DividerWithText } from '~/components/generic/divider-with-text'
 import { ExplanationCard } from '~/components/generic/explanation-card'
 import { LinkButton } from '~/components/links/link-button'
-import { MapPoint } from '~/helpers/spatial-data'
+import type { MapPoint } from '~/helpers/spatial-data'
 import {
   VerificationRequirements,
   isVerificationRequired,

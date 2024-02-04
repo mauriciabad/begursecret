@@ -16,15 +16,18 @@ import { FC, useState } from 'react'
 import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
 import { LinkButton } from '~/components/links/link-button'
 import { cn } from '~/helpers/cn'
-import { VisitMission, VisitMissionPlace } from '~/server/db/constants/missions'
+import { ApiRouterOutput } from '~/server/api/router'
 import {
   PlaceCategoryColor,
   PlaceCategoryIcon as PlaceCategoryIconType,
 } from '~/server/db/constants/places'
 import { PlacePreviewModal } from './place-prevew-modal'
 
+type VisitMissions = ApiRouterOutput['missions']['getVisitMissions']
+type VisitMissionPlace = VisitMissions[number]['places'][number]
+
 export const VisitMissionsAcordion: FC<{
-  visitMissions: VisitMission[]
+  visitMissions: VisitMissions
 }> = ({ visitMissions }) => {
   const t = useTranslations('missions')
   const { isOpen, onOpen, onOpenChange } = useDisclosure()

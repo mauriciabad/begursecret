@@ -7,3 +7,11 @@ const defaultImageKey = 'static/app/content-placeholder.png'
 export function makeImageUrl<T extends string>(s3key: T | null | undefined) {
   return `https://${BUCKET_NAME}.s3.${BUCKET_REGION}.amazonaws.com/${s3key ?? defaultImageKey}` as const
 }
+
+export type ImageType = {
+  id: number
+  key: string
+  width: number
+  height: number
+  alt?: string | null
+}

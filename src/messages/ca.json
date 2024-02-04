@@ -32,6 +32,7 @@
     "columns": {
       "id": "ID",
       "name": "Nom",
+      "images": "Imatges",
       "description": "Descripció",
       "location": "Ubicació",
       "mainCategory": "Categoria principal",
