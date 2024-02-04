@@ -1,10 +1,9 @@
-import { Image } from '@nextui-org/image'
 import { IconAward } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'
 import { IconTitle } from '~/components/generic/icon-title'
 import { MarkdownContent } from '~/components/generic/markdown-content'
-import { makeImageUrl } from '~/helpers/images'
+import { OptimizedImage } from '~/components/generic/optimized-image'
 import { MapPoint } from '~/helpers/spatial-data'
 import { Features } from '~/server/db/constants/features'
 import { VisitMission } from '~/server/db/constants/missions'
@@ -69,22 +68,30 @@ export const PlaceDetails: FC<{
 
       {place.images && place.images.length >= 1 ? (
         <div className="mt-4 grid grid-cols-[2fr_1fr] grid-rows-2 gap-2">
-          <Image
+          <OptimizedImage
             radius="lg"
             shadow="sm"
-            alt={place.name}
             className="aspect-[4/3] object-cover"
             classNames={{
               wrapper: 'row-span-2',
             }}
-            src={makeImageUrl(place.mainImage)}
+            image={{
+              key: place.mainImage,
+              width: 123,
+              height: 123,
+            }}
+            alt={place.name}
           />
-          <Image
+          <OptimizedImage
             radius="lg"
             shadow="sm"
             alt={place.name}
             className="h-full object-cover"
-            src={makeImageUrl(place.images[0].key)}
+            image={{
+              key: place.images[0].key,
+              width: 123,
+              height: 123,
+            }}
           />
           <ViewMoreImagesButtonAndDialog
             images={
@@ -97,12 +104,16 @@ export const PlaceDetails: FC<{
           />
         </div>
       ) : (
-        <Image
+        <OptimizedImage
           radius="lg"
           shadow="sm"
           alt={place.name}
           className="mt-4 aspect-[4/3] object-cover"
-          src={makeImageUrl(place.mainImage)}
+          image={{
+            key: place.mainImage,
+            width: 123,
+            height: 123,
+          }}
         />
       )}
 

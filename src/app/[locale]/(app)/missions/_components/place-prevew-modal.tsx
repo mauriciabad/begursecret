@@ -1,6 +1,5 @@
 'use client'
 
-import { Image } from '@nextui-org/image'
 import {
   Modal,
   ModalBody,
@@ -13,11 +12,11 @@ import { IconChevronRight, IconInfoCircle } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import Link from 'next-intl/link'
 import { FC } from 'react'
+import { OptimizedImage } from '~/components/generic/optimized-image'
 import { LinkButton } from '~/components/links/link-button'
 import { Map } from '~/components/map/map'
 import { PlaceCategoryTagList } from '~/components/place-category-tags/place-category-tag-list'
 import { shotConfettiStars } from '~/helpers/confetti'
-import { makeImageUrl } from '~/helpers/images'
 import { VisitMissionPlace } from '~/server/db/constants/missions'
 import { VerificateButton } from './verificate-button'
 
@@ -69,19 +68,27 @@ export const PlacePreviewModal: FC<
                         ]}
                       />
                     </Link>
-                    <Image
+                    <OptimizedImage
                       radius="md"
-                      alt={place.name}
                       className="h-full"
-                      src={makeImageUrl(place.mainImage)}
+                      image={{
+                        key: place.mainImage,
+                        width: 123,
+                        height: 123,
+                      }}
+                      alt={place.name}
                     />
                     {place.images?.map((image) => (
-                      <Image
+                      <OptimizedImage
                         radius="lg"
                         shadow="sm"
-                        alt={place.name}
                         className="h-full object-cover"
-                        src={makeImageUrl(image.key)}
+                        image={{
+                          key: image.key,
+                          width: 123,
+                          height: 123,
+                        }}
+                        alt={place.name}
                       />
                     ))}
                   </div>

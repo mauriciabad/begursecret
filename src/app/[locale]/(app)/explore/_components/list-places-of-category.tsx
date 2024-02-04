@@ -1,13 +1,12 @@
 'use client'
 
 import { Card, CardBody } from '@nextui-org/card'
-import { Image } from '@nextui-org/image'
 import { IconChevronRight } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import Link from 'next-intl/link'
 import { FC } from 'react'
+import { OptimizedImage } from '~/components/generic/optimized-image'
 import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
-import { makeImageUrl } from '~/helpers/images'
 import {
   PlaceCategoryColor,
   PlaceCategoryIcon as PlaceCategoryIconType,
@@ -69,12 +68,16 @@ export const ListPlacesOfCategory: FC<{
               className="shrink-0"
             >
               <CardBody className="flex w-32 flex-col items-center justify-center gap-2 p-2">
-                <Image
+                <OptimizedImage
                   radius="lg"
                   shadow="sm"
-                  alt={place.name}
                   className="z-0 aspect-[4/3] h-full object-cover"
-                  src={makeImageUrl(place.mainImage)}
+                  image={{
+                    key: place.mainImage,
+                    width: 123,
+                    height: 123,
+                  }}
+                  alt={place.name}
                 />
                 <span className="line-clamp-3 grow text-center text-sm font-medium leading-4 text-stone-900">
                   {place.name}

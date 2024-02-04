@@ -30,6 +30,19 @@ const withPWA = withPWAInit({
 })
 
 /** @type {import('next').NextConfig} */
-const nextConfig = withAxiom(withNextIntl(withPWA({})))
+const nextConfig = withAxiom(
+  withNextIntl(
+    withPWA({
+      images: {
+        remotePatterns: [
+          {
+            protocol: 'https',
+            hostname: '*.s3.*.amazonaws.com',
+          },
+        ],
+      },
+    })
+  )
+)
 
 export default nextConfig
