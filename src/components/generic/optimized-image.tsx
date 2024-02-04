@@ -5,7 +5,7 @@ import { FC } from 'react'
 import { makeImageUrl } from '~/helpers/images'
 
 type Image = {
-  key: string
+  key?: string
   width: number
   height: number
   alt?: string | null
