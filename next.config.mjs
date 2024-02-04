@@ -37,7 +37,7 @@ const nextConfig = withAxiom(
         remotePatterns: [
           {
             protocol: 'https',
-            hostname: '*.s3.*.amazonaws.com',
+            hostname: `${process.env.NEXT_PUBLIC_AWS_BUCKET_NAME ?? '*'}.s3.${process.env.NEXT_PUBLIC_AWS_BUCKET_REGION ?? '*'}.amazonaws.com`,
           },
         ],
       },
