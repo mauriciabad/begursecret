@@ -227,7 +227,7 @@ export const placesRouter = router({
     return result
       ? calculateLocation({
           ...result,
-          images: [],
+          images: [] as { key: string }[],
           visited: visitedPlacesIds.has(input.id),
         })
       : undefined
