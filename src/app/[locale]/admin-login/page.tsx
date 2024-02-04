@@ -29,12 +29,8 @@ const AdminLoginPage: FC<LocaleRouteParams> = async () => {
     return redirect('/admin')
   }
 
-  return <NestedAdminLoginPage isLoggedInAsNotAdmin={!!session} />
-}
+  const isLoggedInAsNotAdmin = !!session && session.user.role !== 'admin'
 
-const NestedAdminLoginPage: FC<{ isLoggedInAsNotAdmin: boolean }> = ({
-  isLoggedInAsNotAdmin,
-}) => {
   const t = useTranslations('admin-login')
 
   return (
