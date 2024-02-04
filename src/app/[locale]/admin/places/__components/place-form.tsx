@@ -18,8 +18,10 @@ import { ApiRouterOutput } from '~/server/api/router'
 import { trpc } from '~/trpc'
 import { UploadPlaceImageModal } from './upload-place-image-modal'
 
+type Place = NonNullable<ApiRouterOutput['admin']['places']['get']>
+
 export const PlaceForm: FC<{
-  place?: NonNullable<ApiRouterOutput['admin']['places']['get']>
+  place?: Place
   className?: string
 }> = ({ className, place }) => {
   const t = useTranslations('admin-places')
