@@ -1,12 +1,14 @@
 'use client'
 
+import { Button } from '@nextui-org/button'
 import {
-  Button,
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-  Input,
+} from '@nextui-org/dropdown'
+import { Input } from '@nextui-org/input'
+import {
   Selection,
   SortDescriptor,
   Table,
@@ -15,8 +17,8 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-  Tooltip,
-} from '@nextui-org/react'
+} from '@nextui-org/table'
+import { Tooltip } from '@nextui-org/tooltip'
 import {
   IconChevronDown,
   IconEdit,
@@ -26,12 +28,12 @@ import {
   IconTrash,
 } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
-import Link from 'next-intl/link'
 import { FC, useCallback, useMemo, useState } from 'react'
 import { OptimizedImage } from '~/components/generic/optimized-image'
 import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
 import { PlaceCategoryTagList } from '~/components/place-category-tags/place-category-tag-list'
 import { cn } from '~/helpers/cn'
+import { Link } from '~/navigation'
 import { ApiRouterOutput } from '~/server/api/router'
 
 type Category = ApiRouterOutput['admin']['places']['listCategories'][number]

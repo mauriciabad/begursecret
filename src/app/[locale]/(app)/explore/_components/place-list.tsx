@@ -1,9 +1,9 @@
 'use client'
 
 import { Card, CardBody } from '@nextui-org/card'
-import Link from 'next-intl/link'
 import { FC } from 'react'
 import { OptimizedImage } from '~/components/generic/optimized-image'
+import { Link } from '~/navigation'
 import { ApiRouterOutput } from '~/server/api/router'
 import { PlaceCategoryTagList } from '../../../../../components/place-category-tags/place-category-tag-list'
 

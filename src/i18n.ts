@@ -22,3 +22,5 @@ export const getLocale = (pathname: string) =>
 
 export type LocaleParams = { locale: string }
 export type LocaleRouteParams = { params: LocaleParams }
+
+export const localePrefix = 'always'

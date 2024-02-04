@@ -1,5 +1,5 @@
 import { mysqlEnum, varchar } from 'drizzle-orm/mysql-core'
-import { translatableLocales } from '../../i18n'
+import { translatableLocales } from '~/i18n'
 
 // Don't reorder these values, they are used to generate the database enum.
 const genderValues = ['masculine', 'feminine'] as const

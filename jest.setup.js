@@ -4,7 +4,7 @@
 
 import '@testing-library/jest-dom'
 
-jest.mock('next-intl/client', () => ({
+jest.mock('~/navigation', () => ({
   useRouter: jest.fn(() => ({
     push: jest.fn(),
     replace: jest.fn(),

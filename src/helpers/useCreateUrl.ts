@@ -1,5 +1,6 @@
-import { usePathname, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { useCallback } from 'react'
+import { usePathname } from '~/navigation'
 
 export function useCreateUrl() {
   const searchParams = useSearchParams()

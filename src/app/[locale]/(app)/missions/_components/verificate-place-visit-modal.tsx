@@ -22,13 +22,13 @@ import {
 import { useSession } from 'next-auth/react'
 import { useLogger } from 'next-axiom'
 import { useTranslations } from 'next-intl'
-import { useRouter } from 'next-intl/client'
 import { FC } from 'react'
 import { AlertBox } from '~/components/generic/alert-box'
 import { DividerWithText } from '~/components/generic/divider-with-text'
 import { ExplanationCard } from '~/components/generic/explanation-card'
 import { LinkButton } from '~/components/links/link-button'
 import type { MapPoint } from '~/helpers/spatial-data'
+import { useRouter } from '~/navigation'
 import {
   VerificationRequirements,
   isVerificationRequired,

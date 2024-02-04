@@ -1,8 +1,8 @@
 'use client'
 
-import { Button, ButtonProps } from '@nextui-org/react'
-import Link from 'next-intl/link'
+import { Button, ButtonProps } from '@nextui-org/button'
 import { FC, ReactNode } from 'react'
+import { Link } from '~/navigation'
 
 export const LinkButton: FC<
   ButtonProps & {

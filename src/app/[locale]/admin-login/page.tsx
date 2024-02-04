@@ -1,17 +1,18 @@
 import { IconBarrierBlock, IconBolt } from '@tabler/icons-react'
 import type { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
-import { getTranslator, redirect } from 'next-intl/server'
+import { getTranslations } from 'next-intl/server'
 import type { FC } from 'react'
 import type { LocaleRouteParams } from '~/i18n'
+import { redirect } from '~/navigation'
 import { getSession } from '~/server/get-server-thing'
 import { LoginForm } from '../../../components/login-form/login-form'
 import { LogoutButton } from './__components/logout-button'
 
 export async function generateMetadata({
-  params,
+  params: { locale },
 }: LocaleRouteParams): Promise<Metadata> {
-  const t = await getTranslator(params.locale, 'admin')
+  const t = await getTranslations({ locale, namespace: 'admin' })
   return {
     title: {
       default: t('meta.title'),
@@ -25,7 +26,7 @@ const AdminLoginPage: FC<LocaleRouteParams> = async () => {
   const session = await getSession()
 
   if (session?.user.role === 'admin') {
-    redirect('/admin')
+    return redirect('/admin')
   }
 
   return <NestedAdminLoginPage isLoggedInAsNotAdmin={!!session} />

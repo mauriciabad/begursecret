@@ -1,9 +1,9 @@
 'use client'
 
-import { Card } from '@nextui-org/react'
-import Link from 'next-intl/link'
+import { Card } from '@nextui-org/card'
 import { FC, ReactNode } from 'react'
 import { cn } from '~/helpers/cn'
+import { Link } from '~/navigation'
 
 export const LinkCard: FC<{
   icon: ReactNode

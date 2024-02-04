@@ -1,8 +1,8 @@
 'use client'
 
 import { NextUIProvider, NextUIProviderProps } from '@nextui-org/react'
-import { useRouter } from 'next-intl/client'
 import type { FC, PropsWithChildren } from 'react'
+import { useRouter } from '~/navigation'
 
 export const NextuiProvider: FC<PropsWithChildren<NextUIProviderProps>> = ({
   children,

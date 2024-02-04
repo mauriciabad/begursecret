@@ -9,8 +9,8 @@ import {
 } from '@tabler/icons-react'
 import { signIn, useSession } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
-import { useRouter } from 'next-intl/client'
 import { FC, FormEvent, useState } from 'react'
+import { useRouter } from '~/navigation'
 
 type CredentialsLoginErrors =
   | 'invalidInput'

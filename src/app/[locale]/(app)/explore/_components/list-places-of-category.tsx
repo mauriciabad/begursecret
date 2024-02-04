@@ -3,10 +3,10 @@
 import { Card, CardBody } from '@nextui-org/card'
 import { IconChevronRight } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
-import Link from 'next-intl/link'
 import { FC } from 'react'
 import { OptimizedImage } from '~/components/generic/optimized-image'
 import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
+import { Link } from '~/navigation'
 import { ApiRouterOutput } from '~/server/api/router'
 
 type Category = ApiRouterOutput['places']['listCategories'][number]

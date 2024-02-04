@@ -8,9 +8,9 @@ import { IconEye, IconEyeOff } from '@tabler/icons-react'
 import { signIn } from 'next-auth/react'
 import { useLogger } from 'next-axiom'
 import { useTranslations } from 'next-intl'
-import Link from 'next-intl/link'
 import { FC, FormEvent, useState } from 'react'
 import { cn } from '~/helpers/cn'
+import { Link } from '~/navigation'
 import { trpc } from '~/trpc'
 
 export const RegisterForm: FC<{

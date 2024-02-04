@@ -1,14 +1,14 @@
 'use client'
 
 import { Avatar } from '@nextui-org/avatar'
-import { Selection } from '@nextui-org/react'
 import { Select, SelectItem } from '@nextui-org/select'
+import { Selection } from '@nextui-org/table'
 import { IconLanguage } from '@tabler/icons-react'
 import { useLocale, useTranslations } from 'next-intl'
-import { usePathname, useRouter } from 'next-intl/client'
 import type { FC } from 'react'
 import { cn } from '~/helpers/cn'
 import { locales } from '~/i18n'
+import { usePathname, useRouter } from '~/navigation'
 
 export const LanguageSwitcher: FC<{ className?: string }> = ({ className }) => {
   const pathname = usePathname()
@@ -40,7 +40,7 @@ export const LanguageSwitcher: FC<{ className?: string }> = ({ className }) => {
         <SelectItem
           key={locale}
           startContent={
-            <Avatar alt="" className="h-6 w-6" src={`/flags/${locale}.svg`} />
+            <Avatar alt="" className="h-6 w-6" src={makeFlagUrl(locale)} />
           }
         >
           {t(`options.${locale}`)}
@@ -48,4 +48,8 @@ export const LanguageSwitcher: FC<{ className?: string }> = ({ className }) => {
       ))}
     </Select>
   )
+}
+
+function makeFlagUrl<L extends string>(locale: L) {
+  return `/flags/${locale}.svg`
 }

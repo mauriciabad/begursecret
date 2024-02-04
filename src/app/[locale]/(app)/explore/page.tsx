@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { useLocale } from 'next-intl'
-import { getTranslator } from 'next-intl/server'
+import { getTranslations } from 'next-intl/server'
 import type { FC } from 'react'
 import { groupByKey } from '~/helpers/utilities'
 import { onlyTranslatableLocales, type LocaleRouteParams } from '~/i18n'
@@ -9,9 +9,12 @@ import { CategoriesGrid } from './_components/categories-grid'
 import { ListPlacesOfCategory } from './_components/list-places-of-category'
 
 export async function generateMetadata({
-  params,
+  params: { locale },
 }: LocaleRouteParams): Promise<Metadata> {
-  const t = await getTranslator(params.locale, 'explore')
+  const t = await getTranslations({
+    locale,
+    namespace: 'explore',
+  })
   return {
     title: t('meta.title'),
     description: t('meta.description'),

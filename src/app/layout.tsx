@@ -3,8 +3,8 @@ import '~/globals.css'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import type { Metadata } from 'next'
 import { AxiomWebVitals } from 'next-axiom'
-import { NextIntlClientProvider, useLocale } from 'next-intl'
-import { getMessages, getTranslator } from 'next-intl/server'
+import { NextIntlClientProvider } from 'next-intl'
+import { getMessages, getTranslations } from 'next-intl/server'
 import { Inter, Poppins } from 'next/font/google'
 import Script from 'next/script'
 import type { FC, PropsWithChildren } from 'react'
@@ -24,9 +24,10 @@ const poppins = Poppins({
 })
 
 export async function generateMetadata({
-  params,
+  params: { locale },
 }: LocaleRouteParams): Promise<Metadata> {
-  const t = await getTranslator(params.locale, 'home')
+  const t = await getTranslations({ locale, namespace: 'home' })
+
   return {
     title: {
       default: t('meta.title'),
@@ -53,9 +54,11 @@ export async function generateMetadata({
 
 type RootLayoutProps = PropsWithChildren<LocaleRouteParams>
 
-const RootLayout: FC<RootLayoutProps> = async ({ children }) => {
-  const locale = useLocale()
-  const messages = await getMessages(locale)
+const RootLayout: FC<RootLayoutProps> = async ({
+  children,
+  params: { locale },
+}) => {
+  const messages = await getMessages({ locale })
   const session = await getSession()
 
   return (

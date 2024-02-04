@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { useLocale } from 'next-intl'
-import { getTranslator } from 'next-intl/server'
+import { getTranslations } from 'next-intl/server'
 import type { FC } from 'react'
 import { LocaleParams, onlyTranslatableLocales } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
@@ -14,9 +14,12 @@ type PageParams = {
   }
 }
 export async function generateMetadata({
-  params,
+  params: { locale },
 }: PageParams): Promise<Metadata> {
-  const t = await getTranslator(params.locale, 'explore')
+  const t = await getTranslations({
+    locale,
+    namespace: 'explore',
+  })
   return {
     title: t('meta.title'),
     description: t('meta.description'),

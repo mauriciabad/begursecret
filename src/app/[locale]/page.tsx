@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
-import { getTranslator } from 'next-intl/server'
+import { getTranslations } from 'next-intl/server'
 import type { FC } from 'react'
 import { Logo } from '~/components/icons/logo'
 import { LanguageSwitcher } from '~/components/inputs/language-switcher'
@@ -8,9 +8,9 @@ import { LinkButtonCustom } from '~/components/links/link-button-custom'
 import type { LocaleRouteParams } from '~/i18n'
 
 export async function generateMetadata({
-  params,
+  params: { locale },
 }: LocaleRouteParams): Promise<Metadata> {
-  const t = await getTranslator(params.locale, 'home')
+  const t = await getTranslations({ locale, namespace: 'home' })
   return {
     title: {
       default: t('meta.title'),

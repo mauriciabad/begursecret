@@ -3,7 +3,7 @@
 import { Accordion, AccordionItem } from '@nextui-org/accordion'
 import { Button } from '@nextui-org/button'
 import { CircularProgress } from '@nextui-org/progress'
-import { useDisclosure } from '@nextui-org/react'
+import { useDisclosure } from '@nextui-org/use-disclosure'
 import {
   IconChevronRight,
   IconCircle,

@@ -1,16 +1,14 @@
 import type { Metadata } from 'next'
-import { getTranslator } from 'next-intl/server'
+import { getTranslations } from 'next-intl/server'
 import type { FC } from 'react'
-import { LocaleParams } from '~/i18n'
+import { LocaleParams, LocaleRouteParams } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
 import { PlaceForm } from '../__components/place-form'
 
 export async function generateMetadata({
-  params,
-}: {
-  params: Params
-}): Promise<Metadata> {
-  const t = await getTranslator(params.locale, 'admin')
+  params: { locale },
+}: LocaleRouteParams): Promise<Metadata> {
+  const t = await getTranslations({ locale, namespace: 'admin' })
   return {
     title: {
       default: t('meta.title'),
