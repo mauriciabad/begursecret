@@ -23,11 +23,12 @@ export const OptimizedImage: FC<
   return (
     <Image
       as={NextImage}
-      {...imageProps}
+      fill
       src={makeImageUrl(actualImage.key)}
       width={actualImage.width}
       height={actualImage.height}
       alt={alt ?? actualImage.alt ?? undefined}
+      {...imageProps}
     />
   )
 }
