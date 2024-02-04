@@ -61,11 +61,7 @@ export const ListPlacesOfCategory: FC<{
                   radius="lg"
                   shadow="sm"
                   className="z-0 aspect-[4/3] h-full object-cover"
-                  image={{
-                    key: place.mainImage,
-                    width: 123,
-                    height: 123,
-                  }}
+                  image={place.mainImage}
                   alt={place.name}
                 />
                 <span className="line-clamp-3 grow text-center text-sm font-medium leading-4 text-stone-900">

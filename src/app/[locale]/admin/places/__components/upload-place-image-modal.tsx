@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@nextui-org/button'
-import { Image } from '@nextui-org/image'
+import { Card } from '@nextui-org/card'
 import { Input } from '@nextui-org/input'
 import {
   Modal,
@@ -17,12 +17,11 @@ import { ControllerRenderProps } from 'react-hook-form'
 import { UploadPlaceImageResponse } from '~/app/api/upload/place-image/route'
 import { AlertBox } from '~/components/generic/alert-box'
 import { cn } from '~/helpers/cn'
-import { makeImageUrl } from '~/helpers/images'
 import { uploadImage } from '~/helpers/upload-images'
 
 export const UploadPlaceImageModal: FC<
   Pick<
-    ControllerRenderProps<{ mainImage: string | undefined }>,
+    ControllerRenderProps<{ mainImageId: number | undefined }>,
     'onBlur' | 'onChange' | 'value'
   > & {
     isInvalid?: boolean
@@ -42,7 +41,7 @@ export const UploadPlaceImageModal: FC<
   const t = useTranslations('admin-places')
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
   const [file, setFile] = useState<File | null>(null)
-  const updateValue = (value: string | null) => {
+  const updateValue = (value: number | null) => {
     onChange?.({
       target: { value },
     })
@@ -54,12 +53,12 @@ export const UploadPlaceImageModal: FC<
   const uploadNewImage = async () => {
     setIsUploading(true)
     try {
-      const { imageKey } = await uploadImage<UploadPlaceImageResponse>({
+      const { image } = await uploadImage<UploadPlaceImageResponse>({
         file,
         endpoint: '/api/upload/place-image',
       })
 
-      updateValue(imageKey)
+      updateValue(image.id)
 
       onClose()
     } catch (e) {
@@ -83,14 +82,14 @@ export const UploadPlaceImageModal: FC<
     <>
       <div className="flex flex-col items-center gap-1">
         <div className="font-title">{label}</div>
-        <Image
+        <Card
           radius="md"
-          alt={t('columns.mainImage')}
-          className={cn('w-full max-w-64', {
+          className={cn('min-h-32 w-full max-w-64', {
             'border-2 border-red-500': isInvalid,
           })}
-          src={makeImageUrl(value)}
-        />
+        >
+          {value}
+        </Card>
         <Button onPress={onOpen} variant="bordered" className={className}>
           {t('change-image.change-main-image')}
         </Button>

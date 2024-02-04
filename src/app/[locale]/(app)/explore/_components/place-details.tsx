@@ -47,11 +47,7 @@ export const PlaceDetails: FC<{
             classNames={{
               wrapper: 'row-span-2',
             }}
-            image={{
-              key: place.mainImage,
-              width: 123,
-              height: 123,
-            }}
+            image={place.mainImage}
             alt={place.name}
           />
           <OptimizedImage
@@ -59,16 +55,12 @@ export const PlaceDetails: FC<{
             shadow="sm"
             alt={place.name}
             className="h-full object-cover"
-            image={{
-              key: place.images[0].key,
-              width: 123,
-              height: 123,
-            }}
+            image={place.images[0]}
           />
           <ViewMoreImagesButtonAndDialog
             images={
               place.mainImage
-                ? [{ key: place.mainImage }, ...place.images]
+                ? [place.mainImage, ...place.images]
                 : place.images
             }
             buttonText={t('see-more')}
@@ -81,11 +73,7 @@ export const PlaceDetails: FC<{
           shadow="sm"
           alt={place.name}
           className="mt-4 aspect-[4/3] object-cover"
-          image={{
-            key: place.mainImage,
-            width: 123,
-            height: 123,
-          }}
+          image={place.mainImage}
         />
       )}
 

@@ -74,11 +74,7 @@ export const PlacePreviewModal: FC<
                     <OptimizedImage
                       radius="md"
                       className="h-full"
-                      image={{
-                        key: place.mainImage,
-                        width: 123,
-                        height: 123,
-                      }}
+                      image={place.mainImage}
                       alt={place.name}
                     />
                     {place.images?.map((image) => (
@@ -86,11 +82,7 @@ export const PlacePreviewModal: FC<
                         radius="lg"
                         shadow="sm"
                         className="h-full object-cover"
-                        image={{
-                          key: image,
-                          width: 123,
-                          height: 123,
-                        }}
+                        image={image}
                         alt={place.name}
                       />
                     ))}

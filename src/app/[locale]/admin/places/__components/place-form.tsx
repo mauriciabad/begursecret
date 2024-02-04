@@ -50,7 +50,7 @@ export const PlaceForm: FC<{
           mainCategory: place.mainCategory.id,
           categories: place.categories.map((c) => c.category.id).join(','),
           location: `${place.location.lat},${place.location.lng}`,
-          mainImage: place.mainImage ?? undefined,
+          mainImageId: place.mainImage.id ?? undefined,
           content: place.content ?? undefined,
         }
       : {
@@ -59,7 +59,7 @@ export const PlaceForm: FC<{
           mainCategory: undefined,
           categories: '',
           location: undefined,
-          mainImage: undefined,
+          mainImageId: undefined,
           content: undefined,
         },
   })
@@ -176,12 +176,12 @@ export const PlaceForm: FC<{
         />
 
         <Controller
-          name="mainImage"
+          name="mainImageId"
           control={form.control}
           render={({ field: { onChange, onBlur, value } }) => (
             <UploadPlaceImageModal
-              isInvalid={!!form.formState.errors['mainImage']}
-              errorMessage={form.formState.errors['mainImage']?.message}
+              isInvalid={!!form.formState.errors['mainImageId']}
+              errorMessage={form.formState.errors['mainImageId']?.message}
               onBlur={onBlur}
               onChange={onChange}
               value={value}

@@ -45,11 +45,7 @@ export const PlaceList: FC<{
                 radius="md"
                 alt={place.name}
                 className="z-0 aspect-[4/3] h-16 object-cover"
-                image={{
-                  key: place.mainImage,
-                  width: 123,
-                  height: 123,
-                }}
+                image={place.mainImage}
               />
             </CardBody>
           </Card>

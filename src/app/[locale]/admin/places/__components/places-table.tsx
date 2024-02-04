@@ -150,11 +150,7 @@ export const PlacesTable: FC<{
       case 'images':
         return (
           <OptimizedImage
-            image={{
-              key: place.mainImage,
-              width: 123,
-              height: 123,
-            }}
+            image={place.mainImage}
             radius="sm"
             className="max-w-12"
           />
