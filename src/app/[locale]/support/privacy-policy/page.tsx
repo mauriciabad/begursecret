@@ -34,7 +34,7 @@ const PrivacyPolicyPage: FC<LocaleRouteParams> = () => {
         <h1>Privacy Policy</h1>
         <blockquote>Last updated: {formatedLastUpdate} </blockquote>
         <p>
-          We at Begur Secret App are committed to protecting your privacy and
+          We at Begur Secret are committed to protecting your privacy and
           personal information. This Privacy Policy explains how we collect,
           use, and safeguard your data when you use our web application. We are
           in compliance with the European Union&#39;s General Data Protection
@@ -162,13 +162,13 @@ const PrivacyPolicyPage: FC<LocaleRouteParams> = () => {
           </li>
         </ul>
         <p>
-          By using Begur Secret App, you agree to this Privacy Policy. Your
-          trust is essential to us, and we are committed to protecting your data
-          and ensuring a transparent and secure user experience.
+          By using Begur Secret, you agree to this Privacy Policy. Your trust is
+          essential to us, and we are committed to protecting your data and
+          ensuring a transparent and secure user experience.
         </p>
-        <p>Thank you for using Begur Secret App!</p>
+        <p>Thank you for using Begur Secret!</p>
         <p>
-          Begur Secret App | Begur, Girona, Spain |
+          Begur Secret | Begur, Girona, Spain |
           <a href="mailto:hola@begursecret.com">hola@begursecret.com</a>
         </p>
       </div>

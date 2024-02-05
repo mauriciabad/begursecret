@@ -5,10 +5,10 @@
   },
   "home": {
     "meta": {
-      "title": "Begur Secret App",
+      "title": "Begur Secret",
       "description": "Descobreix llocs increïbles d'és teu poble."
     },
-    "heading": "Begur Secret App",
+    "heading": "Begur Secret",
     "subtitle": "Descobreix llocs increïbles d'és teu poble.",
     "launch-app": "Obrir App"
   },
@@ -196,7 +196,7 @@
     "register-banner": {
       "register": "Registrar-se",
       "subtitle": "Registra't a",
-      "title": "Begur Secret App",
+      "title": "Begur Secret",
       "text": "Guanya premis, guarda llocs i completa missions"
     },
     "more-options": {
