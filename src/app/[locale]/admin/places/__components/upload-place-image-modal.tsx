@@ -24,7 +24,7 @@ import { trpc } from '~/trpc'
 
 export const UploadPlaceImageModal: FC<
   Pick<
-    ControllerRenderProps<{ mainImageId: number | undefined }>,
+    ControllerRenderProps<{ mainImageId: number | undefined | null }>,
     'onBlur' | 'onChange' | 'value'
   > & {
     isInvalid?: boolean
@@ -45,7 +45,7 @@ export const UploadPlaceImageModal: FC<
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
   const [file, setFile] = useState<File | null>(null)
   const [selected, setSelected] = useState<string | undefined>(
-    mainImageId?.toString()
+    mainImageId?.toString() ?? undefined
   )
   const [uploadFileAlt, setUploadFileAlt] = useState<string>('')
 
