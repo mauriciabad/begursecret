@@ -35,7 +35,7 @@ const TermsAndServicesPage: FC<LocaleRouteParams> = () => {
         <blockquote>Last updated: {formatedLastUpdate} </blockquote>
 
         <p>
-          Welcome to Descobreix Begur App! We&#39;re delighted to have you as a
+          Welcome to Begur Secret App! We&#39;re delighted to have you as a
           user. Please read these easy-to-understand terms of service, which
           outline the rules for using our web application.
         </p>
@@ -43,8 +43,8 @@ const TermsAndServicesPage: FC<LocaleRouteParams> = () => {
           <strong>1. Acceptance of Terms</strong>
         </p>
         <p>
-          By using Descobreix Begur App, you agree to these terms and
-          conditions. If you don&#39;t agree, please don&#39;t use our app.
+          By using Begur Secret App, you agree to these terms and conditions. If
+          you don&#39;t agree, please don&#39;t use our app.
         </p>
         <p>
           <strong>2. Using Our App</strong>
@@ -141,21 +141,16 @@ const TermsAndServicesPage: FC<LocaleRouteParams> = () => {
           <strong>11. Contact Us</strong>
         </p>
         <p>
-          If you have questions or concerns, please contact us at{' '}
-          <a href="mailto:descobreixbegur@gmail.com">
-            descobreixbegur@gmail.com
-          </a>
-          .
+          If you have questions or concerns, please contact us at
+          <a href="mailto:hola@begursecret.com">hola@begursecret.com</a>.
         </p>
         <p>
-          Thanks for using Descobreix Begur App! We hope you enjoy your
-          experience and respect these terms while using our app.
+          Thanks for using Begur Secret App! We hope you enjoy your experience
+          and respect these terms while using our app.
         </p>
         <p>
-          Descobreix Begur App | Begur, Girona, Spain |{' '}
-          <a href="mailto:descobreixbegur@gmail.com">
-            descobreixbegur@gmail.com
-          </a>
+          Begur Secret App | Begur, Girona, Spain |
+          <a href="mailto:hola@begursecret.com">hola@begursecret.com</a>
         </p>
       </div>
     </>

@@ -1,8 +1,8 @@
-# Descobreix Begur App
+# Begur Secret App
 
 Source code for the app.
 
-<https://descobreixbegur.vercel.app>
+<https://begursecret.com>
 
 ## Development
 
@@ -88,10 +88,10 @@ Ask @mauriciabad for access.
 
 These are the services we use related to the code:
 
-- [PlanetScale](https://app.planetscale.com/descobreix-begur-app/descobreix-begur-app)
+- [PlanetScale](https://app.planetscale.com/begursecret/descobreix-begur-app)
 - [AWS S3](https://aws.amazon.com/s3)
-- [Vercel](https://vercel.com/mauriciabad/descobreix-begur-app)
-- [GitHub](https://github.com/mauriciabad/descobreix-begur-app)
+- [Vercel](https://vercel.com/mauriciabad/begursecret)
+- [GitHub](https://github.com/mauriciabad/begursecret)
 - [Cloudflare](https://www.cloudflare.com)
 - [Umami](https://analytics.eu.umami.is/websites/05dcd962-e08b-4cff-82a6-b0a62c4177a3)
-- [Axiom](https://app.axiom.co/descobreix-begur-app-7ctw/dashboards/vercel)
+- [Axiom](https://app.axiom.co/begursecret-7ctw/dashboards/vercel)
