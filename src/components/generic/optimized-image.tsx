@@ -4,8 +4,7 @@ import NextImage, {
   type ImageProps as NextImageProps,
 } from 'next/image'
 import { FC } from 'react'
-import fallbackImage from '~/../public/fallback.png'
-import { env } from '~/env.mjs'
+import fallbackImage from '../../../public/fallback.png'
 import { ImageType, makeImageUrl } from '~/helpers/images'
 
 type ImageWithoutId = Omit<ImageType, 'id'>
@@ -37,8 +36,6 @@ export const OptimizedImage: FC<
     : fallbackImage
   const actualAlt: string | undefined =
     alt ?? (!image || imageIsStatic(image) ? undefined : image.alt ?? undefined)
-  const isProduction =
-    env.NODE_ENV === 'production' && env.VERCEL_ENV === 'production'
 
   return (
     <Image
@@ -49,7 +46,6 @@ export const OptimizedImage: FC<
       blurDataURL={actualImage.blurDataURL}
       alt={actualAlt}
       {...imageProps}
-      unoptimized={!isProduction}
     />
   )
 }
