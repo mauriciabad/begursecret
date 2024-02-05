@@ -1,32 +1,55 @@
 import { Image, type ImageProps } from '@nextui-org/image'
-import NextImage, { type ImageProps as NextImageProps } from 'next/image'
+import NextImage, {
+  StaticImageData,
+  type ImageProps as NextImageProps,
+} from 'next/image'
 import { FC } from 'react'
+import fallbackImage from '~/../public/fallback.png'
+import { env } from '~/env.mjs'
 import { ImageType, makeImageUrl } from '~/helpers/images'
 
 type ImageWithoutId = Omit<ImageType, 'id'>
 
-const DEFAULT_IMAGE = {
-  key: 'static/app/content-placeholder.png',
-  width: 667,
-  height: 667,
-  alt: '',
-} as const satisfies ImageWithoutId
+function imageIsStatic(
+  image: ImageWithoutId | StaticImageData
+): image is StaticImageData {
+  return 'src' in image
+}
+
+function imageToStatic(image: ImageWithoutId): StaticImageData {
+  return {
+    src: makeImageUrl(image.key),
+    width: image.width,
+    height: image.height,
+  }
+}
 
 export const OptimizedImage: FC<
   Omit<ImageProps & NextImageProps, 'src' | 'width' | 'height' | 'alt'> & {
-    image?: ImageWithoutId | null
+    image?: ImageWithoutId | StaticImageData | null
     alt?: string
   }
 > = ({ image, alt, ...imageProps }) => {
-  const actualImage = image ?? DEFAULT_IMAGE
+  const actualImage: StaticImageData = image
+    ? imageIsStatic(image)
+      ? image
+      : imageToStatic(image)
+    : fallbackImage
+  const actualAlt: string | undefined =
+    alt ?? (!image || imageIsStatic(image) ? undefined : image.alt ?? undefined)
+  const isProduction =
+    env.NODE_ENV === 'production' && env.VERCEL_ENV === 'production'
+
   return (
     <Image
       as={NextImage}
-      src={makeImageUrl(actualImage.key)}
+      src={actualImage.src}
       width={actualImage.width}
       height={actualImage.height}
-      alt={alt ?? actualImage.alt ?? undefined}
+      blurDataURL={actualImage.blurDataURL}
+      alt={actualAlt}
       {...imageProps}
+      unoptimized={!isProduction}
     />
   )
 }
