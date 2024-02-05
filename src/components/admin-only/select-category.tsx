@@ -10,18 +10,20 @@ import { trpc } from '~/trpc'
 type Props = Omit<SelectProps, 'children'>
 
 export const SelectCategory = forwardRef<HTMLSelectElement, Props>(
-  ({ ...selectProps }, ref) => {
+  ({ selectedKeys, ...selectProps }, ref) => {
     const locale = useLocale()
-    const { data: categories } = trpc.admin.places.listCategories.useQuery({
-      locale: onlyTranslatableLocales(locale),
-    })
+    const { data: categories, isLoading: isLoadingCategories } =
+      trpc.admin.places.listCategories.useQuery({
+        locale: onlyTranslatableLocales(locale),
+      })
 
     return (
       <Select
         {...selectProps}
+        selectedKeys={isLoadingCategories ? [] : selectedKeys}
         ref={ref}
-        isLoading={!categories}
-        isDisabled={!categories}
+        isLoading={isLoadingCategories}
+        isDisabled={isLoadingCategories}
       >
         {(categories ?? []).map((category) => (
           <SelectItem

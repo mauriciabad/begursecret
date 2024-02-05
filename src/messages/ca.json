@@ -44,12 +44,15 @@
     "add-new": "Crear nou",
     "edit-place": "Editar lloc",
     "create-place": "Crear lloc",
-    "stay-on-page-after-submit": "Quedar-se a la pàgina després d'enviar",
+    "stay-on-page-after-submit": "Fer més",
     "no-places-found": "No s'han trobat llocs",
     "change-image": {
       "save": "Guardar",
+      "upload-and-save": "Pujar i guardar",
+      "alt-text": "Text alternatiu",
       "remove-image": "Eliminar imatge",
       "change-main-image": "Canviar imatge principal",
+      "select-existing-image": "Seleccionar imatge existent",
       "upload-new-image": "Pujar nova imatge",
       "leave-empty-to-remove-main-image": "Deixa-ho buit per eliminar la imatge principal"
     },

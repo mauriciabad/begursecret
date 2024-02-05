@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import type { FC } from 'react'
+import { LoginForm } from '~/components/login-form/login-form'
 import type { LocaleRouteParams } from '~/i18n'
 import { redirect } from '~/navigation'
 import { getSession } from '~/server/get-server-thing'
-import { LoginForm } from '../../../../../components/login-form/login-form'
 
 export async function generateMetadata({
   params: { locale },

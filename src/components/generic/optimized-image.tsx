@@ -7,35 +7,43 @@ import { FC } from 'react'
 import { ImageType, makeImageUrl } from '~/helpers/images'
 import fallbackImage from '../../../public/fallback.png'
 
-type ImageWithoutId = Omit<ImageType, 'id'>
+type S3Image = Omit<ImageType, 'id'>
 
-function imageIsStatic(
-  image: ImageWithoutId | StaticImageData
-): image is StaticImageData {
-  return 'src' in image
+type StaticImage = {
+  src: string
+  height: number
+  width: number
+  blurDataURL?: string
+  alt?: string
 }
 
-function imageToStatic(image: ImageWithoutId): StaticImageData {
+function imageIsFromS3(image: S3Image | StaticImage): image is S3Image {
+  return 'key' in image
+}
+
+function imageToStatic(image: S3Image): StaticImage {
   return {
     src: makeImageUrl(image.key),
     width: image.width,
     height: image.height,
+    alt: image?.alt ?? undefined,
+    blurDataURL: image?.blurDataURL ?? undefined,
   }
 }
 
+const FALLBACK_IMG_ALT = 'Imatge de mostra'
+
 export const OptimizedImage: FC<
   Omit<ImageProps & NextImageProps, 'src' | 'width' | 'height' | 'alt'> & {
-    image?: ImageWithoutId | StaticImageData | null
+    image?: S3Image | StaticImageData | null
     alt?: string
   }
 > = ({ image, alt, ...imageProps }) => {
-  const actualImage: StaticImageData = image
-    ? imageIsStatic(image)
-      ? image
-      : imageToStatic(image)
-    : fallbackImage
-  const actualAlt: string | undefined =
-    alt ?? (!image || imageIsStatic(image) ? undefined : image.alt ?? undefined)
+  const actualImage: StaticImage = image
+    ? imageIsFromS3(image)
+      ? imageToStatic(image)
+      : image
+    : { ...fallbackImage, alt: FALLBACK_IMG_ALT }
 
   return (
     <Image
@@ -44,7 +52,8 @@ export const OptimizedImage: FC<
       width={actualImage.width}
       height={actualImage.height}
       blurDataURL={actualImage.blurDataURL}
-      alt={actualAlt}
+      alt={alt ?? actualImage.alt}
+      placeholder={actualImage.blurDataURL ? 'blur' : 'empty'}
       {...imageProps}
     />
   )
