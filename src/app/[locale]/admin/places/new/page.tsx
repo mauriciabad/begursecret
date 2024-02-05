@@ -4,6 +4,8 @@ import type { FC } from 'react'
 import { type LocaleRouteParams } from '~/i18n'
 import { PlaceForm } from '../__components/place-form'
 
+export const runtime = 'edge'
+
 export async function generateMetadata({
   params: { locale },
 }: LocaleRouteParams): Promise<Metadata> {

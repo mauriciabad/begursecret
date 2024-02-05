@@ -6,6 +6,8 @@ import { redirect } from '~/navigation'
 import { getSession } from '~/server/get-server-thing'
 import { CompleteProfileForm } from './_components/complete-profile-form'
 
+export const runtime = 'edge'
+
 export async function generateMetadata({
   params: { locale },
 }: LocaleRouteParams): Promise<Metadata> {
