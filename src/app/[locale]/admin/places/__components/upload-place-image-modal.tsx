@@ -13,10 +13,11 @@ import {
 } from '@nextui-org/modal'
 import { Radio, RadioGroup } from '@nextui-org/radio'
 import { useTranslations } from 'next-intl'
-import { ChangeEvent, FC, useState } from 'react'
+import { FC, useState } from 'react'
 import { ControllerRenderProps } from 'react-hook-form'
 import { UploadPlaceImageResponse } from '~/app/api/upload/place-image/route'
 import { AlertBox } from '~/components/generic/alert-box'
+import { InputFile } from '~/components/generic/input-file'
 import { OptimizedImage } from '~/components/generic/optimized-image'
 import { cn } from '~/helpers/cn'
 import { uploadImage } from '~/helpers/upload-images'
@@ -94,11 +95,6 @@ export const UploadPlaceImageModal: FC<
     onClose()
   }
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0]
-    if (selectedFile) setFile(selectedFile)
-  }
-
   const { data: allImages, isLoading: isLoadingImages } =
     trpc.admin.images.getAll.useQuery()
   return (
@@ -141,17 +137,14 @@ export const UploadPlaceImageModal: FC<
 
               <ModalBody>
                 <div className="flex items-end gap-4">
-                  <Input
-                    type="file"
-                    label={t('change-image.upload-new-image')}
-                    variant="bordered"
-                    labelPlacement="outside"
-                    placeholder=" "
-                    onChange={handleFileChange}
-                    accept="image/*"
+                  <InputFile
+                    type="images"
+                    onValueChange={(files) => setFile(files[0] ?? null)}
                     isDisabled={isUploading}
                     isInvalid={isInvalid}
                     errorMessage={errorMessage}
+                    label={t('change-image.upload-new-image')}
+                    className="grow"
                   />
                   <Button
                     className="flex-grow"
