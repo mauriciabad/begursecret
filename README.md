@@ -1,4 +1,4 @@
-# Begur Secret App
+# Begur Secret
 
 Source code for the app.
 

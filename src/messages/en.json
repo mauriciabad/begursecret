@@ -5,10 +5,10 @@
   },
   "home": {
     "meta": {
-      "title": "Begur Secret App",
+      "title": "Begur Secret",
       "description": "Discover incredible places in this beautiful town."
     },
-    "heading": "Begur Secret App",
+    "heading": "Begur Secret",
     "subtitle": "Discover incredible places in this beautiful town.",
     "launch-app": "Launch App"
   },
@@ -199,7 +199,7 @@
     "register-banner": {
       "register": "Register",
       "subtitle": "Sign up in",
-      "title": "Begur Secret App",
+      "title": "Begur Secret",
       "text": "Win prices, save places, and complete missions"
     },
     "more-options": {

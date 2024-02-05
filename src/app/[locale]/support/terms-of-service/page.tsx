@@ -35,16 +35,16 @@ const TermsAndServicesPage: FC<LocaleRouteParams> = () => {
         <blockquote>Last updated: {formatedLastUpdate} </blockquote>
 
         <p>
-          Welcome to Begur Secret App! We&#39;re delighted to have you as a
-          user. Please read these easy-to-understand terms of service, which
-          outline the rules for using our web application.
+          Welcome to Begur Secret! We&#39;re delighted to have you as a user.
+          Please read these easy-to-understand terms of service, which outline
+          the rules for using our web application.
         </p>
         <p>
           <strong>1. Acceptance of Terms</strong>
         </p>
         <p>
-          By using Begur Secret App, you agree to these terms and conditions. If
-          you don&#39;t agree, please don&#39;t use our app.
+          By using Begur Secret, you agree to these terms and conditions. If you
+          don&#39;t agree, please don&#39;t use our app.
         </p>
         <p>
           <strong>2. Using Our App</strong>
@@ -145,11 +145,11 @@ const TermsAndServicesPage: FC<LocaleRouteParams> = () => {
           <a href="mailto:hola@begursecret.com">hola@begursecret.com</a>.
         </p>
         <p>
-          Thanks for using Begur Secret App! We hope you enjoy your experience
-          and respect these terms while using our app.
+          Thanks for using Begur Secret! We hope you enjoy your experience and
+          respect these terms while using our app.
         </p>
         <p>
-          Begur Secret App | Begur, Girona, Spain |
+          Begur Secret | Begur, Girona, Spain |
           <a href="mailto:hola@begursecret.com">hola@begursecret.com</a>
         </p>
       </div>
