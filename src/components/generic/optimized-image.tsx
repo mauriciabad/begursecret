@@ -4,8 +4,8 @@ import NextImage, {
   type ImageProps as NextImageProps,
 } from 'next/image'
 import { FC } from 'react'
-import fallbackImage from '../../../public/fallback.png'
 import { ImageType, makeImageUrl } from '~/helpers/images'
+import fallbackImage from '../../../public/fallback.png'
 
 type ImageWithoutId = Omit<ImageType, 'id'>
 
