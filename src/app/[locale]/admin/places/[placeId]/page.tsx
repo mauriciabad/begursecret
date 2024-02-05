@@ -5,7 +5,7 @@ import { LocaleParams, LocaleRouteParams } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
 import { PlaceForm } from '../__components/place-form'
 
-export const runtime = 'edge'
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({
   params: { locale },
