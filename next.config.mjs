@@ -8,6 +8,21 @@ import createNextIntlPlugin from 'next-intl/plugin'
  */
 !process.env.SKIP_ENV_VALIDATION && (await import('./src/env.mjs'))
 
+/** @type {import('next').NextConfig} */
+const nextBaseConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: `${process.env.NEXT_PUBLIC_AWS_BUCKET_NAME ?? '*'}.s3.${
+          process.env.NEXT_PUBLIC_AWS_BUCKET_REGION ?? '*'
+        }.amazonaws.com`,
+      },
+    ],
+    unoptimized: process.env.VERCEL_ENV !== 'production',
+  },
+}
+
 /**
  * Create config wrapper required for using next-intl with RSCs.
  * See https://next-intl-docs.vercel.app/docs/getting-started/app-router-server-components
@@ -30,22 +45,6 @@ const withPWA = withPWAInit({
 })
 
 /** @type {import('next').NextConfig} */
-const nextConfig = withAxiom(
-  withNextIntl(
-    withPWA({
-      images: {
-        remotePatterns: [
-          {
-            protocol: 'https',
-            hostname: `${process.env.NEXT_PUBLIC_AWS_BUCKET_NAME ?? '*'}.s3.${
-              process.env.NEXT_PUBLIC_AWS_BUCKET_REGION ?? '*'
-            }.amazonaws.com`,
-          },
-        ],
-        unoptimized: process.env.VERCEL_ENV !== 'production',
-      },
-    })
-  )
-)
+const nextConfig = withAxiom(withNextIntl(withPWA(nextBaseConfig)))
 
 export default nextConfig
