@@ -206,6 +206,7 @@ export const UploadPlaceImageModal: FC<
                           'before:border-content1 before:border-2 before:rounded-full before:absolute before:-inset-1 before:z-0'
                         ),
                         label: 'z-0 p-0',
+                        labelWrapper: 'm-0',
                       }}
                     >
                       <OptimizedImage
@@ -213,7 +214,7 @@ export const UploadPlaceImageModal: FC<
                         image={image}
                         radius="sm"
                       />
-                      <p className="mx-2 mt-1 w-full text-xs text-gray-600">
+                      <p className="mt-1 w-full px-2 text-xs text-gray-600">
                         {image.alt}
                       </p>
                     </Radio>
