@@ -24,6 +24,7 @@ export const MarkdownEditor: FC<{
         })}
       >
         <MDEditor
+          data-color-mode="light"
           aria-label={label}
           value={value ?? ''}
           onChange={(value) => {
