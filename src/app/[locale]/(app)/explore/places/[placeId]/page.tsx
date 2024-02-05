@@ -1,8 +1,12 @@
 import type { Metadata } from 'next'
-import { getTranslator } from 'next-intl/server'
+import { getTranslations } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import type { FC } from 'react'
-import { LocaleParams, onlyTranslatableLocales } from '~/i18n'
+import {
+  LocaleParams,
+  LocaleRouteParams,
+  onlyTranslatableLocales,
+} from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
 import { OverrideMainMap } from '../../_components/override-main-map'
 import { PlaceDetails } from '../../_components/place-details'
@@ -10,11 +14,9 @@ import { PlaceDetails } from '../../_components/place-details'
 type Params = LocaleParams & { placeId: string }
 
 export async function generateMetadata({
-  params,
-}: {
-  params: Params
-}): Promise<Metadata> {
-  const t = await getTranslator(params.locale, 'place')
+  params: { locale },
+}: LocaleRouteParams): Promise<Metadata> {
+  const t = await getTranslations({ locale, namespace: 'place' })
   return {
     title: t('meta.title'),
     description: t('meta.description'),

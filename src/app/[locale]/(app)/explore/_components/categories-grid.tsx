@@ -3,10 +3,10 @@
 import { Button } from '@nextui-org/button'
 import { Card } from '@nextui-org/card'
 import { useTranslations } from 'next-intl'
-import Link from 'next-intl/link'
 import { FC, useState } from 'react'
 import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
 import { cn } from '~/helpers/cn'
+import { Link } from '~/navigation'
 import { ApiRouterOutput } from '~/server/api/router'
 
 type Categories = ApiRouterOutput['places']['listCategories']

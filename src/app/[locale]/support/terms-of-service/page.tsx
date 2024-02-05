@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 import { useFormatter } from 'next-intl'
-import { getTranslator } from 'next-intl/server'
+import { getTranslations } from 'next-intl/server'
 import type { FC } from 'react'
 import type { LocaleRouteParams } from '~/i18n'
 
 export async function generateMetadata({
-  params,
+  params: { locale },
 }: LocaleRouteParams): Promise<Metadata> {
-  const t = await getTranslator(params.locale, 'terms-of-service')
+  const t = await getTranslations({ locale, namespace: 'terms-of-service' })
   return {
     title: {
       default: t('meta.title'),

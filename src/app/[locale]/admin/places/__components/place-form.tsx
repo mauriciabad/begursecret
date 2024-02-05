@@ -3,7 +3,6 @@
 import { Checkbox } from '@nextui-org/checkbox'
 import { Input, Textarea } from '@nextui-org/input'
 import { useTranslations } from 'next-intl'
-import { useRouter } from 'next-intl/client'
 import { FC, useState } from 'react'
 import { Controller } from 'react-hook-form'
 import { SelectCategory } from '~/components/admin-only/select-category'
@@ -13,6 +12,7 @@ import {
   SafeSubmitButton,
   useSafeForm,
 } from '~/components/generic/safe-form'
+import { useRouter } from '~/navigation'
 import { createPlaceSchema } from '~/schemas/places'
 import { ApiRouterOutput } from '~/server/api/router'
 import { trpc } from '~/trpc'

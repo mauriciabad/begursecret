@@ -1,5 +1,4 @@
-import { Image } from '@nextui-org/image'
-import { ImageProps } from '@nextui-org/react'
+import { Image, type ImageProps } from '@nextui-org/image'
 import NextImage, { type ImageProps as NextImageProps } from 'next/image'
 import { FC } from 'react'
 import { ImageType, makeImageUrl } from '~/helpers/images'

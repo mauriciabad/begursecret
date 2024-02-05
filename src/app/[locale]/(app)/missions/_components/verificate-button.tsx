@@ -1,6 +1,7 @@
 'use client'
 
-import { Button, useDisclosure } from '@nextui-org/react'
+import { Button } from '@nextui-org/button'
+import { useDisclosure } from '@nextui-org/use-disclosure'
 import { IconDiscountCheckFilled } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'

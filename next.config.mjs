@@ -1,6 +1,6 @@
 import withPWAInit from '@ducanh2912/next-pwa'
 import { withAxiom } from 'next-axiom'
-import nextIntlPlugin from 'next-intl/plugin'
+import createNextIntlPlugin from 'next-intl/plugin'
 
 /**
  * Run `build` or `dev` script with `SKIP_ENV_VALIDATION` to skip validation
@@ -12,7 +12,7 @@ import nextIntlPlugin from 'next-intl/plugin'
  * Create config wrapper required for using next-intl with RSCs.
  * See https://next-intl-docs.vercel.app/docs/getting-started/app-router-server-components
  */
-const withNextIntl = nextIntlPlugin('./src/server/i18n.ts')
+const withNextIntl = createNextIntlPlugin('./src/server/i18n.ts')
 
 const withPWA = withPWAInit({
   dest: 'public',

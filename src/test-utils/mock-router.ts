@@ -1,4 +1,4 @@
-import * as NextIntlClient from 'next-intl/client'
+import * as NextIntlClient from '~/navigation'
 
 export const mockUsePathname = ({
   pathname = '',

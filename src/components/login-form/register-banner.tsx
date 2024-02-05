@@ -1,8 +1,8 @@
 import { Button } from '@nextui-org/button'
 import { useTranslations } from 'next-intl'
-import Link from 'next-intl/link'
 import { FC } from 'react'
 import { cn } from '~/helpers/cn'
+import { Link } from '~/navigation'
 
 export const RegisterBanner: FC<{
   className?: string

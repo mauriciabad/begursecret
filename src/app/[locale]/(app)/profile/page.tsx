@@ -1,15 +1,19 @@
 import type { Metadata } from 'next'
-import { getTranslator, redirect } from 'next-intl/server'
+import { getTranslations } from 'next-intl/server'
 import type { FC } from 'react'
 import type { LocaleRouteParams } from '~/i18n'
+import { redirect } from '~/navigation'
 import { getSession } from '~/server/get-server-thing'
 import { UserPreview } from './_components/user-preview'
 import { UserTabs } from './_components/user-tabs'
 
 export async function generateMetadata({
-  params,
+  params: { locale },
 }: LocaleRouteParams): Promise<Metadata> {
-  const t = await getTranslator(params.locale, 'profile')
+  const t = await getTranslations({
+    locale,
+    namespace: 'profile',
+  })
   return {
     title: t('meta.title'),
     description: t('meta.description'),
@@ -19,7 +23,7 @@ export async function generateMetadata({
 const ProfilePage: FC<LocaleRouteParams> = async () => {
   const session = await getSession()
   if (!session) {
-    redirect('/profile/login')
+    return redirect('/profile/login')
   }
 
   return (

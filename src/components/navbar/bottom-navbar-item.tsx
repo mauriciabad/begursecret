@@ -1,7 +1,7 @@
 'use client'
 
-import { usePathname } from 'next-intl/client'
 import { FC, ReactNode } from 'react'
+import { usePathname } from '~/navigation'
 import { LinkButton } from '../links/link-button'
 
 export const BottomNavbarItem: FC<{

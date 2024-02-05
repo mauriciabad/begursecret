@@ -10,9 +10,9 @@ import {
   useDisclosure,
 } from '@nextui-org/modal'
 import { IconExternalLink, IconLock, IconMenu2 } from '@tabler/icons-react'
-import Link from 'next-intl/link'
 import { FC, PropsWithChildren, ReactNode } from 'react'
 import { LanguageSwitcher } from '~/components/inputs/language-switcher'
+import { Link } from '~/navigation'
 
 type MoreOptionsModalProps = PropsWithChildren<{
   title: string
