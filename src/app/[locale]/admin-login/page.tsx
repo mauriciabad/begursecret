@@ -1,6 +1,5 @@
 import { IconBarrierBlock, IconBolt } from '@tabler/icons-react'
 import type { Metadata } from 'next'
-import { useTranslations } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
 import type { FC } from 'react'
 import { LoginForm } from '~/components/login-form/login-form'
@@ -31,7 +30,7 @@ const AdminLoginPage: FC<LocaleRouteParams> = async () => {
 
   const isLoggedInAsNotAdmin = !!session && session.user.role !== 'admin'
 
-  const t = useTranslations('admin-login')
+  const t = await getTranslations('admin-login')
 
   return (
     <>
