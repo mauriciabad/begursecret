@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@nextui-org/button'
-import { Card } from '@nextui-org/card'
+import { Divider } from '@nextui-org/divider'
 import { Input } from '@nextui-org/input'
 import {
   Modal,
@@ -11,13 +11,16 @@ import {
   ModalHeader,
   useDisclosure,
 } from '@nextui-org/modal'
+import { Radio, RadioGroup } from '@nextui-org/radio'
 import { useTranslations } from 'next-intl'
 import { ChangeEvent, FC, useState } from 'react'
 import { ControllerRenderProps } from 'react-hook-form'
 import { UploadPlaceImageResponse } from '~/app/api/upload/place-image/route'
 import { AlertBox } from '~/components/generic/alert-box'
+import { OptimizedImage } from '~/components/generic/optimized-image'
 import { cn } from '~/helpers/cn'
 import { uploadImage } from '~/helpers/upload-images'
+import { trpc } from '~/trpc'
 
 export const UploadPlaceImageModal: FC<
   Pick<
@@ -36,11 +39,16 @@ export const UploadPlaceImageModal: FC<
   errorMessage,
   onChange,
   onBlur,
-  value,
+  value: mainImageId,
 }) => {
   const t = useTranslations('admin-places')
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
   const [file, setFile] = useState<File | null>(null)
+  const [selected, setSelected] = useState<string | undefined>(
+    mainImageId?.toString()
+  )
+  const [uploadFileAlt, setUploadFileAlt] = useState<string>('')
+
   const updateValue = (value: number | null) => {
     onChange?.({
       target: { value },
@@ -50,11 +58,21 @@ export const UploadPlaceImageModal: FC<
 
   const [isUploading, setIsUploading] = useState(false)
 
+  const save = async () => {
+    if (selected) {
+      updateValue(Number(selected))
+    } else {
+      updateValue(null)
+    }
+    onClose()
+  }
+
   const uploadNewImage = async () => {
     setIsUploading(true)
     try {
       const { image } = await uploadImage<UploadPlaceImageResponse>({
         file,
+        alt: uploadFileAlt,
         endpoint: '/api/upload/place-image',
       })
 
@@ -78,18 +96,21 @@ export const UploadPlaceImageModal: FC<
     if (selectedFile) setFile(selectedFile)
   }
 
+  const { data: allImages, isLoading: isLoadingImages } =
+    trpc.admin.images.getAll.useQuery()
+
   return (
     <>
       <div className="flex flex-col items-center gap-1">
         <div className="font-title">{label}</div>
-        <Card
+        <OptimizedImage
           radius="md"
           className={cn('min-h-32 w-full max-w-64', {
             'border-2 border-red-500': isInvalid,
           })}
-        >
-          {value}
-        </Card>
+          image={allImages?.find((image) => image.id === mainImageId)}
+          isLoading={isLoadingImages}
+        />
         <Button onPress={onOpen} variant="bordered" className={className}>
           {t('change-image.change-main-image')}
         </Button>
@@ -104,6 +125,8 @@ export const UploadPlaceImageModal: FC<
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         isDismissable={!isUploading}
+        scrollBehavior="inside"
+        size="5xl"
       >
         <ModalContent>
           {() => (
@@ -115,18 +138,85 @@ export const UploadPlaceImageModal: FC<
               </ModalHeader>
 
               <ModalBody>
+                <div className="flex items-end gap-4">
+                  <Input
+                    type="file"
+                    label={t('change-image.upload-new-image')}
+                    variant="bordered"
+                    labelPlacement="outside"
+                    placeholder=" "
+                    onChange={handleFileChange}
+                    accept="image/*"
+                    isDisabled={isUploading}
+                    isInvalid={isInvalid}
+                    errorMessage={errorMessage}
+                  />
+                  <Button
+                    className="flex-grow"
+                    variant="solid"
+                    color="primary"
+                    onPress={uploadNewImage}
+                    isLoading={isUploading}
+                    isDisabled={isUploading || !file}
+                  >
+                    {t('change-image.upload-and-save')}
+                  </Button>
+                </div>
                 <Input
-                  type="file"
-                  label={t('change-image.upload-new-image')}
+                  onValueChange={setUploadFileAlt}
+                  value={uploadFileAlt}
+                  className="mt-4"
+                  label={t('change-image.alt-text')}
                   variant="bordered"
-                  labelPlacement="outside"
                   placeholder=" "
-                  onChange={handleFileChange}
-                  accept="image/*"
+                  labelPlacement="outside"
                   isDisabled={isUploading}
-                  isInvalid={isInvalid}
-                  errorMessage={errorMessage}
                 />
+
+                <Divider className="my-2" />
+
+                <RadioGroup
+                  label={t('change-image.select-existing-image')}
+                  value={selected}
+                  onValueChange={setSelected}
+                  orientation="horizontal"
+                  isDisabled={isUploading || isLoadingImages}
+                  classNames={{
+                    wrapper: cn(
+                      'grid gap-2 items-start',
+                      'grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5'
+                    ),
+                  }}
+                >
+                  {allImages?.map((image) => (
+                    <Radio
+                      key={image.id}
+                      value={String(image.id)}
+                      classNames={{
+                        base: cn(
+                          'bg-content1 cursor-pointer relative p-1 m-0',
+                          'hover:bg-content2',
+                          'rounded-xl border-2 border-transparent',
+                          'data-[selected=true]:border-primary'
+                        ),
+                        wrapper: cn(
+                          'absolute top-2 right-2 m-0 z-10 bg-content1 rounded-full overflow-visible',
+                          'before:border-content1 before:border-2 before:rounded-full before:absolute before:-inset-1 before:z-0'
+                        ),
+                        label: 'z-0 p-0',
+                      }}
+                    >
+                      <OptimizedImage
+                        className="h-auto w-full min-w-0"
+                        image={image}
+                        radius="sm"
+                      />
+                      <p className="mx-2 mt-1 w-full text-xs text-gray-600">
+                        {image.alt}
+                      </p>
+                    </Radio>
+                  ))}
+                </RadioGroup>
               </ModalBody>
 
               <ModalFooter>
@@ -145,9 +235,9 @@ export const UploadPlaceImageModal: FC<
                   variant="solid"
                   color="primary"
                   fullWidth
-                  onPress={uploadNewImage}
+                  onPress={save}
                   isLoading={isUploading}
-                  isDisabled={isUploading || !file}
+                  isDisabled={isUploading}
                 >
                   {t('change-image.save')}
                 </Button>

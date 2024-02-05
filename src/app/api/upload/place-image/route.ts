@@ -21,6 +21,7 @@ export const POST = withAxiom(async (request) => {
   if (!imageFile) {
     return NextResponse.json(null, { status: 400 })
   }
+  const imageAlt = formData.get('alt') as unknown as string | undefined
   const imageId = uuidv4()
   const imageKey = `contents/${imageId}`
 
@@ -32,7 +33,7 @@ export const POST = withAxiom(async (request) => {
     key: imageKey,
     width: 123,
     height: 123,
-    alt: 'Test alt WIP',
+    alt: imageAlt,
   } as const satisfies ImageType
 
   return NextResponse.json({

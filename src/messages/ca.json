@@ -48,8 +48,11 @@
     "no-places-found": "No s'han trobat llocs",
     "change-image": {
       "save": "Guardar",
+      "upload-and-save": "Pujar i guardar",
+      "alt-text": "Text alternatiu",
       "remove-image": "Eliminar imatge",
       "change-main-image": "Canviar imatge principal",
+      "select-existing-image": "Seleccionar imatge existent",
       "upload-new-image": "Pujar nova imatge",
       "leave-empty-to-remove-main-image": "Deixa-ho buit per eliminar la imatge principal"
     },
