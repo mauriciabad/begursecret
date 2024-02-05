@@ -27,7 +27,7 @@ function imageToStatic(image: S3Image): StaticImage {
     width: image.width,
     height: image.height,
     alt: image?.alt ?? undefined,
-    blurDataURL: undefined,
+    blurDataURL: image?.blurDataURL ?? undefined,
   }
 }
 
@@ -53,6 +53,7 @@ export const OptimizedImage: FC<
       height={actualImage.height}
       blurDataURL={actualImage.blurDataURL}
       alt={alt ?? actualImage.alt}
+      placeholder={actualImage.blurDataURL ? 'blur' : 'empty'}
       {...imageProps}
     />
   )

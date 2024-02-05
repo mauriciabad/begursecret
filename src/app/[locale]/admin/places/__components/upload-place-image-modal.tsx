@@ -48,8 +48,10 @@ export const UploadPlaceImageModal: FC<
     mainImageId?.toString() ?? undefined
   )
   const [uploadFileAlt, setUploadFileAlt] = useState<string>('')
+  const utils = trpc.useUtils()
 
   const updateValue = (value: number | null) => {
+    setSelected(value?.toString() ?? undefined)
     onChange?.({
       target: { value },
     })
@@ -75,6 +77,7 @@ export const UploadPlaceImageModal: FC<
         alt: uploadFileAlt,
         endpoint: '/api/upload/place-image',
       })
+      utils.admin.images.getAll.invalidate()
 
       updateValue(image.id)
 
@@ -98,7 +101,6 @@ export const UploadPlaceImageModal: FC<
 
   const { data: allImages, isLoading: isLoadingImages } =
     trpc.admin.images.getAll.useQuery()
-
   return (
     <>
       <div className="flex flex-col items-center gap-1">

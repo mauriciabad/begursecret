@@ -13,5 +13,6 @@ export type ImageType = {
   key: string
   width: number
   height: number
+  blurDataURL?: string | null
   alt?: string | null
 }
