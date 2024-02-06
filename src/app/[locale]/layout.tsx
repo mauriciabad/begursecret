@@ -1,7 +1,7 @@
 import '~/globals.css'
 
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { AxiomWebVitals } from 'next-axiom'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations } from 'next-intl/server'
@@ -22,6 +22,10 @@ const poppins = Poppins({
   weight: ['400', '500', '600', '700', '800'],
   variable: '--font-poppins',
 })
+
+export const viewport: Viewport = {
+  themeColor: '#5F797A',
+}
 
 export async function generateMetadata({
   params: { locale },
@@ -45,7 +49,6 @@ export async function generateMetadata({
       // startUpImage: [],
     },
     applicationName: t('meta.title'),
-    themeColor: '#5F797A',
   }
 }
 
