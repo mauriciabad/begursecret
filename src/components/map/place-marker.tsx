@@ -14,6 +14,7 @@ export type PlaceMarkerProps = {
   animated?: boolean
   name?: string
   showName?: boolean
+  isDisabled?: boolean
 }
 
 export const PlaceMarker: FC<PlaceMarkerProps> = ({
@@ -24,6 +25,7 @@ export const PlaceMarker: FC<PlaceMarkerProps> = ({
   animated,
   name,
   showName,
+  isDisabled,
 }) => {
   const colorClassName = {
     'border-gray-800 bg-gray-700 before:bg-gray-700': color === 'gray',
@@ -53,15 +55,14 @@ export const PlaceMarker: FC<PlaceMarkerProps> = ({
       {size === 'tiny' ? (
         <div
           className={cn(
-            {
-              'before:absolute before:inset-0 before:-z-10 before:animate-ping before:rounded-full':
-                animated,
-            },
+            animated &&
+              'before:absolute before:inset-0 before:-z-10 before:animate-ping before:rounded-full',
             className,
             'group relative box-border h-3 w-3 rounded-full border shadow',
             'border-gray-800 bg-gray-700',
             colorClassName,
-            'border-white'
+            'border-white',
+            isDisabled && 'opacity-50'
           )}
         >
           {name && (
@@ -74,14 +75,13 @@ export const PlaceMarker: FC<PlaceMarkerProps> = ({
       ) : (
         <div
           className={cn(
-            {
-              'before:absolute before:inset-0 before:-z-10 before:animate-ping before:rounded-full':
-                animated,
-            },
+            animated &&
+              'before:absolute before:inset-0 before:-z-10 before:animate-ping before:rounded-full',
             className,
             'group relative inline-block rounded-full border p-[3px] shadow',
             'border-gray-800 bg-gray-700',
-            colorClassName
+            colorClassName,
+            isDisabled && 'opacity-50'
           )}
         >
           {name && (

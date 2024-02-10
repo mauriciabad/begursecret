@@ -1,5 +1,6 @@
 'use client'
 
+import { IconFocus2 } from '@tabler/icons-react'
 import { Map as LeafletMap, divIcon } from 'leaflet'
 import 'leaflet.locatecontrol'
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'
@@ -40,6 +41,9 @@ export const MapRaw: FC<{
   classNames?: {
     controls?: string
   }
+  disableMarkers?: boolean
+  onValueChange?: (location: MapPoint | undefined) => void
+  value?: MapPoint
   defaultLayer?: LayerId
   innerRef?: (instance: LeafletMap | null) => void
 }> = ({
@@ -49,6 +53,9 @@ export const MapRaw: FC<{
   fullControl,
   zoom: initialZoom = 14,
   classNames = {},
+  disableMarkers,
+  onValueChange,
+  value,
   defaultLayer,
   innerRef,
 }) => {
@@ -59,9 +66,15 @@ export const MapRaw: FC<{
 
   const { zoom } = useMapControlledZoom(map, initialZoom)
 
+  if (onValueChange) {
+    map?.addEventListener('click', (e) => {
+      onValueChange(e.latlng)
+    })
+  }
+
   return (
     <MapContainer
-      center={center}
+      center={value ?? center}
       zoom={zoom}
       zoomControl={false}
       scrollWheelZoom={fullControl}
@@ -90,11 +103,13 @@ export const MapRaw: FC<{
             zIndexOffset={zIndexOffset ?? 0}
             key={`${location.lat}-${location.lng}-${placeId}`}
             position={location}
+            interactive={!disableMarkers}
             icon={divIcon({
               html: renderToStaticMarkup(
                 <PlaceMarker
                   {...placeMarkerProps}
                   size={size ?? (zoom >= 14 ? 'normal' : 'tiny')}
+                  isDisabled={disableMarkers}
                 />
               ),
               iconSize: [0, 0],
@@ -102,7 +117,7 @@ export const MapRaw: FC<{
                 '!flex justify-center items-center border-0 bg-none [&>*]:shrink-0',
             })}
             eventHandlers={
-              markerUrl
+              markerUrl && !disableMarkers
                 ? {
                     click: () => {
                       router.push(markerUrl)
@@ -110,9 +125,32 @@ export const MapRaw: FC<{
                   }
                 : undefined
             }
-            keyboard={fullControl}
+            keyboard={fullControl && !disableMarkers}
           />
         )
+      )}
+
+      {value && (
+        <Marker
+          position={value}
+          interactive={false}
+          key={`${value.lat}-${value.lng}-selected`}
+          icon={divIcon({
+            html: renderToStaticMarkup(
+              <div className="relative">
+                <IconFocus2
+                  className="absolute inset-0 !-z-10 text-black/60"
+                  size={48}
+                  stroke={4}
+                />
+                <IconFocus2 className="z-10 text-white" size={48} stroke={1} />
+              </div>
+            ),
+            iconSize: [0, 0],
+            className:
+              '!flex justify-center items-center border-0 bg-none [&>*]:shrink-0',
+          })}
+        />
       )}
 
       <div

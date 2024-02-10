@@ -11,17 +11,29 @@ export const MarkdownEditor: FC<{
   value?: string
   onChange: (e: { target: { value: string } }) => void
   onBlur: () => void
-}> = ({ isInvalid, errorMessage, label, value, onChange, onBlur }) => {
+  className?: string
+}> = ({
+  isInvalid,
+  errorMessage,
+  label,
+  value,
+  onChange,
+  onBlur,
+  className,
+}) => {
   return (
-    <>
+    <div className={cn('flex flex-col', className)}>
       <p className="mb-1">{label}</p>
 
       {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       <Card
         radius="sm"
-        className={cn({
-          'border-2 border-red-500': isInvalid,
-        })}
+        className={cn(
+          {
+            'border-2 border-red-500': isInvalid,
+          },
+          'grow'
+        )}
       >
         <MDEditor
           data-color-mode="light"
@@ -41,8 +53,9 @@ export const MarkdownEditor: FC<{
             ),
           }}
           preview="edit"
+          height="100%"
         />
       </Card>
-    </>
+    </div>
   )
 }
