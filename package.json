@@ -100,8 +100,12 @@
   "packageManager": "pnpm@8.15.0",
   "pnpm": {
     "supportedArchitectures": {
-      "os": ["linux"],
-      "cpu": ["x64"]
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "x64"
+      ]
     }
   }
 }
