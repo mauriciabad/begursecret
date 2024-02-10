@@ -1,7 +1,6 @@
 import 'server-only'
 
 import { NextResponse } from 'next/server'
-import sharp, { Sharp } from 'sharp'
 import { deleteFromS3, uploadToS3 } from '../aws'
 
 type ExtractGenericFromNextResponse<Type> =
@@ -10,7 +9,6 @@ export type NextResponseType<T extends (...args: any) => any> =
   ExtractGenericFromNextResponse<Awaited<ReturnType<T>>>
 
 type UploadOptions = {
-  process?: (sharpImg: Sharp) => Sharp
   generateBlurDataURL?: boolean
   appendFileTypeToKey?: boolean
 }
@@ -21,28 +19,20 @@ export async function procsessAndUploadToS3<K extends string>(
 ) {
   const imageBuffer = Buffer.from(await file.arrayBuffer())
 
-  const editedImageBuffer = options?.process
-    ? await options.process(sharp(imageBuffer)).toBuffer()
-    : imageBuffer
+  const editedImageBuffer = imageBuffer
 
-  const metadata = await sharp(editedImageBuffer).metadata()
-  const format = metadata.format
+  const format = 'png'
   if (!format) throw new Error('Error getting image metadata: format')
-  const width = metadata.width
+  const width = 999
   if (!width) throw new Error('Error getting image metadata: width')
-  const height = metadata.height
+  const height = 999
   if (!height) throw new Error('Error getting image metadata: height')
 
   const keyWithFileType = options?.appendFileTypeToKey
     ? (`${key}.${format}` as const)
     : key
 
-  const blurDataURL = options?.generateBlurDataURL
-    ? await sharp(editedImageBuffer)
-        .resize(10, 10, { fit: 'inside' })
-        .toBuffer()
-        .then((buffer) => `data:${format};base64,${buffer.toString('base64')}`)
-    : undefined
+  const blurDataURL = undefined
 
   const src = await uploadToS3({
     buffer: editedImageBuffer,
