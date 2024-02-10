@@ -19,11 +19,11 @@ export const POST = withAxiom(async (request) => {
   }
 
   const formData = await request.formData()
-  const imageFile = formData.get('image') as unknown as File | null
-  if (!imageFile) {
+  const imageFile = formData.get('image')
+  if (!imageFile || !(imageFile instanceof File) || imageFile.size === 0) {
     return NextResponse.json(null, { status: 400 })
   }
-  const alt = formData.get('alt') as unknown as string | undefined
+  const alt = formData.get('alt')
 
   const image = await procsessAndUploadToS3(imageFile, `contents/${uuidv4()}`, {
     generateBlurDataURL: true,
@@ -34,7 +34,7 @@ export const POST = withAxiom(async (request) => {
     .insert(images)
     .values({
       ...image,
-      alt,
+      alt: String(alt),
     })
     .execute()
   const imageId = Number(insertImageResult.insertId)
