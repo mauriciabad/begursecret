@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
+import { redirect } from 'next/navigation'
 import type { FC } from 'react'
 import { Logo } from '~/components/icons/logo'
 import { LanguageSwitcher } from '~/components/inputs/language-switcher'
@@ -21,6 +22,8 @@ export async function generateMetadata({
 }
 
 const HomePage: FC<LocaleRouteParams> = () => {
+  redirect('/explore') // TODO: remove this line when the home page is ready
+
   const t = useTranslations('home')
 
   return (
