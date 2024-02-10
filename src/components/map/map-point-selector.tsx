@@ -59,7 +59,7 @@ export const MapPointSelector: FC<{
           value={valueAsMapPoint}
           fullControl
           disableMarkers
-          zoom={18}
+          zoom={valueAsMapPoint ? 18 : undefined}
         />
       </Card>
     </div>
