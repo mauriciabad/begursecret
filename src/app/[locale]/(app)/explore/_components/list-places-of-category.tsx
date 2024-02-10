@@ -50,6 +50,7 @@ export const ListPlacesOfCategory: FC<{
           <li className="contents" key={place.id}>
             <Card
               as={Link}
+              role="link"
               shadow="none"
               radius="lg"
               isPressable
