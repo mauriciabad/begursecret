@@ -1,3 +1,4 @@
+// @ts-check
 import withPWAInit from '@ducanh2912/next-pwa'
 import { withAxiom } from 'next-axiom'
 import createNextIntlPlugin from 'next-intl/plugin'
@@ -18,6 +19,18 @@ const nextBaseConfig = {
           process.env.NEXT_PUBLIC_AWS_BUCKET_REGION ?? '*'
         }.amazonaws.com`,
       },
+      {
+        protocol: 'https',
+        hostname: 'begursecret.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'begursecret-mauriciabad.vercel.app',
+      },
+      {
+        protocol: 'https',
+        hostname: 'begursecret-*-mauriciabad.vercel.app',
+      },
     ],
     unoptimized: process.env.VERCEL_ENV !== 'production',
   },
@@ -32,12 +45,11 @@ const withNextIntl = createNextIntlPlugin('./src/server/i18n.ts')
 const withPWA = withPWAInit({
   dest: 'public',
   fallbacks: {
-    image: '/public/fallback.png',
+    image: '/fallback.png',
   },
   cacheOnFrontEndNav: true,
   aggressiveFrontEndNavCaching: true,
   reloadOnOnline: true,
-  swcMinify: true,
   disable: process.env.NODE_ENV === 'development',
   workboxOptions: {
     disableDevLogs: true,

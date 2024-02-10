@@ -18,7 +18,16 @@ export const POST = withAxiom(async (request) => {
   }
 
   const formData = await request.formData()
-  const imageFile = formData.get('image') as unknown as File | null
+  const imageFile = formData.get('image')
+  if (
+    !(
+      imageFile === null ||
+      imageFile === undefined ||
+      (imageFile instanceof File && imageFile.size > 0)
+    )
+  ) {
+    return NextResponse.json(null, { status: 400 })
+  }
 
   const image = await proccessAndUploadOrDeleteFromS3(
     imageFile,
