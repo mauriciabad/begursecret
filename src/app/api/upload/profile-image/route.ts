@@ -26,7 +26,7 @@ export const POST = withAxiom(async (request) => {
       (imageFile instanceof File && imageFile.size > 0)
     )
   ) {
-    throw new Error('Invalid image')
+    return NextResponse.json(null, { status: 400 })
   }
 
   const image = await proccessAndUploadOrDeleteFromS3(
