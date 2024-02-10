@@ -10,7 +10,9 @@ import {
   IconHistory,
   IconHome,
   IconHomeOff,
+  IconIcons,
   IconMapPin,
+  IconMapPinQuestion,
   IconMountain,
   IconOvalVertical,
   IconParking,
@@ -49,6 +51,8 @@ const iconsByIconName = {
   home: IconHome,
   'building-tunnel': IconBuildingTunnel,
   'building-store': IconBuildingStore,
+  icons: IconIcons,
+  'map-pin-question': IconMapPinQuestion,
 } as const satisfies Record<PlaceCategoryIconType, Icon>
 
 export const PlaceCategoryIcon: FC<
