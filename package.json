@@ -97,5 +97,11 @@
     "webpack": "5.90.1"
   },
   "license": "GNU GENERAL PUBLIC LICENSE",
-  "packageManager": "pnpm@8.15.0"
+  "packageManager": "pnpm@8.15.0",
+  "pnpm": {
+    "supportedArchitectures": {
+      "os": ["linux"],
+      "cpu": ["x64"]
+    }
+  }
 }
