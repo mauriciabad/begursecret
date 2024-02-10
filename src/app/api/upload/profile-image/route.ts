@@ -31,7 +31,7 @@ export const POST = withAxiom(async (request) => {
 
   const image = await proccessAndUploadOrDeleteFromS3(
     imageFile,
-    `profile-images/${session.user.id}`,
+    `profile-images/${session.user.id}`
   )
 
   await db
