@@ -23,6 +23,5 @@ export const middleware = (
 }
 
 export const config = {
-  // matcher: ['/((?!api|_.*|.*\\..*).*)'],
-  matcher: ['/', '/(en|ca)/:path*'],
+  matcher: ['/((?!api|_.*|.*\\..*).*)'],
 }
