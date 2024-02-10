@@ -31,7 +31,11 @@ export const POST = withAxiom(async (request) => {
 
   const image = await proccessAndUploadOrDeleteFromS3(
     imageFile,
-    `profile-images/${session.user.id}`
+    `profile-images/${session.user.id}`,
+    {
+      process: (sharpImg) =>
+        sharpImg.resize({ height: 256, width: 256, fit: 'cover' }),
+    }
   )
 
   await db
