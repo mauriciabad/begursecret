@@ -13,12 +13,16 @@ import { procsessAndUploadToS3 } from '~/server/helpers/upload-images'
 export type UploadPlaceImageResponse = { image: ImageType }
 
 export const POST = withAxiom(async (request) => {
+  console.log('Log inside POST 1', {request})
   const session = await getSession()
+  console.log('Log inside POST 2', {session})
   if (session?.user.role !== 'admin') {
     return NextResponse.json(null, { status: 401 })
   }
 
   const formData = await request.formData()
+  console.log('Log inside POST 3', {
+    alt: formData.get('alt'), image: formData.get('image')})
   const imageFile = formData.get('image')
   if (!imageFile || !(imageFile instanceof File) || imageFile.size === 0) {
     return NextResponse.json(null, { status: 400 })
