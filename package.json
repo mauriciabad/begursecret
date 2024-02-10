@@ -101,10 +101,12 @@
   "pnpm": {
     "supportedArchitectures": {
       "os": [
-        "linux"
+        "linux",
+        "darwin"
       ],
       "cpu": [
-        "x64"
+        "x64",
+        "arm64"
       ]
     }
   }
