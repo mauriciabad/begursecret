@@ -12,6 +12,7 @@ import {
   SafeSubmitButton,
   useSafeForm,
 } from '~/components/generic/safe-form'
+import { MapPointSelector } from '~/components/map/map-point-selector'
 import { useRouter } from '~/navigation'
 import { createPlaceSchema } from '~/schemas/places'
 import { ApiRouterOutput } from '~/server/api/router'
@@ -49,7 +50,7 @@ export const PlaceForm: FC<{
           description: place.description ?? undefined,
           mainCategory: place.mainCategory.id,
           categories: place.categories.map((c) => c.category.id).join(','),
-          location: `${place.location.lat},${place.location.lng}`,
+          location: `${place.location.lat}, ${place.location.lng}`,
           mainImageId: place.mainImage?.id ?? undefined,
           content: place.content ?? undefined,
         }
@@ -159,23 +160,6 @@ export const PlaceForm: FC<{
         </div>
 
         <Controller
-          name="location"
-          control={form.control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              isInvalid={!!form.formState.errors['location']}
-              errorMessage={form.formState.errors['location']?.message}
-              onBlur={onBlur}
-              onChange={onChange}
-              value={value}
-              className="mt-4"
-              label={t('columns.location')}
-              placeholder="Lat, Lng"
-            />
-          )}
-        />
-
-        <Controller
           name="mainImageId"
           control={form.control}
           render={({ field: { onChange, onBlur, value } }) => (
@@ -190,20 +174,39 @@ export const PlaceForm: FC<{
           )}
         />
 
-        <Controller
-          name="content"
-          control={form.control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <MarkdownEditor
-              isInvalid={!!form.formState.errors['content']}
-              errorMessage={form.formState.errors['content']?.message}
-              onBlur={onBlur}
-              onChange={onChange}
-              value={value}
-              label={t('columns.content')}
+        <div className="my-4 grid gap-4 sm:grid-cols-2">
+          <Controller
+            name="content"
+            control={form.control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <MarkdownEditor
+                isInvalid={!!form.formState.errors['content']}
+                errorMessage={form.formState.errors['content']?.message}
+                onBlur={onBlur}
+                onChange={onChange}
+                value={value}
+                label={t('columns.content')}
+              />
+            )}
+          />
+
+          <div className="relative flex-1 basis-64">
+            <Controller
+              name="location"
+              control={form.control}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <MapPointSelector
+                  isInvalid={!!form.formState.errors['location']}
+                  errorMessage={form.formState.errors['location']?.message}
+                  onBlur={onBlur}
+                  onChange={onChange}
+                  value={value}
+                  label={t('columns.location')}
+                />
+              )}
             />
-          )}
-        />
+          </div>
+        </div>
 
         <div className="mt-8 flex items-center justify-start gap-4">
           <SafeSubmitButton color="primary" size="lg" />
