@@ -4,6 +4,7 @@ import {
   IconBuildingCastle,
   IconBuildingStore,
   IconBuildingTunnel,
+  IconChargingPile,
   IconFishHook,
   IconFlag,
   IconFountain,
@@ -11,8 +12,10 @@ import {
   IconHome,
   IconHomeOff,
   IconIcons,
+  IconLadder,
   IconMapPin,
   IconMapPinQuestion,
+  IconMotorbike,
   IconMountain,
   IconOvalVertical,
   IconParking,
@@ -53,6 +56,9 @@ const iconsByIconName = {
   'building-store': IconBuildingStore,
   icons: IconIcons,
   'map-pin-question': IconMapPinQuestion,
+  'charging-pile': IconChargingPile,
+  motorbike: IconMotorbike,
+  ladder: IconLadder,
 } as const satisfies Record<PlaceCategoryIconType, Icon>
 
 export const PlaceCategoryIcon: FC<
