@@ -290,7 +290,7 @@ const FeatureList: FC<PropsWithChildren<{ title: string }>> = ({
   return (
     <div>
       <h4 className="mb-1 font-bold leading-none">{title}</h4>
-      <ul className="xs2:grid-cols-2 grid gap-2">{children}</ul>
+      <ul className="grid gap-2 xs2:grid-cols-2">{children}</ul>
     </div>
   )
 }
