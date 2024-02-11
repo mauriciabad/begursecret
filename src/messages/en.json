@@ -96,8 +96,20 @@
     "features": {
       "features": "Features",
       "services": "Services",
+      "notes": "Notes",
+      "accessibility": "Accessibility",
+      "price": "Price",
+      "price-value": "{price} {units}",
+      "price-unit": {
+        "eur": "€",
+        "eur/minute": "€/min",
+        "eur/hour": "€/h",
+        "eur/day": "€/day"
+      },
+      "parking-spaces": "{spaces} spaces",
       "difficulty": {
         "accessible": "Accessible",
+        "normal": "Easy",
         "smallEffort": "Requires small effort",
         "hard": "Hard",
         "dangerous": "Dangerous"
@@ -113,8 +125,13 @@
         "sand": "Sand",
         "pebbles": "Pebbles",
         "rocks": "Rocks",
-        "concrete": "Concrete"
+        "concrete": "Concrete",
+        "dirt": "Dirt",
+        "pavimented": "Pavimented"
       },
+      "time-from-place": "{time} {place, select, townCenter {from the town center} parking {from the parking} beach {from the beach} road {from the road} other {away}}",
+      "covered": "Covered",
+      "free-with-local-stamp": "Free with Begur's stamp",
       "bus-service": "Bus service",
       "no-bus-service": "No bus service",
       "parking": "Parking",
@@ -130,7 +147,8 @@
       "leisure-services": "Leisure services",
       "no-leisure-services": "No leisure services",
       "drinking-water": "Drinking water",
-      "no-drinking-water": "No drinking water"
+      "no-drinking-water": "No drinking water",
+      "time-duration": "{hours, plural, =0 {} other {# h }}{minutes, plural, =0 {<1 min} other {# min}}"
     },
     "related-missions": "Related missions"
   },

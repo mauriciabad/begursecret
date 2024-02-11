@@ -1,7 +1,20 @@
 import { relations } from 'drizzle-orm'
-import { boolean, mysqlEnum, text, tinytext } from 'drizzle-orm/mysql-core'
+import {
+  boolean,
+  double,
+  int,
+  mysqlEnum,
+  text,
+  tinytext,
+} from 'drizzle-orm/mysql-core'
 import { mysqlTableWithTranslations } from '../../helpers/translations/db-tables'
-import { amountOfPeople, difficulty, groundType } from '../constants/features'
+import {
+  amountOfPeople,
+  difficulty,
+  groundType,
+  placeToArriveFrom,
+  priceUnit,
+} from '../constants/features'
 
 export const {
   normalTable: features,
@@ -17,6 +30,7 @@ export const {
 
     hasBus: boolean('hasBus'),
     hasParking: boolean('hasParking'),
+    parkingSpaces: int('parkingSpaces'),
     hasToilet: boolean('hasToilet'),
     hasRestaurant: boolean('hasRestaurant'),
     hasDrinkingWater: boolean('hasDrinkingWater'),
@@ -25,9 +39,18 @@ export const {
     hasLeisure: boolean('hasLeisure'),
 
     dimensions: tinytext('dimensions'),
+
+    price: double('price'),
+    priceUnit: mysqlEnum('priceUnit', priceUnit),
+
+    isCovered: boolean('isCovered'),
+    timeToArrive: int('timeToArrive'), // In minutes
+    placeToArriveFrom: mysqlEnum('placeToArriveFrom', placeToArriveFrom),
+    isFreeWithLocalStamp: boolean('isFreeWithLocalStamp'),
   },
   translatableColumns: {
     difficultyNotes: text('difficultyNotes'), // Markdown
+    priceNotes: text('priceNotes'), // Markdown
   },
 })
 

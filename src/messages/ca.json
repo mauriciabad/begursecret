@@ -96,8 +96,20 @@
     "features": {
       "features": "Característiques",
       "services": "Serveis",
+      "notes": "Notes",
+      "accessibility": "Accessibilitat",
+      "price": "Preu",
+      "price-value": "{price} {units}",
+      "price-unit": {
+        "eur": "€",
+        "eur/minute": "€/min",
+        "eur/hour": "€/h",
+        "eur/day": "€/dia"
+      },
+      "parking-spaces": "{spaces} places",
       "difficulty": {
         "accessible": "Accessible",
+        "normal": "Fàcil",
         "smallEffort": "Requereix un petit esforç",
         "hard": "Difícil",
         "dangerous": "Perillós"
@@ -112,9 +124,14 @@
       "ground-type": {
         "sand": "Sorra",
         "pebbles": "Pedretes",
-        "rocks": "Roces",
-        "concrete": "Ciment"
+        "rocks": "Roques",
+        "concrete": "Ciment",
+        "dirt": "Terra",
+        "pavimented": "Pavimentat"
       },
+      "time-from-place": "A {time} {place, select, townCenter {del centre} parking {del parking} beach {de la platja} road {de la carretera} other {}}",
+      "covered": "Cobert",
+      "free-with-local-stamp": "Gratuït amb segell de Begur",
       "bus-service": "Servei bus",
       "no-bus-service": "Sense servei bus",
       "parking": "Aparcament",
@@ -130,7 +147,8 @@
       "leisure-services": "Serveis d'oci",
       "no-leisure-services": "Sense serveis d'oci",
       "drinking-water": "Aigua potable",
-      "no-drinking-water": "Aigua no potable"
+      "no-drinking-water": "Aigua no potable",
+      "time-duration": "{hours, plural, =0 {} other {# h }}{minutes, plural, =0 {<1 min} other {# min}}"
     },
     "related-missions": "Missions relacionades"
   },
