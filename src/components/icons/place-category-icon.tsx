@@ -1,10 +1,14 @@
 import {
   Icon,
+  IconArrowBigDownLine,
   IconBeach,
+  IconBucket,
+  IconBuildingBridge2,
   IconBuildingCastle,
   IconBuildingStore,
   IconBuildingTunnel,
   IconChargingPile,
+  IconCornerRightDown,
   IconFishHook,
   IconFlag,
   IconFountain,
@@ -22,6 +26,7 @@ import {
   IconPennant,
   IconRipple,
   IconSailboat,
+  IconScubaDiving,
   IconScubaMask,
   IconTower,
   IconTrees,
@@ -59,6 +64,11 @@ const iconsByIconName = {
   'charging-pile': IconChargingPile,
   motorbike: IconMotorbike,
   ladder: IconLadder,
+  'building-bridge-2': IconBuildingBridge2,
+  'scuba-diving': IconScubaDiving,
+  'arrow-big-down-line': IconArrowBigDownLine,
+  'corner-right-down': IconCornerRightDown,
+  bucket: IconBucket,
 } as const satisfies Record<PlaceCategoryIconType, Icon>
 
 export const PlaceCategoryIcon: FC<
