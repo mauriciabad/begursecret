@@ -26,6 +26,11 @@ export const placeCategoriesIcons = [
   'charging-pile',
   'motorbike',
   'ladder',
+  'scuba-diving',
+  'building-bridge-2',
+  'arrow-big-down-line',
+  'corner-right-down',
+  'bucket',
 ] as const
 export type PlaceCategoryIcon = (typeof placeCategoriesIcons)[number]
 
