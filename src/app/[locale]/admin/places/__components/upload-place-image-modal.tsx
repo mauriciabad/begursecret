@@ -49,6 +49,7 @@ export const UploadPlaceImageModal: FC<
     mainImageId?.toString() ?? undefined
   )
   const [uploadFileAlt, setUploadFileAlt] = useState<string>('')
+  const [uploadFileSource, setUploadFileSource] = useState<string>('')
   const utils = trpc.useUtils()
 
   const updateValue = (value: number | null) => {
@@ -76,6 +77,7 @@ export const UploadPlaceImageModal: FC<
       const { image } = await uploadImage<UploadPlaceImageResponse>({
         file,
         alt: uploadFileAlt,
+        source: uploadFileSource,
         endpoint: '/api/upload/place-image',
       })
       utils.admin.images.getAll.invalidate()
@@ -157,16 +159,26 @@ export const UploadPlaceImageModal: FC<
                     {t('change-image.upload-and-save')}
                   </Button>
                 </div>
-                <Input
-                  onValueChange={setUploadFileAlt}
-                  value={uploadFileAlt}
-                  className="mt-4"
-                  label={t('change-image.alt-text')}
-                  variant="bordered"
-                  placeholder=" "
-                  labelPlacement="outside"
-                  isDisabled={isUploading}
-                />
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <Input
+                    onValueChange={setUploadFileAlt}
+                    value={uploadFileAlt}
+                    label={t('change-image.alt-text')}
+                    variant="bordered"
+                    placeholder=" "
+                    labelPlacement="outside"
+                    isDisabled={isUploading}
+                  />
+                  <Input
+                    onValueChange={setUploadFileSource}
+                    value={uploadFileSource}
+                    label={t('change-image.source')}
+                    variant="bordered"
+                    placeholder=" "
+                    labelPlacement="outside"
+                    isDisabled={isUploading}
+                  />
+                </div>
 
                 <Divider className="my-2" />
 
@@ -199,7 +211,7 @@ export const UploadPlaceImageModal: FC<
                           'before:border-content1 before:border-2 before:rounded-full before:absolute before:-inset-1 before:z-0'
                         ),
                         label: 'z-0 p-0',
-                        labelWrapper: 'm-0',
+                        labelWrapper: 'm-0 w-full',
                       }}
                     >
                       <OptimizedImage
@@ -207,9 +219,16 @@ export const UploadPlaceImageModal: FC<
                         image={image}
                         radius="sm"
                       />
-                      <p className="mt-1 w-full px-2 text-xs text-gray-600">
-                        {image.alt}
-                      </p>
+                      {image.alt && (
+                        <p className="mt-1 w-full px-2 text-xs text-gray-600">
+                          {image.alt}
+                        </p>
+                      )}
+                      {image.source && (
+                        <p className="w-full truncate px-2 text-xs text-gray-400">
+                          {image.source}
+                        </p>
+                      )}
                     </Radio>
                   ))}
                 </RadioGroup>
