@@ -51,7 +51,7 @@ export const MoreOptions: FC = () => {
           url="/admin"
           text={t('go-to-admin')}
           icon={<IconBolt />}
-          isPrivate
+          secondaryIcon="lock"
         />
       )}
       {session && (
@@ -70,13 +70,13 @@ export const MoreOptions: FC = () => {
         url="/support"
         text={t('support')}
         icon={<IconHelpCircle />}
-        isExternal
+        secondaryIcon="external-link"
       />
       <MoreOptionsModalButton
-        url="/support/feedback"
+        url="mailto:hola@begursecret.com?subject=Feedback"
         text={t('feedback')}
         icon={<IconMessage />}
-        isExternal
+        secondaryIcon="mail-forward"
       />
     </MoreOptionsModal>
   )
