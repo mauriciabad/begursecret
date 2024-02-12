@@ -6,6 +6,7 @@ export const images = mysqlTable('image', {
   key: s3ObjectKey('key').notNull(),
   width: int('width').notNull(),
   height: int('height').notNull(),
-  blurDataURL: text('blurDataURL'), // Base64 encoded image
+  source: text('source'),
   alt: tinytext('alt'), // In Catalan only
+  blurDataURL: text('blurDataURL'), // Base64 encoded image
 })
