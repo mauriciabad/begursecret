@@ -30,7 +30,7 @@ export const MoreOptions: FC = () => {
         url="/"
         text={t('go-to-app')}
         icon={<IconDeviceMobile />}
-        isExternal
+        secondaryIcon="external-link"
       />
     </MoreOptionsModal>
   )

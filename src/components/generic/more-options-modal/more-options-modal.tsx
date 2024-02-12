@@ -9,7 +9,13 @@ import {
   ModalHeader,
   useDisclosure,
 } from '@nextui-org/modal'
-import { IconExternalLink, IconLock, IconMenu2 } from '@tabler/icons-react'
+import {
+  Icon,
+  IconExternalLink,
+  IconLock,
+  IconMailForward,
+  IconMenu2,
+} from '@tabler/icons-react'
 import { FC, PropsWithChildren, ReactNode } from 'react'
 import { LanguageSwitcher } from '~/components/inputs/language-switcher'
 import { Link } from '~/navigation'
@@ -58,15 +64,24 @@ export const MoreOptionsModal: FC<MoreOptionsModalProps> = ({
   )
 }
 
+const icons = {
+  'external-link': IconExternalLink,
+  lock: IconLock,
+  'mail-forward': IconMailForward,
+} as const satisfies Record<string, Icon>
+
+type IconName = keyof typeof icons
+
 export const MoreOptionsModalButton: FC<{
   url?: string
   onClick?: () => void
   text: string
   icon: ReactNode
-  isExternal?: boolean
-  isPrivate?: boolean
-}> = ({ url, icon, text, isExternal, onClick, isPrivate }) => {
+  secondaryIcon?: IconName
+}> = ({ url, icon, text, onClick, secondaryIcon }) => {
   if (url && onClick) throw new Error('You can only use one of url or onClick')
+
+  const Icon = secondaryIcon ? icons[secondaryIcon] : undefined
 
   return (
     <Button
@@ -77,12 +92,8 @@ export const MoreOptionsModalButton: FC<{
       fullWidth
       startContent={icon}
       endContent={
-        isExternal ? (
-          <IconExternalLink className="text-stone-400 transition-colors group-hover:text-stone-800" />
-        ) : (
-          isPrivate && (
-            <IconLock className="text-stone-400 transition-colors group-hover:text-stone-800" />
-          )
+        Icon && (
+          <Icon className="text-stone-400 transition-colors group-hover:text-stone-800" />
         )
       }
     >
