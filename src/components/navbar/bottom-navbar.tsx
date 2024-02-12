@@ -3,8 +3,6 @@ import {
   IconAwardFilled,
   IconCompass,
   IconCompassFilled,
-  IconGift,
-  IconGiftFilled,
   IconUser,
   IconUserFilled,
 } from '@tabler/icons-react'
@@ -38,7 +36,7 @@ const BottomNavbarInner: FC<{
         className
       )}
     >
-      <ul className="mx-auto grid h-full max-w-2xl grid-cols-4">
+      <ul className="mx-auto grid h-full max-w-2xl grid-cols-3">
         <BottomNavbarItem
           url="/explore"
           label={t('explore')}
@@ -51,12 +49,12 @@ const BottomNavbarInner: FC<{
           icon={<IconAward />}
           iconActive={<IconAwardFilled />}
         />
-        <BottomNavbarItem
+        {/* <BottomNavbarItem
           url="/hub"
           label={t('hub')}
           icon={<IconGift />}
           iconActive={<IconGiftFilled />}
-        />
+        /> */}
         <BottomNavbarItem
           url="/profile"
           label={t('profile')}
