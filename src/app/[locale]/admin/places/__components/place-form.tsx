@@ -114,8 +114,8 @@ export const PlaceForm: FC<{
           control={form.control}
           render={({ field: { onChange, onBlur, value } }) => (
             <Textarea
-              isInvalid={!!form.formState.errors['name']}
-              errorMessage={form.formState.errors['name']?.message}
+              isInvalid={!!form.formState.errors['description']}
+              errorMessage={form.formState.errors['description']?.message}
               onBlur={onBlur}
               onChange={onChange}
               value={value}

@@ -1,5 +1,6 @@
 import {
   Icon,
+  IconAnchor,
   IconArrowBigDownLine,
   IconBeach,
   IconBucket,
@@ -24,6 +25,7 @@ import {
   IconOvalVertical,
   IconParking,
   IconPennant,
+  IconPool,
   IconRipple,
   IconSailboat,
   IconScubaDiving,
@@ -32,6 +34,7 @@ import {
   IconTrees,
   IconTrekking,
   IconWalk,
+  IconWall,
   TablerIconsProps,
 } from '@tabler/icons-react'
 import { FC } from 'react'
@@ -69,6 +72,9 @@ const iconsByIconName = {
   'arrow-big-down-line': IconArrowBigDownLine,
   'corner-right-down': IconCornerRightDown,
   bucket: IconBucket,
+  wall: IconWall,
+  anchor: IconAnchor,
+  pool: IconPool,
 } as const satisfies Record<PlaceCategoryIconType, Icon>
 
 export const PlaceCategoryIcon: FC<
