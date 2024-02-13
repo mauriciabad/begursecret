@@ -25,6 +25,7 @@ import {
   IconMountain,
   IconOvalVertical,
   IconPalette,
+  IconPaperBag,
   IconParking,
   IconPennant,
   IconPool,
@@ -32,6 +33,7 @@ import {
   IconSailboat,
   IconScubaDiving,
   IconScubaMask,
+  IconStretching2,
   IconTower,
   IconTrees,
   IconTrekking,
@@ -79,6 +81,8 @@ const iconsByIconName = {
   pool: IconPool,
   palette: IconPalette,
   camera: IconCamera,
+  'paper-bag': IconPaperBag,
+  'stretching-2': IconStretching2,
 } as const satisfies Record<PlaceCategoryIconType, Icon>
 
 export const PlaceCategoryIcon: FC<

@@ -36,6 +36,8 @@ export const placeCategoriesIcons = [
   'pool',
   'palette',
   'camera',
+  'paper-bag',
+  'stretching-2',
 ] as const
 export type PlaceCategoryIcon = (typeof placeCategoriesIcons)[number]
 
