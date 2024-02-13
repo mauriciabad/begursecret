@@ -8,6 +8,7 @@ import {
   IconBuildingCastle,
   IconBuildingStore,
   IconBuildingTunnel,
+  IconCamera,
   IconChargingPile,
   IconCornerRightDown,
   IconFishHook,
@@ -23,6 +24,7 @@ import {
   IconMotorbike,
   IconMountain,
   IconOvalVertical,
+  IconPalette,
   IconParking,
   IconPennant,
   IconPool,
@@ -75,6 +77,8 @@ const iconsByIconName = {
   wall: IconWall,
   anchor: IconAnchor,
   pool: IconPool,
+  palette: IconPalette,
+  camera: IconCamera,
 } as const satisfies Record<PlaceCategoryIconType, Icon>
 
 export const PlaceCategoryIcon: FC<
