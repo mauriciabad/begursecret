@@ -25,6 +25,7 @@ import {
   IconOvalVertical,
   IconParking,
   IconPennant,
+  IconPool,
   IconRipple,
   IconSailboat,
   IconScubaDiving,
@@ -73,6 +74,7 @@ const iconsByIconName = {
   bucket: IconBucket,
   wall: IconWall,
   anchor: IconAnchor,
+  pool: IconPool,
 } as const satisfies Record<PlaceCategoryIconType, Icon>
 
 export const PlaceCategoryIcon: FC<
