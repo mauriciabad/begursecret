@@ -31,6 +31,8 @@ export const placeCategoriesIcons = [
   'arrow-big-down-line',
   'corner-right-down',
   'bucket',
+  'wall',
+  'anchor',
 ] as const
 export type PlaceCategoryIcon = (typeof placeCategoriesIcons)[number]
 
