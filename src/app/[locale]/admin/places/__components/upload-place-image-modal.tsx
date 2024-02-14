@@ -12,7 +12,7 @@ import {
   useDisclosure,
 } from '@nextui-org/modal'
 import { Radio, RadioGroup } from '@nextui-org/radio'
-import { useTranslations } from 'next-intl'
+import { useFormatter, useTranslations } from 'next-intl'
 import { FC, useState } from 'react'
 import { ControllerRenderProps } from 'react-hook-form'
 import { UploadPlaceImageResponse } from '~/app/api/upload/place-image/route'
@@ -43,6 +43,7 @@ export const UploadPlaceImageModal: FC<
   value: mainImageId,
 }) => {
   const t = useTranslations('admin-places')
+  const format = useFormatter()
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
   const [file, setFile] = useState<File | null>(null)
   const [selected, setSelected] = useState<string | undefined>(
@@ -50,6 +51,7 @@ export const UploadPlaceImageModal: FC<
   )
   const [uploadFileAlt, setUploadFileAlt] = useState<string>('')
   const [uploadFileSource, setUploadFileSource] = useState<string>('')
+  const [uploadFileCaptureDate, setUploadFileCaptureDate] = useState<string>('')
   const utils = trpc.useUtils()
 
   const updateValue = (value: number | null) => {
@@ -78,6 +80,7 @@ export const UploadPlaceImageModal: FC<
         file,
         alt: uploadFileAlt,
         source: uploadFileSource,
+        captureDate: uploadFileCaptureDate,
         endpoint: '/api/upload/place-image',
       })
       utils.admin.images.getAll.invalidate()
@@ -159,21 +162,31 @@ export const UploadPlaceImageModal: FC<
                     {t('change-image.upload-and-save')}
                   </Button>
                 </div>
-                <div className="grid gap-4 sm:grid-cols-2">
+                <Input
+                  onValueChange={setUploadFileAlt}
+                  value={uploadFileAlt}
+                  label={t('change-image.alt-text')}
+                  variant="bordered"
+                  placeholder=" "
+                  labelPlacement="outside"
+                  isDisabled={isUploading}
+                />
+                <div className="grid gap-4 xs:grid-cols-[1fr,auto]">
                   <Input
-                    onValueChange={setUploadFileAlt}
-                    value={uploadFileAlt}
-                    label={t('change-image.alt-text')}
+                    onValueChange={setUploadFileSource}
+                    value={uploadFileSource}
+                    label={t('change-image.source')}
                     variant="bordered"
                     placeholder=" "
                     labelPlacement="outside"
                     isDisabled={isUploading}
                   />
                   <Input
-                    onValueChange={setUploadFileSource}
-                    value={uploadFileSource}
-                    label={t('change-image.source')}
+                    onValueChange={setUploadFileCaptureDate}
+                    value={uploadFileCaptureDate}
+                    label={t('change-image.capture-date')}
                     variant="bordered"
+                    type="date"
                     placeholder=" "
                     labelPlacement="outside"
                     isDisabled={isUploading}
@@ -227,6 +240,13 @@ export const UploadPlaceImageModal: FC<
                       {image.source && (
                         <p className="w-full truncate px-2 text-xs text-gray-400">
                           {image.source}
+                        </p>
+                      )}
+                      {image.captureDate && (
+                        <p className="w-full px-2 text-xs text-gray-400">
+                          {format.dateTime(image.captureDate, {
+                            dateStyle: 'short',
+                          })}
                         </p>
                       )}
                     </Radio>

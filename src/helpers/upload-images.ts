@@ -2,11 +2,13 @@ export const uploadImage = async <EndpointReturnType>({
   file,
   alt,
   source,
+  captureDate,
   endpoint,
 }: {
   file: File | null
   alt?: string
   source?: string
+  captureDate?: string
   endpoint: `/api/upload/${string}`
 }) => {
   const body = new FormData()
@@ -14,6 +16,7 @@ export const uploadImage = async <EndpointReturnType>({
   if (file) body.set('image', file)
   if (alt) body.set('alt', alt)
   if (source) body.set('source', source)
+  if (captureDate) body.set('captureDate', captureDate)
 
   const response = await fetch(endpoint, {
     method: 'POST',

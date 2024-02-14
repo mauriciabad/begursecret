@@ -1,4 +1,11 @@
-import { int, mysqlTable, serial, text, tinytext } from 'drizzle-orm/mysql-core'
+import {
+  date,
+  int,
+  mysqlTable,
+  serial,
+  text,
+  tinytext,
+} from 'drizzle-orm/mysql-core'
 import { s3ObjectKey } from '../utilities'
 
 export const images = mysqlTable('image', {
@@ -7,6 +14,7 @@ export const images = mysqlTable('image', {
   width: int('width').notNull(),
   height: int('height').notNull(),
   source: text('source'),
+  captureDate: date('captureDate'),
   alt: tinytext('alt'), // In Catalan only
   blurDataURL: text('blurDataURL'), // Base64 encoded image
 })

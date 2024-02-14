@@ -120,6 +120,13 @@
       "when": 1707768501678,
       "tag": "0016_robust_goliath",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "5",
+      "when": 1707913502270,
+      "tag": "0017_tricky_hellfire_club",
+      "breakpoints": true
     }
   ]
 }
