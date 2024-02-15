@@ -10,7 +10,7 @@ import {
   listPlacesSchema,
 } from '~/schemas/places'
 import { db } from '~/server/db/db'
-import { places, placesToPlaceCategories } from '~/server/db/schema'
+import { features, places, placesToPlaceCategories } from '~/server/db/schema'
 import { selectPoint } from '~/server/helpers/spatial-data'
 import {
   flattenTranslationsOnExecute,
@@ -140,6 +140,12 @@ export const placesAdminRouter = router({
     .input(createPlaceSchema)
     .mutation(async ({ input }) => {
       await db.transaction(async (tx) => {
+        const insertFeaturesResult = await tx
+          .insert(features)
+          .values({ ...input.features })
+
+        const featuresId = Number(insertFeaturesResult.insertId)
+
         const insertPlaceResult = await tx.insert(places).values({
           name: input.name,
           description: input.description,
@@ -148,6 +154,7 @@ export const placesAdminRouter = router({
           location: pointToString(input.location),
           content: input.content,
           verificationRequirementsId: 1,
+          featuresId,
         })
         const newPlaceId = Number(insertPlaceResult.insertId)
 
@@ -169,6 +176,28 @@ export const placesAdminRouter = router({
       await db.transaction(async (tx) => {
         const placeId = Number(input.id)
 
+        let featuresId = (
+          await tx
+            .selectDistinct({ featuresId: places.featuresId })
+            .from(places)
+            .where(eq(places.id, placeId))
+        )[0].featuresId
+
+        if (featuresId === null) {
+          const insertFeaturesResult = await tx
+            .insert(features)
+            .values({ ...input.features })
+          featuresId = Number(insertFeaturesResult.insertId)
+        } else {
+          await tx
+            .update(features)
+            .set({
+              ...input.features,
+              id: featuresId,
+            })
+            .where(eq(features.id, featuresId))
+        }
+
         await tx
           .update(places)
           .set({
@@ -178,6 +207,7 @@ export const placesAdminRouter = router({
             mainImageId: input.mainImageId,
             location: pointToString(input.location),
             content: input.content,
+            featuresId: featuresId,
           })
           .where(eq(places.id, placeId))
 

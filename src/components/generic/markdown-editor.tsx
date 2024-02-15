@@ -9,7 +9,7 @@ export const MarkdownEditor: FC<{
   isInvalid?: boolean
   errorMessage?: string
   value?: string | null | undefined
-  onChange?: (e: { target: { value: string } }) => void
+  onChange?: (e: { target: { value: string | null } }) => void
   onBlur?: () => void
   label?: string
   className?: string
@@ -49,7 +49,7 @@ export const MarkdownEditor: FC<{
           onChange={(value) => {
             onChange?.({
               target: {
-                value: value ?? '',
+                value: value || null,
               },
             })
           }}
