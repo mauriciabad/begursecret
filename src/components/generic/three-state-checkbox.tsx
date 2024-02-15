@@ -6,12 +6,21 @@ export const ThreeStateCheckbox: FC<{
   isInvalid?: boolean
   errorMessage?: string
   value?: boolean | null
-  onChange?: (e: { target: { checked: boolean | null } }) => void
+  onChange?: (e: { target: { value: boolean | null } }) => void
   onBlur?: () => void
   label: string
   icon?: Icon
   className?: string
-}> = ({ value, icon, label, onChange, onBlur, className }) => {
+}> = ({
+  value,
+  icon,
+  label,
+  onChange,
+  onBlur,
+  className,
+  isInvalid,
+  errorMessage,
+}) => {
   const Icon = icon
 
   const nextValue = () => {
@@ -25,35 +34,36 @@ export const ThreeStateCheckbox: FC<{
       onClick={() => {
         onChange?.({
           target: {
-            checked: nextValue(),
+            value: nextValue(),
           },
         })
         onBlur?.()
       }}
-      className={cn(
-        'flex cursor-pointer select-none items-center gap-2',
-        className
-      )}
+      className={cn('cursor-pointer select-none', className)}
     >
-      {Icon && <Icon size={20} />}
-      <div
-        className={cn(
-          {
-            'border-blue-500 bg-blue-500 text-white': value === true,
-            'border-red-500 bg-red-500 text-white': value === false,
-            'border-stone-300 bg-stone-50 text-stone-900': value === null,
-          },
-          'flex h-5 w-5 flex-shrink-0 items-center justify-center',
-          'rounded-md border-2'
-        )}
-      >
-        {value === true && <IconCheck size={18} stroke={2.5} className="" />}
-        {value === false && <IconX size={18} stroke={2.5} className="" />}
-        {value === null && (
-          <IconQuestionMark size={18} stroke={2.5} className="" />
-        )}
+      <div className="flex items-center gap-2">
+        {Icon && <Icon size={20} />}
+        <div
+          className={cn(
+            {
+              'border-blue-500 bg-blue-500 text-white': value === true,
+              'border-red-500 bg-red-500 text-white': value === false,
+              'border-stone-300 bg-stone-50 text-stone-900': value === null,
+            },
+            'flex h-5 w-5 flex-shrink-0 items-center justify-center',
+            'rounded-md border-2',
+            isInvalid && 'ring-2 ring-red-500 ring-offset-2'
+          )}
+        >
+          {value === true && <IconCheck size={18} stroke={2.5} className="" />}
+          {value === false && <IconX size={18} stroke={2.5} className="" />}
+          {value === null && (
+            <IconQuestionMark size={18} stroke={2.5} className="" />
+          )}
+        </div>
+        <span>{label}</span>
       </div>
-      <span className="">{label}</span>
+      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
     </label>
   )
 }

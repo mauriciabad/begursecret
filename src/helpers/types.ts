@@ -30,3 +30,11 @@ export type IntlMessageKeys<
     >
   >
 >
+
+export type ControlledInputProps<T = string | null | undefined> = {
+  value?: T
+  onChange?: (e: { target: { value: T } }) => void
+  onBlur?: () => void
+  isInvalid?: boolean
+  errorMessage?: string
+}

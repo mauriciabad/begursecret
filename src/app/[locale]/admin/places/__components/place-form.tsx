@@ -71,23 +71,25 @@ export const PlaceForm: FC<{
 
   const [stayOnPage, setStayOnPage] = useState(false)
 
+  const isCreateForm = !place
+
   return (
     <>
       <h1 className="text-2xl font-bold">
-        {place ? t('edit-place') : t('create-place')}
+        {isCreateForm ? t('create-place') : t('edit-place')}
       </h1>
       <p className="text-lg text-red-500">CATALAN ONLY</p>
 
       <SafeForm
         form={form}
         handleSubmit={async (values) => {
-          if (place) {
+          if (isCreateForm) {
+            await createPlaceMutation.mutateAsync(values)
+          } else {
             await editPlaceMutation.mutateAsync({
               ...values,
               id: place.id,
             })
-          } else {
-            await createPlaceMutation.mutateAsync(values)
           }
 
           form.reset()
@@ -101,10 +103,13 @@ export const PlaceForm: FC<{
         <Controller
           name="name"
           control={form.control}
-          render={({ field: { onChange, onBlur, value } }) => (
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
             <Input
-              isInvalid={!!form.formState.errors['name']}
-              errorMessage={form.formState.errors['name']?.message}
+              isInvalid={!!error}
+              errorMessage={error?.message}
               onBlur={onBlur}
               onChange={onChange}
               value={value}
@@ -115,10 +120,13 @@ export const PlaceForm: FC<{
         <Controller
           name="description"
           control={form.control}
-          render={({ field: { onChange, onBlur, value } }) => (
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
             <Textarea
-              isInvalid={!!form.formState.errors['description']}
-              errorMessage={form.formState.errors['description']?.message}
+              isInvalid={!!error}
+              errorMessage={error?.message}
               onBlur={onBlur}
               onChange={onChange}
               value={value}
@@ -131,10 +139,13 @@ export const PlaceForm: FC<{
           <Controller
             name="mainCategory"
             control={form.control}
-            render={({ field: { onChange, onBlur, value } }) => (
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => (
               <SelectCategory
-                isInvalid={!!form.formState.errors['mainCategory']}
-                errorMessage={form.formState.errors['mainCategory']?.message}
+                isInvalid={!!error}
+                errorMessage={error?.message}
                 onBlur={onBlur}
                 onChange={onChange}
                 selectedKeys={value ? [String(value)] : []}
@@ -146,10 +157,13 @@ export const PlaceForm: FC<{
           <Controller
             name="categories"
             control={form.control}
-            render={({ field: { onChange, onBlur, value } }) => (
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => (
               <SelectCategory
-                isInvalid={!!form.formState.errors['categories']}
-                errorMessage={form.formState.errors['categories']?.message}
+                isInvalid={!!error}
+                errorMessage={error?.message}
                 onBlur={onBlur}
                 onChange={onChange}
                 selectedKeys={value ? value.split(',') : []}
@@ -164,10 +178,13 @@ export const PlaceForm: FC<{
         <Controller
           name="mainImageId"
           control={form.control}
-          render={({ field: { onChange, onBlur, value } }) => (
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
             <UploadPlaceImageModal
-              isInvalid={!!form.formState.errors['mainImageId']}
-              errorMessage={form.formState.errors['mainImageId']?.message}
+              isInvalid={!!error}
+              errorMessage={error?.message}
               onBlur={onBlur}
               onChange={onChange}
               value={value}
@@ -180,10 +197,13 @@ export const PlaceForm: FC<{
           <Controller
             name="content"
             control={form.control}
-            render={({ field: { onChange, onBlur, value } }) => (
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => (
               <MarkdownEditor
-                isInvalid={!!form.formState.errors['content']}
-                errorMessage={form.formState.errors['content']?.message}
+                isInvalid={!!error}
+                errorMessage={error?.message}
                 onBlur={onBlur}
                 onChange={onChange}
                 value={value}
@@ -196,10 +216,13 @@ export const PlaceForm: FC<{
             <Controller
               name="location"
               control={form.control}
-              render={({ field: { onChange, onBlur, value } }) => (
+              render={({
+                field: { onChange, onBlur, value },
+                fieldState: { error },
+              }) => (
                 <MapPointSelector
-                  isInvalid={!!form.formState.errors['location']}
-                  errorMessage={form.formState.errors['location']?.message}
+                  isInvalid={!!error}
+                  errorMessage={error?.message}
                   onBlur={onBlur}
                   onChange={onChange}
                   value={value}
@@ -210,28 +233,15 @@ export const PlaceForm: FC<{
           </div>
         </div>
 
-        <div>
-          <Controller
-            name="features"
-            control={form.control}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <FeaturesEditor
-                isInvalid={!!form.formState.errors['features']}
-                errorMessage={form.formState.errors['features']?.message}
-                onBlur={onBlur}
-                onChange={onChange}
-                value={value}
-                label={t('columns.features')}
-              />
-            )}
-          />
-        </div>
+        <FeaturesEditor label={t('columns.features')} />
 
         <div className="mt-8 flex items-center justify-start gap-4">
           <SafeSubmitButton color="primary" size="lg" />
-          <Checkbox isSelected={stayOnPage} onValueChange={setStayOnPage}>
-            {t('stay-on-page-after-submit')}
-          </Checkbox>
+          {isCreateForm && (
+            <Checkbox isSelected={stayOnPage} onValueChange={setStayOnPage}>
+              {t('stay-on-page-after-submit')}
+            </Checkbox>
+          )}
         </div>
       </SafeForm>
     </>

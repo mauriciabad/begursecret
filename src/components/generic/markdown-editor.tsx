@@ -8,10 +8,10 @@ import { MarkdownContent } from './markdown-content'
 export const MarkdownEditor: FC<{
   isInvalid?: boolean
   errorMessage?: string
-  label?: string
   value?: string | null | undefined
   onChange?: (e: { target: { value: string } }) => void
   onBlur?: () => void
+  label?: string
   className?: string
   icon?: Icon
 }> = ({
