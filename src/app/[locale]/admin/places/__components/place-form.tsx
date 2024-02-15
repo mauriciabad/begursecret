@@ -94,7 +94,7 @@ export const PlaceForm: FC<{
 
           form.reset()
 
-          if (!stayOnPage) {
+          if (!isCreateForm || !stayOnPage) {
             return router.push('/admin/places/')
           }
         }}
