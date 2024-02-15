@@ -1,5 +1,7 @@
+import { createInsertSchema } from 'drizzle-zod'
 import { z } from 'zod'
 import { translatableLocales } from '~/i18n'
+import { features } from '~/server/db/schema'
 import { numericIdSchema } from './shared'
 
 export const listPlacesSchema = z.object({
@@ -47,6 +49,7 @@ export const createPlaceSchema = z.object({
     ),
   mainImageId: z.number().int().optional().nullable(),
   content: z.string().optional(),
+  features: createInsertSchema(features).optional().nullable(),
 })
 
 export const editPlaceSchema = createPlaceSchema.extend({

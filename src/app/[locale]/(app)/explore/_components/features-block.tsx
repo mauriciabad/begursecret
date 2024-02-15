@@ -1,209 +1,137 @@
 import { Card, CardBody } from '@nextui-org/card'
 import { Tooltip } from '@nextui-org/tooltip'
-import {
-  Icon,
-  IconAccessible,
-  IconAccessibleOff,
-  IconAlertTriangle,
-  IconAlertTriangleFilled,
-  IconBadgeWc,
-  IconBus,
-  IconBusOff,
-  IconCar,
-  IconCarGarage,
-  IconCurrencyEuro,
-  IconDropletOff,
-  IconDroplets,
-  IconFountain,
-  IconFountainOff,
-  IconFriends,
-  IconGrain,
-  IconInfoCircle,
-  IconLifebuoy,
-  IconLifebuoyOff,
-  IconMoodOff,
-  IconMoodSmile,
-  IconParking,
-  IconParkingOff,
-  IconRulerMeasure,
-  IconTicket,
-  IconToolsKitchen2,
-  IconToolsKitchen2Off,
-  IconWalk,
-} from '@tabler/icons-react'
+import { Icon, IconInfoCircle } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC, PropsWithChildren } from 'react'
 import { MarkdownContent } from '~/components/generic/markdown-content'
-import { Difficulty, Features } from '~/server/db/constants/features'
-
-const difficultyIcon = {
-  accessible: IconAccessible,
-  normal: IconAccessible,
-  smallEffort: IconAccessibleOff,
-  hard: IconAlertTriangle,
-  dangerous: IconAlertTriangleFilled,
-} as const satisfies Record<Difficulty, Icon>
+import { IntlMessageKeys } from '~/helpers/types'
+import { pick } from '~/helpers/utilities'
+import { Features } from '~/server/db/constants/features'
+import {
+  featureDisplayGroups,
+  getCompositeFeatureKey,
+  getIconForFeature,
+  getMoreInfoContent,
+} from '~/server/db/constants/features-display-data'
 
 export const FeaturesBlock: FC<{ features: Features; className?: string }> = ({
   features,
   className,
 }) => {
-  const t = useTranslations('explore.features')
+  const t = useTranslations('data.features')
 
   return (
     <Card className={className} radius="lg" shadow="sm">
       <CardBody className="gap-2">
-        <FeatureList title={t('features')}>
-          {features.price && (
-            <FeatureItem
-              icon={IconCurrencyEuro}
-              text={t('price-value', {
-                price: features.price,
-                units: t(`price-unit.${features.priceUnit ?? 'eur'}`),
-              })}
-              moreInfo={features.priceNotes}
-            />
-          )}
+        {featureDisplayGroups.map((group) => (
+          <FeatureList key={group.key} title={t(`titles.${group.key}`)}>
+            {group.featureDisplays.map((featureDisplay) => {
+              if ('hidden' in featureDisplay && featureDisplay.hidden) {
+                return null
+              }
 
-          {features.difficulty && (
-            <FeatureItem
-              icon={difficultyIcon[features.difficulty]}
-              text={t(`difficulty.${features.difficulty}`)}
-              moreInfo={features.difficultyNotes}
-            />
-          )}
+              switch (featureDisplay.type) {
+                case 'number':
+                case 'text': {
+                  const value = features[featureDisplay.key]
+                  if (value === null || value === undefined) return null
 
-          {features.amountOfPeople && (
-            <FeatureItem
-              icon={IconFriends}
-              text={t(`amount-of-people.${features.amountOfPeople}`)}
-            />
-          )}
+                  if ('showRaw' in featureDisplay && featureDisplay.showRaw) {
+                    return (
+                      <FeatureItem
+                        key={featureDisplay.key}
+                        icon={featureDisplay.icon}
+                        text={String(value)}
+                        moreInfo={getMoreInfoContent(featureDisplay, features)}
+                      />
+                    )
+                  } else {
+                    return (
+                      <FeatureItem
+                        key={featureDisplay.key}
+                        icon={featureDisplay.icon}
+                        text={t(
+                          `values.${`${featureDisplay.type}.${featureDisplay.key}` as IntlMessageKeys<'data.features.values'>}`,
+                          {
+                            value,
+                          }
+                        )}
+                        moreInfo={getMoreInfoContent(featureDisplay, features)}
+                      />
+                    )
+                  }
+                }
+                case 'markdown': {
+                  const value = features[featureDisplay.key]
+                  if (value === null || value === undefined) return null
+                  return (
+                    <MarkdownFeatureItem
+                      key={featureDisplay.key}
+                      icon={featureDisplay.icon}
+                      label={t(`labels.${featureDisplay.key}`)}
+                      content={value}
+                    />
+                  )
+                }
+                case 'enum': {
+                  const value = features[featureDisplay.key]
+                  if (value === null || value === undefined) return null
 
-          {features.groundType && (
-            <FeatureItem
-              icon={IconGrain}
-              text={t(`ground-type.${features.groundType}`)}
-            />
-          )}
+                  return (
+                    <FeatureItem
+                      key={featureDisplay.key}
+                      icon={getIconForFeature(featureDisplay, value)}
+                      text={t(
+                        `values.enum.${`${featureDisplay.key}.${value}` as IntlMessageKeys<'data.features.values.enum'>}`
+                      )}
+                      moreInfo={getMoreInfoContent(featureDisplay, features)}
+                    />
+                  )
+                }
+                case 'boolean': {
+                  const value = features[featureDisplay.key]
+                  if (value === null || value === undefined) return null
 
-          {features.dimensions && (
-            <FeatureItem icon={IconRulerMeasure} text={features.dimensions} />
-          )}
+                  return (
+                    <BooleanFeatureItem
+                      key={featureDisplay.key}
+                      icon={getIconForFeature(featureDisplay, true)}
+                      iconOff={getIconForFeature(featureDisplay, false)}
+                      text={t(`values.boolean.${featureDisplay.key}.${value}`)}
+                      value={value}
+                      moreInfo={getMoreInfoContent(featureDisplay, features)}
+                    />
+                  )
+                }
+                case 'composite': {
+                  const rawValues = pick(
+                    features,
+                    featureDisplay.keys
+                  ) as Parameters<(typeof featureDisplay)['transformValues']>[0]
 
-          {features.timeToArrive && (
-            <FeatureItem
-              icon={IconWalk}
-              text={t('time-from-place', {
-                time: t('time-duration', {
-                  hours: Math.floor(features.timeToArrive / 60),
-                  minutes: features.timeToArrive % 60,
-                }),
-                place: features.placeToArriveFrom,
-              })}
-            />
-          )}
+                  if (
+                    featureDisplay.showIf &&
+                    !featureDisplay.showIf(rawValues)
+                  ) {
+                    return null
+                  }
 
-          {features.parkingSpaces && (
-            <FeatureItem
-              icon={IconCar}
-              text={t('parking-spaces', { spaces: features.parkingSpaces })}
-            />
-          )}
+                  const values = featureDisplay?.transformValues(rawValues)
 
-          {features.isCovered && (
-            <FeatureItem icon={IconCarGarage} text={t('covered')} />
-          )}
-
-          {features.isFreeWithLocalStamp && (
-            <FeatureItem
-              icon={IconTicket}
-              text={t('free-with-local-stamp')}
-              moreInfo="aa"
-            />
-          )}
-        </FeatureList>
-
-        <FeatureList title={t('services')}>
-          <BooleanFeatureItem
-            value={features.hasBus}
-            icon={IconBus}
-            iconOff={IconBusOff}
-            text={t('bus-service')}
-            textOff={t('no-bus-service')}
-          />
-
-          <BooleanFeatureItem
-            value={features.hasParking}
-            icon={IconParking}
-            iconOff={IconParkingOff}
-            text={t('parking')}
-            textOff={t('no-parking')}
-          />
-
-          <BooleanFeatureItem
-            value={features.hasLifeguard}
-            icon={IconLifebuoy}
-            iconOff={IconLifebuoyOff}
-            text={t('lifeguard')}
-            textOff={t('no-lifeguard')}
-          />
-
-          <BooleanFeatureItem
-            value={features.hasToilet}
-            icon={IconBadgeWc}
-            iconOff={IconAccessibleOff}
-            text={t('toilet')}
-            textOff={t('no-toilet')}
-          />
-
-          <BooleanFeatureItem
-            value={features.hasShower}
-            icon={IconDroplets}
-            iconOff={IconDropletOff}
-            text={t('showers')}
-            textOff={t('no-showers')}
-          />
-
-          <BooleanFeatureItem
-            value={features.hasRestaurant}
-            icon={IconToolsKitchen2}
-            iconOff={IconToolsKitchen2Off}
-            text={t('restaurants')}
-            textOff={t('no-restaurants')}
-          />
-
-          <BooleanFeatureItem
-            value={features.hasLeisure}
-            icon={IconMoodSmile}
-            iconOff={IconMoodOff}
-            text={t('leisure-services')}
-            textOff={t('no-leisure-services')}
-          />
-
-          {features.hasDrinkingWater === true ? (
-            <FeatureItem icon={IconFountain} text={t('drinking-water')} />
-          ) : features.hasDrinkingWater === false ? (
-            <FeatureItem icon={IconFountainOff} text={t('no-drinking-water')} />
-          ) : null}
-        </FeatureList>
-
-        <FeatureList title={t('notes')}>
-          {features.priceNotes && (
-            <NotesFeatureItem
-              icon={IconCurrencyEuro}
-              label={t('price')}
-              content={features.priceNotes}
-            />
-          )}
-          {features.difficultyNotes && (
-            <NotesFeatureItem
-              icon={difficultyIcon[features.difficulty ?? 'accessible']}
-              label={t('accessibility')}
-              content={features.difficultyNotes}
-            />
-          )}
-        </FeatureList>
+                  const key = getCompositeFeatureKey(featureDisplay.keys)
+                  return (
+                    <FeatureItem
+                      key={key}
+                      icon={featureDisplay.icon}
+                      text={t(`values.composite.${key}`, values)}
+                      moreInfo={getMoreInfoContent(featureDisplay, features)}
+                    />
+                  )
+                }
+              }
+            })}
+          </FeatureList>
+        ))}
       </CardBody>
     </Card>
   )
@@ -245,7 +173,7 @@ const FeatureItem: FC<{
   )
 }
 
-const NotesFeatureItem: FC<{
+const MarkdownFeatureItem: FC<{
   icon: Icon
   label: string
   content: string
@@ -267,16 +195,21 @@ const BooleanFeatureItem: FC<{
   text: string
   textOff?: string
   value: boolean | null
-}> = ({ icon, iconOff, text, textOff, value }) => {
-  if (value === null) return null
+  moreInfo?: string | null
+}> = ({ icon, iconOff, text, textOff, value, moreInfo }) => {
+  if (value === null || value === undefined) return null
 
   return (
     <>
       {value ? (
-        <FeatureItem icon={icon} text={text} />
+        <FeatureItem icon={icon} text={text} moreInfo={moreInfo} />
       ) : (
         (textOff || iconOff) && (
-          <FeatureItem icon={iconOff ?? icon} text={textOff ?? text} />
+          <FeatureItem
+            icon={iconOff ?? icon}
+            text={textOff ?? text}
+            moreInfo={moreInfo}
+          />
         )
       )}
     </>

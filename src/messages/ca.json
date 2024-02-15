@@ -1,4 +1,128 @@
 {
+  "data": {
+    "features": {
+      "titles": {
+        "features": "Característiques",
+        "services": "Serveis",
+        "notes": "Notes"
+      },
+      "labels": {
+        "amountOfPeople": "Quantitat de gent",
+        "difficulty": "Dificultat",
+        "groundType": "Tipus de terreny",
+        "hasBus": "Té bus",
+        "hasParking": "Té aparcament",
+        "parkingSpaces": "Places d'aparcament",
+        "hasToilet": "Té WC",
+        "hasRestaurant": "Té restaurant",
+        "hasDrinkingWater": "Té aigua potable",
+        "hasShower": "Té dutxes",
+        "hasLifeguard": "Té socorrista",
+        "hasLeisure": "Té serveis d'oci",
+        "dimensions": "Dimensions",
+        "price": "Preu",
+        "priceUnit": "Unitat del preu",
+        "isCovered": "Està cobert",
+        "timeToArrive": "Temps d'arribada",
+        "placeToArriveFrom": "Lloc d'arribada",
+        "isFreeWithLocalStamp": "És gratuït amb segell de Begur",
+        "difficultyNotes": "Accessibilitat",
+        "priceNotes": "Preu"
+      },
+      "values": {
+        "number": {
+          "parkingSpaces": "{value} places"
+        },
+
+        "text": {},
+
+        "composite": {
+          "price-priceUnit": "{price} {priceUnit}",
+          "timeToArrive-placeToArriveFrom": "A {hours, plural, =0 {} other {# h }}{minutes, plural, =0 {} other {# min}} {placeToArriveFrom, select, townCenter {del centre} parking {del parking} beach {de la platja} road {de la carretera} other {}}"
+        },
+
+        "boolean": {
+          "isFreeWithLocalStamp": {
+            "true": "Gratuït amb segell de Begur",
+            "false": "Pagament inclús amb segell de Begur"
+          },
+          "hasBus": {
+            "true": "Servei bus",
+            "false": "Sense servei bus"
+          },
+          "hasParking": {
+            "true": "Aparcament",
+            "false": "Sense aparcament"
+          },
+          "hasToilet": {
+            "true": "WC",
+            "false": "Sense WC"
+          },
+          "hasLifeguard": {
+            "true": "Socorrista",
+            "false": "Sense socorrista"
+          },
+          "hasShower": {
+            "true": "Dutxes",
+            "false": "Sense dutxes"
+          },
+          "hasRestaurant": {
+            "true": "Restaurants",
+            "false": "Sense restaurants"
+          },
+          "hasLeisure": {
+            "true": "Serveis d'oci",
+            "false": "Sense serveis d'oci"
+          },
+          "hasDrinkingWater": {
+            "true": "Aigua potable",
+            "false": "Aigua no potable"
+          },
+          "isCovered": {
+            "true": "Cobert",
+            "false": "Descobert"
+          }
+        },
+
+        "enum": {
+          "placeToArriveFrom": {
+            "townCenter": "Fins el centre",
+            "parking": "Fins el parking",
+            "beach": "Fins la platja",
+            "road": "Fins la carretera"
+          },
+          "priceUnit": {
+            "eur": "€",
+            "eur/minute": "€/min",
+            "eur/hour": "€/h",
+            "eur/day": "€/dia"
+          },
+          "difficulty": {
+            "accessible": "Accessible",
+            "normal": "Fàcil",
+            "smallEffort": "Requereix un petit esforç",
+            "hard": "Difícil",
+            "dangerous": "Perillós"
+          },
+          "amountOfPeople": {
+            "none": "Buit",
+            "few": "Poca gent",
+            "some": "Algunes persones",
+            "many": "Molta gent",
+            "crowded": "Massificat"
+          },
+          "groundType": {
+            "sand": "Sorra",
+            "pebbles": "Pedretes",
+            "rocks": "Roques",
+            "concrete": "Ciment",
+            "dirt": "Terra",
+            "pavimented": "Pavimentat"
+          }
+        }
+      }
+    }
+  },
   "common": {
     "save": "Guardar",
     "loading": "Carregant..."
@@ -39,18 +163,21 @@
       "categories": "Categories",
       "mainImage": "Imatge principal",
       "actions": "Accions",
-      "content": "Contingut"
+      "content": "Contingut",
+      "features": "Característiques"
     },
     "add-new": "Crear nou",
     "edit-place": "Editar lloc",
     "create-place": "Crear lloc",
     "stay-on-page-after-submit": "Fer més",
     "no-places-found": "No s'han trobat llocs",
+    "no-features": "No hi ha característiques",
     "change-image": {
       "save": "Guardar",
       "upload-and-save": "Pujar i guardar",
       "alt-text": "Text alternatiu",
       "source": "Font",
+      "capture-date": "Data de captura",
       "remove-image": "Eliminar imatge",
       "change-main-image": "Canviar imatge principal",
       "select-existing-image": "Seleccionar imatge existent",
@@ -94,63 +221,7 @@
     "see-more": "Veure més",
     "categories": "Categories",
     "no-more-info": "No hi ha més informació disponible.",
-    "features": {
-      "features": "Característiques",
-      "services": "Serveis",
-      "notes": "Notes",
-      "accessibility": "Accessibilitat",
-      "price": "Preu",
-      "price-value": "{price} {units}",
-      "price-unit": {
-        "eur": "€",
-        "eur/minute": "€/min",
-        "eur/hour": "€/h",
-        "eur/day": "€/dia"
-      },
-      "parking-spaces": "{spaces} places",
-      "difficulty": {
-        "accessible": "Accessible",
-        "normal": "Fàcil",
-        "smallEffort": "Requereix un petit esforç",
-        "hard": "Difícil",
-        "dangerous": "Perillós"
-      },
-      "amount-of-people": {
-        "none": "Buit",
-        "few": "Poca gent",
-        "some": "Algunes persones",
-        "many": "Molta gent",
-        "crowded": "Massificat"
-      },
-      "ground-type": {
-        "sand": "Sorra",
-        "pebbles": "Pedretes",
-        "rocks": "Roques",
-        "concrete": "Ciment",
-        "dirt": "Terra",
-        "pavimented": "Pavimentat"
-      },
-      "time-from-place": "A {time} {place, select, townCenter {del centre} parking {del parking} beach {de la platja} road {de la carretera} other {}}",
-      "covered": "Cobert",
-      "free-with-local-stamp": "Gratuït amb segell de Begur",
-      "bus-service": "Servei bus",
-      "no-bus-service": "Sense servei bus",
-      "parking": "Aparcament",
-      "no-parking": "Sense aparcament",
-      "toilet": "WC",
-      "no-toilet": "Sense WC",
-      "lifeguard": "Socorrista",
-      "no-lifeguard": "Sense socorrista",
-      "showers": "Dutxes",
-      "no-showers": "Sense dutxes",
-      "restaurants": "Restaurants",
-      "no-restaurants": "Sense restaurants",
-      "leisure-services": "Serveis d'oci",
-      "no-leisure-services": "Sense serveis d'oci",
-      "drinking-water": "Aigua potable",
-      "no-drinking-water": "Aigua no potable",
-      "time-duration": "{hours, plural, =0 {} other {# h }}{minutes, plural, =0 {<1 min} other {# min}}"
-    },
+
     "related-missions": "Missions relacionades"
   },
   "missions": {

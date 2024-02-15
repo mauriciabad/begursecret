@@ -29,12 +29,14 @@ export const POST = withAxiom(async (request) => {
     appendFileTypeToKey: true,
   })
 
+  const rawDate = formData.get('captureDate')?.toString()
   const insertImageResult = await db
     .insert(images)
     .values({
       ...image,
       alt: formData.get('alt')?.toString(),
       source: formData.get('source')?.toString(),
+      captureDate: rawDate ? new Date(rawDate) : null,
     })
     .execute()
   const imageId = Number(insertImageResult.insertId)

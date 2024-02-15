@@ -1,4 +1,128 @@
 {
+  "data": {
+    "features": {
+      "titles": {
+        "features": "Features",
+        "services": "Services",
+        "notes": "Notes"
+      },
+      "labels": {
+        "amountOfPeople": "Amount of people",
+        "difficulty": "Difficulty",
+        "groundType": "Ground type",
+        "hasBus": "Has bus service",
+        "hasParking": "Has parking",
+        "parkingSpaces": "Parking spaces",
+        "hasToilet": "Has WC",
+        "hasRestaurant": "Has restaurant",
+        "hasDrinkingWater": "Has drinking water",
+        "hasShower": "Has shower",
+        "hasLifeguard": "Has lifeguard",
+        "hasLeisure": "Has leisure services",
+        "dimensions": "Dimensions",
+        "price": "Price",
+        "priceUnit": "Price unit",
+        "isCovered": "Is a covered",
+        "timeToArrive": "Time to arrive",
+        "placeToArriveFrom": "Place to arrive from",
+        "isFreeWithLocalStamp": "Is free with Begur's stamp",
+        "difficultyNotes": "Accessibility",
+        "priceNotes": "Price"
+      },
+      "values": {
+        "normal": {
+          "parkingSpaces": "{value} spaces"
+        },
+
+        "text": {},
+
+        "composite": {
+          "price-priceUnit": "{price} {priceUnit}",
+          "timeToArrive-placeToArriveFrom": "{hours, plural, =0 {} other {# h }}{minutes, plural, =0 {} other {# min}} from {placeToArriveFrom, select, townCenter {the town center} parking {the parking} beach {the beach} road {the road} other {}}"
+        },
+
+        "boolean": {
+          "isFreeWithLocalStamp": {
+            "true": "Free with Begur's stamp",
+            "false": "Paid even with Begur's stamp"
+          },
+          "hasBus": {
+            "true": "Bus service",
+            "false": "No bus service"
+          },
+          "hasParking": {
+            "true": "Parking",
+            "false": "No parking"
+          },
+          "hasToilet": {
+            "true": "WC",
+            "false": "No WC"
+          },
+          "hasLifeguard": {
+            "true": "Lifeguard",
+            "false": "No lifeguard"
+          },
+          "hasShower": {
+            "true": "Showers",
+            "false": "No showers"
+          },
+          "hasRestaurant": {
+            "true": "Restaurants",
+            "false": "No restaurants"
+          },
+          "hasLeisure": {
+            "true": "Leisure services",
+            "false": "No leisure services"
+          },
+          "hasDrinkingWater": {
+            "true": "Drinking water",
+            "false": "No drinking water"
+          },
+          "isCovered": {
+            "true": "Covered",
+            "false": "Not covered"
+          }
+        },
+
+        "enum": {
+          "placeToArriveFrom": {
+            "townCenter": "To the town center",
+            "parking": "To the parking",
+            "beach": "To the beach",
+            "road": "To the road"
+          },
+          "priceUnit": {
+            "eur": "€",
+            "eur/minute": "€/min",
+            "eur/hour": "€/h",
+            "eur/day": "€/day"
+          },
+          "difficulty": {
+            "accessible": "Accessible",
+            "normal": "Easy",
+            "smallEffort": "Requires small effort",
+            "hard": "Hard",
+            "dangerous": "Dangerous"
+          },
+          "amountOfPeople": {
+            "none": "Empty",
+            "few": "Few people",
+            "some": "Some people",
+            "many": "Many people",
+            "crowded": "Crowded"
+          },
+          "groundType": {
+            "sand": "Sand",
+            "pebbles": "Pebbles",
+            "rocks": "Rocks",
+            "concrete": "Concrete",
+            "dirt": "Dirt",
+            "pavimented": "Pavimented"
+          }
+        }
+      }
+    }
+  },
   "common": {
     "save": "Save",
     "loading": "Loading..."
@@ -39,18 +163,21 @@
       "categories": "Categories",
       "mainImage": "Main image",
       "actions": "Actions",
-      "content": "Content"
+      "content": "Content",
+      "features": "Features"
     },
     "add-new": "Add new",
     "edit-place": "Edit place",
     "create-place": "Create place",
     "stay-on-page-after-submit": "Do more",
     "no-places-found": "No places found",
+    "no-features": "No features",
     "change-image": {
       "save": "Save",
       "upload-and-save": "Upload and save",
       "alt-text": "Alt text",
       "source": "Source",
+      "capture-date": "Capture date",
       "remove-image": "Remove image",
       "change-main-image": "Change main image",
       "select-existing-image": "Select existing image",
@@ -94,63 +221,6 @@
     "see-more": "See more",
     "categories": "Categories",
     "no-more-info": "No more information avilable.",
-    "features": {
-      "features": "Features",
-      "services": "Services",
-      "notes": "Notes",
-      "accessibility": "Accessibility",
-      "price": "Price",
-      "price-value": "{price} {units}",
-      "price-unit": {
-        "eur": "€",
-        "eur/minute": "€/min",
-        "eur/hour": "€/h",
-        "eur/day": "€/day"
-      },
-      "parking-spaces": "{spaces} spaces",
-      "difficulty": {
-        "accessible": "Accessible",
-        "normal": "Easy",
-        "smallEffort": "Requires small effort",
-        "hard": "Hard",
-        "dangerous": "Dangerous"
-      },
-      "amount-of-people": {
-        "none": "No people",
-        "few": "Few people",
-        "some": "Some people",
-        "many": "Many people",
-        "crowded": "Crowded"
-      },
-      "ground-type": {
-        "sand": "Sand",
-        "pebbles": "Pebbles",
-        "rocks": "Rocks",
-        "concrete": "Concrete",
-        "dirt": "Dirt",
-        "pavimented": "Pavimented"
-      },
-      "time-from-place": "{time} {place, select, townCenter {from the town center} parking {from the parking} beach {from the beach} road {from the road} other {away}}",
-      "covered": "Covered",
-      "free-with-local-stamp": "Free with Begur's stamp",
-      "bus-service": "Bus service",
-      "no-bus-service": "No bus service",
-      "parking": "Parking",
-      "no-parking": "No parking",
-      "toilet": "Toilet",
-      "no-toilet": "No toilet",
-      "lifeguard": "Lifeguard",
-      "no-lifeguard": "No lifeguard",
-      "showers": "Showers",
-      "no-showers": "No showers",
-      "restaurants": "Restaurants",
-      "no-restaurants": "No restaurants",
-      "leisure-services": "Leisure services",
-      "no-leisure-services": "No leisure services",
-      "drinking-water": "Drinking water",
-      "no-drinking-water": "No drinking water",
-      "time-duration": "{hours, plural, =0 {} other {# h }}{minutes, plural, =0 {<1 min} other {# min}}"
-    },
     "related-missions": "Related missions"
   },
   "missions": {

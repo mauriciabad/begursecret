@@ -5,6 +5,7 @@ import { Input, Textarea } from '@nextui-org/input'
 import { useTranslations } from 'next-intl'
 import { FC, useState } from 'react'
 import { Controller } from 'react-hook-form'
+import { FeaturesEditor } from '~/components/admin-only/features-editor'
 import { SelectCategory } from '~/components/admin-only/select-category'
 import { MarkdownEditor } from '~/components/generic/markdown-editor'
 import {
@@ -13,6 +14,7 @@ import {
   useSafeForm,
 } from '~/components/generic/safe-form'
 import { MapPointSelector } from '~/components/map/map-point-selector'
+import { cn } from '~/helpers/cn'
 import { useRouter } from '~/navigation'
 import { createPlaceSchema } from '~/schemas/places'
 import { ApiRouterOutput } from '~/server/api/router'
@@ -53,6 +55,7 @@ export const PlaceForm: FC<{
           location: `${place.location.lat}, ${place.location.lng}`,
           mainImageId: place.mainImage?.id ?? undefined,
           content: place.content ?? undefined,
+          features: place.features,
         }
       : {
           name: undefined,
@@ -62,49 +65,54 @@ export const PlaceForm: FC<{
           location: undefined,
           mainImageId: undefined,
           content: undefined,
+          features: undefined,
         },
   })
 
   const [stayOnPage, setStayOnPage] = useState(false)
 
+  const isCreateForm = !place
+
   return (
     <>
       <h1 className="text-2xl font-bold">
-        {place ? t('edit-place') : t('create-place')}
+        {isCreateForm ? t('create-place') : t('edit-place')}
       </h1>
       <p className="text-lg text-red-500">CATALAN ONLY</p>
 
       <SafeForm
         form={form}
         handleSubmit={async (values) => {
-          if (place) {
+          if (isCreateForm) {
+            await createPlaceMutation.mutateAsync(values)
+          } else {
             await editPlaceMutation.mutateAsync({
               ...values,
               id: place.id,
             })
-          } else {
-            await createPlaceMutation.mutateAsync(values)
           }
 
           form.reset()
 
-          if (!stayOnPage) {
+          if (!isCreateForm || !stayOnPage) {
             return router.push('/admin/places/')
           }
         }}
-        className={className}
+        className={cn('space-y-4', className)}
       >
         <Controller
           name="name"
           control={form.control}
-          render={({ field: { onChange, onBlur, value } }) => (
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
             <Input
-              isInvalid={!!form.formState.errors['name']}
-              errorMessage={form.formState.errors['name']?.message}
+              isInvalid={!!error}
+              errorMessage={error?.message}
               onBlur={onBlur}
               onChange={onChange}
               value={value}
-              className="mt-4"
               label={t('columns.name')}
             />
           )}
@@ -112,27 +120,32 @@ export const PlaceForm: FC<{
         <Controller
           name="description"
           control={form.control}
-          render={({ field: { onChange, onBlur, value } }) => (
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
             <Textarea
-              isInvalid={!!form.formState.errors['description']}
-              errorMessage={form.formState.errors['description']?.message}
+              isInvalid={!!error}
+              errorMessage={error?.message}
               onBlur={onBlur}
               onChange={onChange}
               value={value}
-              className="mt-4"
               label={t('columns.description')}
             />
           )}
         />
 
-        <div className="mt-4 grid gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-4">
           <Controller
             name="mainCategory"
             control={form.control}
-            render={({ field: { onChange, onBlur, value } }) => (
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => (
               <SelectCategory
-                isInvalid={!!form.formState.errors['mainCategory']}
-                errorMessage={form.formState.errors['mainCategory']?.message}
+                isInvalid={!!error}
+                errorMessage={error?.message}
                 onBlur={onBlur}
                 onChange={onChange}
                 selectedKeys={value ? [String(value)] : []}
@@ -144,10 +157,13 @@ export const PlaceForm: FC<{
           <Controller
             name="categories"
             control={form.control}
-            render={({ field: { onChange, onBlur, value } }) => (
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => (
               <SelectCategory
-                isInvalid={!!form.formState.errors['categories']}
-                errorMessage={form.formState.errors['categories']?.message}
+                isInvalid={!!error}
+                errorMessage={error?.message}
                 onBlur={onBlur}
                 onChange={onChange}
                 selectedKeys={value ? value.split(',') : []}
@@ -162,10 +178,13 @@ export const PlaceForm: FC<{
         <Controller
           name="mainImageId"
           control={form.control}
-          render={({ field: { onChange, onBlur, value } }) => (
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
             <UploadPlaceImageModal
-              isInvalid={!!form.formState.errors['mainImageId']}
-              errorMessage={form.formState.errors['mainImageId']?.message}
+              isInvalid={!!error}
+              errorMessage={error?.message}
               onBlur={onBlur}
               onChange={onChange}
               value={value}
@@ -174,14 +193,17 @@ export const PlaceForm: FC<{
           )}
         />
 
-        <div className="my-4 grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2">
           <Controller
             name="content"
             control={form.control}
-            render={({ field: { onChange, onBlur, value } }) => (
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => (
               <MarkdownEditor
-                isInvalid={!!form.formState.errors['content']}
-                errorMessage={form.formState.errors['content']?.message}
+                isInvalid={!!error}
+                errorMessage={error?.message}
                 onBlur={onBlur}
                 onChange={onChange}
                 value={value}
@@ -194,10 +216,13 @@ export const PlaceForm: FC<{
             <Controller
               name="location"
               control={form.control}
-              render={({ field: { onChange, onBlur, value } }) => (
+              render={({
+                field: { onChange, onBlur, value },
+                fieldState: { error },
+              }) => (
                 <MapPointSelector
-                  isInvalid={!!form.formState.errors['location']}
-                  errorMessage={form.formState.errors['location']?.message}
+                  isInvalid={!!error}
+                  errorMessage={error?.message}
                   onBlur={onBlur}
                   onChange={onChange}
                   value={value}
@@ -208,11 +233,15 @@ export const PlaceForm: FC<{
           </div>
         </div>
 
+        <FeaturesEditor label={t('columns.features')} />
+
         <div className="mt-8 flex items-center justify-start gap-4">
           <SafeSubmitButton color="primary" size="lg" />
-          <Checkbox isSelected={stayOnPage} onValueChange={setStayOnPage}>
-            {t('stay-on-page-after-submit')}
-          </Checkbox>
+          {isCreateForm && (
+            <Checkbox isSelected={stayOnPage} onValueChange={setStayOnPage}>
+              {t('stay-on-page-after-submit')}
+            </Checkbox>
+          )}
         </div>
       </SafeForm>
     </>

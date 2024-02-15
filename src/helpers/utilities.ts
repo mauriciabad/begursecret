@@ -21,3 +21,16 @@ export const groupByKey = <
     return acc
   }, {} as R)
 }
+
+export function pick<
+  O extends Partial<Record<string, unknown>>,
+  K2 extends string,
+>(obj: O, keys: K2[]) {
+  return keys.reduce(
+    (acc, key) => {
+      acc[key] = obj[key]
+      return acc
+    },
+    {} as { [K in K2]: O[K] }
+  )
+}
