@@ -49,7 +49,7 @@ export const createPlaceSchema = z.object({
     ),
   mainImageId: z.number().int().optional().nullable(),
   content: z.string().optional(),
-  features: createInsertSchema(features).optional().nullable(),
+  features: createInsertSchema(features),
 })
 
 export const editPlaceSchema = createPlaceSchema.extend({

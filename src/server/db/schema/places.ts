@@ -31,7 +31,7 @@ export const {
     mainImageId: int('mainImageId'),
     location: pointType('location').notNull(),
     mainCategoryId: int('mainCategoryId').notNull(),
-    featuresId: int('featuresId'),
+    featuresId: int('featuresId').notNull(),
     verificationRequirementsId: int('verificationRequirementsId'),
   },
   translatableColumns: {

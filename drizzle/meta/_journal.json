@@ -127,6 +127,13 @@
       "when": 1707913502270,
       "tag": "0017_tricky_hellfire_club",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "5",
+      "when": 1708040528072,
+      "tag": "0018_blushing_daimon_hellstrom",
+      "breakpoints": true
     }
   ]
 }
