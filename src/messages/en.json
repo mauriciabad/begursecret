@@ -22,7 +22,7 @@
         "dimensions": "Dimensions",
         "price": "Price",
         "priceUnit": "Price unit",
-        "isCovered": "Is a covered parking",
+        "isCovered": "Is a covered",
         "timeToArrive": "Time to arrive",
         "placeToArriveFrom": "Place to arrive from",
         "isFreeWithLocalStamp": "Is free with Begur's stamp",
@@ -34,12 +34,14 @@
           "parkingSpaces": "{value} spaces"
         },
 
+        "text": {},
+
         "composite": {
           "price-priceUnit": "{price} {priceUnit}",
           "timeToArrive-placeToArriveFrom": "{hours, plural, =0 {} other {# h }}{minutes, plural, =0 {} other {# min}} from {placeToArriveFrom, select, townCenter {the town center} parking {the parking} beach {the beach} road {the road} other {}}"
         },
 
-        "booleans": {
+        "boolean": {
           "isFreeWithLocalStamp": {
             "true": "Free with Begur's stamp",
             "false": "Paid even with Begur's stamp"
@@ -82,7 +84,13 @@
           }
         },
 
-        "enums": {
+        "enum": {
+          "placeToArriveFrom": {
+            "townCenter": "To the town center",
+            "parking": "To the parking",
+            "beach": "To the beach",
+            "road": "To the road"
+          },
           "priceUnit": {
             "eur": "€",
             "eur/minute": "€/min",
@@ -163,6 +171,7 @@
     "create-place": "Create place",
     "stay-on-page-after-submit": "Do more",
     "no-places-found": "No places found",
+    "no-features": "No features",
     "change-image": {
       "save": "Save",
       "upload-and-save": "Upload and save",

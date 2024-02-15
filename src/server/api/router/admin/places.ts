@@ -111,6 +111,7 @@ const getPlace = flattenTranslationsOnExecute(
               name: true,
             },
           }),
+          features: true,
         },
       })
     )

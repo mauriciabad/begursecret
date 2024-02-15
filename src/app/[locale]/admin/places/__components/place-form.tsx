@@ -5,6 +5,7 @@ import { Input, Textarea } from '@nextui-org/input'
 import { useTranslations } from 'next-intl'
 import { FC, useState } from 'react'
 import { Controller } from 'react-hook-form'
+import { FeaturesEditor } from '~/components/admin-only/features-editor'
 import { SelectCategory } from '~/components/admin-only/select-category'
 import { MarkdownEditor } from '~/components/generic/markdown-editor'
 import {
@@ -13,6 +14,7 @@ import {
   useSafeForm,
 } from '~/components/generic/safe-form'
 import { MapPointSelector } from '~/components/map/map-point-selector'
+import { cn } from '~/helpers/cn'
 import { useRouter } from '~/navigation'
 import { createPlaceSchema } from '~/schemas/places'
 import { ApiRouterOutput } from '~/server/api/router'
@@ -53,6 +55,7 @@ export const PlaceForm: FC<{
           location: `${place.location.lat}, ${place.location.lng}`,
           mainImageId: place.mainImage?.id ?? undefined,
           content: place.content ?? undefined,
+          features: place.features,
         }
       : {
           name: undefined,
@@ -62,6 +65,7 @@ export const PlaceForm: FC<{
           location: undefined,
           mainImageId: undefined,
           content: undefined,
+          features: undefined,
         },
   })
 
@@ -92,7 +96,7 @@ export const PlaceForm: FC<{
             return router.push('/admin/places/')
           }
         }}
-        className={className}
+        className={cn('space-y-4', className)}
       >
         <Controller
           name="name"
@@ -104,7 +108,6 @@ export const PlaceForm: FC<{
               onBlur={onBlur}
               onChange={onChange}
               value={value}
-              className="mt-4"
               label={t('columns.name')}
             />
           )}
@@ -119,13 +122,12 @@ export const PlaceForm: FC<{
               onBlur={onBlur}
               onChange={onChange}
               value={value}
-              className="mt-4"
               label={t('columns.description')}
             />
           )}
         />
 
-        <div className="mt-4 grid gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-4">
           <Controller
             name="mainCategory"
             control={form.control}
@@ -174,7 +176,7 @@ export const PlaceForm: FC<{
           )}
         />
 
-        <div className="my-4 grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2">
           <Controller
             name="content"
             control={form.control}
@@ -206,6 +208,23 @@ export const PlaceForm: FC<{
               )}
             />
           </div>
+        </div>
+
+        <div>
+          <Controller
+            name="features"
+            control={form.control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <FeaturesEditor
+                isInvalid={!!form.formState.errors['features']}
+                errorMessage={form.formState.errors['features']?.message}
+                onBlur={onBlur}
+                onChange={onChange}
+                value={value}
+                label={t('columns.features')}
+              />
+            )}
+          />
         </div>
 
         <div className="mt-8 flex items-center justify-start gap-4">

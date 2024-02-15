@@ -9,6 +9,8 @@ import {
   IconBusOff,
   IconCar,
   IconCarGarage,
+  IconClock,
+  IconCoinEuro,
   IconCurrencyEuro,
   IconDropletOff,
   IconDroplets,
@@ -29,8 +31,17 @@ import {
   IconToolsKitchen2Off,
   IconWalk,
 } from '@tabler/icons-react'
+import { InferInsertModel, InferSelectModel } from 'drizzle-orm'
 import { Join } from 'ts-toolbelt/out/String/Join'
-import { Features, PriceUnit } from '~/server/db/constants/features'
+import {
+  PriceUnit,
+  amountOfPeople,
+  difficulty,
+  groundType,
+  placeToArriveFrom,
+  priceUnit,
+} from '~/server/db/constants/features'
+import { features } from '~/server/db/schema'
 
 const typeFeatureDisplay = <F extends AnyFeature>(feature: F) => feature
 
@@ -50,8 +61,22 @@ export const featureDisplayGroups = [
         moreInfoFeatureKey: 'priceNotes',
       } as const),
       typeFeatureDisplay({
+        type: 'number',
+        key: 'price',
+        icon: IconCurrencyEuro,
+        hidden: true,
+      } as const),
+      typeFeatureDisplay({
+        type: 'enum',
+        key: 'priceUnit',
+        icon: IconCoinEuro,
+        hidden: true,
+        options: priceUnit,
+      } as const),
+      typeFeatureDisplay({
         type: 'enum',
         key: 'difficulty',
+        icon: IconAccessible,
         icons: {
           accessible: IconAccessible,
           normal: IconAccessible,
@@ -60,19 +85,23 @@ export const featureDisplayGroups = [
           dangerous: IconAlertTriangleFilled,
         },
         moreInfoFeatureKey: 'difficultyNotes',
+        options: difficulty,
       } as const),
       typeFeatureDisplay({
         type: 'enum',
         key: 'amountOfPeople',
         icon: IconFriends,
+        options: amountOfPeople,
       } as const),
       typeFeatureDisplay({
         type: 'enum',
         key: 'groundType',
         icon: IconGrain,
+        options: groundType,
       }),
       typeFeatureDisplay({
-        type: 'raw',
+        type: 'text',
+        showRaw: true,
         key: 'dimensions',
         icon: IconRulerMeasure,
       } as const),
@@ -88,7 +117,20 @@ export const featureDisplayGroups = [
         showIf: ({ timeToArrive }) => timeToArrive !== null,
       } as const),
       typeFeatureDisplay({
-        type: 'normal',
+        type: 'number',
+        key: 'timeToArrive',
+        icon: IconClock,
+        hidden: true,
+      } as const),
+      typeFeatureDisplay({
+        type: 'enum',
+        key: 'placeToArriveFrom',
+        icon: IconWalk,
+        hidden: true,
+        options: placeToArriveFrom,
+      } as const),
+      typeFeatureDisplay({
+        type: 'number',
         key: 'parkingSpaces',
         icon: IconCar,
       } as const),
@@ -111,6 +153,7 @@ export const featureDisplayGroups = [
       typeFeatureDisplay({
         type: 'boolean',
         key: 'hasBus',
+        icon: IconBus,
         icons: {
           true: IconBus,
           false: IconBusOff,
@@ -119,6 +162,7 @@ export const featureDisplayGroups = [
       typeFeatureDisplay({
         type: 'boolean',
         key: 'hasParking',
+        icon: IconParking,
         icons: {
           true: IconParking,
           false: IconParkingOff,
@@ -127,6 +171,7 @@ export const featureDisplayGroups = [
       typeFeatureDisplay({
         type: 'boolean',
         key: 'hasToilet',
+        icon: IconBadgeWc,
         icons: {
           true: IconBadgeWc,
           false: IconToiletPaperOff,
@@ -135,6 +180,7 @@ export const featureDisplayGroups = [
       typeFeatureDisplay({
         type: 'boolean',
         key: 'hasShower',
+        icon: IconDroplets,
         icons: {
           true: IconDroplets,
           false: IconDropletOff,
@@ -143,6 +189,7 @@ export const featureDisplayGroups = [
       typeFeatureDisplay({
         type: 'boolean',
         key: 'hasLifeguard',
+        icon: IconLifebuoy,
         icons: {
           true: IconLifebuoy,
           false: IconLifebuoyOff,
@@ -151,6 +198,7 @@ export const featureDisplayGroups = [
       typeFeatureDisplay({
         type: 'boolean',
         key: 'hasDrinkingWater',
+        icon: IconFountain,
         icons: {
           true: IconFountain,
           false: IconFountainOff,
@@ -159,6 +207,7 @@ export const featureDisplayGroups = [
       typeFeatureDisplay({
         type: 'boolean',
         key: 'hasRestaurant',
+        icon: IconToolsKitchen2,
         icons: {
           true: IconToolsKitchen2,
           false: IconToolsKitchen2Off,
@@ -167,6 +216,7 @@ export const featureDisplayGroups = [
       typeFeatureDisplay({
         type: 'boolean',
         key: 'hasLeisure',
+        icon: IconMoodSmile,
         icons: {
           true: IconMoodSmile,
           false: IconMoodSad,
@@ -178,12 +228,12 @@ export const featureDisplayGroups = [
     key: 'notes',
     featureDisplays: [
       typeFeatureDisplay({
-        type: 'note',
+        type: 'markdown',
         key: 'priceNotes',
         icon: IconCurrencyEuro,
       } as const),
       typeFeatureDisplay({
-        type: 'note',
+        type: 'markdown',
         key: 'difficultyNotes',
         icon: IconAccessible,
       } as const),
@@ -194,47 +244,36 @@ export const featureDisplayGroups = [
   featureDisplays: AnyFeature[]
 }[]
 
-export function useFeaturesDisplayData(features: Features) {
-  function getMoreInfoContent(featureDisplay: AnyFeature) {
-    if (!('moreInfoFeatureKey' in featureDisplay)) return null
-    if (!featureDisplay.moreInfoFeatureKey) return null
+export function getMoreInfoContent(
+  featureDisplay: AnyFeature,
+  features: Features | null | undefined
+) {
+  if (!features) return null
+  if (!('moreInfoFeatureKey' in featureDisplay)) return null
+  if (!featureDisplay.moreInfoFeatureKey) return null
 
-    return features[featureDisplay.moreInfoFeatureKey]
-  }
+  return features[featureDisplay.moreInfoFeatureKey]
+}
 
-  function getIconForEnumFeature(
-    featureDisplay: EnumFeature,
-    value: NonNullable<Features[EnumFeature['key']]>
-  ) {
-    if ('icon' in featureDisplay && featureDisplay.icon)
-      return featureDisplay.icon
+export function getIconForFeature<F extends EnumFeature | BooleanFeature>(
+  featureDisplay: F,
+  value: string | boolean | null | undefined
+) {
+  if (value === undefined || value === null) return featureDisplay.icon
+  if (featureDisplay.icons)
+    return featureDisplay.icons[`${value}` as keyof typeof featureDisplay.icons]
+  return featureDisplay.icon
+}
 
-    return featureDisplay.icons[value]
-  }
-
-  function getIconForBooleanFeature(
-    featureDisplay: BooleanFeature,
-    value: boolean
-  ) {
-    if ('icon' in featureDisplay && featureDisplay.icon)
-      return featureDisplay.icon
-
-    return featureDisplay.icons[`${value}`]
-  }
-
-  function getCompositeFeatureKey<Keys extends Array<string>>(keys: Keys) {
-    return keys.join('-') as Join<Keys, '-'>
-  }
-
-  return {
-    getMoreInfoContent,
-    getIconForEnumFeature,
-    getIconForBooleanFeature,
-    getCompositeFeatureKey,
-  }
+export function getCompositeFeatureKey<Keys extends Array<string>>(keys: Keys) {
+  return keys.join('-') as Join<Keys, '-'>
 }
 
 // ------------------- types -------------------
+
+type Features =
+  | InferSelectModel<typeof features>
+  | InferInsertModel<typeof features>
 
 type FeatureKey = Exclude<keyof Features, 'id'>
 
@@ -242,23 +281,28 @@ type FeaturesKeysOfType<T> = {
   [K in FeatureKey]: NonNullable<Features[K]> extends T ? K : never
 }[FeatureKey]
 
-type NormalFeature<K extends FeatureKey = FeatureKey> = {
-  type: 'normal'
+type NumberFeature<K extends FeatureKey = FeatureKey> = {
+  type: 'number'
   key: K
+  hidden?: boolean
   icon: Icon
   moreInfoFeatureKey?: FeaturesKeysOfType<string>
+  showRaw?: boolean
 }
 
-type RawFeature<K extends FeatureKey = FeatureKey> = {
-  type: 'raw'
+type TextFeature<K extends FeatureKey = FeatureKey> = {
+  type: 'text'
   key: K
+  hidden?: boolean
   icon: Icon
   moreInfoFeatureKey?: FeaturesKeysOfType<string>
+  showRaw?: boolean
 }
 
-type NoteFeature<K extends FeatureKey = FeatureKey> = {
-  type: 'note'
+type MarkdownFeature<K extends FeatureKey = FeatureKey> = {
+  type: 'markdown'
   key: K
+  hidden?: boolean
   icon: Icon
 }
 
@@ -267,22 +311,23 @@ type EnumFeature<
 > = {
   type: 'enum'
   key: K
+  hidden?: boolean
   moreInfoFeatureKey?: FeaturesKeysOfType<string>
-} & (
-  | { icon: Icon; icons?: never }
-  | { icon?: never; icons: { [IconKey in NonNullable<Features[K]>]: Icon } }
-)
+  options: readonly NonNullable<Features[K]>[]
+  icon: Icon
+  icons?: { [IconKey in NonNullable<Features[K]>]: Icon }
+}
 
 type BooleanFeature<
   K extends FeaturesKeysOfType<boolean> = FeaturesKeysOfType<boolean>,
 > = {
   type: 'boolean'
   key: K
+  hidden?: boolean
   moreInfoFeatureKey?: FeaturesKeysOfType<string>
-} & (
-  | { icon: Icon; icons?: never }
-  | { icon?: never; icons: { true: Icon; false: Icon } }
-)
+  icon: Icon
+  icons?: { true: Icon; false: Icon }
+}
 
 type CompositeFeature<K extends FeatureKey = FeatureKey> = {
   type: 'composite'
@@ -298,8 +343,8 @@ type CompositeFeature<K extends FeatureKey = FeatureKey> = {
 
 type AnyFeature =
   | EnumFeature
-  | RawFeature
-  | NormalFeature
+  | NumberFeature
+  | TextFeature
   | BooleanFeature
   | CompositeFeature
-  | NoteFeature
+  | MarkdownFeature

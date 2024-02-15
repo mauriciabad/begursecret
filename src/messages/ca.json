@@ -22,7 +22,7 @@
         "dimensions": "Dimensions",
         "price": "Preu",
         "priceUnit": "Unitat del preu",
-        "isCovered": "És un aparcament cobert",
+        "isCovered": "Està cobert",
         "timeToArrive": "Temps d'arribada",
         "placeToArriveFrom": "Lloc d'arribada",
         "isFreeWithLocalStamp": "És gratuït amb segell de Begur",
@@ -30,16 +30,18 @@
         "priceNotes": "Preu"
       },
       "values": {
-        "normal": {
+        "number": {
           "parkingSpaces": "{value} places"
         },
+
+        "text": {},
 
         "composite": {
           "price-priceUnit": "{price} {priceUnit}",
           "timeToArrive-placeToArriveFrom": "A {hours, plural, =0 {} other {# h }}{minutes, plural, =0 {} other {# min}} {placeToArriveFrom, select, townCenter {del centre} parking {del parking} beach {de la platja} road {de la carretera} other {}}"
         },
 
-        "booleans": {
+        "boolean": {
           "isFreeWithLocalStamp": {
             "true": "Gratuït amb segell de Begur",
             "false": "Pagament inclús amb segell de Begur"
@@ -82,7 +84,13 @@
           }
         },
 
-        "enums": {
+        "enum": {
+          "placeToArriveFrom": {
+            "townCenter": "Fins el centre",
+            "parking": "Fins el parking",
+            "beach": "Fins la platja",
+            "road": "Fins la carretera"
+          },
           "priceUnit": {
             "eur": "€",
             "eur/minute": "€/min",
@@ -163,6 +171,7 @@
     "create-place": "Crear lloc",
     "stay-on-page-after-submit": "Fer més",
     "no-places-found": "No s'han trobat llocs",
+    "no-features": "No hi ha característiques",
     "change-image": {
       "save": "Guardar",
       "upload-and-save": "Pujar i guardar",
