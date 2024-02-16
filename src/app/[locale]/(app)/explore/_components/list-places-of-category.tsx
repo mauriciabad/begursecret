@@ -76,8 +76,8 @@ export const ListPlacesOfCategory: FC<{
               >
                 <OptimizedImage
                   radius="lg"
-                  shadow="sm"
-                  className="z-0 aspect-[4/3] h-full object-cover"
+                  shadow="none"
+                  className="z-0 aspect-[4/3] h-full border border-stone-100 object-cover"
                   image={place.mainImage}
                   alt={place.name}
                 />
