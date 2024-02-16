@@ -2,9 +2,6 @@
 
 import { IconFocus2 } from '@tabler/icons-react'
 import { Map as LeafletMap, divIcon } from 'leaflet'
-import 'leaflet.locatecontrol'
-import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'
-import 'leaflet/dist/leaflet.css'
 import { FC, useState } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { MapContainer, Marker } from 'react-leaflet'
@@ -13,9 +10,15 @@ import { MapPoint } from '~/helpers/spatial-data'
 import { useRouter } from '~/navigation'
 import { CustomLayersControl, LayerId } from './custom-layout-controls'
 import { CustomLocationControl } from './custom-location-control'
+import { CustomRotationControl } from './custom-rotation-control'
 import { PlaceMarker, PlaceMarkerProps } from './place-marker'
 import { useMapControlledZoom } from './useMapControlledZoom'
 import { useMapResize } from './useMapResize'
+
+import 'leaflet-rotate'
+import 'leaflet.locatecontrol'
+import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'
+import 'leaflet/dist/leaflet.css'
 
 const DEFAULT_CENTER = {
   lat: 41.953,
@@ -89,6 +92,8 @@ export const MapRaw: FC<{
       }}
       attributionControl={false}
       zoomSnap={0.5}
+      rotate={fullControl}
+      touchRotate={fullControl}
     >
       {markers?.map(
         ({
@@ -161,6 +166,7 @@ export const MapRaw: FC<{
       >
         <CustomLayersControl hide={!fullControl} defaultLayer={defaultLayer} />
         <CustomLocationControl hide={!fullControl} />
+        <CustomRotationControl hide={!fullControl} />
       </div>
     </MapContainer>
   )

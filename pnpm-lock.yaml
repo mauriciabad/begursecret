@@ -71,6 +71,9 @@ dependencies:
   leaflet:
     specifier: 1.9.4
     version: 1.9.4
+  leaflet-rotate:
+    specifier: 0.2.8
+    version: 0.2.8(leaflet@1.9.4)
   leaflet.locatecontrol:
     specifier: 0.79.0
     version: 0.79.0
@@ -151,6 +154,9 @@ devDependencies:
   '@types/leaflet':
     specifier: 1.9.8
     version: 1.9.8
+  '@types/leaflet-rotate':
+    specifier: 0.1.4
+    version: 0.1.4
   '@types/leaflet.locatecontrol':
     specifier: 0.74.4
     version: 0.74.4
@@ -6121,6 +6127,12 @@ packages:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: true
 
+  /@types/leaflet-rotate@0.1.4:
+    resolution: {integrity: sha512-v848qzI35lEq/iE5GSWLjMajIf8D3sxBc5SysMFRpn5L7p2kiRPv4kv4h7pByxWYnC0H6iNDbv/eStiLFTLkSQ==}
+    dependencies:
+      '@types/leaflet': 1.9.8
+    dev: true
+
   /@types/leaflet.locatecontrol@0.74.4:
     resolution: {integrity: sha512-JNS2WYI80KrR980DXjQyHnzFoNEy0Vjtt6f8gJvit6RBgRqsQw83rH0ZTtLCwpFHIKrjF/jvIPv/3Fhv4F4SUg==}
     dependencies:
@@ -10163,6 +10175,14 @@ packages:
     dependencies:
       language-subtag-registry: 0.3.22
     dev: true
+
+  /leaflet-rotate@0.2.8(leaflet@1.9.4):
+    resolution: {integrity: sha512-BHtkn35DuJ377yBNn/7XVuV0oIfwJtmqv/wFQ0Lvh7QuVCAD2wfCK0/m9oA3k/LVOnJG8VEGyf3Duf/wTVzeKQ==}
+    peerDependencies:
+      leaflet: ^1.9.3
+    dependencies:
+      leaflet: 1.9.4
+    dev: false
 
   /leaflet.locatecontrol@0.79.0:
     resolution: {integrity: sha512-h64QIHFkypYdr90lkSfjKvPvvk8/b8UnP3m9WuoWdp5p2AaCWC0T1NVwyuj4rd5U4fBW3tQt4ppmZ2LceHMIDg==}

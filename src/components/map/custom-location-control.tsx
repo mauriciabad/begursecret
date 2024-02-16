@@ -3,9 +3,6 @@
 import { Button } from '@nextui-org/button'
 import { IconCurrentLocation } from '@tabler/icons-react'
 import L from 'leaflet'
-import 'leaflet.locatecontrol'
-import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'
-import 'leaflet/dist/leaflet.css'
 import { FC, useEffect, useState } from 'react'
 import { useMap } from 'react-leaflet'
 
