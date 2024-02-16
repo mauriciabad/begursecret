@@ -2,6 +2,7 @@
 
 import { nextui } from '@nextui-org/react'
 import typography from '@tailwindcss/typography'
+import tailwindScrollbarHide from 'tailwind-scrollbar-hide'
 import defaultTheme from 'tailwindcss/defaultTheme'
 import plugin from 'tailwindcss/plugin'
 
@@ -75,6 +76,7 @@ const config = {
   plugins: [
     nextui(),
     typography,
+    tailwindScrollbarHide,
     plugin(function ({ matchUtilities, theme }) {
       matchUtilities(
         {

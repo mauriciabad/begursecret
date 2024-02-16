@@ -56,7 +56,7 @@ export const ListPlacesOfCategory: FC<{
         </Link>
       </div>
 
-      <ul className="flex items-stretch overflow-x-auto px-2">
+      <ul className="flex items-stretch overflow-x-auto px-2 scrollbar-hide">
         {places.map((place) => (
           <li className="contents" key={place.id}>
             <Card
