@@ -81,7 +81,7 @@ export const ListPlacesOfCategory: FC<{
                   image={place.mainImage}
                   alt={place.name}
                 />
-                <span className="line-clamp-3 grow pb-1 text-center leading-4 text-stone-900">
+                <span className="line-clamp-3 grow pb-1 text-center font-medium leading-4 text-stone-900">
                   {place.name}
                 </span>
               </CardBody>
