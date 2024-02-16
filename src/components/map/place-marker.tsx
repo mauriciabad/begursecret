@@ -11,7 +11,7 @@ export type PlaceMarkerProps = {
   icon?: PlaceCategoryIconType
   color?: PlaceCategoryColor
   className?: string
-  size?: 'md' | 'sm' | 'lg'
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'none'
   animated?: boolean
   name?: string
   showName?: boolean
@@ -28,7 +28,9 @@ export const PlaceMarker: FC<PlaceMarkerProps> = ({
   showName,
   isDisabled,
 }) => {
-  if (size === 'sm')
+  if (size === 'none') return null
+
+  if (size === 'sm' || size === 'xs')
     return (
       <div
         className={cn(
@@ -43,6 +45,7 @@ export const PlaceMarker: FC<PlaceMarkerProps> = ({
             colorClasses.border[color],
           ],
           'border-white',
+          size === 'xs' && 'h-2 w-2',
           isDisabled && 'opacity-50'
         )}
       >
