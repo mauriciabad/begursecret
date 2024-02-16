@@ -13,7 +13,6 @@ import { NextuiProvider } from '~/components/providers/nextui-provider'
 import { TrpcProvider } from '~/components/providers/trpc-provider'
 import { env } from '~/env.mjs'
 import { cn } from '~/helpers/cn'
-import { ColorClasses } from '~/helpers/color-classes'
 import { type LocaleRouteParams } from '~/i18n'
 import { getSession } from '~/server/get-server-thing'
 
@@ -74,15 +73,13 @@ const RootLayout: FC<RootLayoutProps> = async ({
       >
         <AxiomWebVitals />
 
-        <ColorClasses>
-          <AuthProvider session={session}>
-            <TrpcProvider>
-              <NextIntlClientProvider locale={locale} messages={messages}>
-                <NextuiProvider>{children}</NextuiProvider>
-              </NextIntlClientProvider>
-            </TrpcProvider>
-          </AuthProvider>
-        </ColorClasses>
+        <AuthProvider session={session}>
+          <TrpcProvider>
+            <NextIntlClientProvider locale={locale} messages={messages}>
+              <NextuiProvider>{children}</NextuiProvider>
+            </NextIntlClientProvider>
+          </TrpcProvider>
+        </AuthProvider>
 
         {env.VERCEL_ENV === 'production' && (
           <Script

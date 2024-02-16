@@ -1,12 +1,5 @@
-import { FC, PropsWithChildren } from 'react'
-
-export const ColorClasses: FC<PropsWithChildren> = ({ children }) => {
-  return children
-}
-
 import { PlaceCategoryColor } from '~/server/db/constants/places'
 
-// Force Tailwind to load this classes
 export const colorClasses = {
   border: {
     gray: 'border-gray-800',
@@ -132,3 +125,6 @@ export const colorClasses = {
 } as const satisfies {
   [x: string]: Record<PlaceCategoryColor, string>
 }
+
+export const allColorClasses: readonly (typeof colorClasses)[keyof typeof colorClasses][PlaceCategoryColor][] =
+  Object.values(colorClasses).map(Object.values).flat()

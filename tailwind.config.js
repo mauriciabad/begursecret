@@ -5,6 +5,7 @@ import typography from '@tailwindcss/typography'
 import tailwindScrollbarHide from 'tailwind-scrollbar-hide'
 import defaultTheme from 'tailwindcss/defaultTheme'
 import plugin from 'tailwindcss/plugin'
+import { allColorClasses } from './src/helpers/color-classes'
 
 /** @type {import('tailwindcss').Config}*/
 const config = {
@@ -109,6 +110,7 @@ const config = {
       )
     }),
   ],
+  safelist: [...allColorClasses],
 }
 
 export default config
