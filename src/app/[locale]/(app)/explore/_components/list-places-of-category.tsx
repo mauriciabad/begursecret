@@ -56,7 +56,7 @@ export const ListPlacesOfCategory: FC<{
         </Link>
       </div>
 
-      <ul className="mt-2 flex items-stretch gap-4 overflow-x-auto px-4">
+      <ul className="flex items-stretch overflow-x-auto px-2">
         {places.map((place) => (
           <li className="contents" key={place.id}>
             <Card
@@ -71,7 +71,7 @@ export const ListPlacesOfCategory: FC<{
               <CardBody
                 className={cn(
                   'w-[calc(50vw-2rem)] min-w-32 max-w-72',
-                  'flex flex-col items-center justify-center gap-2 p-0'
+                  'flex flex-col items-center justify-center gap-2 px-2 pt-2'
                 )}
               >
                 <OptimizedImage
