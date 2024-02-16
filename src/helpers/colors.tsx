@@ -1,6 +1,6 @@
 import { PlaceCategoryColor } from '~/server/db/constants/places'
 
-const classNames = {
+export const colorClasses = {
   border: {
     gray: 'border-gray-800',
     red: 'border-red-800',
@@ -125,5 +125,3 @@ const classNames = {
 } as const satisfies {
   [x: string]: Record<PlaceCategoryColor, string>
 }
-
-export const colorClasses = classNames
