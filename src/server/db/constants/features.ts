@@ -1,4 +1,4 @@
-import { InferSelectModel } from 'drizzle-orm'
+import { InferInsertModel, InferSelectModel } from 'drizzle-orm'
 import { features } from '../schema'
 
 // Don't reorder these values, they are used to generate the database enum.
@@ -45,4 +45,6 @@ export const placeToArriveFrom = [
 ] as const
 export type PlaceToArriveFrom = (typeof placeToArriveFrom)[number]
 
-export type Features = InferSelectModel<typeof features>
+export type FeaturesSelect = InferSelectModel<typeof features>
+export type FeaturesInsert = InferInsertModel<typeof features>
+export type Features = FeaturesSelect

@@ -31,9 +31,12 @@ import {
   IconToolsKitchen2Off,
   IconWalk,
 } from '@tabler/icons-react'
-import { InferInsertModel, InferSelectModel } from 'drizzle-orm'
+import { useMemo } from 'react'
 import { Join } from 'ts-toolbelt/out/String/Join'
+import { pick } from '~/helpers/utilities'
 import {
+  FeaturesInsert,
+  FeaturesSelect,
   PriceUnit,
   amountOfPeople,
   difficulty,
@@ -41,7 +44,6 @@ import {
   placeToArriveFrom,
   priceUnit,
 } from '~/server/db/constants/features'
-import { features } from '~/server/db/schema'
 
 const typeFeatureDisplay = <F extends AnyFeature>(feature: F) => feature
 
@@ -244,17 +246,6 @@ export const featureDisplayGroups = [
   featureDisplays: AnyFeature[]
 }[]
 
-export function getMoreInfoContent(
-  featureDisplay: AnyFeature,
-  features: Features | null | undefined
-) {
-  if (!features) return null
-  if (!('moreInfoFeatureKey' in featureDisplay)) return null
-  if (!featureDisplay.moreInfoFeatureKey) return null
-
-  return features[featureDisplay.moreInfoFeatureKey]
-}
-
 export function getIconForFeature<F extends EnumFeature | BooleanFeature>(
   featureDisplay: F,
   value: string | boolean | null | undefined
@@ -269,11 +260,87 @@ export function getCompositeFeatureKey<Keys extends Array<string>>(keys: Keys) {
   return keys.join('-') as Join<Keys, '-'>
 }
 
+function getCompositeFeatureRawValues<T extends CompositeFeature>(
+  featureDisplay: T,
+  features: Features
+) {
+  return pick(features, featureDisplay.keys) as Parameters<
+    NonNullable<T['transformValues']>
+  >[0]
+}
+
+function shouldShow<T extends CompositeFeature>(
+  featureDisplay: T,
+  rawValues: Parameters<NonNullable<T['transformValues']>>[0]
+) {
+  if (!featureDisplay.showIf) return true
+  return featureDisplay.showIf(rawValues)
+}
+
+export function getCompositeFeatureValues<T extends CompositeFeature>(
+  featureDisplay: T,
+  features: Features
+) {
+  const rawValues = getCompositeFeatureRawValues(featureDisplay, features)
+  if (!shouldShow(featureDisplay, rawValues)) return null
+
+  if (!featureDisplay?.transformValues) return rawValues
+  return featureDisplay?.transformValues(rawValues)
+}
+
+export function useFeatureDisplay(features: Features | null | undefined) {
+  const allValuesNullInGroup = useMemo(() => {
+    return Object.fromEntries(
+      featureDisplayGroups.map((group) => [
+        group.key,
+        group.featureDisplays.every(featureDisplayIsEmpty),
+      ])
+    ) as Record<(typeof featureDisplayGroups)[number]['key'], boolean>
+  }, [features])
+
+  const allValuesNull = useMemo(() => {
+    return featureDisplayGroups.every(
+      (group) => allValuesNullInGroup[group.key]
+    )
+  }, [allValuesNullInGroup])
+
+  function getMoreInfoContent(featureDisplay: AnyFeature) {
+    if (!features) return null
+    if (!('moreInfoFeatureKey' in featureDisplay)) return null
+    if (!featureDisplay.moreInfoFeatureKey) return null
+
+    return features[featureDisplay.moreInfoFeatureKey]
+  }
+
+  function featureDisplayIsEmpty(featureDisplay: AnyFeature) {
+    if (!features) return true
+
+    if ('hidden' in featureDisplay && featureDisplay.hidden) {
+      return true
+    }
+
+    if (featureDisplay.type === 'composite') {
+      const rawValues = getCompositeFeatureRawValues(featureDisplay, features)
+      return !shouldShow(featureDisplay, rawValues)
+    }
+
+    return (
+      features[featureDisplay.key] === null ||
+      features[featureDisplay.key] === undefined
+    )
+  }
+
+  return {
+    allValuesNull,
+    allValuesNullInGroup,
+    getMoreInfoContent,
+    featureDisplayIsEmpty,
+  }
+}
+
 // ------------------- types -------------------
 
-type Features =
-  | InferSelectModel<typeof features>
-  | InferInsertModel<typeof features>
+type Features = FeaturesInsert | FeaturesSelect
 
 type FeatureKey = Exclude<keyof Features, 'id'>
 

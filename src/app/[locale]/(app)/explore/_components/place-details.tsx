@@ -84,9 +84,7 @@ export const PlaceDetails: FC<{
         className="mt-2"
       />
 
-      {place.features && (
-        <FeaturesBlock features={place.features} className="mt-4" />
-      )}
+      <FeaturesBlock features={place.features} className="mt-4" />
 
       {place.content ? (
         <MarkdownContent content={place.content} className="mt-4" />

@@ -5,13 +5,13 @@ import { useTranslations } from 'next-intl'
 import { FC, PropsWithChildren } from 'react'
 import { MarkdownContent } from '~/components/generic/markdown-content'
 import { IntlMessageKeys } from '~/helpers/types'
-import { pick } from '~/helpers/utilities'
 import { Features } from '~/server/db/constants/features'
 import {
   featureDisplayGroups,
   getCompositeFeatureKey,
+  getCompositeFeatureValues,
   getIconForFeature,
-  getMoreInfoContent,
+  useFeatureDisplay,
 } from '~/server/db/constants/features-display-data'
 
 export const FeaturesBlock: FC<{ features: Features; className?: string }> = ({
@@ -20,118 +20,124 @@ export const FeaturesBlock: FC<{ features: Features; className?: string }> = ({
 }) => {
   const t = useTranslations('data.features')
 
+  const { allValuesNull, allValuesNullInGroup, getMoreInfoContent } =
+    useFeatureDisplay(features)
+
+  if (allValuesNull) return null
+
   return (
     <Card className={className} radius="lg" shadow="sm">
       <CardBody className="gap-2">
-        {featureDisplayGroups.map((group) => (
-          <FeatureList key={group.key} title={t(`titles.${group.key}`)}>
-            {group.featureDisplays.map((featureDisplay) => {
-              if ('hidden' in featureDisplay && featureDisplay.hidden) {
-                return null
-              }
-
-              switch (featureDisplay.type) {
-                case 'number':
-                case 'text': {
-                  const value = features[featureDisplay.key]
-                  if (value === null || value === undefined) return null
-
-                  if ('showRaw' in featureDisplay && featureDisplay.showRaw) {
-                    return (
-                      <FeatureItem
-                        key={featureDisplay.key}
-                        icon={featureDisplay.icon}
-                        text={String(value)}
-                        moreInfo={getMoreInfoContent(featureDisplay, features)}
-                      />
-                    )
-                  } else {
-                    return (
-                      <FeatureItem
-                        key={featureDisplay.key}
-                        icon={featureDisplay.icon}
-                        text={t(
-                          `values.${`${featureDisplay.type}.${featureDisplay.key}` as IntlMessageKeys<'data.features.values'>}`,
-                          {
-                            value,
-                          }
-                        )}
-                        moreInfo={getMoreInfoContent(featureDisplay, features)}
-                      />
-                    )
-                  }
-                }
-                case 'markdown': {
-                  const value = features[featureDisplay.key]
-                  if (value === null || value === undefined) return null
-                  return (
-                    <MarkdownFeatureItem
-                      key={featureDisplay.key}
-                      icon={featureDisplay.icon}
-                      label={t(`labels.${featureDisplay.key}`)}
-                      content={value}
-                    />
-                  )
-                }
-                case 'enum': {
-                  const value = features[featureDisplay.key]
-                  if (value === null || value === undefined) return null
-
-                  return (
-                    <FeatureItem
-                      key={featureDisplay.key}
-                      icon={getIconForFeature(featureDisplay, value)}
-                      text={t(
-                        `values.enum.${`${featureDisplay.key}.${value}` as IntlMessageKeys<'data.features.values.enum'>}`
-                      )}
-                      moreInfo={getMoreInfoContent(featureDisplay, features)}
-                    />
-                  )
-                }
-                case 'boolean': {
-                  const value = features[featureDisplay.key]
-                  if (value === null || value === undefined) return null
-
-                  return (
-                    <BooleanFeatureItem
-                      key={featureDisplay.key}
-                      icon={getIconForFeature(featureDisplay, true)}
-                      iconOff={getIconForFeature(featureDisplay, false)}
-                      text={t(`values.boolean.${featureDisplay.key}.${value}`)}
-                      value={value}
-                      moreInfo={getMoreInfoContent(featureDisplay, features)}
-                    />
-                  )
-                }
-                case 'composite': {
-                  const rawValues = pick(
-                    features,
-                    featureDisplay.keys
-                  ) as Parameters<(typeof featureDisplay)['transformValues']>[0]
-
-                  if (
-                    featureDisplay.showIf &&
-                    !featureDisplay.showIf(rawValues)
-                  ) {
+        {featureDisplayGroups.map(
+          (group) =>
+            !allValuesNullInGroup[group.key] && (
+              <FeatureList key={group.key} title={t(`titles.${group.key}`)}>
+                {group.featureDisplays.map((featureDisplay) => {
+                  if ('hidden' in featureDisplay && featureDisplay.hidden) {
                     return null
                   }
 
-                  const values = featureDisplay?.transformValues(rawValues)
+                  switch (featureDisplay.type) {
+                    case 'number':
+                    case 'text': {
+                      const value = features[featureDisplay.key]
+                      if (value === null || value === undefined) return null
 
-                  const key = getCompositeFeatureKey(featureDisplay.keys)
-                  return (
-                    <FeatureItem
-                      key={key}
-                      icon={featureDisplay.icon}
-                      text={t(`values.composite.${key}`, values)}
-                      moreInfo={getMoreInfoContent(featureDisplay, features)}
-                    />
-                  )
-                }
-              }
-            })}
-          </FeatureList>
-        ))}
+                      if (
+                        'showRaw' in featureDisplay &&
+                        featureDisplay.showRaw
+                      ) {
+                        return (
+                          <FeatureItem
+                            key={featureDisplay.key}
+                            icon={featureDisplay.icon}
+                            text={String(value)}
+                            moreInfo={getMoreInfoContent(featureDisplay)}
+                          />
+                        )
+                      } else {
+                        return (
+                          <FeatureItem
+                            key={featureDisplay.key}
+                            icon={featureDisplay.icon}
+                            text={t(
+                              `values.${`${featureDisplay.type}.${featureDisplay.key}` as IntlMessageKeys<'data.features.values'>}`,
+                              {
+                                value,
+                              }
+                            )}
+                            moreInfo={getMoreInfoContent(featureDisplay)}
+                          />
+                        )
+                      }
+                    }
+                    case 'markdown': {
+                      const value = features[featureDisplay.key]
+                      if (value === null || value === undefined) return null
+                      return (
+                        <MarkdownFeatureItem
+                          key={featureDisplay.key}
+                          icon={featureDisplay.icon}
+                          label={t(`labels.${featureDisplay.key}`)}
+                          content={value}
+                        />
+                      )
+                    }
+                    case 'enum': {
+                      const value = features[featureDisplay.key]
+                      if (value === null || value === undefined) return null
+
+                      return (
+                        <FeatureItem
+                          key={featureDisplay.key}
+                          icon={getIconForFeature(featureDisplay, value)}
+                          text={t(
+                            `values.enum.${`${featureDisplay.key}.${value}` as IntlMessageKeys<'data.features.values.enum'>}`
+                          )}
+                          moreInfo={getMoreInfoContent(featureDisplay)}
+                        />
+                      )
+                    }
+                    case 'boolean': {
+                      const value = features[featureDisplay.key]
+                      if (value === null || value === undefined) return null
+
+                      return (
+                        <BooleanFeatureItem
+                          key={featureDisplay.key}
+                          icon={getIconForFeature(featureDisplay, true)}
+                          iconOff={getIconForFeature(featureDisplay, false)}
+                          text={t(
+                            `values.boolean.${featureDisplay.key}.${value}`
+                          )}
+                          value={value}
+                          moreInfo={getMoreInfoContent(featureDisplay)}
+                        />
+                      )
+                    }
+                    case 'composite': {
+                      const values = getCompositeFeatureValues(
+                        featureDisplay,
+                        features
+                      )
+
+                      if (!values) return null
+
+                      const key = getCompositeFeatureKey(featureDisplay.keys)
+                      return (
+                        <FeatureItem
+                          key={key}
+                          icon={featureDisplay.icon}
+                          text={t(`values.composite.${key}`, values)}
+                          moreInfo={getMoreInfoContent(featureDisplay)}
+                        />
+                      )
+                    }
+                  }
+                })}
+              </FeatureList>
+            )
+        )}
       </CardBody>
     </Card>
   )
