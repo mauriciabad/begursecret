@@ -9,9 +9,9 @@ test('has title', async ({ page }) => {
 test('place link works', async ({ page }) => {
   await page.goto('/en/explore')
 
-  await page.mouse.wheel(0, 400)
-
-  await page.getByRole('link', { name: 'Sa Riera Beach' }).click()
+  const link = page.getByRole('link', { name: 'Sa Riera Beach' })
+  await link.scrollIntoViewIfNeeded()
+  await link.click()
 
   await expect(
     page.getByRole('heading', { name: 'Sa Riera Beach' })
