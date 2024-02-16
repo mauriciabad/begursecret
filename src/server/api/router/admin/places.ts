@@ -176,27 +176,20 @@ export const placesAdminRouter = router({
       await db.transaction(async (tx) => {
         const placeId = Number(input.id)
 
-        let featuresId = (
+        const featuresId = (
           await tx
             .selectDistinct({ featuresId: places.featuresId })
             .from(places)
             .where(eq(places.id, placeId))
         )[0].featuresId
 
-        if (featuresId === null) {
-          const insertFeaturesResult = await tx
-            .insert(features)
-            .values({ ...input.features })
-          featuresId = Number(insertFeaturesResult.insertId)
-        } else {
-          await tx
-            .update(features)
-            .set({
-              ...input.features,
-              id: featuresId,
-            })
-            .where(eq(features.id, featuresId))
-        }
+        await tx
+          .update(features)
+          .set({
+            id: featuresId,
+            ...input.features,
+          })
+          .where(eq(features.id, featuresId))
 
         await tx
           .update(places)
