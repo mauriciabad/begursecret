@@ -9,7 +9,7 @@ test('has title', async ({ page }) => {
 test('place link works', async ({ page }) => {
   await page.goto('/en/explore')
 
-  await page.getByRole('link', { name: 'Sa Tuna' }).click()
+  await page.getByRole('link', { name: 'Sa Riera' }).click()
 
-  await expect(page.getByRole('heading', { name: 'Sa Tuna' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Sa Riera' })).toBeVisible()
 })
