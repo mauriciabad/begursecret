@@ -113,7 +113,7 @@ export const MapRaw: FC<{
               html: renderToStaticMarkup(
                 <PlaceMarker
                   {...placeMarkerProps}
-                  size={size ?? (zoom >= 14 ? 'normal' : 'tiny')}
+                  size={size ?? (zoom >= 14 ? 'md' : 'sm')}
                   isDisabled={disableMarkers}
                 />
               ),

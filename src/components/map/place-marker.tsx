@@ -11,7 +11,7 @@ export type PlaceMarkerProps = {
   icon?: PlaceCategoryIconType
   color?: PlaceCategoryColor
   className?: string
-  size?: 'normal' | 'tiny'
+  size?: 'md' | 'sm' | 'lg'
   animated?: boolean
   name?: string
   showName?: boolean
@@ -22,69 +22,96 @@ export const PlaceMarker: FC<PlaceMarkerProps> = ({
   icon,
   className,
   color,
-  size = 'normal',
+  size = 'md',
   animated,
   name,
   showName,
   isDisabled,
 }) => {
-  return (
-    <>
-      {size === 'tiny' ? (
-        <div
-          className={cn(
-            animated &&
-              'before:absolute before:inset-0 before:-z-10 before:animate-ping before:rounded-full',
-            className,
-            'group relative box-border h-3 w-3 rounded-full border shadow',
-            'border-gray-800 bg-gray-700',
-            color && [
-              colorClasses.bg[color],
-              colorClasses.beforeBg[color],
-              colorClasses.border[color],
-            ],
-            'border-white',
-            isDisabled && 'opacity-50'
-          )}
-        >
-          {name && (
-            <MarkerTooltip
-              name={name}
-              className={cn({ 'hidden group-hover:block': !showName })}
-            />
-          )}
-        </div>
-      ) : (
-        <div
-          className={cn(
-            animated &&
-              'before:absolute before:inset-0 before:-z-10 before:animate-ping before:rounded-full',
-            className,
-            'group relative inline-block rounded-full border p-[3px] shadow',
-            'border-gray-800 bg-gray-700',
-            color && [
-              colorClasses.bg[color],
-              colorClasses.beforeBg[color],
-              colorClasses.border[color],
-            ],
-            isDisabled && 'opacity-50'
-          )}
-        >
-          {name && (
-            <MarkerTooltip
-              name={name}
-              className={cn({ 'hidden group-hover:block': !showName })}
-            />
-          )}
-          <PlaceCategoryIcon
-            icon={icon}
-            className="text-white"
-            size={18}
-            stroke={2}
+  if (size === 'sm')
+    return (
+      <div
+        className={cn(
+          animated &&
+            'before:absolute before:inset-0 before:-z-10 before:animate-ping before:rounded-full',
+          className,
+          'group relative box-border h-3 w-3 rounded-full border shadow',
+          'border-gray-800 bg-gray-700',
+          color && [
+            colorClasses.bg[color],
+            colorClasses.beforeBg[color],
+            colorClasses.border[color],
+          ],
+          'border-white',
+          isDisabled && 'opacity-50'
+        )}
+      >
+        {name && (
+          <MarkerTooltip
+            name={name}
+            className={cn({ 'hidden group-hover:block': !showName })}
           />
-        </div>
+        )}
+      </div>
+    )
+
+  if (size === 'lg')
+    return (
+      <div
+        className={cn(
+          'relative rounded-full border-2 p-1 text-white',
+          color && [colorClasses.bg[color], colorClasses.border600[color]],
+          className
+        )}
+      >
+        <PlaceCategoryIcon
+          icon={icon}
+          className={cn(
+            'block h-6 w-6',
+            color && [colorClasses.text600[color]]
+          )}
+          size={18}
+          stroke={5}
+          overflow="visible"
+        />
+        <PlaceCategoryIcon
+          icon={icon}
+          className="absolute inset-1 block h-6 w-6"
+          size={18}
+          stroke={1.75}
+        />
+      </div>
+    )
+
+  return (
+    <div
+      className={cn(
+        animated &&
+          'before:absolute before:inset-0 before:-z-10 before:animate-ping before:rounded-full',
+        className,
+        'group relative inline-block rounded-full border p-[3px] shadow',
+        'border-gray-800 bg-gray-700',
+        color && [
+          colorClasses.bg[color],
+          colorClasses.beforeBg[color],
+          colorClasses.border[color],
+        ],
+        isDisabled && 'opacity-50'
       )}
-    </>
+    >
+      {name && (
+        <MarkerTooltip
+          name={name}
+          className={cn({ 'hidden group-hover:block': !showName })}
+        />
+      )}
+      <PlaceCategoryIcon
+        icon={icon}
+        className="text-white"
+        size={18}
+        stroke={2}
+      />
+    </div>
   )
 }
 

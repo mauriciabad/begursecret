@@ -66,7 +66,7 @@ export const PlacePreviewModal: FC<
                             location: place.location,
                             icon: place.mainCategory.icon,
                             color: 'red',
-                            size: 'tiny',
+                            size: 'sm',
                           },
                         ]}
                       />

@@ -5,9 +5,8 @@ import { IconChevronRight, IconPlus } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'
 import { OptimizedImage } from '~/components/generic/optimized-image'
-import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
+import { PlaceMarker } from '~/components/map/place-marker'
 import { cn } from '~/helpers/cn'
-import { colorClasses } from '~/helpers/color-classes'
 import { Link } from '~/navigation'
 import { ApiRouterOutput } from '~/server/api/router'
 
@@ -23,19 +22,8 @@ export const ListPlacesOfCategory: FC<{
     <div>
       <div className="flex items-center justify-between px-4">
         <div className="flex items-center gap-3">
-          <div
-            className={cn(
-              [colorClasses.bg[category.color]],
-              'flex items-center justify-center rounded-full p-1.5 text-white'
-            )}
-          >
-            <PlaceCategoryIcon
-              icon={category.icon}
-              className="block h-6 w-6"
-              size={18}
-              stroke={1.75}
-            />
-          </div>
+          <PlaceMarker icon={category.icon} color={category.color} size="lg" />
+
           <h3 className="font-title text-lg font-semibold uppercase leading-none tracking-wide text-stone-900">
             {category.namePlural}
           </h3>
