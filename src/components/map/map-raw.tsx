@@ -109,6 +109,7 @@ export const MapRaw: FC<{
       attributionControl={false}
       zoomSnap={0.5}
       rotate={fullControl}
+      rotateControl={false}
       touchRotate={fullControl}
     >
       {markers?.map(
