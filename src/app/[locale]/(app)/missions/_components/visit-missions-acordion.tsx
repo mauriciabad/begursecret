@@ -13,10 +13,10 @@ import {
 } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC, useState } from 'react'
+import { colorClasses } from '~/app/[locale]/layout'
 import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
 import { LinkButton } from '~/components/links/link-button'
 import { cn } from '~/helpers/cn'
-import { colorClasses } from '~/helpers/colors'
 import { ApiRouterOutput } from '~/server/api/router'
 import {
   PlaceCategoryColor,
