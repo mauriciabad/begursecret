@@ -41,7 +41,7 @@ export const OverrideMainMap: FC<OverrideMainMapProps> = ({
           marker.placeId && emphasizedPlaces.has(marker.placeId)
         return {
           ...marker,
-          size: isEmphasized ? 'normal' : 'tiny',
+          size: isEmphasized ? 'md' : 'sm-dynamic',
           zIndexOffset: isEmphasized ? 1000 : 0,
           showName: !!isEmphasized,
         }
@@ -57,7 +57,7 @@ export const OverrideMainMap: FC<OverrideMainMapProps> = ({
           ...(isVeryEmphasized && {
             animated: true,
             zIndexOffset: 2000,
-            size: 'normal',
+            size: 'md',
             showName: true,
           }),
         }

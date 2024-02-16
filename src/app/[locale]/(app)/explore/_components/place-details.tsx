@@ -1,4 +1,4 @@
-import { IconAward } from '@tabler/icons-react'
+import { IconAward, IconBooks } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'
 import { IconTitle } from '~/components/generic/icon-title'
@@ -81,13 +81,14 @@ export const PlaceDetails: FC<{
         mainCategory={place.mainCategory}
         categories={place.categories.map((c) => c.category)}
         wrap
-        className="mt-2"
+        className="mt-4"
       />
 
       <FeaturesBlock features={place.features} className="mt-4" />
 
+      <IconTitle icon={IconBooks} title={t('detailed-info')} className="mt-4" />
       {place.content ? (
-        <MarkdownContent content={place.content} className="mt-4" />
+        <MarkdownContent content={place.content} size="sm" />
       ) : (
         <p className="mt-4 py-4 text-center text-sm text-stone-500">
           {t('no-more-info')}

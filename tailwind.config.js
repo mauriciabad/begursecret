@@ -2,8 +2,10 @@
 
 import { nextui } from '@nextui-org/react'
 import typography from '@tailwindcss/typography'
+import tailwindScrollbarHide from 'tailwind-scrollbar-hide'
 import defaultTheme from 'tailwindcss/defaultTheme'
 import plugin from 'tailwindcss/plugin'
+import { allColorClasses } from './src/helpers/color-classes'
 
 /** @type {import('tailwindcss').Config}*/
 const config = {
@@ -42,6 +44,7 @@ const config = {
           900: '#181C1E',
           950: '#0F1113',
         },
+        cream: '#faf7ef',
       },
       fontFamily: {
         title: [
@@ -75,6 +78,7 @@ const config = {
   plugins: [
     nextui(),
     typography,
+    tailwindScrollbarHide,
     plugin(function ({ matchUtilities, theme }) {
       matchUtilities(
         {
@@ -106,6 +110,7 @@ const config = {
       )
     }),
   ],
+  safelist: [...allColorClasses],
 }
 
 export default config

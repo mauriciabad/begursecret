@@ -221,7 +221,8 @@
     "see-more": "See more",
     "categories": "Categories",
     "no-more-info": "No more information avilable.",
-    "related-missions": "Related missions"
+    "related-missions": "Related missions",
+    "detailed-info": "Detailed info"
   },
   "missions": {
     "meta": {

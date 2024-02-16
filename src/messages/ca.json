@@ -222,7 +222,8 @@
     "categories": "Categories",
     "no-more-info": "No hi ha més informació disponible.",
 
-    "related-missions": "Missions relacionades"
+    "related-missions": "Missions relacionades",
+    "detailed-info": "Informació detallada"
   },
   "missions": {
     "meta": {

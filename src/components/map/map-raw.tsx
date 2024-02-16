@@ -27,7 +27,9 @@ const DEFAULT_CENTER = {
 
 export const mapContainerClassName = 'z-0 h-64 w-full'
 
-export type MapMarker = PlaceMarkerProps & {
+export type MapMarker = Omit<PlaceMarkerProps, 'size'> & {
+  size?: PlaceMarkerProps['size'] | 'sm-dynamic'
+} & {
   zIndexOffset?: number
 } & {
   placeId?: number
@@ -75,6 +77,20 @@ export const MapRaw: FC<{
     })
   }
 
+  function calcSize(size: MapMarker['size']) {
+    if (!size) {
+      if (zoom <= 14) return 'xs'
+      if (zoom <= 15) return 'sm'
+      return 'md'
+    }
+    if (size === 'sm-dynamic') {
+      if (zoom <= 15.5) return 'none'
+      if (zoom <= 16) return 'xs'
+      return zoom >= 17 ? 'md' : 'sm'
+    }
+    return size
+  }
+
   return (
     <MapContainer
       center={value ?? center}
@@ -102,6 +118,7 @@ export const MapRaw: FC<{
           url: markerUrl,
           size,
           zIndexOffset,
+          showName,
           ...placeMarkerProps
         }) => (
           <Marker
@@ -113,8 +130,9 @@ export const MapRaw: FC<{
               html: renderToStaticMarkup(
                 <PlaceMarker
                   {...placeMarkerProps}
-                  size={size ?? (zoom >= 14 ? 'normal' : 'tiny')}
+                  size={calcSize(size)}
                   isDisabled={disableMarkers}
+                  showName={zoom >= 16 && showName}
                 />
               ),
               iconSize: [0, 0],
