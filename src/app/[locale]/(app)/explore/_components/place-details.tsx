@@ -81,7 +81,7 @@ export const PlaceDetails: FC<{
         mainCategory={place.mainCategory}
         categories={place.categories.map((c) => c.category)}
         wrap
-        className="mt-2"
+        className="mt-4"
       />
 
       <FeaturesBlock features={place.features} className="mt-4" />

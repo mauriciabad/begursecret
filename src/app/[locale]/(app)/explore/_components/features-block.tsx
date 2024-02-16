@@ -4,6 +4,7 @@ import { Icon, IconInfoCircle } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC, PropsWithChildren } from 'react'
 import { MarkdownContent } from '~/components/generic/markdown-content'
+import { cn } from '~/helpers/cn'
 import { IntlMessageKeys } from '~/helpers/types'
 import { Features } from '~/server/db/constants/features'
 import {
@@ -26,12 +27,16 @@ export const FeaturesBlock: FC<{ features: Features; className?: string }> = ({
   if (allValuesNull) return null
 
   return (
-    <Card className={className} radius="lg" shadow="sm">
+    <Card className={cn('bg-cream', className)} radius="lg" shadow="none">
       <CardBody className="gap-2">
         {featureDisplayGroups.map(
           (group) =>
             !allValuesNullInGroup[group.key] && (
-              <FeatureList key={group.key} title={t(`titles.${group.key}`)}>
+              <FeatureList
+                key={group.key}
+                title={t(`titles.${group.key}`)}
+                variant={group.key === 'notes' ? 'blocks' : 'items'}
+              >
                 {group.featureDisplays.map((featureDisplay) => {
                   if ('hidden' in featureDisplay && featureDisplay.hidden) {
                     return null
@@ -222,14 +227,25 @@ const BooleanFeatureItem: FC<{
   )
 }
 
-const FeatureList: FC<PropsWithChildren<{ title: string }>> = ({
-  title,
-  children,
-}) => {
+const FeatureList: FC<
+  PropsWithChildren<{
+    title: string
+    variant?: 'items' | 'blocks'
+  }>
+> = ({ title, children, variant }) => {
   return (
     <div>
-      <h4 className="mb-1 font-bold leading-none">{title}</h4>
-      <ul className="grid gap-2 xs2:grid-cols-2">{children}</ul>
+      <h4 className="mb-2 mt-2 text-sm font-semibold leading-none text-foreground-700">
+        {title}
+      </h4>
+      <ul
+        className={cn('grid gap-2 pl-1', {
+          'xs2:grid-cols-2': variant === 'items',
+          'sm:grid-cols-2': variant === 'blocks',
+        })}
+      >
+        {children}
+      </ul>
     </div>
   )
 }

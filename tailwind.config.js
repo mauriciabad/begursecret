@@ -43,6 +43,7 @@ const config = {
           900: '#181C1E',
           950: '#0F1113',
         },
+        cream: '#faf7ef',
       },
       fontFamily: {
         title: [
