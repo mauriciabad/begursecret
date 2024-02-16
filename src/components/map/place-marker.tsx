@@ -1,7 +1,7 @@
 import { FC } from 'react'
-import { colorClasses } from '~/app/[locale]/layout'
 import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
 import { cn } from '~/helpers/cn'
+import { colorClasses } from '~/helpers/color-classes'
 import {
   PlaceCategoryColor,
   PlaceCategoryIcon as PlaceCategoryIconType,
