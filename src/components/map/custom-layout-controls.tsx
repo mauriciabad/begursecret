@@ -5,9 +5,6 @@ import { Card, CardBody } from '@nextui-org/card'
 import { Image } from '@nextui-org/image'
 import { Popover, PopoverContent, PopoverTrigger } from '@nextui-org/popover'
 import { IconStack2 } from '@tabler/icons-react'
-import 'leaflet.locatecontrol'
-import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'
-import 'leaflet/dist/leaflet.css'
 import { useTranslations } from 'next-intl'
 import { FC, useState } from 'react'
 import { TileLayer } from 'react-leaflet'
@@ -52,7 +49,6 @@ export const CustomLayersControl: FC<{
             <Button
               size="lg"
               isIconOnly
-              aria-label="Test"
               variant="solid"
               className="bg-white shadow-md"
             >
