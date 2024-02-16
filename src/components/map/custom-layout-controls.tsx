@@ -32,19 +32,19 @@ export const CustomLayersControl: FC<{
     )
   }
 
-  const selectedLayerFullData = layersData.find(
-    (layer) => layer.id === selectedLayer
-  )
-
   return (
     <>
-      {selectedLayerFullData && (
-        <TileLayer
-          attribution={`&copy; <a href="${selectedLayerFullData.attribution.url}">${selectedLayerFullData.attribution.name}</a>`}
-          url={selectedLayerFullData.tileUrlTemplate}
-          maxZoom={selectedLayerFullData.maxZoom}
-          id={selectedLayerFullData.id}
-        />
+      {layersData.map(
+        (layer) =>
+          layer.id === selectedLayer && (
+            <TileLayer
+              key={layer.id}
+              attribution={`&copy; <a href="${layer.attribution.url}">${layer.attribution.name}</a>`}
+              url={layer.tileUrlTemplate}
+              maxZoom={layer.maxZoom}
+              id={layer.id}
+            />
+          )
       )}
       {!hide && (
         <Popover placement="top-end">
