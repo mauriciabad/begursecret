@@ -65,7 +65,7 @@ export const PlaceForm: FC<{
           location: undefined,
           mainImageId: undefined,
           content: undefined,
-          features: undefined,
+          features: {},
         },
   })
 
