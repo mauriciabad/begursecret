@@ -40,6 +40,7 @@ export const CustomLayersControl: FC<{
               url={layer.tileUrlTemplate}
               maxZoom={layer.maxZoom}
               id={layer.id}
+              updateWhenIdle={false}
             />
           )
       )}
