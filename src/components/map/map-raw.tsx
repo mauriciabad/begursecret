@@ -1,19 +1,21 @@
 'use client'
 
 import { IconFocus2 } from '@tabler/icons-react'
-import { Map as LeafletMap, divIcon } from 'leaflet'
-import { FC, useState } from 'react'
+import { Map as LeafletMap, LeafletMouseEvent, divIcon } from 'leaflet'
+import moize from 'moize'
+import { FC, memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { MapContainer, Marker } from 'react-leaflet'
+import { MapContainer, Marker, useMap } from 'react-leaflet'
 import { cn } from '~/helpers/cn'
 import { MapPoint } from '~/helpers/spatial-data'
 import { useRouter } from '~/navigation'
-import { CustomLayersControl, LayerId } from './custom-layout-controls'
+import { CustomLayersControl, LayerId } from './custom-layers-controls'
 import { CustomLocationControl } from './custom-location-control'
 import { CustomRotationControl } from './custom-rotation-control'
-import { PlaceMarker, PlaceMarkerProps } from './place-marker'
-import { useMapControlledZoom } from './useMapControlledZoom'
+import { PlaceMarkerProps } from './place-marker'
+import { PlaceMarkerIconSvgSize, getPlaceMarkerIcon } from './place-marker-svg'
 import { useMapResize } from './useMapResize'
+import { useObserveZoom } from './useObserveZoom'
 
 import 'leaflet-rotate'
 import 'leaflet.locatecontrol'
@@ -26,6 +28,21 @@ const DEFAULT_CENTER = {
 } as const satisfies MapPoint
 
 export const mapContainerClassName = 'z-0 h-64 w-full'
+
+const calcSize = moize((size: MapMarker['size'], zoom: number) => {
+  if (!size) {
+    if (zoom <= 14) return 'xs'
+    if (zoom <= 15) return 'sm'
+    return 'md'
+  }
+  if (size === 'sm-dynamic') {
+    if (zoom <= 15.5) return 'none'
+    if (zoom <= 16) return 'xs'
+    return zoom >= 17 ? 'md' : 'sm'
+  }
+  if (size === 'lg') return 'md'
+  return size
+})
 
 export type MapMarker = Omit<PlaceMarkerProps, 'size'> & {
   size?: PlaceMarkerProps['size'] | 'sm-dynamic'
@@ -51,75 +68,154 @@ export const MapRaw: FC<{
   value?: MapPoint
   defaultLayer?: LayerId
   innerRef?: (instance: LeafletMap | null) => void
-}> = ({
-  center = DEFAULT_CENTER,
-  className,
-  markers,
-  fullControl,
-  zoom: initialZoom = 14,
-  classNames = {},
-  disableMarkers,
-  onValueChange,
-  value,
-  defaultLayer,
-  innerRef,
-}) => {
+}> = memo(
+  ({
+    center = DEFAULT_CENTER,
+    className,
+    markers,
+    fullControl,
+    zoom: initialZoom = 14,
+    classNames = {},
+    disableMarkers,
+    onValueChange,
+    value,
+    defaultLayer,
+  }) => {
+    const [map, setMap] = useState<LeafletMap | null>(null)
+
+    useMapResize(map)
+
+    const onClick = useCallback(
+      (e: LeafletMouseEvent) => {
+        onValueChange?.(e.latlng)
+      },
+      [onValueChange]
+    )
+
+    useEffect(() => {
+      if (map) {
+        map.on('click', onClick)
+        return () => {
+          map.off('click', onClick)
+        }
+      }
+    }, [map, onClick])
+
+    return (
+      <MapContainer
+        center={value ?? center}
+        zoom={initialZoom}
+        zoomControl={false}
+        scrollWheelZoom={fullControl}
+        doubleClickZoom={fullControl}
+        touchZoom={fullControl}
+        dragging={fullControl}
+        keyboard={fullControl}
+        className={cn(mapContainerClassName, className)}
+        ref={setMap}
+        attributionControl={false}
+        zoomSnap={0.5}
+        rotate={fullControl}
+        rotateControl={false}
+        touchRotate={fullControl}
+      >
+        <MarkersLayersRawMap
+          markers={markers}
+          fullControl={fullControl}
+          disableMarkers={disableMarkers}
+          initialZoom={initialZoom}
+        />
+
+        {value && (
+          <Marker
+            position={value}
+            interactive={false}
+            key={`${value.lat}-${value.lng}-selected`}
+            icon={divIcon({
+              html: renderToStaticMarkup(
+                <div className="relative">
+                  <IconFocus2
+                    className="absolute inset-0 !-z-10 text-black/60"
+                    size={48}
+                    stroke={4}
+                  />
+                  <IconFocus2
+                    className="z-10 text-white"
+                    size={48}
+                    stroke={1}
+                  />
+                </div>
+              ),
+              iconSize: [0, 0],
+              className:
+                '!flex justify-center items-center border-0 bg-none [&>*]:shrink-0',
+            })}
+          />
+        )}
+
+        <div
+          className={cn(
+            'absolute bottom-4 right-4 z-[1000] flex flex-col-reverse gap-2',
+            classNames.controls
+          )}
+        >
+          <CustomLayersControl
+            hide={!fullControl}
+            defaultLayer={defaultLayer}
+          />
+          <CustomLocationControl hide={!fullControl} />
+          <CustomRotationControl hide={!fullControl} />
+        </div>
+      </MapContainer>
+    )
+  }
+)
+
+const MarkersLayersRawMap: FC<{
+  markers?: MapMarker[]
+  disableMarkers?: boolean
+  fullControl?: boolean
+  initialZoom: number
+}> = memo(
+  ({ markers: initialMarkers, disableMarkers, fullControl, initialZoom }) => {
+    const map = useMap()
+
+    const { zoom } = useObserveZoom(map, initialZoom)
+
+    const displayMarkers = useMemo(
+      () => (
+        <MarkersLayers
+          markers={initialMarkers?.map(({ size, showName, ...marker }) => ({
+            ...marker,
+            size: calcSize(size, zoom),
+            showName: zoom >= 16 && showName,
+          }))}
+          fullControl={fullControl}
+          disableMarkers={disableMarkers}
+        />
+      ),
+      [zoom, fullControl, disableMarkers]
+    )
+
+    return displayMarkers
+  }
+)
+
+const MarkersLayers: FC<{
+  markers?: (Omit<MapMarker, 'size'> & { size: PlaceMarkerIconSvgSize })[]
+  disableMarkers?: boolean
+  fullControl?: boolean
+}> = memo(({ markers, disableMarkers, fullControl }) => {
   const router = useRouter()
-  const [map, setMap] = useState<LeafletMap | null>(null)
-
-  useMapResize(map)
-
-  const { zoom } = useMapControlledZoom(map, initialZoom)
-
-  if (onValueChange) {
-    map?.addEventListener('click', (e) => {
-      onValueChange(e.latlng)
-    })
-  }
-
-  function calcSize(size: MapMarker['size']) {
-    if (!size) {
-      if (zoom <= 14) return 'xs'
-      if (zoom <= 15) return 'sm'
-      return 'md'
-    }
-    if (size === 'sm-dynamic') {
-      if (zoom <= 15.5) return 'none'
-      if (zoom <= 16) return 'xs'
-      return zoom >= 17 ? 'md' : 'sm'
-    }
-    return size
-  }
 
   return (
-    <MapContainer
-      center={value ?? center}
-      zoom={zoom}
-      zoomControl={false}
-      scrollWheelZoom={fullControl}
-      doubleClickZoom={fullControl}
-      touchZoom={fullControl}
-      dragging={fullControl}
-      keyboard={fullControl}
-      className={cn(mapContainerClassName, className)}
-      ref={(value) => {
-        innerRef?.(value)
-        setMap(value)
-      }}
-      attributionControl={false}
-      zoomSnap={0.5}
-      rotate={fullControl}
-      rotateControl={false}
-      touchRotate={fullControl}
-    >
+    <>
       {markers?.map(
         ({
           placeId,
           location,
           url: markerUrl,
-          size,
           zIndexOffset,
-          showName,
           ...placeMarkerProps
         }) => (
           <Marker
@@ -127,18 +223,10 @@ export const MapRaw: FC<{
             key={`${location.lat}-${location.lng}-${placeId}`}
             position={location}
             interactive={!disableMarkers}
-            icon={divIcon({
-              html: renderToStaticMarkup(
-                <PlaceMarker
-                  {...placeMarkerProps}
-                  size={calcSize(size)}
-                  isDisabled={disableMarkers}
-                  showName={zoom >= 16 && showName}
-                />
-              ),
-              iconSize: [0, 0],
-              className:
-                '!flex justify-center items-center border-0 bg-none [&>*]:shrink-0',
+            icon={getPlaceMarkerIcon({
+              color: placeMarkerProps.color,
+              icon: placeMarkerProps.icon,
+              size: placeMarkerProps.size,
             })}
             eventHandlers={
               markerUrl && !disableMarkers
@@ -153,40 +241,6 @@ export const MapRaw: FC<{
           />
         )
       )}
-
-      {value && (
-        <Marker
-          position={value}
-          interactive={false}
-          key={`${value.lat}-${value.lng}-selected`}
-          icon={divIcon({
-            html: renderToStaticMarkup(
-              <div className="relative">
-                <IconFocus2
-                  className="absolute inset-0 !-z-10 text-black/60"
-                  size={48}
-                  stroke={4}
-                />
-                <IconFocus2 className="z-10 text-white" size={48} stroke={1} />
-              </div>
-            ),
-            iconSize: [0, 0],
-            className:
-              '!flex justify-center items-center border-0 bg-none [&>*]:shrink-0',
-          })}
-        />
-      )}
-
-      <div
-        className={cn(
-          'absolute bottom-4 right-4 z-[1000] flex flex-col-reverse gap-2',
-          classNames.controls
-        )}
-      >
-        <CustomLayersControl hide={!fullControl} defaultLayer={defaultLayer} />
-        <CustomLocationControl hide={!fullControl} />
-        <CustomRotationControl hide={!fullControl} />
-      </div>
-    </MapContainer>
+    </>
   )
-}
+})
