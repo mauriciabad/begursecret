@@ -20,7 +20,7 @@ export const OverrideMainMap: FC<OverrideMainMapProps> = ({
   const { map, originalMarkers, setMarkers } = useMainMap()
 
   if (map) {
-    if (center && center) {
+    if (center && zoom) {
       map.setView(center, zoom)
     } else {
       if (center) {
