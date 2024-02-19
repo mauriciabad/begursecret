@@ -54,6 +54,7 @@ export const FeaturesBlock: FC<{ features: Features; className?: string }> = ({
                       ) {
                         return (
                           <FeatureItem
+                            as="li"
                             key={featureDisplay.key}
                             icon={featureDisplay.icon}
                             text={String(value)}
@@ -63,6 +64,7 @@ export const FeaturesBlock: FC<{ features: Features; className?: string }> = ({
                       } else {
                         return (
                           <FeatureItem
+                            as="li"
                             key={featureDisplay.key}
                             icon={featureDisplay.icon}
                             text={t(
@@ -94,6 +96,7 @@ export const FeaturesBlock: FC<{ features: Features; className?: string }> = ({
 
                       return (
                         <FeatureItem
+                          as="li"
                           key={featureDisplay.key}
                           icon={getIconForFeature(featureDisplay, value)}
                           text={t(
@@ -131,6 +134,7 @@ export const FeaturesBlock: FC<{ features: Features; className?: string }> = ({
                       const key = getCompositeFeatureKey(featureDisplay.keys)
                       return (
                         <FeatureItem
+                          as="li"
                           key={key}
                           icon={featureDisplay.icon}
                           text={t(`values.composite.${key}`, values)}
@@ -152,8 +156,10 @@ const FeatureItem: FC<{
   icon: Icon
   text: string
   moreInfo?: string | null
-}> = ({ icon, text, moreInfo }) => {
+  as?: 'li' | 'div'
+}> = ({ icon, text, moreInfo, as: htmlAs = 'div' }) => {
   const Icon = icon
+  const Component = htmlAs
 
   return (
     <>
@@ -163,7 +169,7 @@ const FeatureItem: FC<{
             <MarkdownContent className="text-stone-800" content={moreInfo} />
           }
         >
-          <li className="flex items-start gap-2">
+          <Component className="flex items-start gap-2">
             <Icon size={18} className="shrink-0 text-stone-800" />
             <span className="text-sm font-medium text-stone-800">
               {text}
@@ -172,13 +178,13 @@ const FeatureItem: FC<{
                 className="ml-1 box-content inline-block shrink-0 text-stone-400"
               />
             </span>
-          </li>
+          </Component>
         </Tooltip>
       ) : (
-        <li className="flex items-start gap-2">
+        <Component className="flex items-start gap-2">
           <Icon size={18} className="shrink-0 text-stone-800" />
           <span className="text-sm font-medium text-stone-800">{text}</span>
-        </li>
+        </Component>
       )}
     </>
   )
@@ -213,10 +219,11 @@ const BooleanFeatureItem: FC<{
   return (
     <>
       {value ? (
-        <FeatureItem icon={icon} text={text} moreInfo={moreInfo} />
+        <FeatureItem as="li" icon={icon} text={text} moreInfo={moreInfo} />
       ) : (
         (textOff || iconOff) && (
           <FeatureItem
+            as="li"
             icon={iconOff ?? icon}
             text={textOff ?? text}
             moreInfo={moreInfo}
