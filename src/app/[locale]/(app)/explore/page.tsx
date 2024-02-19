@@ -30,20 +30,27 @@ const ExplorePage: FC<LocaleRouteParams> = async () => {
   const categories = await trpc.places.listCategories({
     locale: onlyTranslatableLocales(locale),
   })
-  const placesByCategory = groupByKey(places, 'mainCategory.id')
+  const placesByMainCategory = groupByKey(places, 'mainCategory.id')
+  const placesBySecondaryCategory = groupByKey(
+    places,
+    'categories.0.category.id'
+  )
 
   return (
     <>
       <CategoriesGrid categories={categories} />
 
       <div className="space-y-2">
-        {Object.entries(placesByCategory).map(([categoryId, places]) => (
+        {Object.entries(placesByMainCategory).map(([categoryId, places]) => (
           <ListPlacesOfCategory
             key={categoryId}
             category={
               categories.find((category) => category.id === Number(categoryId))!
             }
-            places={places}
+            places={[
+              ...places,
+              ...(placesBySecondaryCategory[categoryId] ?? []),
+            ]}
           />
         ))}
       </div>
