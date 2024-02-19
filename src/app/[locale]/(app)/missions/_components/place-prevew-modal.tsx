@@ -81,7 +81,7 @@ export const PlacePreviewModal: FC<
                       <OptimizedImage
                         radius="lg"
                         shadow="sm"
-                        className="h-full object-cover"
+                        className="h-full"
                         image={image}
                         alt={place.name}
                       />
