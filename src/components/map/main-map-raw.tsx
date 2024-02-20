@@ -16,6 +16,7 @@ import 'leaflet.locatecontrol'
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'
 import 'leaflet/dist/leaflet.css'
 import { useMainMap } from '../providers/main-map-provider'
+import { MapLine } from './map-line'
 import { MapMarker } from './map-marker'
 
 const DEFAULT_CENTER = {
@@ -79,6 +80,7 @@ export const MainMapRaw: FC<{
       rotateControl={false}
       touchRotate
     >
+      <LinesLayersRawMap />
       <MarkersLayersRawMap fullControl />
 
       <div
@@ -153,6 +155,18 @@ const MarkersLayersRawMap: FC<{
           key={`${mapMarkerProps.lat}-${mapMarkerProps.lng}-${mapMarkerProps.placeId}`}
           {...mapMarkerProps}
         />
+      ))}
+    </>
+  )
+})
+
+const LinesLayersRawMap: FC = memo(() => {
+  const { lines } = useMainMap()
+
+  return (
+    <>
+      {lines.map((line) => (
+        <MapLine key={line.routeId} {...line} />
       ))}
     </>
   )

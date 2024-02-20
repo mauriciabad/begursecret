@@ -13,6 +13,7 @@ const ExploreLayout: FC<ExploreLayoutProps> = async ({ children }) => {
   const trpc = await getTrpc()
 
   const places = await trpc.places.listForMap()
+  const routes = await trpc.routes.listForMap()
 
   return (
     <>
@@ -28,6 +29,13 @@ const ExploreLayout: FC<ExploreLayoutProps> = async ({ children }) => {
             color: place.mainCategory.color,
             url: `/explore/places/${place.id}`,
             name: place.name,
+          }))}
+          lines={routes.map((route) => ({
+            routeId: route.id,
+            color: route.mainCategory.color,
+            path: route.path,
+            url: `/explore/routes/${route.id}`,
+            name: route.name,
           }))}
         >
           <MainMap

@@ -43,15 +43,10 @@ export function getMultiLine(
       // Ignore
     }
 
-    const matchesLines = value.match(
-      /(\([\d.-]+ +[\d.-]+( *, *[\d.-]+ +[\d.-]+)*\))/
-    )
-    if (!matchesLines) {
-      return null
-    }
-
     return nullIfHasNull(
-      matchesLines.map((rawLine) =>
+      Array.from(
+        value.matchAll(/(\([\d.-]+ +[\d.-]+( *, *[\d.-]+ +[\d.-]+)*\))/g)
+      ).map(([rawLine]) =>
         rawLine
           .slice(1, -1)
           .split(',')
@@ -83,13 +78,13 @@ export function getMultiLine(
   return null
 }
 
-export function calculateLocation<
+export function calculatePath<
   L extends MultiLineString | null | undefined,
-  P extends { location: L },
->(place: P) {
+  P extends { path: L },
+>(route: P) {
   return {
-    ...place,
-    location: getMultiLine(place.location),
+    ...route,
+    path: getMultiLine(route.path),
   }
 }
 
