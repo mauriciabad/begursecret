@@ -19,6 +19,9 @@ export const SelectCategory = forwardRef<HTMLSelectElement, Props>(
 
     return (
       <Select
+        classNames={{
+          popoverContent: '[&>*]:max-h-[calc(50dvh-4rem)]',
+        }}
         {...selectProps}
         selectedKeys={isLoadingCategories ? [] : selectedKeys}
         ref={ref}

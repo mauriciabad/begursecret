@@ -1,12 +1,6 @@
 'use client'
 
 import { Button } from '@nextui-org/button'
-import {
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-} from '@nextui-org/dropdown'
 import { Input } from '@nextui-org/input'
 import {
   Selection,
@@ -20,7 +14,6 @@ import {
 } from '@nextui-org/table'
 import { Tooltip } from '@nextui-org/tooltip'
 import {
-  IconChevronDown,
   IconEdit,
   IconEye,
   IconPlus,
@@ -29,7 +22,7 @@ import {
 } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC, useCallback, useMemo, useState } from 'react'
-import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
+import { SelectCategory } from '~/components/admin-only/select-category'
 import { PlaceCategoryTagList } from '~/components/place-category-tags/place-category-tag-list'
 import { cn } from '~/helpers/cn'
 import { Link } from '~/navigation'
@@ -241,42 +234,18 @@ export const PlacesTable: FC<{
             onClear={() => onClear()}
             onValueChange={onSearchChange}
           />
-          <div className="flex items-center gap-3">
+          <div className="flex flex-1 items-center justify-end gap-3">
             <span className="hidden whitespace-nowrap text-right text-small text-default-400 sm:inline-block">
               {t('total', { total: sortedItems.length })}
             </span>
-            <Dropdown>
-              <DropdownTrigger>
-                <Button
-                  endContent={<IconChevronDown className="text-small" />}
-                  variant="flat"
-                >
-                  {t('columns.mainCategory')}
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                closeOnSelect={false}
-                selectedKeys={mainCategoryFilter}
-                selectionMode="multiple"
-                onSelectionChange={setMainCategoryFilter}
-              >
-                {categories.map((category) => (
-                  <DropdownItem
-                    key={category.id}
-                    startContent={
-                      <PlaceCategoryIcon
-                        icon={category.icon}
-                        size={20}
-                        stroke={1.5}
-                        className="text-default-700"
-                      />
-                    }
-                  >
-                    {category.name}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
+            <SelectCategory
+              onSelectionChange={setMainCategoryFilter}
+              selectedKeys={mainCategoryFilter}
+              label={t('columns.categories')}
+              selectionMode="multiple"
+              size="sm"
+              className="max-w-64"
+            />
 
             <Button
               href="/admin/places/new"
