@@ -2,13 +2,14 @@
 
 import { Button } from '@nextui-org/button'
 import { Textarea } from '@nextui-org/input'
-import { Link } from '@nextui-org/Link'
 import { Snippet } from '@nextui-org/snippet'
+import { IconExternalLink } from '@tabler/icons-react'
 import { FC, useState } from 'react'
 import {
   multiLineFromGeoJson,
   multiLineToString,
 } from '~/helpers/spatial-data/multi-line'
+import { Link } from '~/navigation'
 import { SRID_CODE } from '~/server/helpers/spatial-data'
 
 export const WipRoutes: FC = () => {
@@ -22,7 +23,7 @@ export const WipRoutes: FC = () => {
       <Button
         as={Link}
         href="https://geojson.io/#map=13.26/41.95443/3.21328"
-        showAnchorIcon
+        endContent={<IconExternalLink />}
         className="mb-4"
         color="primary"
       >
