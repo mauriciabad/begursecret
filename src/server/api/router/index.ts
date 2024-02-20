@@ -9,12 +9,14 @@ import { missionsRouter } from './missions'
 import { placeListsRouter } from './placeLists'
 import { placesRouter } from './places'
 import { profileRouter } from './profile'
+import { routesRouter } from './routes'
 import { verificationsRouter } from './verifications'
 
 export const apiRouter = router({
   admin: adminRouter,
 
   places: placesRouter,
+  routes: routesRouter,
   auth: authRouter,
   profile: profileRouter,
   missions: missionsRouter,

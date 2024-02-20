@@ -1,5 +1,5 @@
 // From https://tabler-icons.io/
-export const placeCategoriesIcons = [
+export const iconNames = [
   'beach',
   'flag',
   'scuba-mask',
@@ -39,9 +39,9 @@ export const placeCategoriesIcons = [
   'paper-bag',
   'stretching-2',
 ] as const
-export type PlaceCategoryIcon = (typeof placeCategoriesIcons)[number]
+export type IconName = (typeof iconNames)[number]
 
-export const placeCategoriesColors = [
+export const colorNames = [
   'gray',
   'red',
   'orange',
@@ -61,4 +61,4 @@ export const placeCategoriesColors = [
   'pink',
   'rose',
 ] as const
-export type PlaceCategoryColor = (typeof placeCategoriesColors)[number]
+export type ColorName = (typeof colorNames)[number]

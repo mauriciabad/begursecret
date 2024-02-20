@@ -4,10 +4,8 @@ import {
   PointString,
   getPoint,
   pointToString,
-} from '../../helpers/spatial-data'
-
-// ETRS89 UTM zone 31 North
-const SRID_CODE = 25831
+} from '~/helpers/spatial-data/point'
+import { SRID_CODE } from '.'
 
 // TODO: This type should be MapPoint, but for some reason it is not working
 // I'll wait until to fix it until they merge this PR https://github.com/drizzle-team/drizzle-orm/pull/1423

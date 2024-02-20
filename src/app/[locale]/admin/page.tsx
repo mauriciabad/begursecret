@@ -1,4 +1,4 @@
-import { IconLockOpen, IconMapPin } from '@tabler/icons-react'
+import { IconLockOpen, IconMapPin, IconRoute } from '@tabler/icons-react'
 import type { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
@@ -41,6 +41,12 @@ const AdminPage: FC<LocaleRouteParams> = () => {
             icon={<IconMapPin />}
             title={t('places')}
             href="/admin/places"
+            className="w-72"
+          />
+          <LinkCard
+            icon={<IconRoute />}
+            title={t('routes')}
+            href="/admin/routes"
             className="w-72"
           />
         </div>

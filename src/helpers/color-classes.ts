@@ -1,5 +1,5 @@
 import colors from 'tailwindcss/colors'
-import { PlaceCategoryColor } from '~/server/db/constants/places'
+import { ColorName } from '~/server/db/constants/shared'
 
 export const colorClasses = {
   bg: {
@@ -164,10 +164,10 @@ export const colorClasses = {
     rose: 'text-rose-600',
   },
 } as const satisfies {
-  [x: string]: Record<PlaceCategoryColor, string>
+  [x: string]: Record<ColorName, string>
 }
 
-export const allColorClasses: readonly (typeof colorClasses)[keyof typeof colorClasses][PlaceCategoryColor][] =
+export const allColorClasses: readonly (typeof colorClasses)[keyof typeof colorClasses][ColorName][] =
   Object.values(colorClasses).map(Object.values).flat()
 
 export const colorValues = {
@@ -232,5 +232,5 @@ export const colorValues = {
     rose: colors.rose['800'],
   },
 } as const satisfies {
-  [x: string]: Record<PlaceCategoryColor, string>
+  [x: string]: Record<ColorName, string>
 }

@@ -1,10 +1,10 @@
 import { FC } from 'react'
 import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
-import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
+import { IconName } from '~/server/db/constants/shared'
 
 export const PlaceCategoryTag: FC<{
   category: {
-    icon: PlaceCategoryIconType | null
+    icon: IconName | null
     name: string
   }
 }> = ({ category }) => {

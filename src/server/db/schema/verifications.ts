@@ -1,6 +1,6 @@
 import { relations, sql } from 'drizzle-orm'
 import { int, mysqlTable, serial, timestamp } from 'drizzle-orm/mysql-core'
-import { pointType } from '../../helpers/spatial-data'
+import { pointType } from '~/server/helpers/spatial-data/point'
 import { userIdColumnType } from '../utilities'
 import { places } from './places'
 import { users } from './users'

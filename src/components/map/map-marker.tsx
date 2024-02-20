@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Marker } from 'react-leaflet'
-import { MapPoint } from '~/helpers/spatial-data'
+import { MapPoint } from '~/helpers/spatial-data/point'
 import { useRouter } from '~/navigation'
 import {
   PlaceMarkerLeafletIconProps,

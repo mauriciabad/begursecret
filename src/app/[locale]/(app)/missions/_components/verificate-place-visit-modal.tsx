@@ -27,7 +27,7 @@ import { AlertBox } from '~/components/generic/alert-box'
 import { DividerWithText } from '~/components/generic/divider-with-text'
 import { ExplanationCard } from '~/components/generic/explanation-card'
 import { LinkButton } from '~/components/links/link-button'
-import type { MapPoint } from '~/helpers/spatial-data'
+import type { MapPoint } from '~/helpers/spatial-data/point'
 import { useRouter } from '~/navigation'
 import {
   VerificationRequirements,

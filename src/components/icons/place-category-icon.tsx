@@ -42,7 +42,7 @@ import {
   TablerIconsProps,
 } from '@tabler/icons-react'
 import { FC } from 'react'
-import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
+import { IconName } from '~/server/db/constants/shared'
 
 const iconsByIconName = {
   beach: IconBeach,
@@ -83,11 +83,11 @@ const iconsByIconName = {
   camera: IconCamera,
   'paper-bag': IconPaperBag,
   'stretching-2': IconStretching2,
-} as const satisfies Record<PlaceCategoryIconType, Icon>
+} as const satisfies Record<IconName, Icon>
 
 export const PlaceCategoryIcon: FC<
   TablerIconsProps & {
-    icon?: PlaceCategoryIconType | null
+    icon?: IconName | null
   }
 > = ({ icon, ...tablerIconsProps }) => {
   const iconWithoutFallback =

@@ -18,10 +18,7 @@ import { LinkButton } from '~/components/links/link-button'
 import { cn } from '~/helpers/cn'
 import { colorClasses } from '~/helpers/color-classes'
 import { ApiRouterOutput } from '~/server/api/router'
-import {
-  PlaceCategoryColor,
-  PlaceCategoryIcon as PlaceCategoryIconType,
-} from '~/server/db/constants/places'
+import { ColorName, IconName } from '~/server/db/constants/shared'
 import { PlacePreviewModal } from './place-prevew-modal'
 
 type VisitMissions = ApiRouterOutput['missions']['getVisitMissions']
@@ -134,9 +131,9 @@ export const VisitMissionsAcordion: FC<{
 }
 
 const PlaceCategoryIconWithProgress: FC<{
-  icon: PlaceCategoryIconType | null
+  icon: IconName | null
   progress: number
-  color: PlaceCategoryColor
+  color: ColorName
   label: string
 }> = ({ icon, progress, color, label }) => {
   return (
