@@ -104,3 +104,27 @@ function nullIfHasNull<T>(l1: (T | null)[][]): T[][] | null {
 
   return l1 as T[][]
 }
+
+export function multiLineFromGeoJson(value: unknown): MapMultiLine | null {
+  try {
+    const geoJson = GeoJsonSchema.parse(value)
+    return geoJson.features.map((feature) =>
+      feature.geometry.coordinates.map(([lng, lat]) => ({ lat, lng }))
+    )
+  } catch (e) {
+    return null
+  }
+}
+
+const GeoJsonSchema = z.object({
+  type: z.literal('FeatureCollection'),
+  features: z.array(
+    z.object({
+      type: z.literal('Feature'),
+      geometry: z.object({
+        coordinates: z.array(z.tuple([z.number(), z.number()])),
+        type: z.literal('LineString'),
+      }),
+    })
+  ),
+})
