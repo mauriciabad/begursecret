@@ -28,7 +28,6 @@ import { cn } from '~/helpers/cn'
 import { Link } from '~/navigation'
 import { ApiRouterOutput } from '~/server/api/router'
 
-type Category = ApiRouterOutput['admin']['places']['listCategories'][number]
 type Place = ApiRouterOutput['admin']['places']['list'][number]
 
 const columns = [
@@ -85,9 +84,8 @@ const getSortValue = (item: Place, columnKey: SortableColumnKey) => {
 
 export const PlacesTable: FC<{
   places: Place[]
-  categories: Category[]
   className?: string
-}> = ({ className, places, categories }) => {
+}> = ({ className, places }) => {
   const t = useTranslations('admin-places')
 
   const [filterValue, setFilterValue] = useState('')
@@ -110,11 +108,7 @@ export const PlacesTable: FC<{
         place.name.toLowerCase().includes(filterValue.toLowerCase())
       )
     }
-    if (
-      mainCategoryFilter !== 'all' &&
-      mainCategoryFilter.size !== 0 &&
-      mainCategoryFilter.size !== categories.length
-    ) {
+    if (mainCategoryFilter !== 'all' && mainCategoryFilter.size !== 0) {
       filteredUsers = filteredUsers.filter((place) =>
         mainCategoryFilter.has(place.mainCategory.id.toString())
       )
