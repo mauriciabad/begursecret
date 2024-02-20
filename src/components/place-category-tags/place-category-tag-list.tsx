@@ -1,17 +1,17 @@
 import { FC } from 'react'
 import { cn } from '~/helpers/cn'
-import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
+import { IconName } from '~/server/db/constants/shared'
 import { PlaceCategoryTag } from './place-category-tag'
 
 export const PlaceCategoryTagList: FC<{
   mainCategory?: {
     id: number
-    icon: PlaceCategoryIconType | null
+    icon: IconName | null
     name: string
   } | null
   categories?: {
     id: number
-    icon: PlaceCategoryIconType | null
+    icon: IconName | null
     name: string
   }[]
   wrap?: boolean

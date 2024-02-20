@@ -1,7 +1,7 @@
 import { eq, sql } from 'drizzle-orm'
 import 'server-only'
 
-import { calculateLocation, pointToString } from '~/helpers/spatial-data'
+import { calculateLocation, pointToString } from '~/helpers/spatial-data/point'
 import {
   createPlaceSchema,
   editPlaceSchema,
@@ -11,7 +11,7 @@ import {
 } from '~/schemas/places'
 import { db } from '~/server/db/db'
 import { features, places, placesToPlaceCategories } from '~/server/db/schema'
-import { selectPoint } from '~/server/helpers/spatial-data'
+import { selectPoint } from '~/server/helpers/spatial-data/point'
 import {
   flattenTranslationsOnExecute,
   withTranslations,

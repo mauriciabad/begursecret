@@ -4,10 +4,7 @@ import { FC, ReactElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { cn } from '~/helpers/cn'
 import { colorClasses, colorValues } from '~/helpers/color-classes'
-import {
-  PlaceCategoryColor,
-  PlaceCategoryIcon as PlaceCategoryIconType,
-} from '~/server/db/constants/places'
+import { ColorName, IconName } from '~/server/db/constants/shared'
 import { PlaceCategoryIcon } from '../icons/place-category-icon'
 
 const iconVariants = {
@@ -99,8 +96,8 @@ const iconVariants = {
   {
     size: number
     component: FC<{
-      icon?: PlaceCategoryIconType
-      color?: PlaceCategoryColor
+      icon?: IconName
+      color?: ColorName
     }>
   }
 >
@@ -113,8 +110,8 @@ const getPlaceMarkerSvg = moize(
     color,
     size,
   }: {
-    icon?: PlaceCategoryIconType
-    color?: PlaceCategoryColor
+    icon?: IconName
+    color?: ColorName
     size: PlaceMarkerIconSvgSize
   }) => {
     const variant = iconVariants[size]
@@ -127,8 +124,8 @@ function encodeSvg(reactElement: ReactElement) {
 }
 
 export type PlaceMarkerLeafletIconProps = {
-  icon?: PlaceCategoryIconType
-  color?: PlaceCategoryColor
+  icon?: IconName
+  color?: ColorName
   size?: PlaceMarkerIconSvgSize
   animated?: boolean
 }
@@ -160,7 +157,7 @@ const getPlaceMarkerLeafletDivIcon = moize(
   }: {
     svg: string
     variant: PlaceMarkerIconVariant
-    color?: PlaceCategoryColor
+    color?: ColorName
   }) =>
     L.divIcon({
       html: `<img src="${svg}" width="${variant.size}" height="${variant.size}" />`,
