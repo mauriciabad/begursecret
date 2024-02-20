@@ -1,23 +1,15 @@
 import { z } from 'zod'
 
-export type MapMultiLine = {
-  lat: number
-  lng: number
-}[][]
+type Lat = number
+type Lng = number
+export type MapMultiLine = [Lat, Lng][][]
 
 /**
  * @example MultiLineString((1 1,2 2,3 3),(4 4,5 5))
  */
 export type MultiLineString = `MultiLineString(${string})`
 
-const multiLineSchema = z.array(
-  z.array(
-    z.object({
-      lat: z.number(),
-      lng: z.number(),
-    })
-  )
-)
+const multiLineSchema = z.array(z.array(z.tuple([z.number(), z.number()])))
 
 /**
  * Extracts a multi-line from a string.
@@ -60,10 +52,10 @@ export function getMultiLine(
             ) {
               return null
             }
-            return {
-              lat: parseFloat(String(matchesPoints.groups['lat'])),
-              lng: parseFloat(String(matchesPoints.groups['lng'])),
-            }
+            return [
+              parseFloat(String(matchesPoints.groups['lat'])),
+              parseFloat(String(matchesPoints.groups['lng'])),
+            ] as const
           })
       )
     )
@@ -89,7 +81,7 @@ export function calculatePath<
 }
 
 export function multiLineToString(value: MapMultiLine): MultiLineString {
-  return `MultiLineString(${value.map((line) => `(${line.map((point) => `${point.lng} ${point.lat}`).join(',')})`).join(',')})`
+  return `MultiLineString(${value.map((line) => `(${line.map(([lat, lng]) => `${lng} ${lat}`).join(',')})`).join(',')})`
 }
 
 function nullIfHasNull<T>(l1: (T | null)[][]): T[][] | null {
@@ -103,9 +95,7 @@ function nullIfHasNull<T>(l1: (T | null)[][]): T[][] | null {
 export function multiLineFromGeoJson(value: unknown): MapMultiLine | null {
   try {
     const geoJson = GeoJsonSchema.parse(value)
-    return geoJson.features.map((feature) =>
-      feature.geometry.coordinates.map(([lng, lat]) => ({ lat, lng }))
-    )
+    return geoJson.features.map((feature) => feature.geometry.coordinates)
   } catch (e) {
     return null
   }

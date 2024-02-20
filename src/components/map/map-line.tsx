@@ -24,7 +24,7 @@ export const MapLine: FC<MapLine> = ({
 
   return path.map((line) => (
     <Polyline
-      key={line.map(({ lat, lng }) => `${lat}-${lng}`).join(',')}
+      key={line.map(([lat, lng]) => `${lat}-${lng}`).join(',')}
       positions={line}
       color={routeMarkerProps.color}
       weight={5}
