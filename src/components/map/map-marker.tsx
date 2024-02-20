@@ -23,10 +23,9 @@ export type MapMarker = MapMarkerInvariable & {
 }
 
 export const MapMarker: FC<MapMarker> = ({
-  placeId,
   lat,
   lng,
-  url: markerUrl,
+  url,
   zIndexOffset,
   disabled,
   ...placeMarkerProps
@@ -38,17 +37,12 @@ export const MapMarker: FC<MapMarker> = ({
       zIndexOffset={zIndexOffset ?? 0}
       position={[lat, lng]}
       interactive={!disabled}
-      icon={getPlaceMarkerLeafletIcon({
-        color: placeMarkerProps.color,
-        icon: placeMarkerProps.icon,
-        size: placeMarkerProps.size,
-        animated: placeMarkerProps.animated,
-      })}
+      icon={getPlaceMarkerLeafletIcon(placeMarkerProps)}
       eventHandlers={
-        markerUrl && !disabled
+        url && !disabled
           ? {
               click: () => {
-                router.push(markerUrl)
+                router.push(url)
               },
             }
           : undefined

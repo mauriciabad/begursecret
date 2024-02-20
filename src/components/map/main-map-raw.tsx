@@ -98,7 +98,7 @@ export const MainMapRaw: FC<{
 const MarkersLayersRawMap: FC<{
   disableMarkers?: boolean
   fullControl?: boolean
-}> = memo(({}) => {
+}> = memo(() => {
   const { map, markers, emphasizedMarkers, veryEmphasizedMarkers } =
     useMainMap()
 
