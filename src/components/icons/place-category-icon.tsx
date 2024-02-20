@@ -8,6 +8,7 @@ import {
   IconBuildingCastle,
   IconBuildingStore,
   IconBuildingTunnel,
+  IconBus,
   IconBusStop,
   IconCamera,
   IconChargingPile,
@@ -32,9 +33,11 @@ import {
   IconPennant,
   IconPool,
   IconRipple,
+  IconRoute,
   IconSailboat,
   IconScubaDiving,
   IconScubaMask,
+  IconShoe,
   IconSquare,
   IconStretching2,
   IconTower,
@@ -89,6 +92,10 @@ const iconsByIconName = {
   square: IconSquare,
   'bus-stop': IconBusStop,
   'info-circle': IconInfoCircle,
+  route: IconRoute,
+  bus: IconBus,
+  shoe: IconShoe,
+  kayak: IconWalk,
 } as const satisfies Record<IconName, Icon>
 
 export const PlaceCategoryIcon: FC<

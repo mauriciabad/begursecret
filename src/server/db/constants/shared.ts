@@ -41,6 +41,10 @@ export const iconNames = [
   'square',
   'bus-stop',
   'info-circle',
+  'route',
+  'bus',
+  'shoe',
+  'kayak',
 ] as const
 export type IconName = (typeof iconNames)[number]
 
