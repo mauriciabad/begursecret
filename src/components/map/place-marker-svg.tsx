@@ -2,7 +2,8 @@ import L from 'leaflet'
 import moize from 'moize'
 import { FC, ReactElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { colorValues } from '~/helpers/color-classes'
+import { cn } from '~/helpers/cn'
+import { colorClasses, colorValues } from '~/helpers/color-classes'
 import {
   PlaceCategoryColor,
   PlaceCategoryIcon as PlaceCategoryIconType,
@@ -104,6 +105,7 @@ const iconVariants = {
   }
 >
 export type PlaceMarkerIconSvgSize = keyof typeof iconVariants
+type PlaceMarkerIconVariant = (typeof iconVariants)[keyof typeof iconVariants]
 
 const getPlaceMarkerSvg = moize(
   ({
@@ -124,25 +126,52 @@ function encodeSvg(reactElement: ReactElement) {
   return `data:image/svg+xml;base64,${btoa(renderToStaticMarkup(reactElement))}` as const
 }
 
-export const getPlaceMarkerIcon = moize(
-  ({
-    icon,
-    color,
-    size,
-  }: {
-    icon?: PlaceCategoryIconType
-    color?: PlaceCategoryColor
-    size: PlaceMarkerIconSvgSize
-  }) => {
+export type PlaceMarkerLeafletIconProps = {
+  icon?: PlaceCategoryIconType
+  color?: PlaceCategoryColor
+  size?: PlaceMarkerIconSvgSize
+  animated?: boolean
+}
+
+export const getPlaceMarkerLeafletIcon = moize(
+  ({ icon, color, size = 'none', animated }: PlaceMarkerLeafletIconProps) => {
     const svg = getPlaceMarkerSvg({ icon, color, size })
     const variant = iconVariants[size]
+
+    if (animated) return getPlaceMarkerLeafletDivIcon({ svg, variant, color })
+
     return L.icon({
       iconUrl: svg,
       iconRetinaUrl: svg,
+
       iconSize: [variant.size, variant.size],
       iconAnchor: [variant.size / 2, variant.size / 2],
       popupAnchor: [variant.size / 2, 0],
       tooltipAnchor: [variant.size / 2, 0],
     })
   }
+)
+
+const getPlaceMarkerLeafletDivIcon = moize(
+  ({
+    svg,
+    variant,
+    color = 'gray',
+  }: {
+    svg: string
+    variant: PlaceMarkerIconVariant
+    color?: PlaceCategoryColor
+  }) =>
+    L.divIcon({
+      html: `<img src="${svg}" width="${variant.size}" height="${variant.size}" />`,
+      className: cn(
+        'before:absolute before:inset-0 before:-z-10 before:animate-ping before:rounded-full',
+        colorClasses.beforeBg[color]
+      ),
+
+      iconSize: [variant.size, variant.size],
+      iconAnchor: [variant.size / 2, variant.size / 2],
+      popupAnchor: [variant.size / 2, 0],
+      tooltipAnchor: [variant.size / 2, 0],
+    })
 )

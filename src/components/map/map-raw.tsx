@@ -2,25 +2,21 @@
 
 import { IconFocus2 } from '@tabler/icons-react'
 import { Map as LeafletMap, LeafletMouseEvent, divIcon } from 'leaflet'
-import moize from 'moize'
-import { FC, memo, useCallback, useEffect, useMemo, useState } from 'react'
+import { FC, memo, useCallback, useEffect, useState } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { MapContainer, Marker, useMap } from 'react-leaflet'
+import { MapContainer, Marker } from 'react-leaflet'
 import { cn } from '~/helpers/cn'
 import { MapPoint } from '~/helpers/spatial-data'
-import { useRouter } from '~/navigation'
 import { CustomLayersControl, LayerId } from './custom-layers-controls'
 import { CustomLocationControl } from './custom-location-control'
 import { CustomRotationControl } from './custom-rotation-control'
-import { PlaceMarkerProps } from './place-marker'
-import { PlaceMarkerIconSvgSize, getPlaceMarkerIcon } from './place-marker-svg'
 import { useMapResize } from './useMapResize'
-import { useObserveZoom } from './useObserveZoom'
 
 import 'leaflet-rotate'
 import 'leaflet.locatecontrol'
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'
 import 'leaflet/dist/leaflet.css'
+import { MapMarker } from './map-marker'
 
 const DEFAULT_CENTER = {
   lat: 41.953,
@@ -28,31 +24,6 @@ const DEFAULT_CENTER = {
 } as const satisfies MapPoint
 
 export const mapContainerClassName = 'z-0 h-64 w-full'
-
-const calcSize = moize((size: MapMarker['size'], zoom: number) => {
-  if (!size) {
-    if (zoom <= 14) return 'xs'
-    if (zoom <= 15) return 'sm'
-    return 'md'
-  }
-  if (size === 'sm-dynamic') {
-    if (zoom <= 15.5) return 'none'
-    if (zoom <= 16) return 'xs'
-    return zoom >= 17 ? 'md' : 'sm'
-  }
-  if (size === 'lg') return 'md'
-  return size
-})
-
-export type MapMarker = Omit<PlaceMarkerProps, 'size'> & {
-  size?: PlaceMarkerProps['size'] | 'sm-dynamic'
-} & {
-  zIndexOffset?: number
-} & {
-  placeId?: number
-  location: MapPoint
-  url?: string
-}
 
 export const MapRaw: FC<{
   center?: MapPoint
@@ -119,12 +90,13 @@ export const MapRaw: FC<{
         rotateControl={false}
         touchRotate={fullControl}
       >
-        <MarkersLayersRawMap
-          markers={markers}
-          fullControl={fullControl}
-          disableMarkers={disableMarkers}
-          initialZoom={initialZoom}
-        />
+        {markers?.map((placeMarkerProps) => (
+          <MapMarker
+            key={`${placeMarkerProps.lat}-${placeMarkerProps.lng}-${placeMarkerProps.placeId}`}
+            disabled={disableMarkers}
+            {...placeMarkerProps}
+          />
+        ))}
 
         {value && (
           <Marker
@@ -170,77 +142,3 @@ export const MapRaw: FC<{
     )
   }
 )
-
-const MarkersLayersRawMap: FC<{
-  markers?: MapMarker[]
-  disableMarkers?: boolean
-  fullControl?: boolean
-  initialZoom: number
-}> = memo(
-  ({ markers: initialMarkers, disableMarkers, fullControl, initialZoom }) => {
-    const map = useMap()
-
-    const { zoom } = useObserveZoom(map, initialZoom)
-
-    const displayMarkers = useMemo(
-      () => (
-        <MarkersLayers
-          markers={initialMarkers?.map(({ size, showName, ...marker }) => ({
-            ...marker,
-            size: calcSize(size, zoom),
-            showName: zoom >= 16 && showName,
-          }))}
-          fullControl={fullControl}
-          disableMarkers={disableMarkers}
-        />
-      ),
-      [zoom, fullControl, disableMarkers]
-    )
-
-    return displayMarkers
-  }
-)
-
-const MarkersLayers: FC<{
-  markers?: (Omit<MapMarker, 'size'> & { size: PlaceMarkerIconSvgSize })[]
-  disableMarkers?: boolean
-  fullControl?: boolean
-}> = memo(({ markers, disableMarkers, fullControl }) => {
-  const router = useRouter()
-
-  return (
-    <>
-      {markers?.map(
-        ({
-          placeId,
-          location,
-          url: markerUrl,
-          zIndexOffset,
-          ...placeMarkerProps
-        }) => (
-          <Marker
-            zIndexOffset={zIndexOffset ?? 0}
-            key={`${location.lat}-${location.lng}-${placeId}`}
-            position={location}
-            interactive={!disableMarkers}
-            icon={getPlaceMarkerIcon({
-              color: placeMarkerProps.color,
-              icon: placeMarkerProps.icon,
-              size: placeMarkerProps.size,
-            })}
-            eventHandlers={
-              markerUrl && !disableMarkers
-                ? {
-                    click: () => {
-                      router.push(markerUrl)
-                    },
-                  }
-                : undefined
-            }
-            keyboard={fullControl && !disableMarkers}
-          />
-        )
-      )}
-    </>
-  )
-})

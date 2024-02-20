@@ -63,7 +63,9 @@ export const PlacePreviewModal: FC<
                         defaultLayer="bg-satelite-ign"
                         markers={[
                           {
-                            location: place.location,
+                            placeId: place.id,
+                            lat: place.location.lat,
+                            lng: place.location.lng,
                             icon: place.mainCategory.icon,
                             color: 'red',
                             size: 'sm',
@@ -81,7 +83,7 @@ export const PlacePreviewModal: FC<
                       <OptimizedImage
                         radius="lg"
                         shadow="sm"
-                        className="h-full object-cover"
+                        className="h-full"
                         image={image}
                         alt={place.name}
                       />
