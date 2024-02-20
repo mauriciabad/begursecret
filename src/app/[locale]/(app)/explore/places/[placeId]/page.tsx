@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { notFound } from 'next/navigation'
-import type { FC } from 'react'
+import { type FC } from 'react'
 import {
   LocaleParams,
   LocaleRouteParams,
@@ -40,12 +40,14 @@ const PlacePage: FC<{
     placeId,
   })
 
+  const veryEmphasizedMarkers = new Set([placeId])
+
   return (
     <>
       <OverrideMainMap
         center={place.location}
         zoom={18}
-        veryEmphasizedPlaces={new Set([placeId])}
+        veryEmphasizedMarkers={veryEmphasizedMarkers}
       />
       <PlaceDetails place={place} visitMissions={visitMissions} />
     </>

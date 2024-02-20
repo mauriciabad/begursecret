@@ -1,3 +1,4 @@
+import colors from 'tailwindcss/colors'
 import { PlaceCategoryColor } from '~/server/db/constants/places'
 
 export const colorClasses = {
@@ -168,3 +169,68 @@ export const colorClasses = {
 
 export const allColorClasses: readonly (typeof colorClasses)[keyof typeof colorClasses][PlaceCategoryColor][] =
   Object.values(colorClasses).map(Object.values).flat()
+
+export const colorValues = {
+  '600': {
+    gray: colors.gray['900'],
+    red: colors.red['600'],
+    orange: colors.orange['600'],
+    amber: colors.amber['600'],
+    yellow: colors.yellow['600'],
+    lime: colors.lime['600'],
+    green: colors.green['600'],
+    emerald: colors.emerald['600'],
+    teal: colors.teal['600'],
+    cyan: colors.cyan['600'],
+    sky: colors.sky['600'],
+    blue: colors.blue['600'],
+    indigo: colors.indigo['600'],
+    violet: colors.violet['600'],
+    purple: colors.purple['600'],
+    fuchsia: colors.fuchsia['600'],
+    pink: colors.pink['600'],
+    rose: colors.rose['600'],
+  },
+  '500': {
+    gray: colors.gray['700'],
+    red: colors.red['500'],
+    orange: colors.orange['500'],
+    amber: colors.amber['500'],
+    yellow: colors.yellow['500'],
+    lime: colors.lime['500'],
+    green: colors.green['500'],
+    emerald: colors.emerald['500'],
+    teal: colors.teal['500'],
+    cyan: colors.cyan['500'],
+    sky: colors.sky['500'],
+    blue: colors.blue['500'],
+    indigo: colors.indigo['500'],
+    violet: colors.violet['500'],
+    purple: colors.purple['500'],
+    fuchsia: colors.fuchsia['500'],
+    pink: colors.pink['500'],
+    rose: colors.rose['500'],
+  },
+  '800': {
+    gray: colors.gray['800'],
+    red: colors.red['800'],
+    orange: colors.orange['800'],
+    amber: colors.amber['800'],
+    yellow: colors.yellow['800'],
+    lime: colors.lime['800'],
+    green: colors.green['800'],
+    emerald: colors.emerald['800'],
+    teal: colors.teal['800'],
+    cyan: colors.cyan['800'],
+    sky: colors.sky['800'],
+    blue: colors.blue['800'],
+    indigo: colors.indigo['800'],
+    violet: colors.violet['800'],
+    purple: colors.purple['800'],
+    fuchsia: colors.fuchsia['800'],
+    pink: colors.pink['800'],
+    rose: colors.rose['800'],
+  },
+} as const satisfies {
+  [x: string]: Record<PlaceCategoryColor, string>
+}

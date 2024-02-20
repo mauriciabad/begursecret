@@ -44,6 +44,7 @@
     "leaflet": "1.9.4",
     "leaflet-rotate": "0.2.8",
     "leaflet.locatecontrol": "0.79.0",
+    "moize": "6.1.6",
     "mysql2": "3.9.1",
     "next": "14.1.0",
     "next-auth": "4.24.5",
