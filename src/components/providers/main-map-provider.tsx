@@ -8,6 +8,7 @@ import {
   useContext,
   useState,
 } from 'react'
+import { MapLineInvariable } from '../map/map-line'
 import { MapMarkerInvariable } from '../map/map-marker'
 
 export type SetOfMarkers = Set<NonNullable<MapMarkerInvariable['placeId']>>
@@ -21,6 +22,7 @@ const MainMapCtx = createContext<
     veryEmphasizedMarkers: SetOfMarkers | undefined
     setVeryEmphasizedMarkers: (markers: SetOfMarkers | undefined) => void
     markers: readonly MapMarkerInvariable[]
+    lines: readonly MapLineInvariable[]
   }>
 >({
   map: null,
@@ -30,13 +32,17 @@ const MainMapCtx = createContext<
   veryEmphasizedMarkers: undefined,
   setVeryEmphasizedMarkers: () => {},
   markers: [],
+  lines: [],
 })
 
 export const useMainMap = () => useContext(MainMapCtx)
 
 export const MainMapProvider: FC<
-  PropsWithChildren<{ markers: MapMarkerInvariable[] }>
-> = ({ markers, children }) => {
+  PropsWithChildren<{
+    markers: MapMarkerInvariable[]
+    lines: MapLineInvariable[]
+  }>
+> = ({ markers, children, lines }) => {
   const [map, setMap] = useState<LeafletMap | null>(null)
   const [emphasizedMarkers, setEmphasizedMarkers] = useState<SetOfMarkers>()
   const [veryEmphasizedMarkers, setVeryEmphasizedMarkers] =
@@ -53,6 +59,7 @@ export const MainMapProvider: FC<
           veryEmphasizedMarkers,
           setVeryEmphasizedMarkers,
           markers,
+          lines,
         }}
       >
         {children}

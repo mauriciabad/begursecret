@@ -5,7 +5,7 @@ import {
   SetOfMarkers,
   useMainMap,
 } from '~/components/providers/main-map-provider'
-import type { MapPoint } from '~/helpers/spatial-data'
+import type { MapPoint } from '~/helpers/spatial-data/point'
 
 export type OverrideMainMapProps = {
   center?: MapPoint

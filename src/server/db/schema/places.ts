@@ -7,16 +7,14 @@ import {
   text,
   tinytext,
 } from 'drizzle-orm/mysql-core'
-import { pointType } from '../../helpers/spatial-data'
+import { pointType } from '../../helpers/spatial-data/point'
 import { mysqlTableWithTranslations } from '../../helpers/translations/db-tables'
-import {
-  placeCategoriesColors,
-  placeCategoriesIcons,
-} from '../constants/places'
+import { colorNames, iconNames } from '../constants/shared'
 import { gender } from '../utilities'
 import { features } from './features'
 import { images } from './images'
 import { placeListToPlace } from './placeLists'
+import { routesToPlaces } from './routes'
 import { verificationRequirements } from './verificationRequirements'
 import { verifications } from './verifications'
 
@@ -44,6 +42,7 @@ export const {
 export const placesRelations = relations(places, (r) => ({
   ...makePlaceRelations(r),
 
+  routes: r.many(routesToPlaces),
   mainImage: r.one(images, {
     fields: [places.mainImageId],
     references: [images.id],
@@ -76,8 +75,8 @@ export const {
 } = mysqlTableWithTranslations({
   name: 'placeCategory',
   normalColumns: {
-    icon: tinytext('icon', { enum: placeCategoriesIcons }).notNull(),
-    color: tinytext('color', { enum: placeCategoriesColors }).notNull(),
+    icon: tinytext('icon', { enum: iconNames }).notNull(),
+    color: tinytext('color', { enum: colorNames }).notNull(),
     hasVisitMission: boolean('hasVisitMission').notNull().default(true),
   },
   translatableColumns: {

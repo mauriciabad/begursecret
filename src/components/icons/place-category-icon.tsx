@@ -8,7 +8,6 @@ import {
   IconBuildingCastle,
   IconBuildingStore,
   IconBuildingTunnel,
-  IconBusStop,
   IconCamera,
   IconChargingPile,
   IconCornerRightDown,
@@ -19,7 +18,6 @@ import {
   IconHome,
   IconHomeOff,
   IconIcons,
-  IconInfoCircle,
   IconLadder,
   IconMapPin,
   IconMapPinQuestion,
@@ -35,7 +33,6 @@ import {
   IconSailboat,
   IconScubaDiving,
   IconScubaMask,
-  IconSquare,
   IconStretching2,
   IconTower,
   IconTrees,
@@ -45,7 +42,7 @@ import {
   TablerIconsProps,
 } from '@tabler/icons-react'
 import { FC } from 'react'
-import { PlaceCategoryIcon as PlaceCategoryIconType } from '~/server/db/constants/places'
+import { IconName } from '~/server/db/constants/shared'
 
 const iconsByIconName = {
   beach: IconBeach,
@@ -89,11 +86,11 @@ const iconsByIconName = {
   square: IconSquare,
   'bus-stop': IconBusStop,
   'info-circle': IconInfoCircle,
-} as const satisfies Record<PlaceCategoryIconType, Icon>
+} as const satisfies Record<IconName, Icon>
 
 export const PlaceCategoryIcon: FC<
   TablerIconsProps & {
-    icon?: PlaceCategoryIconType | null
+    icon?: IconName | null
   }
 > = ({ icon, ...tablerIconsProps }) => {
   const iconWithoutFallback =

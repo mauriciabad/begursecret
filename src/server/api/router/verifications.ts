@@ -1,6 +1,6 @@
 import 'server-only'
 
-import { pointToString } from '~/helpers/spatial-data'
+import { pointToString } from '~/helpers/spatial-data/point'
 import { verificateVisitSchema } from '~/schemas/verifications'
 import { db } from '~/server/db/db'
 import { verifications } from '~/server/db/schema'

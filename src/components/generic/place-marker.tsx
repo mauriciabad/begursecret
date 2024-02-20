@@ -2,14 +2,11 @@ import { FC } from 'react'
 import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
 import { cn } from '~/helpers/cn'
 import { colorClasses } from '~/helpers/color-classes'
-import {
-  PlaceCategoryColor,
-  PlaceCategoryIcon as PlaceCategoryIconType,
-} from '~/server/db/constants/places'
+import { ColorName, IconName } from '~/server/db/constants/shared'
 
 export type PlaceMarkerProps = {
-  icon?: PlaceCategoryIconType
-  color?: PlaceCategoryColor
+  icon?: IconName
+  color?: ColorName
   className?: string
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'none'
   animated?: boolean

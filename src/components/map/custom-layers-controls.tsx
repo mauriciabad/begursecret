@@ -286,9 +286,9 @@ const layersData = [
       url: 'http://www.esri.com/',
     },
     tileUrlTemplate:
-      'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+      'https://clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
     sampleImage:
-      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/14/6085/8338',
+      'https://clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/14/6085/8338',
   },
   {
     id: 'bg-satelite-ign',

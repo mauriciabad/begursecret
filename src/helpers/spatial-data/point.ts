@@ -12,7 +12,7 @@ type WTFPointType<Lat extends number = number, Lng extends number = number> = {
 /**
  * Extracts the lat and lng from a string.
  * Notice that the order is lng lat, not lat lng. Except in JSON format, where it doesn't matter.
- * @param value String in the format `lng lat`, `POINT(lng lat), `{ "lat": 1,"lng": 1 }` or `{ "x": 1,"y": 1 }`. Tere can be a comma between the values.
+ * @param value String in the format `lng lat`, `POINT(lng lat), `{ "lat": 1,"lng": 1 }` or `{ "x": 1,"y": 1 }`. There can be a comma between the values.
  * @returns Object with lat and lng properties
  */
 export function getPoint(

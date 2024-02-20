@@ -134,6 +134,13 @@
       "when": 1708040528072,
       "tag": "0018_blushing_daimon_hellstrom",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "5",
+      "when": 1708425618677,
+      "tag": "0019_warm_zaladane",
+      "breakpoints": true
     }
   ]
 }

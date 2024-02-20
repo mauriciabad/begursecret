@@ -1,7 +1,7 @@
 import 'server-only'
 
 import { sql } from 'drizzle-orm'
-import { calculateLocation } from '~/helpers/spatial-data'
+import { calculateLocation } from '~/helpers/spatial-data/point'
 import {
   getPlacesSchema,
   listCategoriesSchema,
@@ -11,7 +11,7 @@ import {
 import { db } from '~/server/db/db'
 import { places } from '~/server/db/schema'
 import { getVisitedPlacesIdsByUserId } from '~/server/helpers/db-queries/placeLists'
-import { selectPoint } from '~/server/helpers/spatial-data'
+import { selectPoint } from '~/server/helpers/spatial-data/point'
 import {
   flattenTranslationsOnExecute,
   withTranslations,
