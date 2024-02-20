@@ -45,6 +45,9 @@ export const iconNames = [
   'bus',
   'shoe',
   'kayak',
+  'arrows-down-up',
+  'swimming',
+  'diamond',
 ] as const
 export type IconName = (typeof iconNames)[number]
 

@@ -2,6 +2,7 @@ import {
   Icon,
   IconAnchor,
   IconArrowBigDownLine,
+  IconArrowsDownUp,
   IconBeach,
   IconBucket,
   IconBuildingBridge2,
@@ -13,6 +14,7 @@ import {
   IconCamera,
   IconChargingPile,
   IconCornerRightDown,
+  IconDiamond,
   IconFishHook,
   IconFlag,
   IconFountain,
@@ -40,6 +42,7 @@ import {
   IconShoe,
   IconSquare,
   IconStretching2,
+  IconSwimming,
   IconTower,
   IconTrees,
   IconTrekking,
@@ -96,6 +99,9 @@ const iconsByIconName = {
   bus: IconBus,
   shoe: IconShoe,
   kayak: IconWalk,
+  'arrows-down-up': IconArrowsDownUp,
+  swimming: IconSwimming,
+  diamond: IconDiamond,
 } as const satisfies Record<IconName, Icon>
 
 export const PlaceCategoryIcon: FC<
