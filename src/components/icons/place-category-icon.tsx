@@ -19,6 +19,7 @@ import {
   IconHome,
   IconHomeOff,
   IconIcons,
+  IconInfoCircle,
   IconLadder,
   IconMapPin,
   IconMapPinQuestion,
@@ -87,6 +88,7 @@ const iconsByIconName = {
   'stretching-2': IconStretching2,
   square: IconSquare,
   'bus-stop': IconBusStop,
+  'info-circle': IconInfoCircle,
 } as const satisfies Record<PlaceCategoryIconType, Icon>
 
 export const PlaceCategoryIcon: FC<
