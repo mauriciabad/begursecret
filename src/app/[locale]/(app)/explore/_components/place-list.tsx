@@ -44,7 +44,7 @@ export const PlaceList: FC<{
               <OptimizedImage
                 radius="md"
                 alt={place.name}
-                className="z-0 aspect-[4/3] h-16 w-auto object-cover"
+                className="z-0 aspect-[4/3] h-16 object-cover"
                 image={place.mainImage}
               />
             </CardBody>

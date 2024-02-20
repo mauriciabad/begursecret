@@ -38,7 +38,7 @@ const ExplorePage: FC<PageParams> = async ({ searchParams }) => {
 
   return (
     <>
-      <OverrideMainMap emphasizedPlaces={placeIds} />
+      <OverrideMainMap emphasizedMarkers={placeIds} />
       <PlaceList places={places} />
     </>
   )

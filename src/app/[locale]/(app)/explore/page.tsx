@@ -30,7 +30,11 @@ const ExplorePage: FC<LocaleRouteParams> = async () => {
   const categories = await trpc.places.listCategories({
     locale: onlyTranslatableLocales(locale),
   })
-  const placesByCategory = groupByKey(places, 'mainCategory.id')
+  const placesByCategory = groupByKey(
+    places,
+    ['mainCategory.id', 'categories.0.category.id'],
+    { unique: true }
+  )
 
   return (
     <>

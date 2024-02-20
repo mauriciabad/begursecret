@@ -4,6 +4,7 @@ import NextImage, {
   type ImageProps as NextImageProps,
 } from 'next/image'
 import { FC } from 'react'
+import { cn } from '~/helpers/cn'
 import { ImageType, makeImageUrl } from '~/helpers/images'
 import fallbackImage from '../../../public/fallback.png'
 
@@ -38,7 +39,7 @@ export const OptimizedImage: FC<
     image?: S3Image | StaticImageData | null
     alt?: string
   }
-> = ({ image, alt, ...imageProps }) => {
+> = ({ image, alt, className, ...imageProps }) => {
   const actualImage: StaticImage = image
     ? imageIsFromS3(image)
       ? imageToStatic(image)
@@ -54,6 +55,7 @@ export const OptimizedImage: FC<
       blurDataURL={actualImage.blurDataURL}
       alt={alt ?? actualImage.alt}
       placeholder={actualImage.blurDataURL ? 'blur' : 'empty'}
+      className={cn('h-auto w-auto', className)}
       {...imageProps}
     />
   )

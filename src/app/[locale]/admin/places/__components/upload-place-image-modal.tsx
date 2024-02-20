@@ -228,7 +228,7 @@ export const UploadPlaceImageModal: FC<
                       }}
                     >
                       <OptimizedImage
-                        className="h-auto w-full min-w-0"
+                        className="w-full min-w-0"
                         image={image}
                         radius="sm"
                       />
