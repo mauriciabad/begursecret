@@ -29,7 +29,6 @@ import {
 } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC, useCallback, useMemo, useState } from 'react'
-import { OptimizedImage } from '~/components/generic/optimized-image'
 import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
 import { PlaceCategoryTagList } from '~/components/place-category-tags/place-category-tag-list'
 import { cn } from '~/helpers/cn'
@@ -44,11 +43,6 @@ const columns = [
     key: 'id',
     sortable: true,
     align: 'end',
-  },
-  {
-    key: 'images',
-    sortable: false,
-    align: 'start',
   },
   {
     key: 'name',
@@ -76,7 +70,7 @@ const columns = [
     align: 'center',
   },
 ] as const satisfies {
-  key: keyof Place | 'actions' | 'images'
+  key: keyof Place | 'actions'
   sortable: boolean
   align: 'center' | 'start' | 'end' | undefined
 }[]
@@ -149,14 +143,6 @@ export const PlacesTable: FC<{
 
   const renderCell = useCallback((place: Place, columnKey: ColumnKey) => {
     switch (columnKey) {
-      case 'images':
-        return (
-          <OptimizedImage
-            image={place.mainImage}
-            radius="sm"
-            className="max-w-12"
-          />
-        )
       case 'name':
         return (
           <>
