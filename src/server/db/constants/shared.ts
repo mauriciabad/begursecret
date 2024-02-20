@@ -38,6 +38,16 @@ export const iconNames = [
   'camera',
   'paper-bag',
   'stretching-2',
+  'square',
+  'bus-stop',
+  'info-circle',
+  'route',
+  'bus',
+  'shoe',
+  'kayak',
+  'arrows-down-up',
+  'swimming',
+  'diamond',
 ] as const
 export type IconName = (typeof iconNames)[number]
 
