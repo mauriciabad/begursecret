@@ -1,39 +1,34 @@
 'use client'
 
 import { Select, SelectItem, type SelectProps } from '@nextui-org/select'
-import { useLocale } from 'next-intl'
 import { forwardRef } from 'react'
-import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
-import { onlyTranslatableLocales } from '~/i18n'
-import { trpc } from '~/trpc'
+import { CategoryIcon } from '~/components/icons/category-icon'
+import { IconName } from '~/server/db/constants/shared'
 
-type Props = Omit<SelectProps, 'children'>
+type Props = Omit<SelectProps, 'children'> & {
+  categories: { id: number; name: string; icon: IconName }[]
+  isLoading: boolean
+}
 
 export const SelectCategory = forwardRef<HTMLSelectElement, Props>(
-  ({ selectedKeys, ...selectProps }, ref) => {
-    const locale = useLocale()
-    const { data: categories, isLoading: isLoadingCategories } =
-      trpc.admin.places.listCategories.useQuery({
-        locale: onlyTranslatableLocales(locale),
-      })
-
+  ({ selectedKeys, categories, isLoading, ...selectProps }, ref) => {
     return (
       <Select
         classNames={{
           popoverContent: '[&>*]:max-h-[calc(50dvh-4rem)]',
         }}
         {...selectProps}
-        selectedKeys={isLoadingCategories ? [] : selectedKeys}
+        selectedKeys={isLoading ? [] : selectedKeys}
         ref={ref}
-        isLoading={isLoadingCategories}
-        isDisabled={isLoadingCategories}
+        isLoading={isLoading}
+        isDisabled={isLoading}
       >
         {(categories ?? []).map((category) => (
           <SelectItem
             key={category.id}
             value={category.id}
             startContent={
-              <PlaceCategoryIcon
+              <CategoryIcon
                 icon={category.icon}
                 size={20}
                 stroke={1.5}

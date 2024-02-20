@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
-import { useLocale } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
 import type { FC } from 'react'
-import { onlyTranslatableLocales, type LocaleRouteParams } from '~/i18n'
+import { LocaleParams, LocaleRouteParams } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
-import { RoutesTable } from './_components/routes-table'
+import { RouteForm } from '../_components/route-form'
 
 export async function generateMetadata({
   params: { locale },
@@ -19,20 +18,24 @@ export async function generateMetadata({
   }
 }
 
-const AdminPage: FC<LocaleRouteParams> = async () => {
-  const locale = useLocale()
+type Params = LocaleParams & { routeId: string }
+
+const AdminEditRoutePage: FC<{
+  params: Params
+}> = async ({ params }) => {
   const trpc = await getTrpc()
-  const routes = await trpc.admin.routes.list({
-    locale: onlyTranslatableLocales(locale),
+  const route = await trpc.admin.routes.get({
+    id: Number(params.routeId),
+    locale: null,
   })
 
   return (
     <>
       <main className="mx-auto min-h-screen max-w-7xl p-4 sm:py-8 lg:py-12">
-        <RoutesTable routes={routes} />
+        <RouteForm route={route} />
       </main>
     </>
   )
 }
 
-export default AdminPage
+export default AdminEditRoutePage

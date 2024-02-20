@@ -2,8 +2,8 @@
 
 import { Card, CardBody } from '@nextui-org/card'
 import { FC } from 'react'
+import { CategoryTagList } from '~/components/category-tags/category-tag-list'
 import { OptimizedImage } from '~/components/generic/optimized-image'
-import { PlaceCategoryTagList } from '~/components/place-category-tags/place-category-tag-list'
 import { Link } from '~/navigation'
 import { ApiRouterOutput } from '~/server/api/router'
 
@@ -30,7 +30,7 @@ export const PlaceList: FC<{
               <div>
                 <h2 className="font-title font-bold">{place.name}</h2>
 
-                <PlaceCategoryTagList
+                <CategoryTagList
                   mainCategory={place.mainCategory}
                   categories={place.categories.map((c) => c.category)}
                   wrap

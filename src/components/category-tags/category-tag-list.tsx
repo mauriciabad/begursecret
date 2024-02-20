@@ -1,9 +1,9 @@
 import { FC } from 'react'
 import { cn } from '~/helpers/cn'
 import { IconName } from '~/server/db/constants/shared'
-import { PlaceCategoryTag } from './place-category-tag'
+import { CategoryTag } from './category-tag'
 
-export const PlaceCategoryTagList: FC<{
+export const CategoryTagList: FC<{
   mainCategory?: {
     id: number
     icon: IconName | null
@@ -27,14 +27,14 @@ export const PlaceCategoryTagList: FC<{
         className
       )}
     >
-      {mainCategory && <PlaceCategoryTag category={mainCategory} />}
+      {mainCategory && <CategoryTag category={mainCategory} />}
 
       {mainCategory && categories !== undefined && categories.length >= 1 && (
         <span className="h-4 w-[1px] bg-stone-200" />
       )}
 
       {categories?.map((category) => (
-        <PlaceCategoryTag key={category.id} category={category} />
+        <CategoryTag key={category.id} category={category} />
       ))}
     </div>
   )

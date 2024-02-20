@@ -151,7 +151,7 @@
       "logout": "Logout"
     }
   },
-  "admin-places": {
+  "admin-places-and-routes": {
     "search-placeholder": "Search by name...",
     "total": "Total {total}",
     "columns": {
@@ -165,13 +165,14 @@
       "mainImage": "Main image",
       "actions": "Actions",
       "content": "Content",
-      "features": "Features"
+      "features": "Features",
+      "path": "Path"
     },
     "add-new": "Add new",
-    "edit-place": "Edit place",
-    "create-place": "Create place",
+    "edit": "Edit",
+    "create": "Create",
     "stay-on-page-after-submit": "Do more",
-    "no-places-found": "No places found",
+    "nothing-found": "Nothing found",
     "no-features": "No features",
     "change-image": {
       "save": "Save",

@@ -1,69 +1,68 @@
 'use client'
 
+import { Button } from '@nextui-org/button'
 import { Checkbox } from '@nextui-org/checkbox'
 import { Input, Textarea } from '@nextui-org/input'
+import { IconExternalLink } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC, useState } from 'react'
 import { Controller } from 'react-hook-form'
 import { FeaturesEditor } from '~/components/admin-only/features-editor'
-import { SelectPlaceCategory } from '~/components/admin-only/select-place-category'
+import { SelectRouteCategory } from '~/components/admin-only/select-route-category'
 import { MarkdownEditor } from '~/components/generic/markdown-editor'
 import {
   SafeForm,
   SafeSubmitButton,
   useSafeForm,
 } from '~/components/generic/safe-form'
-import { MapPointSelector } from '~/components/map/map-point-selector'
 import { cn } from '~/helpers/cn'
-import { useRouter } from '~/navigation'
-import { createPlaceSchema } from '~/schemas/places'
+import { multiLineToGeoJsonString } from '~/helpers/spatial-data/multi-line'
+import { Link, useRouter } from '~/navigation'
+import { createRouteSchema } from '~/schemas/routes'
 import { ApiRouterOutput } from '~/server/api/router'
 import { trpc } from '~/trpc'
-import { UploadPlaceImageModal } from './upload-place-image-modal'
 
-type Place = NonNullable<ApiRouterOutput['admin']['places']['get']>
+type Route = NonNullable<ApiRouterOutput['admin']['routes']['get']>
 
-export const PlaceForm: FC<{
-  place?: Place
+export const RouteForm: FC<{
+  route?: Route
   className?: string
-}> = ({ className, place }) => {
+}> = ({ className, route }) => {
   const t = useTranslations('admin-places-and-routes')
   const router = useRouter()
 
   const utils = trpc.useUtils()
-  const createPlaceMutation = trpc.admin.places.createPlace.useMutation({
+  const createRouteMutation = trpc.admin.routes.createRoute.useMutation({
     onSuccess() {
-      utils.admin.places.list.invalidate()
-      utils.admin.places.get.invalidate()
+      utils.admin.routes.list.invalidate()
+      utils.admin.routes.get.invalidate()
     },
   })
-  const editPlaceMutation = trpc.admin.places.editPlace.useMutation({
+  const editRouteMutation = trpc.admin.routes.editRoute.useMutation({
     onSuccess() {
-      utils.admin.places.list.invalidate()
-      utils.admin.places.get.invalidate()
+      utils.admin.routes.list.invalidate()
+      utils.admin.routes.get.invalidate()
     },
   })
 
   const form = useSafeForm({
-    schema: createPlaceSchema,
-    defaultValues: place
+    schema: createRouteSchema,
+    defaultValues: route
       ? {
-          name: place.name,
-          description: place.description ?? undefined,
-          mainCategory: place.mainCategory.id,
-          categories: place.categories.map((c) => c.category.id).join(','),
-          location: `${place.location.lat}, ${place.location.lng}`,
-          mainImageId: place.mainImage?.id ?? undefined,
-          content: place.content ?? undefined,
-          features: place.features,
+          name: route.name,
+          description: route.description ?? undefined,
+          mainCategory: route.mainCategory.id,
+          categories: route.categories.map((c) => c.category.id).join(','),
+          path: multiLineToGeoJsonString(route.path),
+          content: route.content ?? undefined,
+          features: route.features,
         }
       : {
           name: undefined,
           description: undefined,
           mainCategory: undefined,
           categories: '',
-          location: undefined,
-          mainImageId: undefined,
+          path: undefined,
           content: undefined,
           features: {},
         },
@@ -71,7 +70,7 @@ export const PlaceForm: FC<{
 
   const [stayOnPage, setStayOnPage] = useState(false)
 
-  const isCreateForm = !place
+  const isCreateForm = !route
 
   return (
     <>
@@ -84,18 +83,18 @@ export const PlaceForm: FC<{
         form={form}
         handleSubmit={async (values) => {
           if (isCreateForm) {
-            await createPlaceMutation.mutateAsync(values)
+            await createRouteMutation.mutateAsync(values)
           } else {
-            await editPlaceMutation.mutateAsync({
+            await editRouteMutation.mutateAsync({
               ...values,
-              id: place.id,
+              id: route.id,
             })
           }
 
           form.reset()
 
           if (!isCreateForm || !stayOnPage) {
-            return router.push('/admin/places/')
+            return router.push('/admin/routes/')
           }
         }}
         className={cn('space-y-4', className)}
@@ -143,7 +142,7 @@ export const PlaceForm: FC<{
               field: { onChange, onBlur, value },
               fieldState: { error },
             }) => (
-              <SelectPlaceCategory
+              <SelectRouteCategory
                 isInvalid={!!error}
                 errorMessage={error?.message}
                 onBlur={onBlur}
@@ -161,7 +160,7 @@ export const PlaceForm: FC<{
               field: { onChange, onBlur, value },
               fieldState: { error },
             }) => (
-              <SelectPlaceCategory
+              <SelectRouteCategory
                 isInvalid={!!error}
                 errorMessage={error?.message}
                 onBlur={onBlur}
@@ -174,24 +173,6 @@ export const PlaceForm: FC<{
             )}
           />
         </div>
-
-        <Controller
-          name="mainImageId"
-          control={form.control}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <UploadPlaceImageModal
-              isInvalid={!!error}
-              errorMessage={error?.message}
-              onBlur={onBlur}
-              onChange={onChange}
-              value={value}
-              label={t('columns.mainImage')}
-            />
-          )}
-        />
 
         <div className="grid gap-4 sm:grid-cols-2">
           <Controller
@@ -212,21 +193,32 @@ export const PlaceForm: FC<{
             )}
           />
 
-          <div className="relative flex-1 basis-64">
+          <div className="relative flex-1 basis-64 ">
+            <Button
+              as={Link}
+              href="https://geojson.io/#map=13.26/41.95443/3.21328"
+              endContent={<IconExternalLink />}
+              className="mb-4"
+              color="primary"
+              target="_blank"
+            >
+              Open GeoJSON.io
+            </Button>
+
             <Controller
-              name="location"
+              name="path"
               control={form.control}
               render={({
                 field: { onChange, onBlur, value },
                 fieldState: { error },
               }) => (
-                <MapPointSelector
+                <Textarea
                   isInvalid={!!error}
                   errorMessage={error?.message}
                   onBlur={onBlur}
                   onChange={onChange}
                   value={value}
-                  label={t('columns.location')}
+                  label={t('columns.path')}
                 />
               )}
             />

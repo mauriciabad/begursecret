@@ -5,7 +5,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { cn } from '~/helpers/cn'
 import { colorClasses, colorValues } from '~/helpers/color-classes'
 import { ColorName, IconName } from '~/server/db/constants/shared'
-import { PlaceCategoryIcon } from '../icons/place-category-icon'
+import { CategoryIcon } from '../icons/category-icon'
 
 const iconVariants = {
   none: {
@@ -80,7 +80,7 @@ const iconVariants = {
           stroke={colorValues['800'][color]}
           strokeWidth="1"
         />
-        <PlaceCategoryIcon
+        <CategoryIcon
           icon={icon}
           color="#fff"
           x="4"

@@ -21,7 +21,7 @@ export const pointType = customType<{
   toDriver(value: WrongPointType | string) {
     const point = getPoint(value)
     if (!point) throw new Error(`Invalid point value: ${JSON.stringify(value)}`)
-    return sql`ST_PointFromText('POINT(${point.lng} ${point.lat})', ${SRID_CODE})`
+    return sql`ST_PointFromText(${pointToString(point)}, ${SRID_CODE})`
   },
   fromDriver(value: string): WrongPointType {
     const point = getPoint(value)

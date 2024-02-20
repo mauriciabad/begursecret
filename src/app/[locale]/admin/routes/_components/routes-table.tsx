@@ -22,13 +22,13 @@ import {
 } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC, useCallback, useMemo, useState } from 'react'
-import { SelectPlaceCategory } from '~/components/admin-only/select-place-category'
+import { SelectRouteCategory } from '~/components/admin-only/select-route-category'
 import { CategoryTagList } from '~/components/category-tags/category-tag-list'
 import { cn } from '~/helpers/cn'
 import { Link } from '~/navigation'
 import { ApiRouterOutput } from '~/server/api/router'
 
-type Place = ApiRouterOutput['admin']['places']['list'][number]
+type Route = ApiRouterOutput['admin']['routes']['list'][number]
 
 const columns = [
   {
@@ -39,11 +39,6 @@ const columns = [
   {
     key: 'name',
     sortable: true,
-    align: 'start',
-  },
-  {
-    key: 'location',
-    sortable: false,
     align: 'start',
   },
   {
@@ -62,7 +57,7 @@ const columns = [
     align: 'center',
   },
 ] as const satisfies {
-  key: keyof Place | 'actions'
+  key: keyof Route | 'actions'
   sortable: boolean
   align: 'center' | 'start' | 'end' | undefined
 }[]
@@ -73,7 +68,7 @@ type SortableColumnKey<T = Column> = T extends { sortable: true; key: infer ID }
   ? ID
   : never
 
-const getSortValue = (item: Place, columnKey: SortableColumnKey) => {
+const getSortValue = (item: Route, columnKey: SortableColumnKey) => {
   switch (columnKey) {
     case 'mainCategory':
       return item.mainCategory.name
@@ -82,10 +77,10 @@ const getSortValue = (item: Place, columnKey: SortableColumnKey) => {
   }
 }
 
-export const PlacesTable: FC<{
-  places: Place[]
+export const RoutesTable: FC<{
+  routes: Route[]
   className?: string
-}> = ({ className, places }) => {
+}> = ({ className, routes }) => {
   const t = useTranslations('admin-places-and-routes')
 
   const [filterValue, setFilterValue] = useState('')
@@ -101,24 +96,24 @@ export const PlacesTable: FC<{
   const hasSearchFilter = Boolean(filterValue)
 
   const filteredItems = useMemo(() => {
-    let filteredUsers = [...places]
+    let filteredUsers = [...routes]
 
     if (hasSearchFilter) {
-      filteredUsers = filteredUsers.filter((place) =>
-        place.name.toLowerCase().includes(filterValue.toLowerCase())
+      filteredUsers = filteredUsers.filter((route) =>
+        route.name.toLowerCase().includes(filterValue.toLowerCase())
       )
     }
     if (mainCategoryFilter !== 'all' && mainCategoryFilter.size !== 0) {
-      filteredUsers = filteredUsers.filter((place) =>
-        mainCategoryFilter.has(place.mainCategory.id.toString())
+      filteredUsers = filteredUsers.filter((route) =>
+        mainCategoryFilter.has(route.mainCategory.id.toString())
       )
     }
 
     return filteredUsers
-  }, [places, filterValue, mainCategoryFilter])
+  }, [routes, filterValue, mainCategoryFilter])
 
   const sortedItems = useMemo(() => {
-    return [...filteredItems].sort((a: Place, b: Place) => {
+    return [...filteredItems].sort((a: Route, b: Route) => {
       const columnKey = sortDescriptor.column as SortableColumnKey
       const first = getSortValue(a, columnKey)
       const second = getSortValue(b, columnKey)
@@ -128,31 +123,23 @@ export const PlacesTable: FC<{
     })
   }, [sortDescriptor, filteredItems])
 
-  const renderCell = useCallback((place: Place, columnKey: ColumnKey) => {
+  const renderCell = useCallback((route: Route, columnKey: ColumnKey) => {
     switch (columnKey) {
       case 'name':
         return (
           <>
-            <p className="font-semibold">{place.name}</p>
+            <p className="font-semibold">{route.name}</p>
             <p className="line-clamp-2 text-xs text-gray-600">
-              {place.description}
+              {route.description}
             </p>
           </>
         )
-      case 'location':
-        return (
-          <div className="flex flex-col">
-            <p className="text-bold font-mono text-tiny text-default-400">
-              {`${place.location.lat.toFixed(6)}, ${place.location.lng.toFixed(6)}`}
-            </p>
-          </div>
-        )
       case 'mainCategory':
-        return <CategoryTagList mainCategory={place.mainCategory} wrap />
+        return <CategoryTagList mainCategory={route.mainCategory} wrap />
       case 'categories':
         return (
           <CategoryTagList
-            categories={place.categories.map((c) => c.category)}
+            categories={route.categories.map((c) => c.category)}
             wrap
           />
         )
@@ -161,7 +148,7 @@ export const PlacesTable: FC<{
           <div className="relative flex items-center">
             <Tooltip content={t('actions.view')}>
               <Button
-                href={`/explore/places/${place.id}`}
+                href={`/explore/routes/${route.id}`}
                 as={Link}
                 variant="light"
                 radius="sm"
@@ -173,7 +160,7 @@ export const PlacesTable: FC<{
             </Tooltip>
             <Tooltip content={t('actions.edit')}>
               <Button
-                href={`/admin/places/${place.id}`}
+                href={`/admin/routes/${route.id}`}
                 as={Link}
                 variant="light"
                 radius="sm"
@@ -200,7 +187,7 @@ export const PlacesTable: FC<{
           </div>
         )
       default:
-        return place[columnKey]
+        return route[columnKey]
     }
   }, [])
 
@@ -232,7 +219,7 @@ export const PlacesTable: FC<{
             <span className="hidden whitespace-nowrap text-right text-small text-default-400 sm:inline-block">
               {t('total', { total: sortedItems.length })}
             </span>
-            <SelectPlaceCategory
+            <SelectRouteCategory
               onSelectionChange={setMainCategoryFilter}
               selectedKeys={mainCategoryFilter}
               label={t('columns.categories')}
@@ -242,7 +229,7 @@ export const PlacesTable: FC<{
             />
 
             <Button
-              href="/admin/places/new"
+              href="/admin/routes/new"
               as={Link}
               color="primary"
               endContent={<IconPlus className="flex-shrink-0" />}

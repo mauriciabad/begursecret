@@ -1,15 +1,18 @@
 import { z } from 'zod'
 
-type Lat = number
-type Lng = number
-export type MapMultiLine = [Lat, Lng][][]
+export type MapMultiLine<
+  Lat extends number = number,
+  Lng extends number = number,
+> = [Lat, Lng][][]
 
 /**
  * @example MultiLineString((1 1,2 2,3 3),(4 4,5 5))
  */
 export type MultiLineString = `MultiLineString(${string})`
 
-const multiLineSchema = z.array(z.array(z.tuple([z.number(), z.number()])))
+export const multiLineSchema = z.array(
+  z.array(z.tuple([z.number(), z.number()]))
+)
 
 /**
  * Extracts a multi-line from a string.
@@ -71,12 +74,12 @@ export function getMultiLine(
 }
 
 export function calculatePath<
-  L extends MultiLineString | null | undefined,
+  L extends MultiLineString,
   P extends { path: L },
->(route: P) {
+>({ path, ...route }: P) {
   return {
     ...route,
-    path: getMultiLine(route.path),
+    path: getMultiLine(path),
   }
 }
 
@@ -94,14 +97,40 @@ function nullIfHasNull<T>(l1: (T | null)[][]): T[][] | null {
 
 export function multiLineFromGeoJson(value: unknown): MapMultiLine | null {
   try {
-    const geoJson = GeoJsonSchema.parse(value)
-    return geoJson.features.map((feature) => feature.geometry.coordinates)
+    const geoJson = geoJsonSchema.parse(value)
+    return geoJson.features.map((feature) =>
+      feature.geometry.coordinates.map(([lng, lat]) => [lat, lng])
+    )
   } catch (e) {
     return null
   }
 }
 
-const GeoJsonSchema = z.object({
+export function multilineFromGeoJsonString(string: string) {
+  try {
+    return multiLineFromGeoJson(JSON.parse(string))
+  } catch (e) {
+    return null
+  }
+}
+
+export function multiLineToGeoJson(multiline: MapMultiLine) {
+  return {
+    type: 'FeatureCollection',
+    features: multiline.map((line) => ({
+      type: 'Feature',
+      geometry: {
+        type: 'LineString',
+        coordinates: line.map(([lat, lng]) => [lng, lat]),
+      },
+    })),
+  }
+}
+export function multiLineToGeoJsonString(multiline: MapMultiLine) {
+  return JSON.stringify(multiLineToGeoJson(multiline), null, 2)
+}
+
+export const geoJsonSchema = z.object({
   type: z.literal('FeatureCollection'),
   features: z.array(
     z.object({

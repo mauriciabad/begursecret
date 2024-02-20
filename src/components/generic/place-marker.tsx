@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
+import { CategoryIcon } from '~/components/icons/category-icon'
 import { cn } from '~/helpers/cn'
 import { colorClasses } from '~/helpers/color-classes'
 import { ColorName, IconName } from '~/server/db/constants/shared'
@@ -64,7 +64,7 @@ export const PlaceMarker: FC<PlaceMarkerProps> = ({
           className
         )}
       >
-        <PlaceCategoryIcon
+        <CategoryIcon
           icon={icon}
           className={cn(
             'block h-6 w-6',
@@ -74,7 +74,7 @@ export const PlaceMarker: FC<PlaceMarkerProps> = ({
           stroke={5}
           overflow="visible"
         />
-        <PlaceCategoryIcon
+        <CategoryIcon
           icon={icon}
           className="absolute inset-1 block h-6 w-6"
           size={18}
@@ -105,12 +105,7 @@ export const PlaceMarker: FC<PlaceMarkerProps> = ({
           className={cn({ 'hidden group-hover:block': !showName })}
         />
       )}
-      <PlaceCategoryIcon
-        icon={icon}
-        className="text-white"
-        size={18}
-        stroke={2}
-      />
+      <CategoryIcon icon={icon} className="text-white" size={18} stroke={2} />
     </div>
   )
 }
