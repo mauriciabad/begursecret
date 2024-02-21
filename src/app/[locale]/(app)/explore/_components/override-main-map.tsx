@@ -2,6 +2,7 @@
 
 import { FC, memo, useEffect } from 'react'
 import {
+  SetOfLines,
   SetOfMarkers,
   useMainMap,
 } from '~/components/providers/main-map-provider'
@@ -12,11 +13,23 @@ export type OverrideMainMapProps = {
   zoom?: number
   emphasizedMarkers?: SetOfMarkers
   veryEmphasizedMarkers?: SetOfMarkers
+  veryEmphasizedLines?: SetOfLines
 }
 
 export const OverrideMainMap: FC<OverrideMainMapProps> = memo(
-  ({ center, zoom, emphasizedMarkers, veryEmphasizedMarkers }) => {
-    const { map, setEmphasizedMarkers, setVeryEmphasizedMarkers } = useMainMap()
+  ({
+    center,
+    zoom,
+    emphasizedMarkers,
+    veryEmphasizedMarkers,
+    veryEmphasizedLines,
+  }) => {
+    const {
+      map,
+      setEmphasizedMarkers,
+      setVeryEmphasizedMarkers,
+      setVeryEmphasizedLines,
+    } = useMainMap()
 
     useEffect(() => {
       if (map) {
@@ -34,6 +47,8 @@ export const OverrideMainMap: FC<OverrideMainMapProps> = memo(
         setEmphasizedMarkers(emphasizedMarkers)
 
         setVeryEmphasizedMarkers(veryEmphasizedMarkers)
+
+        setVeryEmphasizedLines(veryEmphasizedLines)
       }
     }, [map])
 
