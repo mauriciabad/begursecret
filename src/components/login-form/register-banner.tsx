@@ -11,9 +11,14 @@ export const RegisterBanner: FC<{
   return (
     <Link
       href="/register"
-      className="block h-auto rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 bg-cover bg-center object-fill p-6 text-white shadow-lg shadow-purple-500/50"
+      className={cn(
+        'bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 bg-cover bg-center',
+        'text-white shadow-lg shadow-purple-500/50',
+        'block h-auto rounded-xl object-fill p-6',
+        className
+      )}
     >
-      <div className={cn('mb-10', className)}>
+      <div className="mb-10">
         <p className="text-sm font-bold uppercase">{t('subtitle')}</p>
         <p className="font-title text-3xl font-bold uppercase">{t('title')}</p>
         <p className="text-lg leading-none">{t('text')}</p>
