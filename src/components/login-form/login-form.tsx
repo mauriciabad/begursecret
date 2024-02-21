@@ -18,7 +18,7 @@ export const LoginForm: FC<{
   return (
     <>
       {!registerDisabled && (
-        <RegisterBanner className="-mt-4 sm:mx-4 sm:mt-0 rounded-none sm:rounded-xl" />
+        <RegisterBanner className="-mt-4 rounded-none sm:mx-4 sm:mt-0 sm:rounded-xl" />
       )}
 
       <div className="mx-auto mt-10 max-w-sm">
