@@ -8,6 +8,7 @@ import {
   ModalHeader,
   ModalProps,
 } from '@nextui-org/modal'
+import { ScrollShadow } from '@nextui-org/scroll-shadow'
 import { IconChevronRight, IconInfoCircle } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'
@@ -47,13 +48,18 @@ export const PlacePreviewModal: FC<
               </ModalHeader>
               <ModalBody className="py-0">
                 <>
-                  <div className="-mx-6 flex h-32 gap-2 overflow-x-auto px-6 [&>*]:shrink-0">
+                  <ScrollShadow
+                    hideScrollBar
+                    orientation="horizontal"
+                    className="-mx-6 h-32 justify-start space-x-2 whitespace-nowrap leading-[0] [&>*:first-child]:!ml-6 [&>*:last-child]:!mr-6 [&>*]:inline-block"
+                    size={24}
+                  >
                     <Link
                       href={`/explore/places/${place.id}`}
-                      className="outline-none focus-visible:ring focus-visible:ring-primary focus-visible:ring-offset-2"
+                      className="h-full w-24 outline-none focus-visible:ring focus-visible:ring-primary focus-visible:ring-offset-2"
                     >
                       <Map
-                        className="aspect-[3/4] h-full w-auto rounded-md"
+                        className="h-full w-full rounded-md"
                         zoom={isFar ? 10 : 11}
                         center={
                           isFar
@@ -75,7 +81,7 @@ export const PlacePreviewModal: FC<
                     </Link>
                     <OptimizedImage
                       radius="md"
-                      className="h-full"
+                      full="height"
                       image={place.mainImage}
                       alt={place.name}
                     />
@@ -83,12 +89,12 @@ export const PlacePreviewModal: FC<
                       <OptimizedImage
                         radius="lg"
                         shadow="sm"
-                        className="h-full"
+                        full="height"
                         image={image}
                         alt={place.name}
                       />
                     ))}
-                  </div>
+                  </ScrollShadow>
                   <div className="overflow-x-auto">
                     <CategoryTagList
                       mainCategory={place.mainCategory}

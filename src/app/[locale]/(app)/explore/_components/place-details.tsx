@@ -43,7 +43,7 @@ export const PlaceDetails: FC<{
           <OptimizedImage
             radius="lg"
             shadow="sm"
-            className="aspect-[4/3] object-cover"
+            className="aspect-[4/3]"
             classNames={{
               wrapper: 'row-span-2',
             }}
@@ -54,7 +54,7 @@ export const PlaceDetails: FC<{
             radius="lg"
             shadow="sm"
             alt={place.name}
-            className="h-full object-cover"
+            full="both"
             image={place.images[0]}
           />
           <ViewMoreImagesButtonAndDialog
