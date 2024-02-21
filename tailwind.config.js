@@ -3,6 +3,7 @@
 import { nextui } from '@nextui-org/react'
 import typography from '@tailwindcss/typography'
 import tailwindScrollbarHide from 'tailwind-scrollbar-hide'
+import tailwindcssSafeArea from 'tailwindcss-safe-area'
 import defaultTheme from 'tailwindcss/defaultTheme'
 import plugin from 'tailwindcss/plugin'
 import { allColorClasses } from './src/helpers/color-classes'
@@ -79,6 +80,7 @@ const config = {
     nextui(),
     typography,
     tailwindScrollbarHide,
+    tailwindcssSafeArea,
     plugin(function ({ matchUtilities, theme }) {
       matchUtilities(
         {

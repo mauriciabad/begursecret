@@ -25,6 +25,8 @@ const poppins = Poppins({
 
 export const viewport: Viewport = {
   themeColor: '#5F797A',
+  maximumScale: 1,
+  userScalable: false,
 }
 
 export async function generateMetadata({
@@ -68,7 +70,7 @@ const RootLayout: FC<RootLayoutProps> = async ({
           inter.className,
           poppins.variable,
           inter.variable,
-          'bg-stone-50',
+          'bg-stone-50 p-safe',
         ])}
       >
         <AxiomWebVitals />
