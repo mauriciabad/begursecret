@@ -4,7 +4,10 @@ export type MapPoint = {
 }
 export type PointString = `POINT(${number} ${number})`
 
-type WTFPointType<Lat extends number = number, Lng extends number = number> = {
+type GeoJsonPointType<
+  Lat extends number = number,
+  Lng extends number = number,
+> = {
   type: 'Point'
   coordinates: [Lng, Lat]
 }
@@ -16,7 +19,7 @@ type WTFPointType<Lat extends number = number, Lng extends number = number> = {
  * @returns Object with lat and lng properties
  */
 export function getPoint(
-  value: PointString | { x: number; y: number } | MapPoint | WTFPointType
+  value: PointString | { x: number; y: number } | MapPoint | GeoJsonPointType
 ): MapPoint
 export function getPoint(value: null | undefined): null
 export function getPoint(
@@ -25,7 +28,7 @@ export function getPoint(
     | PointString
     | { x: number; y: number }
     | MapPoint
-    | WTFPointType
+    | GeoJsonPointType
     | null
     | undefined
 ): MapPoint | null
@@ -35,7 +38,7 @@ export function getPoint(
     | PointString
     | { x: number; y: number }
     | MapPoint
-    | WTFPointType
+    | GeoJsonPointType
     | null
     | undefined
 ): MapPoint | null {

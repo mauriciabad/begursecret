@@ -21,7 +21,7 @@ export const multiLineType = customType<{
     const multiLine = getMultiLine(value)
     if (!multiLine)
       throw new Error(`Invalid multiLine value: ${JSON.stringify(value)}`)
-    return sql`ST_MLineFromText('${multiLineToString(multiLine)}', ${SRID_CODE})`
+    return sql`ST_MultiLineStringFromText(${multiLineToString(multiLine)}, ${SRID_CODE})`
   },
   fromDriver(value: string): WrongMultiLineType {
     const multiLine = getMultiLine(value)

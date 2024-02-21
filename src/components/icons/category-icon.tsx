@@ -104,7 +104,7 @@ const iconsByIconName = {
   diamond: IconDiamond,
 } as const satisfies Record<IconName, Icon>
 
-export const PlaceCategoryIcon: FC<
+export const CategoryIcon: FC<
   TablerIconsProps & {
     icon?: IconName | null
   }

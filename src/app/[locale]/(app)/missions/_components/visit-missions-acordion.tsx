@@ -13,7 +13,7 @@ import {
 } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC, useState } from 'react'
-import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
+import { CategoryIcon } from '~/components/icons/category-icon'
 import { LinkButton } from '~/components/links/link-button'
 import { cn } from '~/helpers/cn'
 import { colorClasses } from '~/helpers/color-classes'
@@ -51,7 +51,7 @@ export const VisitMissionsAcordion: FC<{
               title: 'text-gray-700 font-title text-lg font-semibold',
             }}
             startContent={
-              <PlaceCategoryIconWithProgress
+              <CategoryIconWithProgress
                 icon={category.icon}
                 progress={
                   places.filter((place) => place.visited).length / places.length
@@ -130,7 +130,7 @@ export const VisitMissionsAcordion: FC<{
   )
 }
 
-const PlaceCategoryIconWithProgress: FC<{
+const CategoryIconWithProgress: FC<{
   icon: IconName | null
   progress: number
   color: ColorName
@@ -161,7 +161,7 @@ const PlaceCategoryIconWithProgress: FC<{
         />
       )}
       <div className="absolute inset-0 flex items-center justify-center">
-        <PlaceCategoryIcon
+        <CategoryIcon
           icon={icon}
           className={cn(color && [colorClasses.text[color]], {
             'text-white': progress >= 1,

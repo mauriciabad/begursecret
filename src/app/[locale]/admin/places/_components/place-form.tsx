@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl'
 import { FC, useState } from 'react'
 import { Controller } from 'react-hook-form'
 import { FeaturesEditor } from '~/components/admin-only/features-editor'
-import { SelectCategory } from '~/components/admin-only/select-category'
+import { SelectPlaceCategory } from '~/components/admin-only/select-place-category'
 import { MarkdownEditor } from '~/components/generic/markdown-editor'
 import {
   SafeForm,
@@ -27,7 +27,7 @@ export const PlaceForm: FC<{
   place?: Place
   className?: string
 }> = ({ className, place }) => {
-  const t = useTranslations('admin-places')
+  const t = useTranslations('admin-places-and-routes')
   const router = useRouter()
 
   const utils = trpc.useUtils()
@@ -76,7 +76,7 @@ export const PlaceForm: FC<{
   return (
     <>
       <h1 className="text-2xl font-bold">
-        {isCreateForm ? t('create-place') : t('edit-place')}
+        {isCreateForm ? t('create') : t('edit')}
       </h1>
       <p className="text-lg text-red-500">CATALAN ONLY</p>
 
@@ -143,7 +143,7 @@ export const PlaceForm: FC<{
               field: { onChange, onBlur, value },
               fieldState: { error },
             }) => (
-              <SelectCategory
+              <SelectPlaceCategory
                 isInvalid={!!error}
                 errorMessage={error?.message}
                 onBlur={onBlur}
@@ -161,7 +161,7 @@ export const PlaceForm: FC<{
               field: { onChange, onBlur, value },
               fieldState: { error },
             }) => (
-              <SelectCategory
+              <SelectPlaceCategory
                 isInvalid={!!error}
                 errorMessage={error?.message}
                 onBlur={onBlur}

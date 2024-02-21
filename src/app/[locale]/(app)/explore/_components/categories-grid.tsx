@@ -4,7 +4,7 @@ import { Button } from '@nextui-org/button'
 import { Card } from '@nextui-org/card'
 import { useTranslations } from 'next-intl'
 import { FC, useState } from 'react'
-import { PlaceCategoryIcon } from '~/components/icons/place-category-icon'
+import { CategoryIcon } from '~/components/icons/category-icon'
 import { cn } from '~/helpers/cn'
 import { Link } from '~/navigation'
 import { ApiRouterOutput } from '~/server/api/router'
@@ -36,7 +36,7 @@ export const CategoriesGrid: FC<{
                 { hidden: !showingAll && i >= 6 }
               )}
             >
-              <PlaceCategoryIcon
+              <CategoryIcon
                 icon={category.icon}
                 size={24}
                 className="text-stone-800"

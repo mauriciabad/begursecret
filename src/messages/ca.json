@@ -151,7 +151,7 @@
       "logout": "Tanca sessió"
     }
   },
-  "admin-places": {
+  "admin-places-and-routes": {
     "search-placeholder": "Cercar per nom...",
     "total": "Total {total}",
     "columns": {
@@ -165,13 +165,14 @@
       "mainImage": "Imatge principal",
       "actions": "Accions",
       "content": "Contingut",
-      "features": "Característiques"
+      "features": "Característiques",
+      "path": "Recorregut"
     },
     "add-new": "Crear nou",
-    "edit-place": "Editar lloc",
-    "create-place": "Crear lloc",
+    "edit": "Editar",
+    "create": "Crear",
     "stay-on-page-after-submit": "Fer més",
-    "no-places-found": "No s'han trobat llocs",
+    "nothing-found": "No s'ha trobat res",
     "no-features": "No hi ha característiques",
     "change-image": {
       "save": "Guardar",
@@ -437,6 +438,12 @@
     "meta": {
       "title": "Lloc",
       "description": "Informació del lloc"
+    }
+  },
+  "route": {
+    "meta": {
+      "title": "Ruta",
+      "description": "Informació de la ruta"
     }
   },
   "map": {

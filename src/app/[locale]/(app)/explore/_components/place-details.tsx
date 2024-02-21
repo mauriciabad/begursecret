@@ -1,10 +1,10 @@
 import { IconAward, IconBooks } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'
+import { CategoryTagList } from '~/components/category-tags/category-tag-list'
 import { IconTitle } from '~/components/generic/icon-title'
 import { MarkdownContent } from '~/components/generic/markdown-content'
 import { OptimizedImage } from '~/components/generic/optimized-image'
-import { PlaceCategoryTagList } from '~/components/place-category-tags/place-category-tag-list'
 import { ApiRouterOutput } from '~/server/api/router'
 import { VisitMissionsAcordion } from '../../missions/_components/visit-missions-acordion'
 import { FeaturesBlock } from './features-block'
@@ -77,7 +77,7 @@ export const PlaceDetails: FC<{
         />
       )}
 
-      <PlaceCategoryTagList
+      <CategoryTagList
         mainCategory={place.mainCategory}
         categories={place.categories.map((c) => c.category)}
         wrap

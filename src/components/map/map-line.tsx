@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, memo } from 'react'
 import { Polyline } from 'react-leaflet'
 import { colorValues } from '~/helpers/color-classes'
 import { MapMultiLine } from '~/helpers/spatial-data/multi-line'
@@ -7,6 +7,7 @@ import { ColorName } from '~/server/db/constants/shared'
 
 const STROKE_WIDTH = 4
 const STROKE_BORDER = 2
+const STROKE_OUTLINE = 4
 
 export type MapLineInvariable = {
   routeId: number
@@ -16,43 +17,68 @@ export type MapLineInvariable = {
 }
 export type MapLine = MapLineInvariable & {
   disabled?: boolean
+  veryEmphasized?: boolean
 }
 
-export const MapLine: FC<MapLine> = ({
-  path,
-  url,
-  disabled,
-  ...routeMarkerProps
-}) => {
-  const router = useRouter()
+export const MapLine: FC<MapLine> = memo(
+  ({ path, url, disabled, veryEmphasized, ...routeMarkerProps }) => {
+    const router = useRouter()
 
-  return (
-    <>
-      {path.map((line) => (
-        <Polyline
-          key={`${line.map(([lat, lng]) => `${lat}-${lng}`).join(',')}-bg`}
-          positions={line}
-          color={colorValues[800][routeMarkerProps.color]}
-          weight={STROKE_WIDTH + STROKE_BORDER}
-        />
-      ))}
-      {path.map((line) => (
-        <Polyline
-          key={line.map(([lat, lng]) => `${lat}-${lng}`).join(',')}
-          positions={line}
-          color={colorValues[500][routeMarkerProps.color]}
-          weight={STROKE_WIDTH}
-          eventHandlers={
-            url && !disabled
-              ? {
-                  click: () => {
-                    router.push(url)
-                  },
+    const extraStrokeWidth = veryEmphasized ? 2 : 0
+
+    const displayLines = (
+      <>
+        {path.map((line) => (
+          <Polyline
+            key={`${line.map(([lat, lng]) => `${lat}-${lng}`).join(',')}-border`}
+            positions={line}
+            color={colorValues[800][routeMarkerProps.color]}
+            weight={STROKE_WIDTH + extraStrokeWidth + STROKE_BORDER}
+          />
+        ))}
+        {path.map((line) => (
+          <Polyline
+            key={`${line.map(([lat, lng]) => `${lat}-${lng}`).join(',')}-stroke`}
+            positions={line}
+            color={colorValues[500][routeMarkerProps.color]}
+            weight={STROKE_WIDTH + extraStrokeWidth}
+            eventHandlers={
+              url && !disabled
+                ? {
+                    click: () => {
+                      router.push(url)
+                    },
+                  }
+                : undefined
+            }
+          />
+        ))}
+      </>
+    )
+
+    return (
+      <>
+        {veryEmphasized ? (
+          <>
+            {path.map((line) => (
+              <Polyline
+                key={`${line.map(([lat, lng]) => `${lat}-${lng}`).join(',')}-outline`}
+                positions={line}
+                color="#fff"
+                weight={
+                  STROKE_WIDTH +
+                  extraStrokeWidth +
+                  STROKE_BORDER +
+                  STROKE_OUTLINE
                 }
-              : undefined
-          }
-        />
-      ))}
-    </>
-  )
-}
+              />
+            ))}
+            {displayLines}
+          </>
+        ) : (
+          displayLines
+        )}
+      </>
+    )
+  }
+)

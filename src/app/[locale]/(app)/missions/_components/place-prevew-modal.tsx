@@ -11,10 +11,10 @@ import {
 import { IconChevronRight, IconInfoCircle } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'
+import { CategoryTagList } from '~/components/category-tags/category-tag-list'
 import { OptimizedImage } from '~/components/generic/optimized-image'
 import { LinkButton } from '~/components/links/link-button'
 import { Map } from '~/components/map/map'
-import { PlaceCategoryTagList } from '~/components/place-category-tags/place-category-tag-list'
 import { shotConfettiStars } from '~/helpers/confetti'
 import { Link } from '~/navigation'
 import { ApiRouterOutput } from '~/server/api/router'
@@ -90,7 +90,7 @@ export const PlacePreviewModal: FC<
                     ))}
                   </div>
                   <div className="overflow-x-auto">
-                    <PlaceCategoryTagList
+                    <CategoryTagList
                       mainCategory={place.mainCategory}
                       categories={place.categories}
                     />

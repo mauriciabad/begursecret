@@ -1,25 +1,28 @@
 import 'server-only'
 
 import { eq, sql } from 'drizzle-orm'
-import { calculateLocation, pointToString } from '~/helpers/spatial-data/point'
 import {
-  createPlaceSchema,
-  editPlaceSchema,
-  getPlacesSchema,
+  calculatePath,
+  multiLineToString,
+} from '~/helpers/spatial-data/multi-line'
+import {
+  createRouteSchema,
+  editRouteSchema,
+  getRoutesSchema,
   listCategoriesSchema,
-  listPlacesSchema,
-} from '~/schemas/places'
+  listRoutesSchema,
+} from '~/schemas/routes'
 import { db } from '~/server/db/db'
-import { features, places, placesToPlaceCategories } from '~/server/db/schema'
-import { selectPoint } from '~/server/helpers/spatial-data/point'
+import { features, routes, routesToRouteCategories } from '~/server/db/schema'
+import { selectMultiLine } from '~/server/helpers/spatial-data/multi-line'
 import {
   flattenTranslationsOnExecute,
   withTranslations,
 } from '~/server/helpers/translations/query/with-translations'
 import { adminProcedure, router } from '~/server/trpc'
 
-const getAllPlaces = flattenTranslationsOnExecute(
-  db.query.places
+const getAllRoutes = flattenTranslationsOnExecute(
+  db.query.routes
     .findMany(
       withTranslations({
         columns: {
@@ -28,7 +31,7 @@ const getAllPlaces = flattenTranslationsOnExecute(
           description: true,
         },
         extras: {
-          location: selectPoint('location', places.location),
+          path: selectMultiLine('path', routes.path),
         },
         with: {
           categories: {
@@ -58,7 +61,7 @@ const getAllPlaces = flattenTranslationsOnExecute(
 )
 
 const listCategories = flattenTranslationsOnExecute(
-  db.query.placeCategories
+  db.query.routeCategories
     .findMany(
       withTranslations({
         columns: {
@@ -74,8 +77,8 @@ const listCategories = flattenTranslationsOnExecute(
     .prepare()
 )
 
-const getPlace = flattenTranslationsOnExecute(
-  db.query.places
+const getRoute = flattenTranslationsOnExecute(
+  db.query.routes
     .findFirst(
       withTranslations({
         columns: {
@@ -85,9 +88,9 @@ const getPlace = flattenTranslationsOnExecute(
           content: true,
         },
         extras: {
-          location: selectPoint('location', places.location),
+          path: selectMultiLine('path', routes.path),
         },
-        where: (place, { eq }) => eq(place.id, sql.placeholder('id')),
+        where: (route, { eq }) => eq(route.id, sql.placeholder('id')),
         with: {
           mainImage: true,
           categories: {
@@ -117,26 +120,26 @@ const getPlace = flattenTranslationsOnExecute(
     .prepare()
 )
 
-export const placesAdminRouter = router({
-  list: adminProcedure.input(listPlacesSchema).query(async ({ input }) => {
-    return (await getAllPlaces.execute({ locale: input.locale })).map(
-      calculateLocation
+export const routesAdminRouter = router({
+  list: adminProcedure.input(listRoutesSchema).query(async ({ input }) => {
+    return (await getAllRoutes.execute({ locale: input.locale })).map(
+      calculatePath
     )
   }),
-  get: adminProcedure.input(getPlacesSchema).query(async ({ input }) => {
-    const result = await getPlace.execute({
+  get: adminProcedure.input(getRoutesSchema).query(async ({ input }) => {
+    const result = await getRoute.execute({
       locale: input.locale,
       id: input.id,
     })
-    return result ? calculateLocation(result) : undefined
+    return result ? calculatePath(result) : undefined
   }),
   listCategories: adminProcedure
     .input(listCategoriesSchema)
     .query(async ({ input }) => {
       return await listCategories.execute({ locale: input.locale })
     }),
-  createPlace: adminProcedure
-    .input(createPlaceSchema)
+  createRoute: adminProcedure
+    .input(createRouteSchema)
     .mutation(async ({ input }) => {
       await db.transaction(async (tx) => {
         const insertFeaturesResult = await tx
@@ -145,41 +148,40 @@ export const placesAdminRouter = router({
 
         const featuresId = Number(insertFeaturesResult.insertId)
 
-        const insertPlaceResult = await tx.insert(places).values({
+        const insertRouteResult = await tx.insert(routes).values({
           name: input.name,
           description: input.description,
           mainCategoryId: input.mainCategory,
-          mainImageId: input.mainImageId,
-          location: pointToString(input.location),
+          path: multiLineToString(input.path),
           content: input.content,
           verificationRequirementsId: 1,
           featuresId,
         })
-        const newPlaceId = Number(insertPlaceResult.insertId)
+        const newRouteId = Number(insertRouteResult.insertId)
 
         if (input.categories.length > 0) {
-          await tx.insert(placesToPlaceCategories).values(
+          await tx.insert(routesToRouteCategories).values(
             input.categories.map((categoryId) => ({
-              placeId: newPlaceId,
+              routeId: newRouteId,
               categoryId: categoryId,
             }))
           )
         }
 
-        return newPlaceId
+        return newRouteId
       })
     }),
-  editPlace: adminProcedure
-    .input(editPlaceSchema)
+  editRoute: adminProcedure
+    .input(editRouteSchema)
     .mutation(async ({ input }) => {
       await db.transaction(async (tx) => {
-        const placeId = Number(input.id)
+        const routeId = Number(input.id)
 
         const featuresId = (
           await tx
-            .selectDistinct({ featuresId: places.featuresId })
-            .from(places)
-            .where(eq(places.id, placeId))
+            .selectDistinct({ featuresId: routes.featuresId })
+            .from(routes)
+            .where(eq(routes.id, routeId))
         )[0].featuresId
 
         await tx
@@ -191,32 +193,30 @@ export const placesAdminRouter = router({
           .where(eq(features.id, featuresId))
 
         await tx
-          .update(places)
+          .update(routes)
           .set({
             name: input.name,
             description: input.description,
             mainCategoryId: input.mainCategory,
-            mainImageId: input.mainImageId,
-            location: pointToString(input.location),
+            path: multiLineToString(input.path),
             content: input.content,
             featuresId: featuresId,
           })
-          .where(eq(places.id, placeId))
-
+          .where(eq(routes.id, routeId))
         await tx
-          .delete(placesToPlaceCategories)
-          .where(eq(placesToPlaceCategories.placeId, placeId))
+          .delete(routesToRouteCategories)
+          .where(eq(routesToRouteCategories.routeId, routeId))
 
         if (input.categories.length > 0) {
-          await tx.insert(placesToPlaceCategories).values(
+          await tx.insert(routesToRouteCategories).values(
             input.categories.map((categoryId) => ({
-              placeId: placeId,
+              routeId: routeId,
               categoryId: categoryId,
             }))
           )
         }
 
-        return placeId
+        return routeId
       })
     }),
 })

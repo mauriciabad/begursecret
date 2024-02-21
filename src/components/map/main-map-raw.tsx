@@ -161,12 +161,16 @@ const MarkersLayersRawMap: FC<{
 })
 
 const LinesLayersRawMap: FC = memo(() => {
-  const { lines } = useMainMap()
+  const { lines, veryEmphasizedLines } = useMainMap()
 
   return (
     <>
       {lines.map((line) => (
-        <MapLine key={line.routeId} {...line} />
+        <MapLine
+          key={line.routeId}
+          {...line}
+          veryEmphasized={veryEmphasizedLines?.has(line.routeId)}
+        />
       ))}
     </>
   )

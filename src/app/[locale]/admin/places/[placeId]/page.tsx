@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server'
 import type { FC } from 'react'
 import { LocaleParams, LocaleRouteParams } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
-import { PlaceForm } from '../__components/place-form'
+import { PlaceForm } from '../_components/place-form'
 
 export async function generateMetadata({
   params: { locale },

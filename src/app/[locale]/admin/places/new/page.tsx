@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import type { FC } from 'react'
 import { type LocaleRouteParams } from '~/i18n'
-import { PlaceForm } from '../__components/place-form'
+import { PlaceForm } from '../_components/place-form'
 
 export async function generateMetadata({
   params: { locale },

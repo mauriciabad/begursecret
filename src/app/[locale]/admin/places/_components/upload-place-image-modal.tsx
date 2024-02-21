@@ -42,7 +42,7 @@ export const UploadPlaceImageModal: FC<
   onBlur,
   value: mainImageId,
 }) => {
-  const t = useTranslations('admin-places')
+  const t = useTranslations('admin-places-and-routes')
   const format = useFormatter()
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
   const [file, setFile] = useState<File | null>(null)

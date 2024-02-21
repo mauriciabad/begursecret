@@ -12,6 +12,7 @@ import { MapLineInvariable } from '../map/map-line'
 import { MapMarkerInvariable } from '../map/map-marker'
 
 export type SetOfMarkers = Set<NonNullable<MapMarkerInvariable['placeId']>>
+export type SetOfLines = Set<NonNullable<MapLineInvariable['routeId']>>
 
 const MainMapCtx = createContext<
   Readonly<{
@@ -21,6 +22,8 @@ const MainMapCtx = createContext<
     setEmphasizedMarkers: (markers: SetOfMarkers | undefined) => void
     veryEmphasizedMarkers: SetOfMarkers | undefined
     setVeryEmphasizedMarkers: (markers: SetOfMarkers | undefined) => void
+    veryEmphasizedLines: SetOfLines | undefined
+    setVeryEmphasizedLines: (lines: SetOfLines | undefined) => void
     markers: readonly MapMarkerInvariable[]
     lines: readonly MapLineInvariable[]
   }>
@@ -31,6 +34,8 @@ const MainMapCtx = createContext<
   setEmphasizedMarkers: () => {},
   veryEmphasizedMarkers: undefined,
   setVeryEmphasizedMarkers: () => {},
+  veryEmphasizedLines: undefined,
+  setVeryEmphasizedLines: () => {},
   markers: [],
   lines: [],
 })
@@ -47,6 +52,7 @@ export const MainMapProvider: FC<
   const [emphasizedMarkers, setEmphasizedMarkers] = useState<SetOfMarkers>()
   const [veryEmphasizedMarkers, setVeryEmphasizedMarkers] =
     useState<SetOfMarkers>()
+  const [veryEmphasizedLines, setVeryEmphasizedLines] = useState<SetOfLines>()
 
   return (
     <>
@@ -58,6 +64,8 @@ export const MainMapProvider: FC<
           setEmphasizedMarkers,
           veryEmphasizedMarkers,
           setVeryEmphasizedMarkers,
+          veryEmphasizedLines,
+          setVeryEmphasizedLines,
           markers,
           lines,
         }}
