@@ -29,7 +29,7 @@ export const RouteDetails: FC<{
           <OptimizedImage
             radius="lg"
             shadow="sm"
-            className="aspect-[4/3] object-cover"
+            className="aspect-[4/3]"
             classNames={{
               wrapper: 'row-span-2',
             }}
@@ -40,7 +40,7 @@ export const RouteDetails: FC<{
             radius="lg"
             shadow="sm"
             alt={route.name}
-            className="h-full object-cover"
+            full="both"
             image={route.images[0]}
           />
           <ViewMoreImagesButtonAndDialog

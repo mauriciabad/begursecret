@@ -34,12 +34,19 @@ function imageToStatic(image: S3Image): StaticImage {
 
 const FALLBACK_IMG_ALT = 'Imatge de mostra'
 
+const fullClassNames = {
+  height: 'h-full w-auto',
+  width: 'h-auto w-full',
+  both: 'h-full w-full',
+} as const satisfies Record<string, string>
+
 export const OptimizedImage: FC<
   Omit<ImageProps & NextImageProps, 'src' | 'width' | 'height' | 'alt'> & {
     image?: S3Image | StaticImageData | null
     alt?: string
+    full?: keyof typeof fullClassNames
   }
-> = ({ image, alt, className, ...imageProps }) => {
+> = ({ image, alt, className, full = 'width', classNames, ...imageProps }) => {
   const actualImage: StaticImage = image
     ? imageIsFromS3(image)
       ? imageToStatic(image)
@@ -55,7 +62,11 @@ export const OptimizedImage: FC<
       blurDataURL={actualImage.blurDataURL}
       alt={alt ?? actualImage.alt}
       placeholder={actualImage.blurDataURL ? 'blur' : 'empty'}
-      className={cn('h-auto w-auto', className)}
+      className={cn('object-cover', fullClassNames[full], className)}
+      classNames={{
+        ...classNames,
+        wrapper: cn(fullClassNames[full], classNames?.wrapper),
+      }}
       {...imageProps}
     />
   )
