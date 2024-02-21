@@ -9,10 +9,8 @@ import { cn } from '~/helpers/cn'
 import { MapPoint } from '~/helpers/spatial-data/point'
 import { CustomLayersControl, LayerId } from './custom-layers-controls'
 import { CustomLocationControl } from './custom-location-control'
-import { CustomRotationControl } from './custom-rotation-control'
 import { useMapResize } from './useMapResize'
 
-import 'leaflet-rotate'
 import 'leaflet.locatecontrol'
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'
 import 'leaflet/dist/leaflet.css'
@@ -86,9 +84,6 @@ export const MapRaw: FC<{
         ref={setMap}
         attributionControl={false}
         zoomSnap={0.5}
-        rotate={fullControl}
-        rotateControl={false}
-        touchRotate={fullControl}
       >
         {markers?.map((placeMarkerProps) => (
           <MapMarker
@@ -136,7 +131,6 @@ export const MapRaw: FC<{
             defaultLayer={defaultLayer}
           />
           <CustomLocationControl hide={!fullControl} />
-          <CustomRotationControl hide={!fullControl} />
         </div>
       </MapContainer>
     )
