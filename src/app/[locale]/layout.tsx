@@ -25,6 +25,8 @@ const poppins = Poppins({
 
 export const viewport: Viewport = {
   themeColor: '#5F797A',
+  maximumScale: 1,
+  userScalable: false,
 }
 
 export async function generateMetadata({
