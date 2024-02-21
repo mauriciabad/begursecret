@@ -9,6 +9,9 @@ import { cn } from '~/helpers/cn'
 
 const MotionButton = motion(Button)
 
+/**
+ * Unused due to paths moving randomly while rotating.
+ */
 export const CustomRotationControl: FC<{ hide?: boolean }> = ({ hide }) => {
   const parentMap = useMap()
   const [bearing, setBearing] = useState<number>(0)
