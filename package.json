@@ -97,6 +97,7 @@
     "prettier-plugin-tailwindcss": "0.5.11",
     "server-only": "0.0.1",
     "tailwind-merge": "2.2.1",
+    "tailwindcss-safe-area": "0.5.1",
     "ts-jest": "29.1.2",
     "ts-toolbelt": "9.6.0",
     "webpack": "5.90.1"
