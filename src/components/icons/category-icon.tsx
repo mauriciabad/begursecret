@@ -13,6 +13,7 @@ import {
   IconBusStop,
   IconCamera,
   IconChargingPile,
+  IconChartBubble,
   IconCornerRightDown,
   IconDiamond,
   IconFishHook,
@@ -102,6 +103,7 @@ const iconsByIconName = {
   'arrows-down-up': IconArrowsDownUp,
   swimming: IconSwimming,
   diamond: IconDiamond,
+  'chart-bubble': IconChartBubble,
 } as const satisfies Record<IconName, Icon>
 
 export const CategoryIcon: FC<

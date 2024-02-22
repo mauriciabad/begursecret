@@ -48,6 +48,7 @@ export const iconNames = [
   'arrows-down-up',
   'swimming',
   'diamond',
+  'chart-bubble',
 ] as const
 export type IconName = (typeof iconNames)[number]
 
