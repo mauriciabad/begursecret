@@ -46,6 +46,7 @@ export const PlaceList: FC<{
                 alt={place.name}
                 className="z-0 aspect-[4/3] h-16 object-cover"
                 image={place.mainImage}
+                full="height"
               />
             </CardBody>
           </Card>
