@@ -35,10 +35,10 @@ export type GroundType = (typeof groundType)[number]
 // Don't reorder these values, they are used to generate the database enum.
 export const allowedAccess = [
   'public',
-  'private',
+  'permissive',
   'customers',
   'permit',
-  'permissive',
+  'private',
   'mixed',
 ] as const
 export type AllowedAccess = (typeof allowedAccess)[number]

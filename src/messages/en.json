@@ -41,14 +41,17 @@
       },
       "values": {
         "normal": {
-          "parkingSpaces": "{value} spaces"
+          "parkingSpaces": "{value} spaces",
+          "slope": "{value} m"
         },
 
         "text": {},
 
         "composite": {
-          "price-priceUnit": "{price} {priceUnit}",
-          "timeToArrive-placeToArriveFrom": "{hours, plural, =0 {} other {# h }}{minutes, plural, =0 {} other {# min}} from {placeToArriveFrom, select, townCenter {the town center} parking {the parking} beach {the beach} road {the road} other {}}"
+          "price-priceUnit": "{price} {unit}",
+          "timeToArrive-placeToArriveFrom": "{hours, plural, =0 {} other {# h }}{minutes, plural, =0 {} other {# min}} from {placeToArriveFrom, select, townCenter {the town center} parking {the parking} beach {the beach} road {the road} other {}}",
+          "distance": "{distance} {unit}",
+          "duration": "{hours, plural, =0 {} other {# h }}{minutes, plural, =0 {} other {# min}}"
         },
 
         "boolean": {
@@ -100,6 +103,10 @@
           "isCovered": {
             "true": "Covered",
             "false": "Not covered"
+          },
+          "isNudist": {
+            "true": "Nudist",
+            "false": "Not nudist"
           }
         },
 
@@ -137,6 +144,14 @@
             "concrete": "Concrete",
             "dirt": "Dirt",
             "pavimented": "Pavimented"
+          },
+          "allowedAccess": {
+            "public": "Public access",
+            "permissive": "Access allowed, but not public",
+            "customers": "Customers only",
+            "permit": "Permit required",
+            "private": "Private access",
+            "mixed": "Mixed access"
           }
         }
       }

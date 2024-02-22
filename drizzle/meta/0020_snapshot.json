@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "4083433b-c86d-4a14-bfdf-53189a928833",
+  "id": "681fb2bb-2ee4-4b26-856f-b73c79269db3",
   "prevId": "d45a3d2f-23a4-4e2c-a24e-5952705e34db",
   "tables": {
     "account": {
@@ -290,7 +290,7 @@
         },
         "allowedAccess": {
           "name": "allowedAccess",
-          "type": "enum('public','private','customers','permit','permissive','mixed')",
+          "type": "enum('public','permissive','customers','permit','private','mixed')",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false

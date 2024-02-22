@@ -79,7 +79,7 @@ export const featureDisplayGroups = [
         icon: IconCurrencyEuro,
         transformValues: ({ price, priceUnit }) => ({
           price,
-          priceUnit: priceUnit ?? ('eur' satisfies PriceUnit),
+          unit: priceUnit ?? ('eur' satisfies PriceUnit),
         }),
         showIf: ({ price }) => price !== null,
         moreInfoFeatureKey: 'priceNotes',
@@ -173,11 +173,34 @@ export const featureDisplayGroups = [
       typeFeatureDisplay({
         type: 'number',
         key: 'duration',
+        hidden: true,
+        icon: IconClock,
+      } as const),
+      typeFeatureDisplay({
+        type: 'composite',
+        keys: ['duration'],
+        hidden: true,
+        transformValues: ({ duration }) => ({
+          hours: Math.floor((duration ?? 0) / 60),
+          minutes: (duration ?? 0) % 60,
+        }),
+        showIf: ({ duration }) => duration !== null,
         icon: IconClock,
       } as const),
       typeFeatureDisplay({
         type: 'number',
         key: 'distance',
+        hidden: true,
+        icon: IconRulerMeasure,
+      } as const),
+      typeFeatureDisplay({
+        type: 'composite',
+        keys: ['distance'],
+        hidden: true,
+        transformValues: ({ distance }) =>
+          distance && distance >= 1000
+            ? { distance: distance / 1000, unit: 'km' }
+            : { distance: distance, unit: 'm' },
         icon: IconRulerMeasure,
       } as const),
       typeFeatureDisplay({

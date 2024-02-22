@@ -41,14 +41,17 @@
       },
       "values": {
         "number": {
-          "parkingSpaces": "{value} places"
+          "parkingSpaces": "{value} places",
+          "slope": "{value} m"
         },
 
         "text": {},
 
         "composite": {
-          "price-priceUnit": "{price} {priceUnit}",
-          "timeToArrive-placeToArriveFrom": "A {hours, plural, =0 {} other {# h }}{minutes, plural, =0 {} other {# min}} {placeToArriveFrom, select, townCenter {del centre} parking {del parking} beach {de la platja} road {de la carretera} other {}}"
+          "price-priceUnit": "{price} {unit}",
+          "timeToArrive-placeToArriveFrom": "A {hours, plural, =0 {} other {# h }}{minutes, plural, =0 {} other {# min}} {placeToArriveFrom, select, townCenter {del centre} parking {del parking} beach {de la platja} road {de la carretera} other {}}",
+          "distance": "{distance} {unit}",
+          "duration": "{hours, plural, =0 {} other {# h }}{minutes, plural, =0 {} other {# min}}"
         },
 
         "boolean": {
@@ -99,6 +102,10 @@
           "isCovered": {
             "true": "Cobert",
             "false": "Descobert"
+          },
+          "isNudist": {
+            "true": "Nudista",
+            "false": "No nudista"
           }
         },
 
@@ -136,6 +143,14 @@
             "concrete": "Ciment",
             "dirt": "Terra",
             "pavimented": "Pavimentat"
+          },
+          "allowedAccess": {
+            "public": "Accés públic",
+            "permissive": "Accés permès, però no públic",
+            "customers": "Només per clients",
+            "permit": "Autorització necessària",
+            "private": "Accés privat",
+            "mixed": "Accés mixt"
           }
         }
       }
