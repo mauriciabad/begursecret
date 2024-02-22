@@ -531,6 +531,7 @@ type TranslationValues = Record<
 >
 
 export function nestedT<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   T extends (...args: any[]) => string,
   V extends TranslationValues,
 >(t: T, key: Parameters<T>[0], values: V) {
