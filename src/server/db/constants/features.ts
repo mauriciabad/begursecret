@@ -33,6 +33,17 @@ export const groundType = [
 export type GroundType = (typeof groundType)[number]
 
 // Don't reorder these values, they are used to generate the database enum.
+export const allowedAccess = [
+  'public',
+  'private',
+  'customers',
+  'permit',
+  'permissive',
+  'mixed',
+] as const
+export type AllowedAccess = (typeof allowedAccess)[number]
+
+// Don't reorder these values, they are used to generate the database enum.
 export const priceUnit = ['eur', 'eur/minute', 'eur/hour', 'eur/day'] as const
 export type PriceUnit = (typeof priceUnit)[number]
 

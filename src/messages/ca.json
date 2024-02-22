@@ -5,7 +5,8 @@
         "features": "Característiques",
         "services": "Serveis",
         "notes": "Notes",
-        "other": "Altres"
+        "other": "Altres",
+        "general": "General"
       },
       "labels": {
         "amountOfPeople": "Quantitat de gent",
@@ -22,6 +23,7 @@
         "hasLeisure": "Té serveis d'oci",
         "hasUnofficialName": "Nom no oficial",
         "isOutOfTheMunicipality": "Fora del municipi",
+        "allowedAccess": "Accés",
         "dimensions": "Dimensions",
         "price": "Preu",
         "priceUnit": "Unitat del preu",
@@ -30,7 +32,8 @@
         "placeToArriveFrom": "Lloc d'arribada",
         "isFreeWithLocalStamp": "És gratuït amb segell de Begur",
         "difficultyNotes": "Accessibilitat",
-        "priceNotes": "Preu"
+        "priceNotes": "Preu",
+        "allowedAccessNotes": "Accés"
       },
       "values": {
         "number": {

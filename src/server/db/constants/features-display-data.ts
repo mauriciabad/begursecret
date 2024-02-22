@@ -5,10 +5,12 @@ import {
   IconAlertTriangle,
   IconAlertTriangleFilled,
   IconBadgeWc,
+  IconBarrierBlock,
   IconBus,
   IconBusOff,
   IconCar,
   IconCarGarage,
+  IconCertificate,
   IconClock,
   IconCoinEuro,
   IconCurrencyEuro,
@@ -42,6 +44,7 @@ import {
   FeaturesInsert,
   FeaturesSelect,
   PriceUnit,
+  allowedAccess,
   amountOfPeople,
   difficulty,
   groundType,
@@ -49,11 +52,13 @@ import {
   priceUnit,
 } from '~/server/db/constants/features'
 
-const typeFeatureDisplay = <F extends AnyFeature>(feature: F) => feature
+const typeFeatureDisplay = <F extends AnyFeature<K>, K extends FeatureKey>(
+  feature: F
+) => feature
 
 export const featureDisplayGroups = [
   {
-    key: 'features',
+    key: 'general',
     featureDisplays: [
       typeFeatureDisplay({
         type: 'composite',
@@ -101,15 +106,17 @@ export const featureDisplayGroups = [
       } as const),
       typeFeatureDisplay({
         type: 'enum',
-        key: 'groundType',
-        icon: IconGrain,
-        options: groundType,
-      }),
-      typeFeatureDisplay({
-        type: 'text',
-        showRaw: true,
-        key: 'dimensions',
-        icon: IconRulerMeasure,
+        key: 'allowedAccess',
+        icon: IconBarrierBlock,
+        icons: {
+          public: IconWalk,
+          private: IconBarrierBlock,
+          customers: IconBarrierBlock,
+          permit: IconCertificate,
+          permissive: IconWalk,
+          mixed: IconBarrierBlock,
+        },
+        options: allowedAccess,
       } as const),
       typeFeatureDisplay({
         type: 'composite',
@@ -136,6 +143,28 @@ export const featureDisplayGroups = [
         options: placeToArriveFrom,
       } as const),
       typeFeatureDisplay({
+        type: 'boolean',
+        key: 'isFreeWithLocalStamp',
+        icon: IconTicket,
+      } as const),
+    ],
+  },
+  {
+    key: 'features',
+    featureDisplays: [
+      typeFeatureDisplay({
+        type: 'enum',
+        key: 'groundType',
+        icon: IconGrain,
+        options: groundType,
+      }),
+      typeFeatureDisplay({
+        type: 'text',
+        showRaw: true,
+        key: 'dimensions',
+        icon: IconRulerMeasure,
+      } as const),
+      typeFeatureDisplay({
         type: 'number',
         key: 'parkingSpaces',
         icon: IconCar,
@@ -145,11 +174,6 @@ export const featureDisplayGroups = [
         key: 'isCovered',
         icon: IconCarGarage,
         moreInfoTranslationKey: true,
-      } as const),
-      typeFeatureDisplay({
-        type: 'boolean',
-        key: 'isFreeWithLocalStamp',
-        icon: IconTicket,
       } as const),
     ],
   },
@@ -265,6 +289,11 @@ export const featureDisplayGroups = [
         type: 'markdown',
         key: 'difficultyNotes',
         icon: IconAccessible,
+      } as const),
+      typeFeatureDisplay({
+        type: 'markdown',
+        key: 'allowedAccessNotes',
+        icon: IconBarrierBlock,
       } as const),
     ],
   },
@@ -435,10 +464,10 @@ type CompositeFeature<K extends FeatureKey = FeatureKey> = {
   moreInfoFeatureKey?: FeaturesKeysOfType<string>
 }
 
-type AnyFeature =
-  | EnumFeature
-  | NumberFeature
-  | TextFeature
-  | BooleanFeature
-  | CompositeFeature
-  | MarkdownFeature
+type AnyFeature<K extends FeatureKey = FeatureKey> =
+  | (K extends FeaturesKeysOfType<string>
+      ? MarkdownFeature<K> | EnumFeature<K> | TextFeature<K>
+      : K extends FeaturesKeysOfType<boolean>
+        ? BooleanFeature<K>
+        : NumberFeature<K>)
+  | CompositeFeature<K>

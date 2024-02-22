@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "718c845a-c94e-4e85-89ae-ede97bf58421",
+  "id": "3030fbfb-311e-4153-841c-e062e8bd38df",
   "prevId": "d45a3d2f-23a4-4e2c-a24e-5952705e34db",
   "tables": {
     "account": {
@@ -281,6 +281,13 @@
           "notNull": false,
           "autoincrement": false
         },
+        "allowedAccess": {
+          "name": "allowedAccess",
+          "type": "enum('public','private','customers','permit','permissive','mixed')",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "dimensions": {
           "name": "dimensions",
           "type": "tinytext",
@@ -343,6 +350,13 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
+        },
+        "allowedAccessNotes": {
+          "name": "allowedAccessNotes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {},
@@ -390,6 +404,13 @@
         },
         "priceNotes": {
           "name": "priceNotes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "allowedAccessNotes": {
+          "name": "allowedAccessNotes",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
