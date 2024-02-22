@@ -183,7 +183,6 @@ export const featureDisplayGroups = [
       typeFeatureDisplay({
         type: 'composite',
         keys: ['duration'],
-        hidden: true,
         transformValues: ({ duration }) => ({
           hours: Math.floor((duration ?? 0) / 60),
           minutes: (duration ?? 0) % 60,
@@ -200,7 +199,6 @@ export const featureDisplayGroups = [
       typeFeatureDisplay({
         type: 'composite',
         keys: ['distance'],
-        hidden: true,
         transformValues: ({ distance }) =>
           distance && distance >= 1000
             ? { distance: distance / 1000, unit: 'km' }
