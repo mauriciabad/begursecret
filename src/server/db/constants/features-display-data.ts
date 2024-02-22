@@ -190,7 +190,6 @@ export const featureDisplayGroups = [
           hours: Math.floor((duration ?? 0) / 60),
           minutes: (duration ?? 0) % 60,
         }),
-        showIf: ({ duration }) => duration !== null,
         icon: IconClock,
       } as const),
       typeFeatureDisplay({
@@ -399,7 +398,9 @@ function shouldShow<T extends CompositeFeature>(
   featureDisplay: T,
   rawValues: Parameters<NonNullable<T['transformValues']>>[0]
 ) {
-  if (!featureDisplay.showIf) return true
+  if (!featureDisplay.showIf) {
+    return Object.values(rawValues).some((v) => v !== null)
+  }
   return featureDisplay.showIf(rawValues)
 }
 
