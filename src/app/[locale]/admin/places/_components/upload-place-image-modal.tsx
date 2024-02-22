@@ -113,6 +113,7 @@ export const UploadPlaceImageModal: FC<
           })}
           image={allImages?.find((image) => image.id === mainImageId)}
           isLoading={isLoadingImages}
+          full="height"
         />
         <Button onPress={onOpen} variant="bordered" className={className}>
           {t('change-image.change-main-image')}
