@@ -43,6 +43,7 @@ import {
 } from '@tabler/icons-react'
 import { useMemo } from 'react'
 import { Join } from 'ts-toolbelt/out/String/Join'
+import { Leaves } from '~/helpers/types'
 import { pick } from '~/helpers/utilities'
 import {
   FeaturesInsert,
@@ -79,7 +80,10 @@ export const featureDisplayGroups = [
         icon: IconCurrencyEuro,
         transformValues: ({ price, priceUnit }) => ({
           price,
-          unit: priceUnit ?? ('eur' satisfies PriceUnit),
+          unit: [
+            `values.enum.priceUnit.${priceUnit ?? ('eur' satisfies PriceUnit)}`,
+            {},
+          ],
         }),
         showIf: ({ price }) => price !== null,
         moreInfoFeatureKey: 'priceNotes',
@@ -506,12 +510,43 @@ type CompositeFeature<K extends FeatureKey = FeatureKey> = {
   type: 'composite'
   keys: K[]
   icon: Icon
-  transformValues?: (values: { [Keys in K]: Features[Keys] }) => Record<
-    string,
-    string | number | boolean | Date | null | undefined
-  >
+  transformValues?: (values: {
+    [Keys in K]: Features[Keys]
+  }) => TranslationValues
   showIf?: (values: { [Keys in K]: Features[Keys] }) => boolean
   moreInfoFeatureKey?: FeaturesKeysOfType<string>
+}
+
+type NestedIntlKey = Leaves<IntlMessages['data']['features']>
+
+type TranslationValuesBasic =
+  | string
+  | number
+  | boolean
+  | Date
+  | null
+  | undefined
+
+type TranslationValues = Record<
+  string,
+  TranslationValuesBasic | [NestedIntlKey, TranslationValues]
+>
+
+export function nestedT<
+  T extends (...args: any[]) => string,
+  V extends TranslationValues,
+>(t: T, key: Parameters<T>[0], values: V) {
+  const tranlatedValues: Record<string, TranslationValuesBasic> = {}
+
+  for (const [k, v] of Object.entries(values)) {
+    if (Array.isArray(v)) {
+      tranlatedValues[k] = nestedT(t, v[0], v[1])
+    } else {
+      tranlatedValues[k] = v
+    }
+  }
+
+  return t(key, tranlatedValues)
 }
 
 type AnyFeature<K extends FeatureKey = FeatureKey> =

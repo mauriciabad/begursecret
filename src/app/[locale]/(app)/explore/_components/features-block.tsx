@@ -12,6 +12,7 @@ import {
   getCompositeFeatureKey,
   getCompositeFeatureValues,
   getIconForFeature,
+  nestedT,
   useFeatureDisplay,
 } from '~/server/db/constants/features-display-data'
 
@@ -144,7 +145,7 @@ export const FeaturesBlock: FC<{ features: Features; className?: string }> = ({
                           as="li"
                           key={key}
                           icon={featureDisplay.icon}
-                          text={t(`values.composite.${key}`, values)}
+                          text={nestedT(t, `values.composite.${key}`, values)}
                           moreInfo={getMoreInfoContent(featureDisplay)}
                         />
                       )
