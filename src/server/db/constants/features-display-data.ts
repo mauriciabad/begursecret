@@ -244,7 +244,7 @@ export const featureDisplayGroups = [
       } as const),
       typeFeatureDisplay({
         type: 'boolean',
-        key: 'hasUnofficialName',
+        key: 'isOutOfTheMunicipality',
         icon: IconDoorExit,
         icons: {
           true: IconDoorExit,
