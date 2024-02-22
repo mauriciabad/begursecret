@@ -33,7 +33,11 @@
         "isFreeWithLocalStamp": "És gratuït amb segell de Begur",
         "difficultyNotes": "Accessibilitat",
         "priceNotes": "Preu",
-        "allowedAccessNotes": "Accés"
+        "allowedAccessNotes": "Accés",
+        "isNudist": "És nudista",
+        "duration": "Durada",
+        "distance": "Distància",
+        "slope": "Desnivell"
       },
       "values": {
         "number": {

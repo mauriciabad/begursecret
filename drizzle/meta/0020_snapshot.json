@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "3030fbfb-311e-4153-841c-e062e8bd38df",
+  "id": "4083433b-c86d-4a14-bfdf-53189a928833",
   "prevId": "d45a3d2f-23a4-4e2c-a24e-5952705e34db",
   "tables": {
     "account": {
@@ -267,6 +267,13 @@
           "notNull": false,
           "autoincrement": false
         },
+        "isNudist": {
+          "name": "isNudist",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "hasUnofficialName": {
           "name": "hasUnofficialName",
           "type": "boolean",
@@ -312,6 +319,27 @@
         "isCovered": {
           "name": "isCovered",
           "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "duration": {
+          "name": "duration",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "distance": {
+          "name": "distance",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "slope": {
+          "name": "slope",
+          "type": "int",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false

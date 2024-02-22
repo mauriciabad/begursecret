@@ -4,16 +4,17 @@ import {
   IconAccessibleOff,
   IconAlertTriangle,
   IconAlertTriangleFilled,
+  IconArrowDownRight,
   IconBadgeWc,
   IconBarrierBlock,
   IconBus,
   IconBusOff,
   IconCar,
-  IconCarGarage,
   IconCertificate,
   IconClock,
   IconCoinEuro,
   IconCurrencyEuro,
+  IconDimensions,
   IconDoorEnter,
   IconDoorExit,
   IconDropletOff,
@@ -31,10 +32,13 @@ import {
   IconParking,
   IconParkingOff,
   IconRulerMeasure,
+  IconShirt,
+  IconShirtOff,
   IconTicket,
   IconToiletPaperOff,
   IconToolsKitchen2,
   IconToolsKitchen2Off,
+  IconUmbrella,
   IconWalk,
 } from '@tabler/icons-react'
 import { useMemo } from 'react'
@@ -60,6 +64,15 @@ export const featureDisplayGroups = [
   {
     key: 'general',
     featureDisplays: [
+      typeFeatureDisplay({
+        type: 'boolean',
+        key: 'isNudist',
+        icon: IconShirtOff,
+        icons: {
+          true: IconShirtOff,
+          false: IconShirt,
+        },
+      } as const),
       typeFeatureDisplay({
         type: 'composite',
         keys: ['price', 'priceUnit'],
@@ -153,27 +166,41 @@ export const featureDisplayGroups = [
     key: 'features',
     featureDisplays: [
       typeFeatureDisplay({
+        type: 'number',
+        key: 'parkingSpaces',
+        icon: IconCar,
+      } as const),
+      typeFeatureDisplay({
+        type: 'number',
+        key: 'duration',
+        icon: IconClock,
+      } as const),
+      typeFeatureDisplay({
+        type: 'number',
+        key: 'distance',
+        icon: IconRulerMeasure,
+      } as const),
+      typeFeatureDisplay({
+        type: 'number',
+        key: 'slope',
+        icon: IconArrowDownRight,
+      } as const),
+      typeFeatureDisplay({
+        type: 'text',
+        showRaw: true,
+        key: 'dimensions',
+        icon: IconDimensions,
+      } as const),
+      typeFeatureDisplay({
         type: 'enum',
         key: 'groundType',
         icon: IconGrain,
         options: groundType,
       }),
       typeFeatureDisplay({
-        type: 'text',
-        showRaw: true,
-        key: 'dimensions',
-        icon: IconRulerMeasure,
-      } as const),
-      typeFeatureDisplay({
-        type: 'number',
-        key: 'parkingSpaces',
-        icon: IconCar,
-      } as const),
-      typeFeatureDisplay({
         type: 'boolean',
         key: 'isCovered',
-        icon: IconCarGarage,
-        moreInfoTranslationKey: true,
+        icon: IconUmbrella,
       } as const),
     ],
   },

@@ -33,7 +33,11 @@
         "isFreeWithLocalStamp": "Is free with Begur's stamp",
         "difficultyNotes": "Accessibility",
         "priceNotes": "Price",
-        "allowedAccessNotes": "Allowed access"
+        "allowedAccessNotes": "Allowed access",
+        "isNudist": "Is nudist",
+        "duration": "Duration",
+        "distance": "Distance",
+        "slope": "Slope"
       },
       "values": {
         "normal": {
