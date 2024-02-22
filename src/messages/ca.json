@@ -23,6 +23,8 @@
         "hasLeisure": "Té serveis d'oci",
         "hasUnofficialName": "Nom no oficial",
         "isOutOfTheMunicipality": "Fora del municipi",
+        "hasInacurateLocation": "Ubicació inexacta",
+        "hasInacurateLocationNotes": "Ubicació inexacta",
         "allowedAccess": "Accés",
         "dimensions": "Dimensions",
         "price": "Preu",
@@ -106,6 +108,10 @@
           "isNudist": {
             "true": "Nudista",
             "false": "No nudista"
+          },
+          "hasInacurateLocation": {
+            "true": "Ubicació inexacta",
+            "false": "Ubicació exacta"
           }
         },
 
