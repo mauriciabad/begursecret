@@ -12,7 +12,7 @@ export const ThreeStateCheckbox: FC<{
   icon?: Icon
   className?: string
 }> = ({
-  value,
+  value = null,
   icon,
   label,
   onChange,
