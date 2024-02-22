@@ -4,7 +4,9 @@
       "titles": {
         "features": "Característiques",
         "services": "Serveis",
-        "notes": "Notes"
+        "notes": "Notes",
+        "other": "Altres",
+        "general": "General"
       },
       "labels": {
         "amountOfPeople": "Quantitat de gent",
@@ -19,6 +21,9 @@
         "hasShower": "Té dutxes",
         "hasLifeguard": "Té socorrista",
         "hasLeisure": "Té serveis d'oci",
+        "hasUnofficialName": "Nom no oficial",
+        "isOutOfTheMunicipality": "Fora del municipi",
+        "allowedAccess": "Accés",
         "dimensions": "Dimensions",
         "price": "Preu",
         "priceUnit": "Unitat del preu",
@@ -27,18 +32,26 @@
         "placeToArriveFrom": "Lloc d'arribada",
         "isFreeWithLocalStamp": "És gratuït amb segell de Begur",
         "difficultyNotes": "Accessibilitat",
-        "priceNotes": "Preu"
+        "priceNotes": "Preu",
+        "allowedAccessNotes": "Accés",
+        "isNudist": "És nudista",
+        "duration": "Durada",
+        "distance": "Distància",
+        "slope": "Desnivell"
       },
       "values": {
         "number": {
-          "parkingSpaces": "{value} places"
+          "parkingSpaces": "{value} places",
+          "slope": "{value} m"
         },
 
         "text": {},
 
         "composite": {
-          "price-priceUnit": "{price} {priceUnit}",
-          "timeToArrive-placeToArriveFrom": "A {hours, plural, =0 {} other {# h }}{minutes, plural, =0 {} other {# min}} {placeToArriveFrom, select, townCenter {del centre} parking {del parking} beach {de la platja} road {de la carretera} other {}}"
+          "price-priceUnit": "{price} {unit}",
+          "timeToArrive-placeToArriveFrom": "A {hours, plural, =0 {} other {# h }}{minutes, plural, =0 {} other {# min}} {placeToArriveFrom, select, townCenter {del centre} parking {del parking} beach {de la platja} road {de la carretera} other {}}",
+          "distance": "{distance} {unit}",
+          "duration": "{hours, plural, =0 {} other {# h }}{minutes, plural, =0 {} other {# min}}"
         },
 
         "boolean": {
@@ -74,6 +87,14 @@
             "true": "Serveis d'oci",
             "false": "Sense serveis d'oci"
           },
+          "hasUnofficialName": {
+            "true": "Nom no oficial",
+            "false": "Nom oficial"
+          },
+          "isOutOfTheMunicipality": {
+            "true": "Fora del municipi",
+            "false": "Dins del municipi"
+          },
           "hasDrinkingWater": {
             "true": "Aigua potable",
             "false": "Aigua no potable"
@@ -81,6 +102,10 @@
           "isCovered": {
             "true": "Cobert",
             "false": "Descobert"
+          },
+          "isNudist": {
+            "true": "Nudista",
+            "false": "No nudista"
           }
         },
 
@@ -118,6 +143,14 @@
             "concrete": "Ciment",
             "dirt": "Terra",
             "pavimented": "Pavimentat"
+          },
+          "allowedAccess": {
+            "public": "Accés públic",
+            "permissive": "Accés permès, però no públic",
+            "customers": "Només per clients",
+            "permit": "Autorització necessària",
+            "private": "Accés privat",
+            "mixed": "Accés mixt"
           }
         }
       }

@@ -7,6 +7,7 @@ import { onlyTranslatableLocales, type LocaleRouteParams } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
 import { CategoriesGrid } from './_components/categories-grid'
 import { ListPlacesOfCategory } from './_components/list-places-of-category'
+import { OverrideMainMap } from './_components/override-main-map'
 
 export async function generateMetadata({
   params: { locale },
@@ -38,6 +39,8 @@ const ExplorePage: FC<LocaleRouteParams> = async () => {
 
   return (
     <>
+      <OverrideMainMap reset />
+
       <CategoriesGrid categories={categories} />
 
       <div className="space-y-2">

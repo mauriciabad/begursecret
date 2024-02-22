@@ -141,6 +141,13 @@
       "when": 1708425618677,
       "tag": "0019_warm_zaladane",
       "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "5",
+      "when": 1708619014761,
+      "tag": "0020_lyrical_white_queen",
+      "breakpoints": true
     }
   ]
 }

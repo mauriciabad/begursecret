@@ -4,14 +4,19 @@ import {
   IconAccessibleOff,
   IconAlertTriangle,
   IconAlertTriangleFilled,
+  IconArrowDownRight,
   IconBadgeWc,
+  IconBarrierBlock,
   IconBus,
   IconBusOff,
   IconCar,
-  IconCarGarage,
+  IconCertificate,
   IconClock,
   IconCoinEuro,
   IconCurrencyEuro,
+  IconDimensions,
+  IconDoorEnter,
+  IconDoorExit,
   IconDropletOff,
   IconDroplets,
   IconFountain,
@@ -20,24 +25,31 @@ import {
   IconGrain,
   IconLifebuoy,
   IconLifebuoyOff,
+  IconMessageCheck,
+  IconMessageReport,
   IconMoodSad,
   IconMoodSmile,
   IconParking,
   IconParkingOff,
   IconRulerMeasure,
+  IconShirt,
+  IconShirtOff,
   IconTicket,
   IconToiletPaperOff,
   IconToolsKitchen2,
   IconToolsKitchen2Off,
+  IconUmbrella,
   IconWalk,
 } from '@tabler/icons-react'
 import { useMemo } from 'react'
 import { Join } from 'ts-toolbelt/out/String/Join'
+import { Leaves } from '~/helpers/types'
 import { pick } from '~/helpers/utilities'
 import {
   FeaturesInsert,
   FeaturesSelect,
   PriceUnit,
+  allowedAccess,
   amountOfPeople,
   difficulty,
   groundType,
@@ -45,19 +57,33 @@ import {
   priceUnit,
 } from '~/server/db/constants/features'
 
-const typeFeatureDisplay = <F extends AnyFeature>(feature: F) => feature
+const typeFeatureDisplay = <F extends AnyFeature<K>, K extends FeatureKey>(
+  feature: F
+) => feature
 
 export const featureDisplayGroups = [
   {
-    key: 'features',
+    key: 'general',
     featureDisplays: [
+      typeFeatureDisplay({
+        type: 'boolean',
+        key: 'isNudist',
+        icon: IconShirtOff,
+        icons: {
+          true: IconShirtOff,
+          false: IconShirt,
+        },
+      } as const),
       typeFeatureDisplay({
         type: 'composite',
         keys: ['price', 'priceUnit'],
         icon: IconCurrencyEuro,
         transformValues: ({ price, priceUnit }) => ({
           price,
-          priceUnit: priceUnit ?? ('eur' satisfies PriceUnit),
+          unit: [
+            `values.enum.priceUnit.${priceUnit ?? ('eur' satisfies PriceUnit)}`,
+            {},
+          ],
         }),
         showIf: ({ price }) => price !== null,
         moreInfoFeatureKey: 'priceNotes',
@@ -97,15 +123,17 @@ export const featureDisplayGroups = [
       } as const),
       typeFeatureDisplay({
         type: 'enum',
-        key: 'groundType',
-        icon: IconGrain,
-        options: groundType,
-      }),
-      typeFeatureDisplay({
-        type: 'text',
-        showRaw: true,
-        key: 'dimensions',
-        icon: IconRulerMeasure,
+        key: 'allowedAccess',
+        icon: IconBarrierBlock,
+        icons: {
+          public: IconWalk,
+          private: IconBarrierBlock,
+          customers: IconBarrierBlock,
+          permit: IconCertificate,
+          permissive: IconWalk,
+          mixed: IconBarrierBlock,
+        },
+        options: allowedAccess,
       } as const),
       typeFeatureDisplay({
         type: 'composite',
@@ -132,20 +160,72 @@ export const featureDisplayGroups = [
         options: placeToArriveFrom,
       } as const),
       typeFeatureDisplay({
+        type: 'boolean',
+        key: 'isFreeWithLocalStamp',
+        icon: IconTicket,
+      } as const),
+    ],
+  },
+  {
+    key: 'features',
+    featureDisplays: [
+      typeFeatureDisplay({
         type: 'number',
         key: 'parkingSpaces',
         icon: IconCar,
       } as const),
       typeFeatureDisplay({
-        type: 'boolean',
-        key: 'isCovered',
-        icon: IconCarGarage,
-        moreInfoTranslationKey: true,
+        type: 'number',
+        key: 'duration',
+        hidden: true,
+        icon: IconClock,
       } as const),
       typeFeatureDisplay({
+        type: 'composite',
+        keys: ['duration'],
+        transformValues: ({ duration }) => ({
+          hours: Math.floor((duration ?? 0) / 60),
+          minutes: (duration ?? 0) % 60,
+        }),
+        showIf: ({ duration }) => duration !== null,
+        icon: IconClock,
+      } as const),
+      typeFeatureDisplay({
+        type: 'number',
+        key: 'distance',
+        hidden: true,
+        icon: IconRulerMeasure,
+      } as const),
+      typeFeatureDisplay({
+        type: 'composite',
+        keys: ['distance'],
+        transformValues: ({ distance }) =>
+          distance && distance >= 1000
+            ? { distance: distance / 1000, unit: 'km' }
+            : { distance: distance, unit: 'm' },
+        icon: IconRulerMeasure,
+      } as const),
+      typeFeatureDisplay({
+        type: 'number',
+        key: 'slope',
+        icon: IconArrowDownRight,
+      } as const),
+      typeFeatureDisplay({
+        type: 'text',
+        showRaw: true,
+        key: 'dimensions',
+        icon: IconDimensions,
+      } as const),
+      typeFeatureDisplay({
+        type: 'enum',
+        key: 'groundType',
+        icon: IconGrain,
+        options: groundType,
+      }),
+      typeFeatureDisplay({
         type: 'boolean',
-        key: 'isFreeWithLocalStamp',
-        icon: IconTicket,
+        key: 'isCovered',
+        icon: IconUmbrella,
       } as const),
     ],
   },
@@ -227,6 +307,29 @@ export const featureDisplayGroups = [
     ],
   },
   {
+    key: 'other',
+    featureDisplays: [
+      typeFeatureDisplay({
+        type: 'boolean',
+        key: 'hasUnofficialName',
+        icon: IconMessageReport,
+        icons: {
+          true: IconMessageReport,
+          false: IconMessageCheck,
+        },
+      } as const),
+      typeFeatureDisplay({
+        type: 'boolean',
+        key: 'isOutOfTheMunicipality',
+        icon: IconDoorExit,
+        icons: {
+          true: IconDoorExit,
+          false: IconDoorEnter,
+        },
+      } as const),
+    ],
+  },
+  {
     key: 'notes',
     featureDisplays: [
       typeFeatureDisplay({
@@ -239,10 +342,15 @@ export const featureDisplayGroups = [
         key: 'difficultyNotes',
         icon: IconAccessible,
       } as const),
+      typeFeatureDisplay({
+        type: 'markdown',
+        key: 'allowedAccessNotes',
+        icon: IconBarrierBlock,
+      } as const),
     ],
   },
 ] as const satisfies {
-  key: string
+  key: keyof IntlMessages['data']['features']['titles']
   featureDisplays: AnyFeature[]
 }[]
 
@@ -400,18 +508,50 @@ type CompositeFeature<K extends FeatureKey = FeatureKey> = {
   type: 'composite'
   keys: K[]
   icon: Icon
-  transformValues?: (values: { [Keys in K]: Features[Keys] }) => Record<
-    string,
-    string | number | boolean | Date | null | undefined
-  >
+  transformValues?: (values: {
+    [Keys in K]: Features[Keys]
+  }) => TranslationValues
   showIf?: (values: { [Keys in K]: Features[Keys] }) => boolean
   moreInfoFeatureKey?: FeaturesKeysOfType<string>
 }
 
-type AnyFeature =
-  | EnumFeature
-  | NumberFeature
-  | TextFeature
-  | BooleanFeature
-  | CompositeFeature
-  | MarkdownFeature
+type NestedIntlKey = Leaves<IntlMessages['data']['features']>
+
+type TranslationValuesBasic =
+  | string
+  | number
+  | boolean
+  | Date
+  | null
+  | undefined
+
+type TranslationValues = Record<
+  string,
+  TranslationValuesBasic | [NestedIntlKey, TranslationValues]
+>
+
+export function nestedT<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  T extends (...args: any[]) => string,
+  V extends TranslationValues,
+>(t: T, key: Parameters<T>[0], values: V) {
+  const tranlatedValues: Record<string, TranslationValuesBasic> = {}
+
+  for (const [k, v] of Object.entries(values)) {
+    if (Array.isArray(v)) {
+      tranlatedValues[k] = nestedT(t, v[0], v[1])
+    } else {
+      tranlatedValues[k] = v
+    }
+  }
+
+  return t(key, tranlatedValues)
+}
+
+type AnyFeature<K extends FeatureKey = FeatureKey> =
+  | (K extends FeaturesKeysOfType<string>
+      ? MarkdownFeature<K> | EnumFeature<K> | TextFeature<K>
+      : K extends FeaturesKeysOfType<boolean>
+        ? BooleanFeature<K>
+        : NumberFeature<K>)
+  | CompositeFeature<K>

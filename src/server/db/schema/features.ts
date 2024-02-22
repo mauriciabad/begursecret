@@ -9,6 +9,7 @@ import {
 } from 'drizzle-orm/mysql-core'
 import { mysqlTableWithTranslations } from '../../helpers/translations/db-tables'
 import {
+  allowedAccess,
   amountOfPeople,
   difficulty,
   groundType,
@@ -37,13 +38,17 @@ export const {
     hasShower: boolean('hasShower'),
     hasLifeguard: boolean('hasLifeguard'),
     hasLeisure: boolean('hasLeisure'),
-
+    isNudist: boolean('isNudist'),
+    hasUnofficialName: boolean('hasUnofficialName'),
+    isOutOfTheMunicipality: boolean('isOutOfTheMunicipality'),
+    allowedAccess: mysqlEnum('allowedAccess', allowedAccess),
     dimensions: tinytext('dimensions'),
-
     price: double('price'),
     priceUnit: mysqlEnum('priceUnit', priceUnit),
-
     isCovered: boolean('isCovered'),
+    duration: int('duration'), // In minutes
+    distance: int('distance'), // In meters
+    slope: int('slope'), // In meters
     timeToArrive: int('timeToArrive'), // In minutes
     placeToArriveFrom: mysqlEnum('placeToArriveFrom', placeToArriveFrom),
     isFreeWithLocalStamp: boolean('isFreeWithLocalStamp'),
@@ -51,6 +56,7 @@ export const {
   translatableColumns: {
     difficultyNotes: text('difficultyNotes'), // Markdown
     priceNotes: text('priceNotes'), // Markdown
+    allowedAccessNotes: text('allowedAccessNotes'), // Markdown
   },
 })
 
