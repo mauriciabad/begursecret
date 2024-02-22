@@ -4,7 +4,8 @@
       "titles": {
         "features": "Features",
         "services": "Services",
-        "notes": "Notes"
+        "notes": "Notes",
+        "other": "Other"
       },
       "labels": {
         "amountOfPeople": "Amount of people",
@@ -19,6 +20,8 @@
         "hasShower": "Has shower",
         "hasLifeguard": "Has lifeguard",
         "hasLeisure": "Has leisure services",
+        "hasUnofficialName": "Name is unofficial",
+        "isOutOfTheMunicipality": "Is out of the municipality",
         "dimensions": "Dimensions",
         "price": "Price",
         "priceUnit": "Price unit",
@@ -73,6 +76,15 @@
           "hasLeisure": {
             "true": "Leisure services",
             "false": "No leisure services"
+          },
+
+          "hasUnofficialName": {
+            "true": "Unofficial name",
+            "false": "Official name"
+          },
+          "isOutOfTheMunicipality": {
+            "true": "Out of the municipality",
+            "false": "In the municipality"
           },
           "hasDrinkingWater": {
             "true": "Drinking water",

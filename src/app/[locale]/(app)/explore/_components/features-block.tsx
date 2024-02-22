@@ -26,15 +26,22 @@ export const FeaturesBlock: FC<{ features: Features; className?: string }> = ({
 
   if (allValuesNull) return null
 
+  const thereIsJustOneGroup =
+    Object.values(allValuesNullInGroup).filter((v) => !v).length === 1
+
   return (
     <Card className={cn('bg-cream', className)} radius="lg" shadow="none">
-      <CardBody className="gap-2">
+      <CardBody className="gap-4">
         {featureDisplayGroups.map(
           (group) =>
             !allValuesNullInGroup[group.key] && (
               <FeatureList
                 key={group.key}
-                title={t(`titles.${group.key}`)}
+                title={
+                  thereIsJustOneGroup
+                    ? t('titles.features')
+                    : t(`titles.${group.key}`)
+                }
                 variant={group.key === 'notes' ? 'blocks' : 'items'}
               >
                 {group.featureDisplays.map((featureDisplay) => {
@@ -242,7 +249,7 @@ const FeatureList: FC<
 > = ({ title, children, variant }) => {
   return (
     <div>
-      <h4 className="mb-2 mt-2 text-sm font-semibold leading-none text-foreground-700">
+      <h4 className="mb-2 text-sm font-semibold leading-none text-foreground-700">
         {title}
       </h4>
       <ul

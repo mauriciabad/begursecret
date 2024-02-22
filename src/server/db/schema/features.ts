@@ -37,6 +37,8 @@ export const {
     hasShower: boolean('hasShower'),
     hasLifeguard: boolean('hasLifeguard'),
     hasLeisure: boolean('hasLeisure'),
+    hasUnofficialName: boolean('hasUnofficialName'),
+    isOutOfTheMunicipality: boolean('isOutOfTheMunicipality'),
 
     dimensions: tinytext('dimensions'),
 

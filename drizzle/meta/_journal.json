@@ -141,6 +141,13 @@
       "when": 1708425618677,
       "tag": "0019_warm_zaladane",
       "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "5",
+      "when": 1708606641101,
+      "tag": "0020_condemned_ben_grimm",
+      "breakpoints": true
     }
   ]
 }

@@ -12,6 +12,8 @@ import {
   IconClock,
   IconCoinEuro,
   IconCurrencyEuro,
+  IconDoorEnter,
+  IconDoorExit,
   IconDropletOff,
   IconDroplets,
   IconFountain,
@@ -20,6 +22,8 @@ import {
   IconGrain,
   IconLifebuoy,
   IconLifebuoyOff,
+  IconMessageCheck,
+  IconMessageReport,
   IconMoodSad,
   IconMoodSmile,
   IconParking,
@@ -227,6 +231,29 @@ export const featureDisplayGroups = [
     ],
   },
   {
+    key: 'other',
+    featureDisplays: [
+      typeFeatureDisplay({
+        type: 'boolean',
+        key: 'hasUnofficialName',
+        icon: IconMessageReport,
+        icons: {
+          true: IconMessageReport,
+          false: IconMessageCheck,
+        },
+      } as const),
+      typeFeatureDisplay({
+        type: 'boolean',
+        key: 'hasUnofficialName',
+        icon: IconDoorExit,
+        icons: {
+          true: IconDoorExit,
+          false: IconDoorEnter,
+        },
+      } as const),
+    ],
+  },
+  {
     key: 'notes',
     featureDisplays: [
       typeFeatureDisplay({
@@ -242,7 +269,7 @@ export const featureDisplayGroups = [
     ],
   },
 ] as const satisfies {
-  key: string
+  key: keyof IntlMessages['data']['features']['titles']
   featureDisplays: AnyFeature[]
 }[]
 

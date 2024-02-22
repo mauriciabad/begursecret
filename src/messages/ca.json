@@ -4,7 +4,8 @@
       "titles": {
         "features": "Característiques",
         "services": "Serveis",
-        "notes": "Notes"
+        "notes": "Notes",
+        "other": "Altres"
       },
       "labels": {
         "amountOfPeople": "Quantitat de gent",
@@ -19,6 +20,8 @@
         "hasShower": "Té dutxes",
         "hasLifeguard": "Té socorrista",
         "hasLeisure": "Té serveis d'oci",
+        "hasUnofficialName": "Nom no oficial",
+        "isOutOfTheMunicipality": "Fora del municipi",
         "dimensions": "Dimensions",
         "price": "Preu",
         "priceUnit": "Unitat del preu",
@@ -73,6 +76,14 @@
           "hasLeisure": {
             "true": "Serveis d'oci",
             "false": "Sense serveis d'oci"
+          },
+          "hasUnofficialName": {
+            "true": "Nom no oficial",
+            "false": "Nom oficial"
+          },
+          "isOutOfTheMunicipality": {
+            "true": "Fora del municipi",
+            "false": "Dins del municipi"
           },
           "hasDrinkingWater": {
             "true": "Aigua potable",
