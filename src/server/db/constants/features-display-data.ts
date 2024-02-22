@@ -4,6 +4,8 @@ import {
   IconAccessibleOff,
   IconAlertTriangle,
   IconAlertTriangleFilled,
+  IconArmchair,
+  IconArmchairOff,
   IconArrowDownRight,
   IconBadgeWc,
   IconBarrierBlock,
@@ -304,6 +306,15 @@ export const featureDisplayGroups = [
         icons: {
           true: IconMoodSmile,
           false: IconMoodSad,
+        },
+      } as const),
+      typeFeatureDisplay({
+        type: 'boolean',
+        key: 'hasBench',
+        icon: IconArmchair,
+        icons: {
+          true: IconArmchair,
+          false: IconArmchairOff,
         },
       } as const),
     ],

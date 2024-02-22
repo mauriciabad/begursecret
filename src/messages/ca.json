@@ -25,6 +25,7 @@
         "isOutOfTheMunicipality": "Fora del municipi",
         "hasInacurateLocation": "Ubicació inexacta",
         "hasInacurateLocationNotes": "Ubicació inexacta",
+        "hasBench": "Té banc",
         "allowedAccess": "Accés",
         "dimensions": "Dimensions",
         "price": "Preu",
@@ -112,6 +113,10 @@
           "hasInacurateLocation": {
             "true": "Ubicació inexacta",
             "false": "Ubicació exacta"
+          },
+          "hasBench": {
+            "true": "Banc",
+            "false": "Sense banc"
           }
         },
 

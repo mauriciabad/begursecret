@@ -25,6 +25,7 @@
         "isOutOfTheMunicipality": "Is out of the municipality",
         "hasInacurateLocation": "Has inacurate location",
         "hasInacurateLocationNotes": "Inacurate location",
+        "hasBench": "Has bench",
         "allowedAccess": "Allowed access",
         "dimensions": "Dimensions",
         "price": "Price",
@@ -113,6 +114,10 @@
           "hasInacurateLocation": {
             "true": "Inacurate location",
             "false": "Accurate location"
+          },
+          "hasBench": {
+            "true": "Bench",
+            "false": "No bench"
           }
         },
 

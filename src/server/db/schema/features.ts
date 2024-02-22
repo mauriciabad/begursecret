@@ -42,6 +42,7 @@ export const {
     hasUnofficialName: boolean('hasUnofficialName'),
     hasInacurateLocation: boolean('hasInacurateLocation'),
     isOutOfTheMunicipality: boolean('isOutOfTheMunicipality'),
+    hasBench: boolean('hasBench'),
     allowedAccess: mysqlEnum('allowedAccess', allowedAccess),
     dimensions: tinytext('dimensions'),
     price: double('price'),
