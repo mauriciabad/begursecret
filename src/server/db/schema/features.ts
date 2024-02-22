@@ -40,6 +40,7 @@ export const {
     hasLeisure: boolean('hasLeisure'),
     isNudist: boolean('isNudist'),
     hasUnofficialName: boolean('hasUnofficialName'),
+    hasInacurateLocation: boolean('hasInacurateLocation'),
     isOutOfTheMunicipality: boolean('isOutOfTheMunicipality'),
     allowedAccess: mysqlEnum('allowedAccess', allowedAccess),
     dimensions: tinytext('dimensions'),
@@ -57,6 +58,7 @@ export const {
     difficultyNotes: text('difficultyNotes'), // Markdown
     priceNotes: text('priceNotes'), // Markdown
     allowedAccessNotes: text('allowedAccessNotes'), // Markdown
+    hasInacurateLocationNotes: text('hasInacurateLocationNotes'), // Markdown
   },
 })
 

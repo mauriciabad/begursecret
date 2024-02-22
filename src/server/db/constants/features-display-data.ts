@@ -25,6 +25,8 @@ import {
   IconGrain,
   IconLifebuoy,
   IconLifebuoyOff,
+  IconMapPin,
+  IconMapPinOff,
   IconMessageCheck,
   IconMessageReport,
   IconMoodSad,
@@ -134,6 +136,7 @@ export const featureDisplayGroups = [
           mixed: IconBarrierBlock,
         },
         options: allowedAccess,
+        moreInfoFeatureKey: 'allowedAccessNotes',
       } as const),
       typeFeatureDisplay({
         type: 'composite',
@@ -327,6 +330,16 @@ export const featureDisplayGroups = [
           false: IconDoorEnter,
         },
       } as const),
+      typeFeatureDisplay({
+        type: 'boolean',
+        key: 'hasInacurateLocation',
+        icon: IconMapPinOff,
+        icons: {
+          true: IconMapPinOff,
+          false: IconMapPin,
+        },
+        moreInfoFeatureKey: 'hasInacurateLocationNotes',
+      } as const),
     ],
   },
   {
@@ -346,6 +359,11 @@ export const featureDisplayGroups = [
         type: 'markdown',
         key: 'allowedAccessNotes',
         icon: IconBarrierBlock,
+      } as const),
+      typeFeatureDisplay({
+        type: 'markdown',
+        key: 'hasInacurateLocationNotes',
+        icon: IconMapPinOff,
       } as const),
     ],
   },
