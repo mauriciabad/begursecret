@@ -14,6 +14,7 @@ export type OverrideMainMapProps = {
   emphasizedMarkers?: SetOfMarkers
   veryEmphasizedMarkers?: SetOfMarkers
   veryEmphasizedLines?: SetOfLines
+  reset?: boolean
 }
 
 export const OverrideMainMap: FC<OverrideMainMapProps> = memo(
@@ -23,6 +24,7 @@ export const OverrideMainMap: FC<OverrideMainMapProps> = memo(
     emphasizedMarkers,
     veryEmphasizedMarkers,
     veryEmphasizedLines,
+    reset,
   }) => {
     const {
       map,
@@ -44,10 +46,14 @@ export const OverrideMainMap: FC<OverrideMainMapProps> = memo(
           }
         }
 
+        if (reset) {
+          setEmphasizedMarkers(new Set())
+          setVeryEmphasizedMarkers(new Set())
+          setVeryEmphasizedLines(new Set())
+        }
+
         setEmphasizedMarkers(emphasizedMarkers)
-
         setVeryEmphasizedMarkers(veryEmphasizedMarkers)
-
         setVeryEmphasizedLines(veryEmphasizedLines)
       }
     }, [map])
