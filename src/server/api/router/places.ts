@@ -208,44 +208,6 @@ const listCategories = flattenTranslationsOnExecute(
 
 export const placesRouter = router({
   list: publicProcedure.input(listPlacesSchema).query(async ({ input }) => {
-    console.log(
-      db.query.places
-        .findMany(
-          withTranslations({
-            columns: {
-              id: true,
-              name: true,
-              importance: true,
-            },
-            extras: {
-              location: selectPoint('location', places.location),
-            },
-            orderBy: [ascNullsEnd(places.importance)],
-            with: {
-              mainImage: true,
-              categories: {
-                columns: {},
-                with: {
-                  category: {
-                    columns: {
-                      id: true,
-                      icon: true,
-                    },
-                  },
-                },
-              },
-              mainCategory: {
-                columns: {
-                  id: true,
-                  icon: true,
-                  color: true,
-                },
-              },
-            },
-          })
-        )
-        .toSQL()
-    )
     return (await getAllPlaces.execute({ locale: input.locale })).map(
       calculateLocation
     )
