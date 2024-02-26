@@ -75,7 +75,7 @@
           "timeToArrive-placeToArriveFrom": "{hours, plural, =0 {} other {# h }}{minutes, plural, =0 {} other {# min}} from {placeToArriveFrom, select, townCenter {the town center} parking {the parking} beach {the beach} road {the road} other {}}",
           "distance": "{distance} {unit}",
           "duration": "{hours, plural, =0 {} other {# h }}{minutes, plural, =0 {} other {# min}}",
-          "depthMin-depthMax": "De -{depthMin} a -{depthMax} m"
+          "depthMin-depthMax": "De -{depthMin} m a -{depthMax} m"
         },
 
         "boolean": {
