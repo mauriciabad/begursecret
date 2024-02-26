@@ -15,6 +15,7 @@ import {
   IconCalendarMonth,
   IconCar,
   IconCertificate,
+  IconCertificateOff,
   IconClock,
   IconCoinEuro,
   IconCurrencyEuro,
@@ -44,6 +45,7 @@ import {
   IconSailboat,
   IconSailboatOff,
   IconSchool,
+  IconSchoolOff,
   IconShirt,
   IconShirtOff,
   IconTicket,
@@ -235,7 +237,7 @@ export const featureDisplayGroups = [
       typeFeatureDisplay({
         type: 'composite',
         keys: ['depthMin', 'depthMax'],
-        icon: IconWalk,
+        icon: IconArrowBarDown,
       } as const),
       typeFeatureDisplay({
         type: 'number',
@@ -424,12 +426,27 @@ export const featureDisplayGroups = [
         key: 'scubaDivingLevel',
         icon: IconCertificate,
         options: scubaDivingLevel,
+        icons: {
+          discoverScubaDiving: IconCertificateOff,
+          openWater: IconCertificate,
+          advancedOpenWater: IconCertificate,
+          specialtyDiver: IconCertificate,
+          technicalDiver: IconCertificate,
+        },
       } as const),
       typeFeatureDisplay({
         type: 'enum',
         key: 'trainingLevel',
         icon: IconSchool,
         options: trainingLevel,
+        icons: {
+          noTraining: IconSchoolOff,
+          amateur: IconSchool,
+          entryLevel: IconSchool,
+          advanced: IconSchool,
+          professional: IconSchool,
+          elite: IconSchool,
+        },
       } as const),
       typeFeatureDisplay({
         type: 'boolean',
