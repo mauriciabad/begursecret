@@ -9,8 +9,9 @@ import {
   searchPlacesSchema,
 } from '~/schemas/places'
 import { db } from '~/server/db/db'
-import { places } from '~/server/db/schema'
+import { placeCategories, places } from '~/server/db/schema'
 import { getVisitedPlacesIdsByUserId } from '~/server/helpers/db-queries/placeLists'
+import { ascNullsEnd } from '~/server/helpers/order-by'
 import { selectPoint } from '~/server/helpers/spatial-data/point'
 import {
   flattenTranslationsOnExecute,
@@ -25,10 +26,12 @@ const getAllPlaces = flattenTranslationsOnExecute(
         columns: {
           id: true,
           name: true,
+          importance: true,
         },
         extras: {
           location: selectPoint('location', places.location),
         },
+        orderBy: [ascNullsEnd(places.importance)],
         with: {
           mainImage: true,
           categories: {
@@ -60,6 +63,7 @@ const getAllPlacesForMap = db.query.places
     columns: {
       id: true,
       name: true,
+      importance: true,
     },
     extras: {
       location: selectPoint('location', places.location),
@@ -84,10 +88,12 @@ const searchPlaces = flattenTranslationsOnExecute(
           id: true,
           name: true,
           description: true,
+          importance: true,
         },
         extras: {
           location: selectPoint('location', places.location),
         },
+        orderBy: [ascNullsEnd(places.importance)],
         where: (place, { eq, and, isNotNull }) =>
           and(
             isNotNull(place.mainCategoryId),
@@ -130,6 +136,7 @@ const getPlace = flattenTranslationsOnExecute(
           name: true,
           description: true,
           content: true,
+          importance: true,
         },
         extras: {
           location: selectPoint('location', places.location),
@@ -191,7 +198,9 @@ const listCategories = flattenTranslationsOnExecute(
           namePlural: true,
           nameGender: true,
           color: true,
+          order: true,
         },
+        orderBy: [ascNullsEnd(placeCategories.order)],
       })
     )
     .prepare()

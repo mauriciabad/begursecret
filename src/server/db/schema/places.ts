@@ -1,6 +1,7 @@
 import { relations } from 'drizzle-orm'
 import {
   boolean,
+  double,
   int,
   mysqlTable,
   primaryKey,
@@ -31,6 +32,7 @@ export const {
     mainCategoryId: int('mainCategoryId').notNull(),
     featuresId: int('featuresId').notNull(),
     verificationRequirementsId: int('verificationRequirementsId'),
+    importance: double('importance'),
   },
   translatableColumns: {
     name: text('name').notNull(),
@@ -78,6 +80,7 @@ export const {
     icon: tinytext('icon', { enum: iconNames }).notNull(),
     color: tinytext('color', { enum: colorNames }).notNull(),
     hasVisitMission: boolean('hasVisitMission').notNull().default(true),
+    order: int('order'),
   },
   translatableColumns: {
     name: tinytext('name').notNull(),

@@ -13,8 +13,11 @@ import {
   amountOfPeople,
   difficulty,
   groundType,
+  howNarrow,
   placeToArriveFrom,
   priceUnit,
+  scubaDivingLevel,
+  trainingLevel,
 } from '../constants/features'
 
 export const {
@@ -41,7 +44,18 @@ export const {
     isNudist: boolean('isNudist'),
     hasUnofficialName: boolean('hasUnofficialName'),
     hasInacurateLocation: boolean('hasInacurateLocation'),
+    date: tinytext('date'),
+    isBoatOnly: boolean('isBoatOnly'),
+    trainingLevel: mysqlEnum('trainingLevel', trainingLevel),
+    hasMissingInfo: boolean('hasMissingInfo'),
+    height: int('height'), // In meters
+    depth: int('depth'), // In meters
+    depthMin: int('depthMin'), // In meters
+    depthMax: int('depthMax'), // In meters
+    scubaDivingLevel: mysqlEnum('scubaDivingLevel', scubaDivingLevel),
+    notThereAnymore: boolean('notThereAnymore'),
     isOutOfTheMunicipality: boolean('isOutOfTheMunicipality'),
+    hasBench: boolean('hasBench'),
     allowedAccess: mysqlEnum('allowedAccess', allowedAccess),
     dimensions: tinytext('dimensions'),
     price: double('price'),
@@ -53,12 +67,15 @@ export const {
     timeToArrive: int('timeToArrive'), // In minutes
     placeToArriveFrom: mysqlEnum('placeToArriveFrom', placeToArriveFrom),
     isFreeWithLocalStamp: boolean('isFreeWithLocalStamp'),
+    howNarrow: mysqlEnum('howNarrow', howNarrow),
   },
   translatableColumns: {
     difficultyNotes: text('difficultyNotes'), // Markdown
     priceNotes: text('priceNotes'), // Markdown
     allowedAccessNotes: text('allowedAccessNotes'), // Markdown
     hasInacurateLocationNotes: text('hasInacurateLocationNotes'), // Markdown
+    hasMissingInfoNotes: text('hasMissingInfoNotes'), // Markdown
+    notThereAnymoreNotes: text('notThereAnymoreNotes'), // Markdown
   },
 })
 

@@ -41,7 +41,7 @@ export const ThreeStateCheckbox: FC<{
       }}
       className={cn('cursor-pointer select-none', className)}
     >
-      <div className="flex items-center gap-2">
+      <div className="flex h-full items-center gap-2">
         {Icon && <Icon size={20} />}
         <div
           className={cn(

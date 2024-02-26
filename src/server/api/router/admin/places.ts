@@ -10,7 +10,13 @@ import {
   listPlacesSchema,
 } from '~/schemas/places'
 import { db } from '~/server/db/db'
-import { features, places, placesToPlaceCategories } from '~/server/db/schema'
+import {
+  features,
+  placeCategories,
+  places,
+  placesToPlaceCategories,
+} from '~/server/db/schema'
+import { ascNullsEnd } from '~/server/helpers/order-by'
 import { selectPoint } from '~/server/helpers/spatial-data/point'
 import {
   flattenTranslationsOnExecute,
@@ -26,6 +32,7 @@ const getAllPlaces = flattenTranslationsOnExecute(
           id: true,
           name: true,
           description: true,
+          importance: true,
         },
         extras: {
           location: selectPoint('location', places.location),
@@ -68,7 +75,9 @@ const listCategories = flattenTranslationsOnExecute(
           namePlural: true,
           nameGender: true,
           color: true,
+          order: true,
         },
+        orderBy: [ascNullsEnd(placeCategories.order)],
       })
     )
     .prepare()
@@ -83,6 +92,7 @@ const getPlace = flattenTranslationsOnExecute(
           name: true,
           description: true,
           content: true,
+          importance: true,
         },
         extras: {
           location: selectPoint('location', places.location),
@@ -151,6 +161,7 @@ export const placesAdminRouter = router({
           mainCategoryId: input.mainCategory,
           mainImageId: input.mainImageId,
           location: pointToString(input.location),
+          importance: input.importance,
           content: input.content,
           verificationRequirementsId: 1,
           featuresId,
@@ -198,6 +209,7 @@ export const placesAdminRouter = router({
             mainCategoryId: input.mainCategory,
             mainImageId: input.mainImageId,
             location: pointToString(input.location),
+            importance: input.importance,
             content: input.content,
             featuresId: featuresId,
           })

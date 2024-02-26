@@ -28,7 +28,7 @@ export const iconNames = [
   'ladder',
   'scuba-diving',
   'building-bridge-2',
-  'arrow-big-down-line',
+  'fall',
   'corner-right-down',
   'bucket',
   'wall',
@@ -48,6 +48,7 @@ export const iconNames = [
   'arrows-down-up',
   'swimming',
   'diamond',
+  'chart-bubble',
 ] as const
 export type IconName = (typeof iconNames)[number]
 

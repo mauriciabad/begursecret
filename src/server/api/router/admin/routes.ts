@@ -13,7 +13,13 @@ import {
   listRoutesSchema,
 } from '~/schemas/routes'
 import { db } from '~/server/db/db'
-import { features, routes, routesToRouteCategories } from '~/server/db/schema'
+import {
+  features,
+  routeCategories,
+  routes,
+  routesToRouteCategories,
+} from '~/server/db/schema'
+import { ascNullsEnd } from '~/server/helpers/order-by'
 import { selectMultiLine } from '~/server/helpers/spatial-data/multi-line'
 import {
   flattenTranslationsOnExecute,
@@ -29,6 +35,7 @@ const getAllRoutes = flattenTranslationsOnExecute(
           id: true,
           name: true,
           description: true,
+          importance: true,
         },
         extras: {
           path: selectMultiLine('path', routes.path),
@@ -71,7 +78,9 @@ const listCategories = flattenTranslationsOnExecute(
           namePlural: true,
           nameGender: true,
           color: true,
+          order: true,
         },
+        orderBy: [ascNullsEnd(routeCategories.order)],
       })
     )
     .prepare()
@@ -86,6 +95,7 @@ const getRoute = flattenTranslationsOnExecute(
           name: true,
           description: true,
           content: true,
+          importance: true,
         },
         extras: {
           path: selectMultiLine('path', routes.path),
@@ -153,6 +163,7 @@ export const routesAdminRouter = router({
           description: input.description,
           mainCategoryId: input.mainCategory,
           path: multiLineToString(input.path),
+          importance: input.importance,
           content: input.content,
           verificationRequirementsId: 1,
           featuresId,
@@ -199,6 +210,7 @@ export const routesAdminRouter = router({
             description: input.description,
             mainCategoryId: input.mainCategory,
             path: multiLineToString(input.path),
+            importance: input.importance,
             content: input.content,
             featuresId: featuresId,
           })

@@ -24,7 +24,7 @@ export const listCategoriesSchema = z.object({
 
 export const createPlaceSchema = z.object({
   name: z.string().min(3),
-  description: z.string().optional(),
+  description: z.string().optional().nullable(),
   mainCategory: z.coerce.number().positive('Required').int(),
   categories: z
     .string()
@@ -47,8 +47,9 @@ export const createPlaceSchema = z.object({
         lng: z.number(),
       })
     ),
+  importance: z.coerce.number().gt(0).optional().nullable(),
   mainImageId: z.number().int().optional().nullable(),
-  content: z.string().optional(),
+  content: z.string().optional().nullable(),
   features: createInsertSchema(features),
 })
 

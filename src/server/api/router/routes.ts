@@ -5,6 +5,7 @@ import { calculatePath } from '~/helpers/spatial-data/multi-line'
 import { getRoutesSchema } from '~/schemas/routes'
 import { db } from '~/server/db/db'
 import { routes } from '~/server/db/schema'
+import { ascNullsEnd } from '~/server/helpers/order-by'
 import { selectMultiLine } from '~/server/helpers/spatial-data/multi-line'
 import {
   flattenTranslationsOnExecute,
@@ -17,6 +18,7 @@ const getAllRoutesForMap = db.query.routes
     columns: {
       id: true,
       name: true,
+      importance: true,
     },
     extras: {
       path: selectMultiLine('path', routes.path),
@@ -42,10 +44,12 @@ const getRoute = flattenTranslationsOnExecute(
           name: true,
           description: true,
           content: true,
+          importance: true,
         },
         extras: {
           path: selectMultiLine('path', routes.path),
         },
+        orderBy: [ascNullsEnd(routes.importance)],
         where: (route, { eq }) => eq(route.id, sql.placeholder('id')),
         with: {
           mainImage: true,

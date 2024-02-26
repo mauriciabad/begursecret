@@ -34,8 +34,14 @@ const ExplorePage: FC<LocaleRouteParams> = async () => {
   const placesByCategory = groupByKey(
     places,
     ['mainCategory.id', 'categories.0.category.id'],
-    { unique: true }
+    {
+      unique: true,
+    }
   )
+  const placesByCategorySorted = categories.map((category) => ({
+    categoryId: category.id,
+    places: placesByCategory[category.id] ?? [],
+  }))
 
   return (
     <>
@@ -44,7 +50,7 @@ const ExplorePage: FC<LocaleRouteParams> = async () => {
       <CategoriesGrid categories={categories} />
 
       <div className="space-y-2">
-        {Object.entries(placesByCategory).map(([categoryId, places]) => (
+        {placesByCategorySorted.map(({ categoryId, places }) => (
           <ListPlacesOfCategory
             key={categoryId}
             category={

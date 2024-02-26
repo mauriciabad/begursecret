@@ -6,7 +6,8 @@
         "services": "Services",
         "notes": "Notes",
         "other": "Other",
-        "general": "General"
+        "general": "General",
+        "requirements": "Requirements"
       },
       "labels": {
         "amountOfPeople": "Amount of people",
@@ -25,6 +26,7 @@
         "isOutOfTheMunicipality": "Is out of the municipality",
         "hasInacurateLocation": "Has inacurate location",
         "hasInacurateLocationNotes": "Inacurate location",
+        "hasBench": "Has bench",
         "allowedAccess": "Allowed access",
         "dimensions": "Dimensions",
         "price": "Price",
@@ -39,21 +41,41 @@
         "isNudist": "Is nudist",
         "duration": "Duration",
         "distance": "Distance",
-        "slope": "Slope"
+        "slope": "Slope",
+        "date": "Date",
+        "isBoatOnly": "Is boat only",
+        "trainingLevel": "Training Level",
+        "hasMissingInfo": "Missing info",
+        "height": "Height",
+        "depth": "Depth",
+        "depthMin": "Min. depth",
+        "depthMax": "Max. Depth",
+        "scubaDivingLevel": "Scuba diving level",
+        "notThereAnymore": "Not there anymore",
+        "howNarrow": "How narrow",
+        "hasMissingInfoNotes": "Missing info",
+        "notThereAnymoreNotes": "Not there anymore"
       },
       "values": {
         "normal": {
           "parkingSpaces": "{value} spaces",
-          "slope": "{value} m"
+          "slope": "{value} m",
+          "height": "{value} m",
+          "depth": "-{value} m",
+          "depthMin": "-{value} m",
+          "depthMax": "-{value} m"
         },
 
-        "text": {},
+        "text": {
+          "date": "{value}"
+        },
 
         "composite": {
           "price-priceUnit": "{price} {unit}",
           "timeToArrive-placeToArriveFrom": "{hours, plural, =0 {} other {# h }}{minutes, plural, =0 {} other {# min}} from {placeToArriveFrom, select, townCenter {the town center} parking {the parking} beach {the beach} road {the road} other {}}",
           "distance": "{distance} {unit}",
-          "duration": "{hours, plural, =0 {} other {# h }}{minutes, plural, =0 {} other {# min}}"
+          "duration": "{hours, plural, =0 {} other {# h }}{minutes, plural, =0 {} other {# min}}",
+          "depthMin-depthMax": "De -{depthMin} m a -{depthMax} m"
         },
 
         "boolean": {
@@ -113,6 +135,22 @@
           "hasInacurateLocation": {
             "true": "Inacurate location",
             "false": "Accurate location"
+          },
+          "hasBench": {
+            "true": "Bench",
+            "false": "No bench"
+          },
+          "isBoatOnly": {
+            "true": "Boat only",
+            "false": "Boat not required"
+          },
+          "hasMissingInfo": {
+            "true": "Missing info",
+            "false": "All info available"
+          },
+          "notThereAnymore": {
+            "true": "Not there anymore",
+            "false": "There currently"
           }
         },
 
@@ -158,6 +196,28 @@
             "permit": "Permit required",
             "private": "Private access",
             "mixed": "Mixed access"
+          },
+          "trainingLevel": {
+            "noTraining": "No training required",
+            "amateur": "Amateur level",
+            "entryLevel": "Entry level",
+            "advanced": "Advanced level",
+            "professional": "Professional level",
+            "elite": "Elite level"
+          },
+          "scubaDivingLevel": {
+            "discoverScubaDiving": "Suitable for discover scuba diving",
+            "openWater": "Open Water required",
+            "advancedOpenWater": "Advanced Open Water required",
+            "specialtyDiver": "Specialty Diver required",
+            "technicalDiver": "Technical Diver required"
+          },
+          "howNarrow": {
+            "extremlyNarrow": "Extremly narrow",
+            "narrow": "Narrow",
+            "extraSpace": "Slightly wide",
+            "wide": "Wide",
+            "veryWide": "Very wide"
           }
         }
       }
@@ -206,7 +266,8 @@
       "actions": "Actions",
       "content": "Content",
       "features": "Features",
-      "path": "Path"
+      "path": "Path",
+      "importance": "Importance"
     },
     "add-new": "Add new",
     "edit": "Edit",
