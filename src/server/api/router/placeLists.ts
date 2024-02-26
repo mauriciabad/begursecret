@@ -9,13 +9,13 @@ import {
 import { db } from '~/server/db/db'
 import { placeListToPlace, places } from '~/server/db/schema'
 import { getVisitedPlaceListIdByUserId } from '~/server/helpers/db-queries/placeLists'
+import { ascNullsEnd } from '~/server/helpers/order-by'
 import { selectPoint } from '~/server/helpers/spatial-data/point'
 import {
   flattenTranslationsOnExecute,
   withTranslations,
 } from '~/server/helpers/translations/query/with-translations'
 import { protectedProcedure, router } from '~/server/trpc'
-import { ascNullsEnd } from '~/server/helpers/order-by'
 
 const addToPlaceList = db
   .insert(placeListToPlace)
