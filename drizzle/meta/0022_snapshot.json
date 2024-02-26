@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "68a7520c-3f92-4b98-9241-2ee3fa506ab8",
+  "id": "658f2b7d-8dff-4d29-9020-2905f96fe732",
   "prevId": "0da09f68-610c-4af4-8c88-b99f601a2f84",
   "tables": {
     "account": {
@@ -288,6 +288,76 @@
           "notNull": false,
           "autoincrement": false
         },
+        "date": {
+          "name": "date",
+          "type": "tinytext",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "isBoatOnly": {
+          "name": "isBoatOnly",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "trainingLevel": {
+          "name": "trainingLevel",
+          "type": "enum('noTraining','amateur','entryLevel','advanced','professional','elite')",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "hasMissingInfo": {
+          "name": "hasMissingInfo",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "height": {
+          "name": "height",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "depth": {
+          "name": "depth",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "depthMin": {
+          "name": "depthMin",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "depthMax": {
+          "name": "depthMax",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "scubaDivingLevel": {
+          "name": "scubaDivingLevel",
+          "type": "enum('discoverScubaDiving','openWater','advancedOpenWater','specialtyDiver','technicalDiver')",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "notThereAnymore": {
+          "name": "notThereAnymore",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "isOutOfTheMunicipality": {
           "name": "isOutOfTheMunicipality",
           "type": "boolean",
@@ -379,6 +449,13 @@
           "notNull": false,
           "autoincrement": false
         },
+        "howNarrow": {
+          "name": "howNarrow",
+          "type": "enum('extremlyNarrow','narrow','extraSpace','wide','veryWide')",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "difficultyNotes": {
           "name": "difficultyNotes",
           "type": "text",
@@ -402,6 +479,20 @@
         },
         "hasInacurateLocationNotes": {
           "name": "hasInacurateLocationNotes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "hasMissingInfoNotes": {
+          "name": "hasMissingInfoNotes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "notThereAnymoreNotes": {
+          "name": "notThereAnymoreNotes",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
@@ -467,6 +558,20 @@
         },
         "hasInacurateLocationNotes": {
           "name": "hasInacurateLocationNotes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "hasMissingInfoNotes": {
+          "name": "hasMissingInfoNotes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "notThereAnymoreNotes": {
+          "name": "notThereAnymoreNotes",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
@@ -658,6 +763,13 @@
           "autoincrement": false,
           "default": true
         },
+        "order": {
+          "name": "order",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "name": {
           "name": "name",
           "type": "tinytext",
@@ -791,6 +903,13 @@
         "verificationRequirementsId": {
           "name": "verificationRequirementsId",
           "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "importance": {
+          "name": "importance",
+          "type": "double",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -950,6 +1069,13 @@
           "autoincrement": false,
           "default": true
         },
+        "order": {
+          "name": "order",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "name": {
           "name": "name",
           "type": "tinytext",
@@ -1083,6 +1209,13 @@
         "verificationRequirementsId": {
           "name": "verificationRequirementsId",
           "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "importance": {
+          "name": "importance",
+          "type": "double",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
