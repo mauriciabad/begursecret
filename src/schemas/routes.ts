@@ -23,7 +23,7 @@ export const listCategoriesSchema = z.object({
 
 export const createRouteSchema = z.object({
   name: z.string().min(3),
-  description: z.string().optional(),
+  description: z.string().optional().nullable(),
   mainCategory: z.coerce.number().positive('Required').int(),
   categories: z
     .string()
@@ -38,7 +38,8 @@ export const createRouteSchema = z.object({
     .min(3, 'Required')
     .transform(multilineFromGeoJsonString)
     .pipe(multiLineSchema),
-  content: z.string().optional(),
+  importance: z.coerce.number().gt(0).optional().nullable(),
+  content: z.string().optional().nullable(),
   features: createInsertSchema(features),
 })
 

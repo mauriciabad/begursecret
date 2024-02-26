@@ -15,6 +15,7 @@ import {
   withTranslations,
 } from '~/server/helpers/translations/query/with-translations'
 import { protectedProcedure, router } from '~/server/trpc'
+import { ascNullsEnd } from '~/server/helpers/order-by'
 
 const addToPlaceList = db
   .insert(placeListToPlace)
@@ -43,6 +44,7 @@ const getPlacesFromPlaceListQuery = flattenTranslationsOnExecute(
           extras: {
             location: selectPoint('location', places.location),
           },
+          orderBy: [ascNullsEnd(places.importance)],
           with: {
             mainImage: true,
             categories: {

@@ -28,7 +28,7 @@ export const iconNames = [
   'ladder',
   'scuba-diving',
   'building-bridge-2',
-  'arrow-big-down-line',
+  'fall',
   'corner-right-down',
   'bucket',
   'wall',

@@ -6,7 +6,8 @@
         "services": "Serveis",
         "notes": "Notes",
         "other": "Altres",
-        "general": "General"
+        "general": "General",
+        "requirements": "Requisits"
       },
       "labels": {
         "amountOfPeople": "Quantitat de gent",
@@ -40,21 +41,41 @@
         "isNudist": "És nudista",
         "duration": "Durada",
         "distance": "Distància",
-        "slope": "Desnivell"
+        "slope": "Desnivell",
+        "date": "Data",
+        "isBoatOnly": "Només per a vaixells",
+        "trainingLevel": "Nivell de formació",
+        "hasMissingInfo": "Falta informació",
+        "height": "Alçada",
+        "depth": "Profunditat",
+        "depthMin": "Profunditat min",
+        "depthMax": "Profunditat max",
+        "scubaDivingLevel": "Nivell de submarinisme",
+        "notThereAnymore": "Ja no hi és",
+        "howNarrow": "Quan estret",
+        "hasMissingInfoNotes": "Falta informació",
+        "notThereAnymoreNotes": "Ja no hi és"
       },
       "values": {
         "number": {
           "parkingSpaces": "{value} places",
-          "slope": "{value} m"
+          "slope": "{value} m",
+          "height": "{value} m",
+          "depth": "-{value} m",
+          "depthMin": "-{value} m",
+          "depthMax": "-{value} m"
         },
 
-        "text": {},
+        "text": {
+          "date": "{value}"
+        },
 
         "composite": {
           "price-priceUnit": "{price} {unit}",
           "timeToArrive-placeToArriveFrom": "A {hours, plural, =0 {} other {# h }}{minutes, plural, =0 {} other {# min}} {placeToArriveFrom, select, townCenter {del centre} parking {del parking} beach {de la platja} road {de la carretera} other {}}",
           "distance": "{distance} {unit}",
-          "duration": "{hours, plural, =0 {} other {# h }}{minutes, plural, =0 {} other {# min}}"
+          "duration": "{hours, plural, =0 {} other {# h }}{minutes, plural, =0 {} other {# min}}",
+          "depthMin-depthMax": "De -{depthMin} a -{depthMax} m"
         },
 
         "boolean": {
@@ -117,6 +138,18 @@
           "hasBench": {
             "true": "Banc",
             "false": "Sense banc"
+          },
+          "isBoatOnly": {
+            "true": "Només amb barca",
+            "false": "No cal barca"
+          },
+          "hasMissingInfo": {
+            "true": "Falta informació",
+            "false": "Tota la informació disponible"
+          },
+          "notThereAnymore": {
+            "true": "Ja no hi és",
+            "false": "Hi és actualment"
           }
         },
 
@@ -162,6 +195,28 @@
             "permit": "Autorització necessària",
             "private": "Accés privat",
             "mixed": "Accés mixt"
+          },
+          "trainingLevel": {
+            "noTraining": "No cal formació",
+            "amateur": "Nivell amateur",
+            "entryLevel": "Nivell d'entrada",
+            "advanced": "Nivell avançat",
+            "professional": "Nivell professional",
+            "elite": "Nivell elit"
+          },
+          "scubaDivingLevel": {
+            "discoverScubaDiving": "Apte per bateig de mar",
+            "openWater": "Cal ser Open Water",
+            "advancedOpenWater": "Cal ser Advanced Open Water",
+            "specialtyDiver": "Cal ser Specialty Diver",
+            "technicalDiver": "Cal ser bussejador tècnic"
+          },
+          "howNarrow": {
+            "extremlyNarrow": "Molt estret",
+            "narrow": "Estret",
+            "extraSpace": "Poc ampli",
+            "wide": "Ampli",
+            "veryWide": "Molt ampli"
           }
         }
       }
@@ -210,7 +265,8 @@
       "actions": "Accions",
       "content": "Contingut",
       "features": "Característiques",
-      "path": "Recorregut"
+      "path": "Recorregut",
+      "importance": "Importància"
     },
     "add-new": "Crear nou",
     "edit": "Editar",

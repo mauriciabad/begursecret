@@ -99,23 +99,44 @@ export const RouteForm: FC<{
         }}
         className={cn('space-y-4', className)}
       >
-        <Controller
-          name="name"
-          control={form.control}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <Input
-              isInvalid={!!error}
-              errorMessage={error?.message}
-              onBlur={onBlur}
-              onChange={onChange}
-              value={value}
-              label={t('columns.name')}
-            />
-          )}
-        />
+        <div className="grid gap-4 sm:grid-cols-4 lg:grid-cols-5">
+          <Controller
+            name="name"
+            control={form.control}
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => (
+              <Input
+                isInvalid={!!error}
+                errorMessage={error?.message}
+                onBlur={onBlur}
+                onChange={onChange}
+                value={value}
+                label={t('columns.name')}
+                className="sm:col-span-3 lg:col-span-4"
+              />
+            )}
+          />
+          <Controller
+            name="importance"
+            control={form.control}
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => (
+              <Input
+                type="number"
+                isInvalid={!!error}
+                errorMessage={error?.message}
+                onBlur={onBlur}
+                onChange={onChange}
+                value={value?.toString()}
+                label={t('columns.importance')}
+              />
+            )}
+          />
+        </div>
         <Controller
           name="description"
           control={form.control}
@@ -128,7 +149,7 @@ export const RouteForm: FC<{
               errorMessage={error?.message}
               onBlur={onBlur}
               onChange={onChange}
-              value={value}
+              value={value ?? undefined}
               label={t('columns.description')}
             />
           )}

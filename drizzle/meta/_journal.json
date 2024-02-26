@@ -162,6 +162,13 @@
       "when": 1708644214828,
       "tag": "0022_loose_zuras",
       "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "5",
+      "when": 1708961038315,
+      "tag": "0023_same_white_queen",
+      "breakpoints": true
     }
   ]
 }

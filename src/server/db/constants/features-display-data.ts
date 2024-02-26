@@ -6,11 +6,13 @@ import {
   IconAlertTriangleFilled,
   IconArmchair,
   IconArmchairOff,
+  IconArrowBarDown,
   IconArrowDownRight,
   IconBadgeWc,
   IconBarrierBlock,
   IconBus,
   IconBusOff,
+  IconCalendarMonth,
   IconCar,
   IconCertificate,
   IconClock,
@@ -25,9 +27,12 @@ import {
   IconFountainOff,
   IconFriends,
   IconGrain,
+  IconHelpTriangle,
+  IconInfoCircle,
   IconLifebuoy,
   IconLifebuoyOff,
   IconMapPin,
+  IconMapPinCheck,
   IconMapPinOff,
   IconMessageCheck,
   IconMessageReport,
@@ -36,6 +41,9 @@ import {
   IconParking,
   IconParkingOff,
   IconRulerMeasure,
+  IconSailboat,
+  IconSailboatOff,
+  IconSchool,
   IconShirt,
   IconShirtOff,
   IconTicket,
@@ -43,6 +51,7 @@ import {
   IconToolsKitchen2,
   IconToolsKitchen2Off,
   IconUmbrella,
+  IconViewportNarrow,
   IconWalk,
 } from '@tabler/icons-react'
 import { useMemo } from 'react'
@@ -57,8 +66,11 @@ import {
   amountOfPeople,
   difficulty,
   groundType,
+  howNarrow,
   placeToArriveFrom,
   priceUnit,
+  scubaDivingLevel,
+  trainingLevel,
 } from '~/server/db/constants/features'
 
 const typeFeatureDisplay = <F extends AnyFeature<K>, K extends FeatureKey>(
@@ -71,13 +83,25 @@ export const featureDisplayGroups = [
     featureDisplays: [
       typeFeatureDisplay({
         type: 'boolean',
-        key: 'isNudist',
-        icon: IconShirtOff,
+        key: 'hasMissingInfo',
+        icon: IconHelpTriangle,
         icons: {
-          true: IconShirtOff,
-          false: IconShirt,
+          true: IconHelpTriangle,
+          false: IconInfoCircle,
         },
+        moreInfoFeatureKey: 'hasMissingInfoNotes',
       } as const),
+      typeFeatureDisplay({
+        type: 'boolean',
+        key: 'notThereAnymore',
+        icon: IconMapPinOff,
+        icons: {
+          true: IconMapPinOff,
+          false: IconMapPinCheck,
+        },
+        moreInfoFeatureKey: 'notThereAnymoreNotes',
+      } as const),
+
       typeFeatureDisplay({
         type: 'composite',
         keys: ['price', 'priceUnit'],
@@ -105,41 +129,14 @@ export const featureDisplayGroups = [
         hidden: true,
         options: priceUnit,
       } as const),
-      typeFeatureDisplay({
-        type: 'enum',
-        key: 'difficulty',
-        icon: IconAccessible,
-        icons: {
-          accessible: IconAccessible,
-          normal: IconAccessible,
-          smallEffort: IconAccessibleOff,
-          hard: IconAlertTriangle,
-          dangerous: IconAlertTriangleFilled,
-        },
-        moreInfoFeatureKey: 'difficultyNotes',
-        options: difficulty,
-      } as const),
+
       typeFeatureDisplay({
         type: 'enum',
         key: 'amountOfPeople',
         icon: IconFriends,
         options: amountOfPeople,
       } as const),
-      typeFeatureDisplay({
-        type: 'enum',
-        key: 'allowedAccess',
-        icon: IconBarrierBlock,
-        icons: {
-          public: IconWalk,
-          private: IconBarrierBlock,
-          customers: IconBarrierBlock,
-          permit: IconCertificate,
-          permissive: IconWalk,
-          mixed: IconBarrierBlock,
-        },
-        options: allowedAccess,
-        moreInfoFeatureKey: 'allowedAccessNotes',
-      } as const),
+
       typeFeatureDisplay({
         type: 'composite',
         keys: ['timeToArrive', 'placeToArriveFrom'],
@@ -168,6 +165,11 @@ export const featureDisplayGroups = [
         type: 'boolean',
         key: 'isFreeWithLocalStamp',
         icon: IconTicket,
+      } as const),
+      typeFeatureDisplay({
+        type: 'text',
+        key: 'date',
+        icon: IconCalendarMonth,
       } as const),
     ],
   },
@@ -221,15 +223,57 @@ export const featureDisplayGroups = [
         icon: IconDimensions,
       } as const),
       typeFeatureDisplay({
+        type: 'number',
+        key: 'height',
+        icon: IconRulerMeasure,
+      } as const),
+      typeFeatureDisplay({
+        type: 'number',
+        key: 'depth',
+        icon: IconArrowBarDown,
+      } as const),
+      typeFeatureDisplay({
+        type: 'composite',
+        keys: ['depthMin', 'depthMax'],
+        icon: IconWalk,
+      } as const),
+      typeFeatureDisplay({
+        type: 'number',
+        key: 'depthMin',
+        icon: IconArrowBarDown,
+        hidden: true,
+      } as const),
+      typeFeatureDisplay({
+        type: 'number',
+        key: 'depthMax',
+        icon: IconArrowBarDown,
+        hidden: true,
+      } as const),
+      typeFeatureDisplay({
         type: 'enum',
         key: 'groundType',
         icon: IconGrain,
         options: groundType,
       }),
       typeFeatureDisplay({
+        type: 'enum',
+        key: 'howNarrow',
+        icon: IconViewportNarrow,
+        options: howNarrow,
+      } as const),
+      typeFeatureDisplay({
         type: 'boolean',
         key: 'isCovered',
         icon: IconUmbrella,
+      } as const),
+      typeFeatureDisplay({
+        type: 'boolean',
+        key: 'hasDrinkingWater',
+        icon: IconFountain,
+        icons: {
+          true: IconFountain,
+          false: IconFountainOff,
+        },
       } as const),
     ],
   },
@@ -279,15 +323,6 @@ export const featureDisplayGroups = [
         icons: {
           true: IconLifebuoy,
           false: IconLifebuoyOff,
-        },
-      } as const),
-      typeFeatureDisplay({
-        type: 'boolean',
-        key: 'hasDrinkingWater',
-        icon: IconFountain,
-        icons: {
-          true: IconFountain,
-          false: IconFountainOff,
         },
       } as const),
       typeFeatureDisplay({
@@ -353,6 +388,70 @@ export const featureDisplayGroups = [
     ],
   },
   {
+    key: 'requirements',
+    featureDisplays: [
+      typeFeatureDisplay({
+        type: 'enum',
+        key: 'allowedAccess',
+        icon: IconBarrierBlock,
+        icons: {
+          public: IconWalk,
+          private: IconBarrierBlock,
+          customers: IconBarrierBlock,
+          permit: IconCertificate,
+          permissive: IconWalk,
+          mixed: IconBarrierBlock,
+        },
+        options: allowedAccess,
+        moreInfoFeatureKey: 'allowedAccessNotes',
+      } as const),
+      typeFeatureDisplay({
+        type: 'enum',
+        key: 'difficulty',
+        icon: IconAccessible,
+        icons: {
+          accessible: IconAccessible,
+          normal: IconAccessible,
+          smallEffort: IconAccessibleOff,
+          hard: IconAlertTriangle,
+          dangerous: IconAlertTriangleFilled,
+        },
+        moreInfoFeatureKey: 'difficultyNotes',
+        options: difficulty,
+      } as const),
+      typeFeatureDisplay({
+        type: 'enum',
+        key: 'scubaDivingLevel',
+        icon: IconCertificate,
+        options: scubaDivingLevel,
+      } as const),
+      typeFeatureDisplay({
+        type: 'enum',
+        key: 'trainingLevel',
+        icon: IconSchool,
+        options: trainingLevel,
+      } as const),
+      typeFeatureDisplay({
+        type: 'boolean',
+        key: 'isBoatOnly',
+        icon: IconSailboat,
+        icons: {
+          true: IconSailboat,
+          false: IconSailboatOff,
+        },
+      } as const),
+      typeFeatureDisplay({
+        type: 'boolean',
+        key: 'isNudist',
+        icon: IconShirtOff,
+        icons: {
+          true: IconShirtOff,
+          false: IconShirt,
+        },
+      } as const),
+    ],
+  },
+  {
     key: 'notes',
     featureDisplays: [
       typeFeatureDisplay({
@@ -373,6 +472,16 @@ export const featureDisplayGroups = [
       typeFeatureDisplay({
         type: 'markdown',
         key: 'hasInacurateLocationNotes',
+        icon: IconMapPinOff,
+      } as const),
+      typeFeatureDisplay({
+        type: 'markdown',
+        key: 'hasMissingInfoNotes',
+        icon: IconHelpTriangle,
+      } as const),
+      typeFeatureDisplay({
+        type: 'markdown',
+        key: 'notThereAnymoreNotes',
         icon: IconMapPinOff,
       } as const),
     ],
