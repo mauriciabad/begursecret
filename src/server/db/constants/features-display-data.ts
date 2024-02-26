@@ -81,7 +81,7 @@ const typeFeatureDisplay = <F extends AnyFeature<K>, K extends FeatureKey>(
 
 export const featureDisplayGroups = [
   {
-    key: 'general',
+    key: 'hidden',
     featureDisplays: [
       typeFeatureDisplay({
         type: 'boolean',
@@ -91,8 +91,20 @@ export const featureDisplayGroups = [
           true: IconHelpTriangle,
           false: IconInfoCircle,
         },
+        hidden: true,
         moreInfoFeatureKey: 'hasMissingInfoNotes',
       } as const),
+      typeFeatureDisplay({
+        type: 'markdown',
+        key: 'hasMissingInfoNotes',
+        icon: IconHelpTriangle,
+        hidden: true,
+      } as const),
+    ],
+  },
+  {
+    key: 'general',
+    featureDisplays: [
       typeFeatureDisplay({
         type: 'boolean',
         key: 'notThereAnymore',
@@ -490,11 +502,6 @@ export const featureDisplayGroups = [
         type: 'markdown',
         key: 'hasInacurateLocationNotes',
         icon: IconMapPinOff,
-      } as const),
-      typeFeatureDisplay({
-        type: 'markdown',
-        key: 'hasMissingInfoNotes',
-        icon: IconHelpTriangle,
       } as const),
       typeFeatureDisplay({
         type: 'markdown',

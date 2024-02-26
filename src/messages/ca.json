@@ -2,6 +2,7 @@
   "data": {
     "features": {
       "titles": {
+        "hidden": "Ocult",
         "features": "Característiques",
         "services": "Serveis",
         "notes": "Notes",
