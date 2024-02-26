@@ -43,7 +43,7 @@
         "distance": "Distància",
         "slope": "Desnivell",
         "date": "Data",
-        "isBoatOnly": "Només per a vaixells",
+        "isBoatOnly": "Cal barco",
         "trainingLevel": "Nivell de formació",
         "hasMissingInfo": "Falta informació",
         "height": "Alçada",
@@ -52,8 +52,8 @@
         "depthMax": "Profunditat max",
         "scubaDivingLevel": "Nivell de submarinisme",
         "notThereAnymore": "Ja no hi és",
-        "howNarrow": "Quan estret",
-        "hasMissingInfoNotes": "Falta informació",
+        "howNarrow": "Amplada",
+        "hasMissingInfoNotes": "Informació faltant",
         "notThereAnymoreNotes": "Ja no hi és"
       },
       "values": {
@@ -140,7 +140,7 @@
             "false": "Sense banc"
           },
           "isBoatOnly": {
-            "true": "Només amb barca",
+            "true": "Cal barca",
             "false": "No cal barca"
           },
           "hasMissingInfo": {
@@ -214,7 +214,7 @@
           "howNarrow": {
             "extremlyNarrow": "Molt estret",
             "narrow": "Estret",
-            "extraSpace": "Poc ampli",
+            "extraSpace": "Lleugerament ampli",
             "wide": "Ampli",
             "veryWide": "Molt ampli"
           }
