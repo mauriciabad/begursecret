@@ -3,7 +3,7 @@
 import { Button } from '@nextui-org/button'
 import { Checkbox } from '@nextui-org/checkbox'
 import { Input, Textarea } from '@nextui-org/input'
-import { IconExternalLink } from '@tabler/icons-react'
+import { IconDownload, IconExternalLink } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC, useState } from 'react'
 import { Controller } from 'react-hook-form'
@@ -16,6 +16,7 @@ import {
   useSafeForm,
 } from '~/components/generic/safe-form'
 import { cn } from '~/helpers/cn'
+import { download } from '~/helpers/download-file'
 import { multiLineToGeoJsonString } from '~/helpers/spatial-data/multi-line'
 import { Link, useRouter } from '~/navigation'
 import { createRouteSchema } from '~/schemas/routes'
@@ -214,18 +215,7 @@ export const RouteForm: FC<{
             )}
           />
 
-          <div className="relative flex-1 basis-64 ">
-            <Button
-              as={Link}
-              href="https://geojson.io/#map=13.26/41.95443/3.21328"
-              endContent={<IconExternalLink />}
-              className="mb-4"
-              color="primary"
-              target="_blank"
-            >
-              Open GeoJSON.io
-            </Button>
-
+          <div className="relative flex-1 basis-64 space-y-4">
             <Controller
               name="path"
               control={form.control}
@@ -240,9 +230,37 @@ export const RouteForm: FC<{
                   onChange={onChange}
                   value={value}
                   label={t('columns.path')}
+                  labelPlacement="outside"
                 />
               )}
             />
+
+            <div className="flex gap-4">
+              <Button
+                as={Link}
+                href="https://geojson.io/#map=13.26/41.95443/3.21328"
+                startContent={<IconExternalLink />}
+                color="primary"
+                target="_blank"
+              >
+                Open editor
+              </Button>
+
+              <Button
+                startContent={<IconDownload />}
+                color="primary"
+                onPress={() => {
+                  download(
+                    form.getValues('path'),
+                    `route-${form.getValues('name')}-${new Date().toISOString()}.json`,
+                    'application/json'
+                  )
+                }}
+                disabled={!form.getValues('path')}
+              >
+                Download GeoJSON
+              </Button>
+            </div>
           </div>
         </div>
 
