@@ -117,11 +117,12 @@ export function multilineFromGeoJsonString(string: string) {
 export function multiLineToGeoJson(multiline: MapMultiLine) {
   return {
     type: 'FeatureCollection',
+    properties: {},
     features: multiline.map((line) => ({
       type: 'Feature',
       geometry: {
-        type: 'LineString',
         coordinates: line.map(([lat, lng]) => [lng, lat]),
+        type: 'LineString',
       },
     })),
   }

@@ -10,12 +10,17 @@ import { CustomLocationControl } from './custom-location-control'
 import { useMapResize } from './useMapResize'
 import { useObserveZoom } from './useObserveZoom'
 
+import DoubleTouchDragZoom from '@petoc/leaflet-double-touch-drag-zoom'
+import '@petoc/leaflet-double-touch-drag-zoom/src/leaflet-double-touch-drag-zoom.css'
+import L from 'leaflet'
 import 'leaflet.locatecontrol'
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'
 import 'leaflet/dist/leaflet.css'
 import { useMainMap } from '../providers/main-map-provider'
 import { MapLine } from './map-line'
 import { MapMarker } from './map-marker'
+
+L.Map.addInitHook('addHandler', 'doubleTouchDragZoom', DoubleTouchDragZoom)
 
 const DEFAULT_CENTER = {
   lat: 41.953,
@@ -68,6 +73,7 @@ export const MainMapRaw: FC<{
       scrollWheelZoom
       doubleClickZoom
       touchZoom
+      doubleTouchDragZoom
       dragging
       keyboard
       className={cn(mapContainerClassName, className)}
