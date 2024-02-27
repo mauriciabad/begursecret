@@ -117,9 +117,9 @@ export function multilineFromGeoJsonString(string: string) {
 export function multiLineToGeoJson(multiline: MapMultiLine) {
   return {
     type: 'FeatureCollection',
-    properties: {},
     features: multiline.map((line) => ({
       type: 'Feature',
+      properties: {},
       geometry: {
         coordinates: line.map(([lat, lng]) => [lng, lat]),
         type: 'LineString',
@@ -137,8 +137,9 @@ export const geoJsonSchema = z.object({
     z.object({
       type: z.literal('Feature'),
       geometry: z.object({
-        coordinates: z.array(z.tuple([z.number(), z.number()])),
         type: z.literal('LineString'),
+        properties: z.object({}),
+        coordinates: z.array(z.tuple([z.number(), z.number()])),
       }),
     })
   ),
