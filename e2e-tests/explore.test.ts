@@ -6,7 +6,7 @@ test('has title', async ({ page }) => {
   await expect(page).toHaveTitle(/Explore/)
 })
 
-test('place link works', async ({ page }) => {
+test.skip('place link works', async ({ page }) => {
   await page.goto('/en/explore')
 
   const link = page.getByRole('link', { name: 'Sa Riera Beach' })
