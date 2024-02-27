@@ -541,18 +541,6 @@
     "hub": "Hub",
     "profile": "Profile"
   },
-  "place": {
-    "meta": {
-      "title": "Place",
-      "description": "Place details"
-    }
-  },
-  "route": {
-    "meta": {
-      "title": "Route",
-      "description": "Route details"
-    }
-  },
   "map": {
     "layout-types": {
       "standard": "Standard",
