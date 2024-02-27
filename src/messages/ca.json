@@ -292,7 +292,9 @@
       "edit": "Editar",
       "delete": "Eliminar"
     },
-    "delete-unsupported": "Eliminar no està suportat, elimina directament de la base de dades"
+    "delete-unsupported": "Eliminar no està suportat, elimina directament de la base de dades",
+    "open-editor": "Obrir editor",
+    "download-geojson": "Descarregar GeoJSON"
   },
   "admin-login": {
     "heading": "Accés denegat",

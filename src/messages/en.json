@@ -293,7 +293,9 @@
       "edit": "Edit",
       "delete": "Delete"
     },
-    "delete-unsupported": "Delete is not supported, delete from database directly"
+    "delete-unsupported": "Delete is not supported, delete from database directly",
+    "open-editor": "Open editor",
+    "download-geojson": "Download GeoJSON"
   },
   "admin-login": {
     "heading": "Access denied",
