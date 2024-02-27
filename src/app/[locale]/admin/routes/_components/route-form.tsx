@@ -243,7 +243,7 @@ export const RouteForm: FC<{
                 color="primary"
                 target="_blank"
               >
-                Open editor
+                {t('open-editor')}
               </Button>
 
               <Button
@@ -258,7 +258,7 @@ export const RouteForm: FC<{
                 }}
                 disabled={!form.getValues('path')}
               >
-                Download GeoJSON
+                {t('download-geojson')}
               </Button>
             </div>
           </div>
