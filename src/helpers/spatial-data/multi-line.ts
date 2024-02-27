@@ -138,7 +138,7 @@ export const geoJsonSchema = z.object({
       type: z.literal('Feature'),
       geometry: z.object({
         type: z.literal('LineString'),
-        properties: z.object({}),
+        properties: z.object({}).optional(),
         coordinates: z.array(z.tuple([z.number(), z.number()])),
       }),
     })
