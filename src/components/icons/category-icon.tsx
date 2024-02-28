@@ -104,6 +104,7 @@ const iconsByIconName = {
   diamond: IconDiamond,
   'chart-bubble': IconChartBubble,
   'arrow-fork': IconArrowFork,
+  'map-pin': IconMapPin,
 } as const satisfies Record<IconName, Icon>
 
 export const CategoryIcon: FC<
