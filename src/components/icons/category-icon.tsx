@@ -1,6 +1,7 @@
 import {
   Icon,
   IconAnchor,
+  IconArrowFork,
   IconArrowsDownUp,
   IconBeach,
   IconBucket,
@@ -22,7 +23,6 @@ import {
   IconHistory,
   IconHome,
   IconHomeOff,
-  IconIcons,
   IconInfoCircle,
   IconLadder,
   IconMapPin,
@@ -76,7 +76,6 @@ const iconsByIconName = {
   home: IconHome,
   'building-tunnel': IconBuildingTunnel,
   'building-store': IconBuildingStore,
-  icons: IconIcons,
   'map-pin-question': IconMapPinQuestion,
   'charging-pile': IconChargingPile,
   motorbike: IconMotorbike,
@@ -104,6 +103,7 @@ const iconsByIconName = {
   swimming: IconSwimming,
   diamond: IconDiamond,
   'chart-bubble': IconChartBubble,
+  'arrow-fork': IconArrowFork,
 } as const satisfies Record<IconName, Icon>
 
 export const CategoryIcon: FC<
