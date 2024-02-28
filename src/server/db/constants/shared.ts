@@ -29,7 +29,7 @@ export const iconNames = [
   'building-bridge-2',
   'fall',
   'corner-right-down',
-  'bucket',
+  'wash',
   'wall',
   'anchor',
   'pool',

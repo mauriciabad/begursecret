@@ -4,7 +4,6 @@ import {
   IconArrowFork,
   IconArrowsDownUp,
   IconBeach,
-  IconBucket,
   IconBuildingBridge2,
   IconBuildingCastle,
   IconBuildingStore,
@@ -49,6 +48,7 @@ import {
   IconTrekking,
   IconWalk,
   IconWall,
+  IconWash,
   TablerIconsProps,
 } from '@tabler/icons-react'
 import { FC } from 'react'
@@ -84,7 +84,7 @@ const iconsByIconName = {
   'scuba-diving': IconScubaDiving,
   fall: IconFall,
   'corner-right-down': IconCornerRightDown,
-  bucket: IconBucket,
+  wash: IconWash,
   wall: IconWall,
   anchor: IconAnchor,
   pool: IconPool,
