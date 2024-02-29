@@ -3,7 +3,7 @@ import { colorValues } from '~/helpers/color-classes'
 import { MapMultiLine } from '~/helpers/spatial-data/multi-line'
 import { useRouter } from '~/navigation'
 import { ColorName } from '~/server/db/constants/shared'
-import { Polyline } from './next-components/map-components'
+import { Polyline } from '../leaflet-components/next-js-ready/simple-components'
 
 const STROKE_WIDTH = 4
 const STROKE_BORDER = 2

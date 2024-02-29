@@ -1,12 +1,12 @@
 import { FC } from 'react'
 import { MapPoint } from '~/helpers/spatial-data/point'
 import { useRouter } from '~/navigation'
-import { Marker } from './next-components/map-components'
+import { Marker } from '../leaflet-components/next-js-ready/marker'
 import {
   PlaceMarkerLeafletIconProps,
   getPlaceMarkerLeafletDivIcon,
   getPlaceMarkerLeafletIcon,
-} from './place-marker-svg'
+} from '../utilities/place-marker-svg'
 
 export type MapMarkerInvariable = {
   placeId: number

@@ -3,26 +3,10 @@ import type {
   DivIconOptions,
   Icon,
   IconOptions,
-  Map as LeafletMap,
   Marker as LeafletMarker,
 } from 'leaflet'
-import { FC, PropsWithChildren, Ref, useEffect, useState } from 'react'
-import {
-  MapContainer as LMapContainer,
-  Marker as LMarker,
-  type MapContainerProps as LMapContainerProps,
-  type MarkerProps,
-} from 'react-leaflet'
-
-export const MapContainer: FC<
-  PropsWithChildren<
-    LMapContainerProps & {
-      forwardedRef?: Ref<LeafletMap> | null
-    }
-  >
-> = ({ forwardedRef, ...props }) => (
-  <LMapContainer {...props} ref={forwardedRef} />
-)
+import { FC, Ref, useEffect, useState } from 'react'
+import { Marker as LMarker, type MarkerProps } from 'react-leaflet'
 
 export const Marker: FC<
   {

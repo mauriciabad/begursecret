@@ -13,7 +13,7 @@ import {
   SafeSubmitButton,
   useSafeForm,
 } from '~/components/generic/safe-form'
-import { MapPointSelector } from '~/components/map/map-point-selector'
+import { MapPointSelector } from '~/components/map/map-elements/map-point-selector'
 import { cn } from '~/helpers/cn'
 import { useRouter } from '~/navigation'
 import { createPlaceSchema } from '~/schemas/places'

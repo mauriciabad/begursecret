@@ -1,42 +1,163 @@
 'use client'
 
-import { IconLoader } from '@tabler/icons-react'
-import dynamic from 'next/dynamic'
-import { createContext, useContext, useMemo } from 'react'
+import moize from 'moize'
+import { FC, memo } from 'react'
 import { cn } from '~/helpers/cn'
-import { mapContainerClassName } from './main-map-raw'
+import { MapPoint } from '~/helpers/spatial-data/point'
+import { useMainMap } from '../providers/main-map-provider'
+import { useMapResize } from './hooks/useMapResize'
+import { NextMapContainer } from './leaflet-components/next-js-ready/map-container'
+import { CustomLayersControl } from './map-elements/custom-layers-controls'
+import { CustomLocationControl } from './map-elements/custom-location-control'
+import { MapLine } from './map-elements/map-line'
+import { MapMarker } from './map-elements/map-marker'
 
-const DynamicMap = dynamic(
-  async () => {
-    const { MainMapRaw: Map } = await import('./main-map-raw')
-    return { default: Map }
-  },
-  {
-    loading: () => {
-      const { className } = useContext(LoadingPropsCtx)
-      return (
-        <div
-          className={cn(
-            mapContainerClassName,
-            'flex items-center justify-center',
-            className
-          )}
-        >
-          <IconLoader className="animate mr-1 h-6 w-6 animate-spin text-stone-800 [animation-duration:2s]" />
-        </div>
-      )
-    },
-    ssr: false,
+const DEFAULT_CENTER = {
+  lat: 41.953,
+  lng: 3.2137,
+} as const satisfies MapPoint
+
+const INITIAL_ZOOM = 14
+
+const calcSize = moize(
+  (
+    size: MapMarker['size'] | 'not-emphasized' | 'all-markers',
+    zoom: number
+  ) => {
+    switch (size) {
+      case 'all-markers': {
+        if (zoom <= 14) return 'xs'
+        if (zoom <= 15) return 'sm'
+        return 'md'
+      }
+      case 'not-emphasized': {
+        if (zoom <= 15.5) return 'none'
+        if (zoom <= 16) return 'xs'
+        if (zoom <= 17) return 'sm'
+        return 'md'
+      }
+      default: {
+        return size
+      }
+    }
   }
 )
 
-const LoadingPropsCtx = createContext<{ className?: string }>({})
+export const MainMap: FC<{
+  className?: string
+  classNames?: {
+    controls?: string
+  }
+}> = memo(({ className, classNames = {} }) => {
+  const { map, setMap } = useMainMap()
 
-export const MainMap: typeof DynamicMap = (props) => {
-  const Map = useMemo(() => DynamicMap, [])
+  useMapResize(map)
+
   return (
-    <LoadingPropsCtx.Provider value={{ className: props.className }}>
-      <Map {...props} />
-    </LoadingPropsCtx.Provider>
+    <NextMapContainer
+      center={DEFAULT_CENTER}
+      zoom={INITIAL_ZOOM}
+      zoomControl={false}
+      scrollWheelZoom
+      doubleClickZoom
+      touchZoom
+      dragging
+      keyboard
+      className={cn('z-0 h-64 w-full', className)}
+      ref={setMap}
+      attributionControl={false}
+      zoomSnap={0.5}
+    >
+      <LinesLayersRawMap />
+      <MarkersLayersRawMap fullControl />
+
+      <div
+        className={cn(
+          'absolute bottom-4 right-4 z-[1000] flex flex-col-reverse gap-2',
+          classNames.controls
+        )}
+      >
+        <CustomLayersControl />
+        <CustomLocationControl />
+      </div>
+    </NextMapContainer>
   )
-}
+})
+
+const MarkersLayersRawMap: FC<{
+  disableMarkers?: boolean
+  fullControl?: boolean
+}> = memo(() => {
+  const { markers, emphasizedMarkers, veryEmphasizedMarkers } = useMainMap()
+
+  const zoom = 14 // TODO: get zoom from map
+
+  const displayMarkers = markers?.map((marker) => {
+    if (veryEmphasizedMarkers) {
+      if (veryEmphasizedMarkers.has(marker.placeId)) {
+        return {
+          ...marker,
+          animated: true,
+          zIndexOffset: 2000,
+          size: calcSize('md', zoom),
+        }
+      } else {
+        return {
+          ...marker,
+          size: calcSize('all-markers', zoom),
+          zIndexOffset: 0,
+        }
+      }
+    }
+
+    if (emphasizedMarkers) {
+      if (emphasizedMarkers.has(marker.placeId)) {
+        return {
+          ...marker,
+          size: calcSize('md', zoom),
+          animated: true,
+          zIndexOffset: 1000,
+        }
+      } else {
+        return {
+          ...marker,
+          size: calcSize('not-emphasized', zoom),
+          zIndexOffset: 0,
+        }
+      }
+    }
+
+    return {
+      ...marker,
+      size: calcSize('all-markers', zoom),
+      zIndexOffset: 0,
+    }
+  })
+
+  return (
+    <>
+      {displayMarkers.map((mapMarkerProps) => (
+        <MapMarker
+          key={`${mapMarkerProps.lat}-${mapMarkerProps.lng}-${mapMarkerProps.placeId}`}
+          {...mapMarkerProps}
+        />
+      ))}
+    </>
+  )
+})
+
+const LinesLayersRawMap: FC = memo(() => {
+  const { lines, veryEmphasizedLines } = useMainMap()
+
+  return (
+    <>
+      {lines.map((line) => (
+        <MapLine
+          key={line.routeId}
+          {...line}
+          veryEmphasized={veryEmphasizedLines?.has(line.routeId)}
+        />
+      ))}
+    </>
+  )
+})

@@ -8,8 +8,8 @@ import { IconStack2 } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC, useState } from 'react'
 import { cn } from '~/helpers/cn'
-import { LinkButton } from '../links/link-button'
-import { TileLayer } from './next-components/map-components'
+import { LinkButton } from '../../links/link-button'
+import { TileLayer } from '../leaflet-components/next-js-ready/simple-components'
 
 export const CustomLayersControl: FC<{
   hide?: boolean

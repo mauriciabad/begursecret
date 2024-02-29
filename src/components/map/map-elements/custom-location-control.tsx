@@ -4,7 +4,7 @@ import { Button } from '@nextui-org/button'
 import { IconCurrentLocation } from '@tabler/icons-react'
 import { FC, useEffect, useState } from 'react'
 import { useMap } from 'react-leaflet'
-import '../../../public/lib/L.Control.Locate.min.css'
+import '../../../../public/lib/L.Control.Locate.min.css'
 
 let hasImportedLocateControl = false
 

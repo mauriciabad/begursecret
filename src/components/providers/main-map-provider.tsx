@@ -8,8 +8,8 @@ import {
   useContext,
   useState,
 } from 'react'
-import { MapLineInvariable } from '../map/map-line'
-import { MapMarkerInvariable } from '../map/map-marker'
+import { MapLineInvariable } from '../map/map-elements/map-line'
+import { MapMarkerInvariable } from '../map/map-elements/map-marker'
 
 export type SetOfMarkers = Set<NonNullable<MapMarkerInvariable['placeId']>>
 export type SetOfLines = Set<NonNullable<MapLineInvariable['routeId']>>
