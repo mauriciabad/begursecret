@@ -6,6 +6,7 @@ import { cn } from '~/helpers/cn'
 import { MapPoint } from '~/helpers/spatial-data/point'
 import { useMainMap } from '../providers/main-map-provider'
 import { useMapResize } from './hooks/useMapResize'
+import { useObserveZoom } from './hooks/useObserveZoom'
 import { NextMapContainer } from './leaflet-components/next-js-ready/map-container'
 import { CustomLayersControl } from './map-elements/custom-layers-controls'
 import { CustomLocationControl } from './map-elements/custom-location-control'
@@ -89,9 +90,10 @@ const MarkersLayer: FC<{
   disableMarkers?: boolean
   fullControl?: boolean
 }> = memo(() => {
-  const { markers, emphasizedMarkers, veryEmphasizedMarkers } = useMainMap()
+  const { map, markers, emphasizedMarkers, veryEmphasizedMarkers } =
+    useMainMap()
 
-  const zoom = 14 // TODO: get zoom from map
+  const { zoom } = useObserveZoom(map, INITIAL_ZOOM)
 
   const displayMarkers = markers?.map((marker) => {
     if (veryEmphasizedMarkers) {
