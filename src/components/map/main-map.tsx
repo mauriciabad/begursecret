@@ -1,12 +1,10 @@
 'use client'
 
-import moize from 'moize'
 import { FC, memo } from 'react'
 import { cn } from '~/helpers/cn'
 import { MapPoint } from '~/helpers/spatial-data/point'
 import { useMainMap } from '../providers/main-map-provider'
 import { useMapResize } from './hooks/useMapResize'
-import { useObserveZoom } from './hooks/useObserveZoom'
 import { NextMapContainer } from './leaflet-components/next-js-ready/map-container'
 import { CustomLayersControl } from './map-elements/custom-layers-controls'
 import { CustomLocationControl } from './map-elements/custom-location-control'
@@ -19,30 +17,6 @@ const DEFAULT_CENTER = {
 } as const satisfies MapPoint
 
 const INITIAL_ZOOM = 14
-
-const calcSize = moize(
-  (
-    size: MapMarker['size'] | 'not-emphasized' | 'all-markers',
-    zoom: number
-  ) => {
-    switch (size) {
-      case 'all-markers': {
-        if (zoom <= 14) return 'xs'
-        if (zoom <= 15) return 'sm'
-        return 'md'
-      }
-      case 'not-emphasized': {
-        if (zoom <= 15.5) return 'none'
-        if (zoom <= 16) return 'xs'
-        if (zoom <= 17) return 'sm'
-        return 'md'
-      }
-      default: {
-        return size
-      }
-    }
-  }
-)
 
 export const MainMap: FC<{
   className?: string
@@ -90,10 +64,7 @@ const MarkersLayer: FC<{
   disableMarkers?: boolean
   fullControl?: boolean
 }> = memo(() => {
-  const { map, markers, emphasizedMarkers, veryEmphasizedMarkers } =
-    useMainMap()
-
-  const { zoom } = useObserveZoom(map, INITIAL_ZOOM)
+  const { markers, emphasizedMarkers, veryEmphasizedMarkers } = useMainMap()
 
   const displayMarkers = markers?.map((marker) => {
     if (veryEmphasizedMarkers) {
@@ -102,14 +73,14 @@ const MarkersLayer: FC<{
           ...marker,
           animated: true,
           zIndexOffset: 2000,
-          size: calcSize('md', zoom),
-        }
+          size: 'md',
+        } as const
       } else {
         return {
           ...marker,
-          size: calcSize('all-markers', zoom),
+          size: 'all-markers',
           zIndexOffset: 0,
-        }
+        } as const
       }
     }
 
@@ -117,24 +88,24 @@ const MarkersLayer: FC<{
       if (emphasizedMarkers.has(marker.placeId)) {
         return {
           ...marker,
-          size: calcSize('md', zoom),
+          size: 'md',
           animated: true,
           zIndexOffset: 1000,
-        }
+        } as const
       } else {
         return {
           ...marker,
-          size: calcSize('not-emphasized', zoom),
+          size: 'not-emphasized',
           zIndexOffset: 0,
-        }
+        } as const
       }
     }
 
     return {
       ...marker,
-      size: calcSize('all-markers', zoom),
+      size: 'all-markers',
       zIndexOffset: 0,
-    }
+    } as const
   })
 
   return (
