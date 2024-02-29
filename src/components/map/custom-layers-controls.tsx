@@ -7,9 +7,9 @@ import { Popover, PopoverContent, PopoverTrigger } from '@nextui-org/popover'
 import { IconStack2 } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC, useState } from 'react'
-import { TileLayer } from 'react-leaflet'
 import { cn } from '~/helpers/cn'
 import { LinkButton } from '../links/link-button'
+import { TileLayer } from './map-components'
 
 export const CustomLayersControl: FC<{
   hide?: boolean

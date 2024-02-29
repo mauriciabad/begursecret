@@ -1,9 +1,9 @@
 import { FC, memo } from 'react'
-import { Polyline } from 'react-leaflet'
 import { colorValues } from '~/helpers/color-classes'
 import { MapMultiLine } from '~/helpers/spatial-data/multi-line'
 import { useRouter } from '~/navigation'
 import { ColorName } from '~/server/db/constants/shared'
+import { Polyline } from './map-components'
 
 const STROKE_WIDTH = 4
 const STROKE_BORDER = 2

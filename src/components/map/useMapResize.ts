@@ -1,7 +1,7 @@
-import { Map } from 'leaflet'
+import type { Map as LeafletMap } from 'leaflet'
 import { useEffect } from 'react'
 
-export function useMapResize(map: Map | null) {
+export function useMapResize(map: LeafletMap | null) {
   useEffect(() => {
     if (map) {
       const resizeObserver = new ResizeObserver(() => map.invalidateSize())

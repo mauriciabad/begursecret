@@ -1,9 +1,10 @@
 import { FC } from 'react'
-import { Marker } from 'react-leaflet'
 import { MapPoint } from '~/helpers/spatial-data/point'
 import { useRouter } from '~/navigation'
+import { Marker } from './map-components'
 import {
   PlaceMarkerLeafletIconProps,
+  getPlaceMarkerLeafletDivIcon,
   getPlaceMarkerLeafletIcon,
 } from './place-marker-svg'
 
@@ -32,12 +33,16 @@ export const MapMarker: FC<MapMarker> = ({
 }) => {
   const router = useRouter()
 
+  const iconOptions = placeMarkerProps.animated
+    ? getPlaceMarkerLeafletDivIcon(placeMarkerProps)
+    : getPlaceMarkerLeafletIcon(placeMarkerProps)
+
   return (
     <Marker
       zIndexOffset={zIndexOffset ?? 0}
       position={[lat, lng]}
       interactive={!disabled}
-      icon={getPlaceMarkerLeafletIcon(placeMarkerProps)}
+      icon={iconOptions}
       eventHandlers={
         url && !disabled
           ? {

@@ -1,25 +1,16 @@
 'use client'
 
 import { IconFocus2 } from '@tabler/icons-react'
-import { Map as LeafletMap, LeafletMouseEvent, divIcon } from 'leaflet'
+import type { Map as LeafletMap, LeafletMouseEvent } from 'leaflet'
 import { FC, memo, useCallback, useEffect, useState } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { MapContainer, Marker } from 'react-leaflet'
 import { cn } from '~/helpers/cn'
 import { MapPoint } from '~/helpers/spatial-data/point'
 import { CustomLayersControl, LayerId } from './custom-layers-controls'
 import { CustomLocationControl } from './custom-location-control'
-import { useMapResize } from './useMapResize'
-
-import DoubleTouchDragZoom from '@petoc/leaflet-double-touch-drag-zoom'
-import '@petoc/leaflet-double-touch-drag-zoom/src/leaflet-double-touch-drag-zoom.css'
-import L from 'leaflet'
-import 'leaflet.locatecontrol'
-import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css'
-import 'leaflet/dist/leaflet.css'
+import { MapContainer, Marker } from './map-components'
 import { MapMarker } from './map-marker'
-
-L.Map.addInitHook('addHandler', 'doubleTouchDragZoom', DoubleTouchDragZoom)
+import { useMapResize } from './useMapResize'
 
 const DEFAULT_CENTER = {
   lat: 41.953,
@@ -83,7 +74,6 @@ export const MapRaw: FC<{
         scrollWheelZoom={fullControl}
         doubleClickZoom={fullControl}
         touchZoom={fullControl}
-        doubleTouchDragZoom={fullControl}
         dragging={fullControl}
         keyboard={fullControl}
         className={cn(mapContainerClassName, className)}
@@ -104,7 +94,7 @@ export const MapRaw: FC<{
             position={value}
             interactive={false}
             key={`${value.lat}-${value.lng}-selected`}
-            icon={divIcon({
+            icon={{
               html: renderToStaticMarkup(
                 <div className="relative">
                   <IconFocus2
@@ -122,7 +112,7 @@ export const MapRaw: FC<{
               iconSize: [0, 0],
               className:
                 '!flex justify-center items-center border-0 bg-none [&>*]:shrink-0',
-            })}
+            }}
           />
         )}
 

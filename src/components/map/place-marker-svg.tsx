@@ -1,4 +1,4 @@
-import L from 'leaflet'
+import type { DivIconOptions, IconOptions } from 'leaflet'
 import moize from 'moize'
 import { FC, ReactElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
@@ -101,8 +101,7 @@ const iconVariants = {
     }>
   }
 >
-export type PlaceMarkerIconSvgSize = keyof typeof iconVariants
-type PlaceMarkerIconVariant = (typeof iconVariants)[keyof typeof iconVariants]
+type PlaceMarkerIconSvgSize = keyof typeof iconVariants
 
 const getPlaceMarkerSvg = moize(
   ({
@@ -131,13 +130,11 @@ export type PlaceMarkerLeafletIconProps = {
 }
 
 export const getPlaceMarkerLeafletIcon = moize(
-  ({ icon, color, size = 'none', animated }: PlaceMarkerLeafletIconProps) => {
+  ({ icon, color, size = 'none' }: PlaceMarkerLeafletIconProps) => {
     const svg = getPlaceMarkerSvg({ icon, color, size })
     const variant = iconVariants[size]
 
-    if (animated) return getPlaceMarkerLeafletDivIcon({ svg, variant, color })
-
-    return L.icon({
+    return {
       iconUrl: svg,
       iconRetinaUrl: svg,
 
@@ -145,21 +142,16 @@ export const getPlaceMarkerLeafletIcon = moize(
       iconAnchor: [variant.size / 2, variant.size / 2],
       popupAnchor: [variant.size / 2, 0],
       tooltipAnchor: [variant.size / 2, 0],
-    })
+    } satisfies IconOptions
   }
 )
 
-const getPlaceMarkerLeafletDivIcon = moize(
-  ({
-    svg,
-    variant,
-    color = 'gray',
-  }: {
-    svg: string
-    variant: PlaceMarkerIconVariant
-    color?: ColorName
-  }) =>
-    L.divIcon({
+export const getPlaceMarkerLeafletDivIcon = moize(
+  ({ icon, color = 'gray', size = 'none' }: PlaceMarkerLeafletIconProps) => {
+    const svg = getPlaceMarkerSvg({ icon, color, size })
+    const variant = iconVariants[size]
+
+    return {
       html: `<img src="${svg}" width="${variant.size}" height="${variant.size}" />`,
       className: cn(
         'before:absolute before:inset-0 before:-z-10 before:animate-ping before:rounded-full',
@@ -170,5 +162,6 @@ const getPlaceMarkerLeafletDivIcon = moize(
       iconAnchor: [variant.size / 2, variant.size / 2],
       popupAnchor: [variant.size / 2, 0],
       tooltipAnchor: [variant.size / 2, 0],
-    })
+    } satisfies DivIconOptions
+  }
 )
