@@ -8,7 +8,7 @@ import { cn } from '~/helpers/cn'
 import { MapPoint } from '~/helpers/spatial-data/point'
 import { useMapResize } from './hooks/useMapResize'
 import { NextMapContainer } from './leaflet-components/next-js-ready/map-container'
-import { Marker } from './leaflet-components/next-js-ready/marker'
+import { NextMarker } from './leaflet-components/next-js-ready/marker'
 import {
   CustomLayersControl,
   LayerId,
@@ -94,7 +94,7 @@ export const Map: FC<{
         ))}
 
         {value && (
-          <Marker
+          <NextMarker
             position={value}
             interactive={false}
             key={`${value.lat}-${value.lng}-selected`}

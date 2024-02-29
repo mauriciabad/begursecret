@@ -9,7 +9,7 @@ import { useTranslations } from 'next-intl'
 import { FC, useState } from 'react'
 import { cn } from '~/helpers/cn'
 import { LinkButton } from '../../links/link-button'
-import { TileLayer } from '../leaflet-components/next-js-ready/simple-components'
+import { NextTileLayer } from '../leaflet-components/next-js-ready/simple-components'
 
 export const CustomLayersControl: FC<{
   hide?: boolean
@@ -34,7 +34,7 @@ export const CustomLayersControl: FC<{
       {layersData.map(
         (layer) =>
           layer.id === selectedLayer && (
-            <TileLayer
+            <NextTileLayer
               key={layer.id}
               attribution={`&copy; <a href="${layer.attribution.url}">${layer.attribution.name}</a>`}
               url={layer.tileUrlTemplate}

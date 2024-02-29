@@ -6,7 +6,7 @@ const LazyMarker = dynamic(
   () => import('../to-be-lazy-loaded/marker').then((m) => m.Marker),
   { ssr: false }
 )
-export const Marker = forwardRef<
+export const NextMarker = forwardRef<
   LeafletMarker,
   ComponentProps<typeof LazyMarker>
 >((props, ref) => <LazyMarker {...props} forwardedRef={ref} />)

@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { MapPoint } from '~/helpers/spatial-data/point'
 import { useRouter } from '~/navigation'
-import { Marker } from '../leaflet-components/next-js-ready/marker'
+import { NextMarker } from '../leaflet-components/next-js-ready/marker'
 import {
   PlaceMarkerLeafletIconProps,
   getPlaceMarkerLeafletDivIcon,
@@ -38,7 +38,7 @@ export const MapMarker: FC<MapMarker> = ({
     : getPlaceMarkerLeafletIcon(placeMarkerProps)
 
   return (
-    <Marker
+    <NextMarker
       zIndexOffset={zIndexOffset ?? 0}
       position={[lat, lng]}
       interactive={!disabled}
