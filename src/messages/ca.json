@@ -537,18 +537,6 @@
     "hub": "Oficina virtual",
     "profile": "Perfil"
   },
-  "place": {
-    "meta": {
-      "title": "Lloc",
-      "description": "Informació del lloc"
-    }
-  },
-  "route": {
-    "meta": {
-      "title": "Ruta",
-      "description": "Informació de la ruta"
-    }
-  },
   "map": {
     "layout-types": {
       "standard": "Estàndard",

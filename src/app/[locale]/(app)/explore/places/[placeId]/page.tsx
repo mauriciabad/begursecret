@@ -1,31 +1,66 @@
 import type { Metadata } from 'next'
-import { getTranslations } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { type FC } from 'react'
-import {
-  LocaleParams,
-  LocaleRouteParams,
-  onlyTranslatableLocales,
-} from '~/i18n'
+import { makeImageUrl } from '~/helpers/images'
+import { LocaleRouteParams, locales, onlyTranslatableLocales } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
 import { OverrideMainMap } from '../../_components/override-main-map'
 import { PlaceDetails } from '../../_components/place-details'
 
-type Params = LocaleParams & { placeId: string }
+type Params = LocaleRouteParams<{ placeId: string }>
 
 export async function generateMetadata({
-  params: { locale },
-}: LocaleRouteParams): Promise<Metadata> {
-  const t = await getTranslations({ locale, namespace: 'place' })
+  params: { locale, placeId },
+}: Params): Promise<Metadata> {
+  const trpc = await getTrpc()
+  const place = await trpc.metadata.place({
+    locale: onlyTranslatableLocales(locale),
+    id: Number(placeId),
+  })
+  if (!place) return {}
+
+  const title = `${place.name}`
+  const categoriesList = [
+    place.mainCategory.namePlural,
+    ...place.categories.map((c) => c.category.namePlural),
+  ]
+  const description = `${place.description} | ${categoriesList.join(', ')}`
+  const alternates = Object.fromEntries(
+    locales.map((l) => [l, `/${l}/explore/places/${placeId}`])
+  )
+
   return {
-    title: t('meta.title'),
-    description: t('meta.description'),
+    title,
+    description,
+    alternates: {
+      canonical: `/explore/places/${placeId}`,
+      languages: alternates,
+    },
+    openGraph: {
+      title,
+      description,
+      url: alternates[locale],
+      siteName: 'Begur Secret',
+      images: place.mainImage
+        ? {
+            url: makeImageUrl(place.mainImage.key),
+            width: place.mainImage.width,
+            height: place.mainImage.height,
+            alt: place.mainImage.alt ?? undefined,
+          }
+        : undefined,
+      locale,
+      type: 'article',
+      // modifiedTime: place.updatedAt,
+      // publishedTime: place.updatedAt,
+      authors: 'Begur Secret',
+      tags: [...categoriesList, 'begur', 'costa-brava', 'baix-emporda'],
+      section: place.mainCategory.namePlural,
+    },
   }
 }
 
-const PlacePage: FC<{
-  params: Params
-}> = async ({ params }) => {
+const PlacePage: FC<Params> = async ({ params }) => {
   const placeId = Number(params.placeId)
 
   const trpc = await getTrpc()
