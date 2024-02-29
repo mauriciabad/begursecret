@@ -3,7 +3,7 @@
   "start_url": "/explore",
   "name": "Begur Secret",
   "short_name": "Begur Secret",
-  "description": "Descobreix llocs increïbles d'és teu poble.",
+  "description": "Descobreix llocs increïbles i explora Begur com mai ho has fet abans. +500 llocs i rutes t'esperen!",
   "scope": "https://begursecret.com",
   "icons": [
     {
@@ -48,7 +48,21 @@
   "dir": "ltr",
   "screenshots": [
     {
-      "src": "screenshots/place-details.jpg",
+      "src": "screenshots/map.jpg",
+      "sizes": "1080x1920",
+      "type": "image/jpg",
+      "platform": "narrow",
+      "label": "Map preview"
+    },
+    {
+      "src": "screenshots/info.jpg",
+      "sizes": "1080x1920",
+      "type": "image/jpg",
+      "platform": "narrow",
+      "label": "Place information screen"
+    },
+    {
+      "src": "screenshots/visits.jpg",
       "sizes": "1080x1920",
       "type": "image/jpg",
       "platform": "narrow",
