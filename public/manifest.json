@@ -1,6 +1,10 @@
 {
+  "id": "begursecret",
+  "start_url": "/explore",
   "name": "Begur Secret",
   "short_name": "Begur Secret",
+  "description": "Descobreix llocs increïbles d'és teu poble.",
+  "scope": "https://begursecret.com",
   "icons": [
     {
       "src": "/favicon/maskable-icon-x1024.png",
@@ -35,7 +39,21 @@
   ],
   "theme_color": "#5F797A",
   "background_color": "#FFFFFF",
-  "start_url": "/explore",
   "display": "standalone",
-  "orientation": "portrait"
+  "orientation": "portrait",
+  "categories": ["sports", "travel"],
+  "launch_handler": {
+    "client_mode": "auto"
+  },
+  "dir": "ltr",
+  "screenshots": [
+    {
+      "src": "screenshots/place-details.jpg",
+      "sizes": "1080x1920",
+      "type": "image/jpg",
+      "platform": "narrow",
+      "label": "Place details screen"
+    }
+  ],
+  "handle_links": "preferred"
 }
