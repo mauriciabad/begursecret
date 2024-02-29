@@ -9,7 +9,7 @@ import { useTranslations } from 'next-intl'
 import { FC, useState } from 'react'
 import { cn } from '~/helpers/cn'
 import { LinkButton } from '../links/link-button'
-import { TileLayer } from './map-components'
+import { TileLayer } from './next-components/map-components'
 
 export const CustomLayersControl: FC<{
   hide?: boolean

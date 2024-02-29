@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { MapPoint } from '~/helpers/spatial-data/point'
 import { useRouter } from '~/navigation'
-import { Marker } from './map-components'
+import { Marker } from './next-components/map-components'
 import {
   PlaceMarkerLeafletIconProps,
   getPlaceMarkerLeafletDivIcon,

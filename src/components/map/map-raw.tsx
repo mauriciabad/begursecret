@@ -8,8 +8,8 @@ import { cn } from '~/helpers/cn'
 import { MapPoint } from '~/helpers/spatial-data/point'
 import { CustomLayersControl, LayerId } from './custom-layers-controls'
 import { CustomLocationControl } from './custom-location-control'
-import { MapContainer, Marker } from './map-components'
 import { MapMarker } from './map-marker'
+import { MapContainer, Marker } from './next-components/map-components'
 import { useMapResize } from './useMapResize'
 
 const DEFAULT_CENTER = {

@@ -7,9 +7,9 @@ import { MapPoint } from '~/helpers/spatial-data/point'
 import { useMainMap } from '../providers/main-map-provider'
 import { CustomLayersControl } from './custom-layers-controls'
 import { CustomLocationControl } from './custom-location-control'
-import { MapContainer } from './map-components'
 import { MapLine } from './map-line'
 import { MapMarker } from './map-marker'
+import { MapContainer } from './next-components/map-components'
 import { useMapResize } from './useMapResize'
 
 const DEFAULT_CENTER = {
