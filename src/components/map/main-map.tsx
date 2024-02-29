@@ -68,8 +68,8 @@ export const MainMap: FC<{
       attributionControl={false}
       zoomSnap={0.5}
     >
-      <LinesLayersRawMap />
-      <MarkersLayersRawMap fullControl />
+      <LinesLayer />
+      <MarkersLayer fullControl />
 
       <div
         className={cn(
@@ -84,7 +84,7 @@ export const MainMap: FC<{
   )
 })
 
-const MarkersLayersRawMap: FC<{
+const MarkersLayer: FC<{
   disableMarkers?: boolean
   fullControl?: boolean
 }> = memo(() => {
@@ -146,7 +146,7 @@ const MarkersLayersRawMap: FC<{
   )
 })
 
-const LinesLayersRawMap: FC = memo(() => {
+const LinesLayer: FC = memo(() => {
   const { lines, veryEmphasizedLines } = useMainMap()
 
   return (
