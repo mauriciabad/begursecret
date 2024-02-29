@@ -54,5 +54,6 @@
       "platform": "narrow",
       "label": "Place details screen"
     }
-  ]
+  ],
+  "handle_links": "preferred"
 }
