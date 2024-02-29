@@ -7,9 +7,9 @@ import { Popover, PopoverContent, PopoverTrigger } from '@nextui-org/popover'
 import { IconStack2 } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC, useState } from 'react'
-import { TileLayer } from 'react-leaflet'
 import { cn } from '~/helpers/cn'
-import { LinkButton } from '../links/link-button'
+import { LinkButton } from '../../links/link-button'
+import { NextTileLayer } from '../leaflet-components/next-js-ready/simple-components'
 
 export const CustomLayersControl: FC<{
   hide?: boolean
@@ -34,7 +34,7 @@ export const CustomLayersControl: FC<{
       {layersData.map(
         (layer) =>
           layer.id === selectedLayer && (
-            <TileLayer
+            <NextTileLayer
               key={layer.id}
               attribution={`&copy; <a href="${layer.attribution.url}">${layer.attribution.name}</a>`}
               url={layer.tileUrlTemplate}

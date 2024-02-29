@@ -1,9 +1,9 @@
 import { FC, memo } from 'react'
-import { Polyline } from 'react-leaflet'
 import { colorValues } from '~/helpers/color-classes'
 import { MapMultiLine } from '~/helpers/spatial-data/multi-line'
 import { useRouter } from '~/navigation'
 import { ColorName } from '~/server/db/constants/shared'
+import { NextPolyline } from '../leaflet-components/next-js-ready/simple-components'
 
 const STROKE_WIDTH = 4
 const STROKE_BORDER = 2
@@ -29,7 +29,7 @@ export const MapLine: FC<MapLine> = memo(
     const displayLines = (
       <>
         {path.map((line) => (
-          <Polyline
+          <NextPolyline
             key={`${line.map(([lat, lng]) => `${lat}-${lng}`).join(',')}-border`}
             positions={line}
             color={colorValues[800][routeMarkerProps.color]}
@@ -37,7 +37,7 @@ export const MapLine: FC<MapLine> = memo(
           />
         ))}
         {path.map((line) => (
-          <Polyline
+          <NextPolyline
             key={`${line.map(([lat, lng]) => `${lat}-${lng}`).join(',')}-stroke`}
             positions={line}
             color={colorValues[500][routeMarkerProps.color]}
@@ -61,7 +61,7 @@ export const MapLine: FC<MapLine> = memo(
         {veryEmphasized ? (
           <>
             {path.map((line) => (
-              <Polyline
+              <NextPolyline
                 key={`${line.map(([lat, lng]) => `${lat}-${lng}`).join(',')}-outline`}
                 positions={line}
                 color="#fff"

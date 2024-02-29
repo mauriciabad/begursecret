@@ -4,9 +4,9 @@ import NextImage, {
   type ImageProps as NextImageProps,
 } from 'next/image'
 import { FC } from 'react'
+import fallbackImage from '~/../public/fallback.png'
 import { cn } from '~/helpers/cn'
 import { ImageType, makeImageUrl } from '~/helpers/images'
-import fallbackImage from '../../../public/fallback.png'
 
 type S3Image = Omit<ImageType, 'id'>
 
