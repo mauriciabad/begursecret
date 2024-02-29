@@ -79,6 +79,7 @@ export const Map: FC<{
         doubleClickZoom={fullControl}
         touchZoom={fullControl}
         dragging={fullControl}
+        doubleTouchDragZoom={fullControl}
         keyboard={fullControl}
         className={cn(mapContainerClassName, className)}
         ref={setMap}

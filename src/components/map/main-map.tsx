@@ -61,6 +61,7 @@ export const MainMap: FC<{
       scrollWheelZoom
       doubleClickZoom
       touchZoom
+      doubleTouchDragZoom
       dragging
       keyboard
       className={cn('z-0 h-64 w-full', className)}

@@ -1,3 +1,6 @@
+import '@petoc/leaflet-double-touch-drag-zoom'
+import '@petoc/leaflet-double-touch-drag-zoom/src/leaflet-double-touch-drag-zoom.css'
+
 import type { Map as LeafletMap } from 'leaflet'
 import { FC, PropsWithChildren, Ref } from 'react'
 import {
