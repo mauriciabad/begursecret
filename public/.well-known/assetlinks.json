@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.begursecret.twa",
+      "sha256_cert_fingerprints": [
+        "06:48:00:26:8A:9B:21:CC:A5:B9:46:9C:56:57:7D:63:C9:55:DC:EC:DF:1D:03:5A:E4:CD:54:11:07:09:47:28"
+      ]
+    }
+  }
+]
