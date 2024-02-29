@@ -4,11 +4,14 @@ import ogImage from '../../public/ogimage.png'
 import { Metadata } from 'next'
 import { env } from '~/env.mjs'
 
-const url = env.VERCEL_URL
-  ? `https://${env.VERCEL_URL}`
-  : env.NODE_ENV === 'development'
-    ? `http://localhost:${process.env.PORT || 3000}`
-    : 'https://begursecret.com'
+const url =
+  env.VERCEL_ENV === 'production'
+    ? 'https://begursecret.com'
+    : env.VERCEL_ENV === 'preview'
+      ? `https://${env.VERCEL_URL}`
+      : env.NODE_ENV === 'development'
+        ? `http://localhost:${process.env.PORT || 3000}`
+        : 'https://begursecret.com'
 
 export const metadata: Metadata = {
   metadataBase: new URL(url),
