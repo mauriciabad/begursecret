@@ -4,6 +4,14 @@ Source code for the app.
 
 <https://begursecret.com>
 
+## Screenshots
+
+<p align="center" width="100%">
+  <img src="./public/screenshots/map.jpg" width="32%" />
+  <img src="./public/screenshots/info.jpg"  width="32%"/>
+  <img src="./public/screenshots/visits.jpg" width="32%" />
+</p>
+
 ## Development
 
 ### Setup
