@@ -1,9 +1,9 @@
 import {
   Icon,
   IconAnchor,
+  IconArrowFork,
   IconArrowsDownUp,
   IconBeach,
-  IconBucket,
   IconBuildingBridge2,
   IconBuildingCastle,
   IconBuildingStore,
@@ -22,7 +22,6 @@ import {
   IconHistory,
   IconHome,
   IconHomeOff,
-  IconIcons,
   IconInfoCircle,
   IconLadder,
   IconMapPin,
@@ -49,6 +48,7 @@ import {
   IconTrekking,
   IconWalk,
   IconWall,
+  IconWash,
   TablerIconsProps,
 } from '@tabler/icons-react'
 import { FC } from 'react'
@@ -76,7 +76,6 @@ const iconsByIconName = {
   home: IconHome,
   'building-tunnel': IconBuildingTunnel,
   'building-store': IconBuildingStore,
-  icons: IconIcons,
   'map-pin-question': IconMapPinQuestion,
   'charging-pile': IconChargingPile,
   motorbike: IconMotorbike,
@@ -85,7 +84,7 @@ const iconsByIconName = {
   'scuba-diving': IconScubaDiving,
   fall: IconFall,
   'corner-right-down': IconCornerRightDown,
-  bucket: IconBucket,
+  wash: IconWash,
   wall: IconWall,
   anchor: IconAnchor,
   pool: IconPool,
@@ -104,6 +103,8 @@ const iconsByIconName = {
   swimming: IconSwimming,
   diamond: IconDiamond,
   'chart-bubble': IconChartBubble,
+  'arrow-fork': IconArrowFork,
+  'map-pin': IconMapPin,
 } as const satisfies Record<IconName, Icon>
 
 export const CategoryIcon: FC<

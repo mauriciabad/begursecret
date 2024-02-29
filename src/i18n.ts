@@ -21,6 +21,10 @@ export const getLocale = (pathname: string) =>
   localePathPattern.exec(pathname)?.groups?.locale
 
 export type LocaleParams = { locale: string }
-export type LocaleRouteParams = { params: LocaleParams }
+export type LocaleRouteParams<
+  T extends Record<string, unknown> = Record<string, never>,
+> = {
+  params: LocaleParams & T
+}
 
 export const localePrefix = 'always'
