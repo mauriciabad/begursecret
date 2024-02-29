@@ -2,7 +2,7 @@
 
 import { IconLoader } from '@tabler/icons-react'
 import dynamic from 'next/dynamic'
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useMemo } from 'react'
 import { cn } from '~/helpers/cn'
 import { mapContainerClassName } from './map-raw'
 
@@ -32,8 +32,11 @@ const DynamicMap = dynamic(
 
 const LoadingPropsCtx = createContext<{ className?: string }>({})
 
-export const Map: typeof DynamicMap = (props) => (
-  <LoadingPropsCtx.Provider value={{ className: props.className }}>
-    <DynamicMap {...props} />
-  </LoadingPropsCtx.Provider>
-)
+export const Map: typeof DynamicMap = (props) => {
+  const Map = useMemo(() => DynamicMap, [])
+  return (
+    <LoadingPropsCtx.Provider value={{ className: props.className }}>
+      <Map {...props} />
+    </LoadingPropsCtx.Provider>
+  )
+}
