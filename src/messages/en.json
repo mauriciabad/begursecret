@@ -231,10 +231,10 @@
   "home": {
     "meta": {
       "title": "Begur Secret",
-      "description": "Discover incredible places in this beautiful town."
+      "description": "Discover incredible places and explore Begur like never before."
     },
     "heading": "Begur Secret",
-    "subtitle": "Discover incredible places in this beautiful town.",
+    "description": "Discover incredible places and explore Begur like never before.",
     "launch-app": "Launch App"
   },
   "admin": {

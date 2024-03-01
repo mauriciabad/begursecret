@@ -24,7 +24,7 @@ const poppins = Poppins({
 })
 
 export const viewport: Viewport = {
-  themeColor: '#5F797A',
+  themeColor: '#FFFFFF',
   maximumScale: 1,
   userScalable: false,
 }
