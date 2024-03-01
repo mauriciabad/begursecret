@@ -10,7 +10,7 @@ const Loading: FC = () => {
           <Skeleton className="mx-auto h-4 w-full max-w-32 rounded-full" />
         </div>
 
-        <div className="grid grid-cols-3 gap-4 px-4">
+        <div className="mx-auto grid max-w-2xl grid-cols-3 gap-4 px-4">
           {[...Array(3)].map((_, i) => (
             <div key={i} className="space-y-2 p-2">
               <Skeleton className="mx-auto h-6 w-6 rounded-full" />
