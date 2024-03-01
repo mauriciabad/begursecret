@@ -60,17 +60,42 @@
       "label": "Mapa amb +500 llocs i rutes"
     },
     {
-      "src": "screenshots/info.jpg",
-      "sizes": "1080x1920",
-      "type": "image/jpg",
-      "label": "Informació detallada i pràctica"
-    },
-    {
       "src": "screenshots/visits.jpg",
       "sizes": "1080x1920",
       "type": "image/jpg",
       "label": "Registra les teves visites"
+    },
+    {
+      "src": "screenshots/info.jpg",
+      "sizes": "1080x1920",
+      "type": "image/jpg",
+      "label": "Informació detallada i pràctica"
     }
   ],
-  "handle_links": "preferred"
+  "handle_links": "preferred",
+  "shortcuts": [
+    {
+      "name": "Mapa",
+      "url": "/explore"
+    },
+    {
+      "name": "Missions",
+      "url": "/missions"
+    },
+    {
+      "name": "Perfil",
+      "url": "/profile"
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.begursecret.twa",
+      "id": "com.begursecret.twa"
+    }
+  ],
+  "prefer_related_applications": true,
+  "edge_side_panel": {
+    "preferred_width": 400
+  }
 }
