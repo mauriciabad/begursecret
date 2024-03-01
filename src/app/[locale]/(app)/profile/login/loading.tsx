@@ -3,7 +3,7 @@ import { FC } from 'react'
 
 const Loading: FC = () => {
   return (
-    <>
+    <div className="mx-auto max-w-2xl px-4">
       <Skeleton className="h-[13.75rem] w-full shadow-lg" />
 
       <div className="px-8">
@@ -30,7 +30,7 @@ const Loading: FC = () => {
         <Skeleton className="mx-auto mb-4 mt-10 h-6 w-full max-w-48 rounded-full" />
         <Skeleton className="mt-4 h-10 w-full rounded-xl" />
       </div>
-    </>
+    </div>
   )
 }
 
