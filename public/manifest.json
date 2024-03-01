@@ -3,7 +3,7 @@
   "start_url": "/explore",
   "name": "Begur Secret",
   "short_name": "Begur Secret",
-  "description": "Descobreix llocs increïbles i explora Begur com mai ho has fet abans. +500 llocs i rutes t'esperen!",
+  "description": "Descobreix llocs increïbles i explora Begur com mai ho has fet abans.",
   "scope": "https://begursecret.com",
   "icons": [
     {
