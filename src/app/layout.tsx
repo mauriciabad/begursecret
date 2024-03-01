@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { FC, PropsWithChildren } from 'react'
 import ogImage from '../../public/ogimage.png'
 
 import { Metadata } from 'next'
@@ -29,12 +29,10 @@ export const metadata: Metadata = {
   },
 }
 
-type Props = {
-  children: ReactNode
-}
-
 // Since we have a `not-found.tsx` page on the root, a layout file
 // is required, even if it's just passing children through.
-export default function RootLayout({ children }: Props) {
+const RootLayout: FC<PropsWithChildren> = ({ children }) => {
   return children
 }
+
+export default RootLayout

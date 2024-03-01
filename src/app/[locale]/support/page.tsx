@@ -1,16 +1,16 @@
 import { IconScript } from '@tabler/icons-react'
 import type { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import type { FC } from 'react'
 import { LinkButton } from '~/components/links/link-button'
-import type { LocaleRouteParams } from '~/i18n'
+import { parseLocale, type LocaleRouteParams } from '~/i18n'
 
 export async function generateMetadata({
-  params: { locale },
+  params,
 }: LocaleRouteParams): Promise<Metadata> {
   const t = await getTranslations({
-    locale,
+    locale: params.locale,
     namespace: 'support',
   })
   return {
@@ -22,7 +22,10 @@ export async function generateMetadata({
   }
 }
 
-const SupportPage: FC<LocaleRouteParams> = () => {
+const SupportPage: FC<LocaleRouteParams> = ({ params }) => {
+  const locale = parseLocale(params.locale)
+  unstable_setRequestLocale(locale)
+
   const t = useTranslations('support')
 
   return (

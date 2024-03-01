@@ -1,14 +1,18 @@
 import type { Metadata } from 'next'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import type { FC } from 'react'
-import { LocaleParams, LocaleRouteParams } from '~/i18n'
+import { LocaleRouteParams, parseLocale } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
 import { PlaceForm } from '../_components/place-form'
 
+type PageParams = LocaleRouteParams<{
+  placeId: string
+}>
+
 export async function generateMetadata({
-  params: { locale },
-}: LocaleRouteParams): Promise<Metadata> {
-  const t = await getTranslations({ locale, namespace: 'admin' })
+  params,
+}: PageParams): Promise<Metadata> {
+  const t = await getTranslations({ locale: params.locale, namespace: 'admin' })
   return {
     title: {
       default: t('meta.title'),
@@ -18,14 +22,14 @@ export async function generateMetadata({
   }
 }
 
-type Params = LocaleParams & { placeId: string }
+const AdminEditPlacePage: FC<PageParams> = async ({ params }) => {
+  const locale = parseLocale(params.locale)
+  unstable_setRequestLocale(locale)
 
-const AdminEditPlacePage: FC<{
-  params: Params
-}> = async ({ params }) => {
+  const placeId = Number(params.placeId)
   const trpc = await getTrpc()
   const place = await trpc.admin.places.get({
-    id: Number(params.placeId),
+    id: placeId,
     locale: null,
   })
 

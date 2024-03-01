@@ -1,14 +1,18 @@
 import { Navbar, NavbarContent, NavbarItem } from '@nextui-org/navbar'
 import { IconBolt } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
+import { unstable_setRequestLocale } from 'next-intl/server'
 import type { FC, PropsWithChildren } from 'react'
-import type { LocaleRouteParams } from '~/i18n'
+import { parseLocale, type LocaleRouteParams } from '~/i18n'
 import { Link } from '~/navigation'
 import { MoreOptions } from './_components/more-options'
 
 type AdminLayoutProps = PropsWithChildren<LocaleRouteParams>
 
-const AdminLayout: FC<AdminLayoutProps> = ({ children }) => {
+const AdminLayout: FC<AdminLayoutProps> = ({ params, children }) => {
+  const locale = parseLocale(params.locale)
+  unstable_setRequestLocale(locale)
+
   const t = useTranslations('admin')
 
   return (

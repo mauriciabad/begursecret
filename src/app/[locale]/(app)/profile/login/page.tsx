@@ -1,16 +1,16 @@
 import type { Metadata } from 'next'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import type { FC } from 'react'
 import { LoginForm } from '~/components/login-form/login-form'
-import type { LocaleRouteParams } from '~/i18n'
+import { parseLocale, type LocaleRouteParams } from '~/i18n'
 import { redirect } from '~/navigation'
 import { getSession } from '~/server/get-server-thing'
 
 export async function generateMetadata({
-  params: { locale },
+  params,
 }: LocaleRouteParams): Promise<Metadata> {
   const t = await getTranslations({
-    locale,
+    locale: params.locale,
     namespace: 'profile',
   })
   return {
@@ -19,7 +19,10 @@ export async function generateMetadata({
   }
 }
 
-const LoginPage: FC<LocaleRouteParams> = async () => {
+const LoginPage: FC<LocaleRouteParams> = async ({ params }) => {
+  const locale = parseLocale(params.locale)
+  unstable_setRequestLocale(locale)
+
   const session = await getSession()
 
   if (session) {

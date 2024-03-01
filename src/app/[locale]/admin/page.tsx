@@ -1,15 +1,15 @@
 import { IconLockOpen, IconMapPin, IconRoute } from '@tabler/icons-react'
 import type { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import type { FC } from 'react'
 import { LinkCard } from '~/components/generic/link-card'
-import type { LocaleRouteParams } from '~/i18n'
+import { parseLocale, type LocaleRouteParams } from '~/i18n'
 
 export async function generateMetadata({
-  params: { locale },
+  params,
 }: LocaleRouteParams): Promise<Metadata> {
-  const t = await getTranslations({ locale, namespace: 'admin' })
+  const t = await getTranslations({ locale: params.locale, namespace: 'admin' })
   return {
     title: {
       default: t('meta.title'),
@@ -19,7 +19,10 @@ export async function generateMetadata({
   }
 }
 
-const AdminPage: FC<LocaleRouteParams> = () => {
+const AdminPage: FC<LocaleRouteParams> = ({ params }) => {
+  const locale = parseLocale(params.locale)
+  unstable_setRequestLocale(locale)
+
   const t = useTranslations('admin')
 
   return (

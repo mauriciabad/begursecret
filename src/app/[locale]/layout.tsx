@@ -4,7 +4,11 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import type { Metadata, Viewport } from 'next'
 import { AxiomWebVitals } from 'next-axiom'
 import { NextIntlClientProvider } from 'next-intl'
-import { getMessages, getTranslations } from 'next-intl/server'
+import {
+  getMessages,
+  getTranslations,
+  unstable_setRequestLocale,
+} from 'next-intl/server'
 import { Inter, Poppins } from 'next/font/google'
 import Script from 'next/script'
 import type { FC, PropsWithChildren } from 'react'
@@ -13,7 +17,7 @@ import { NextuiProvider } from '~/components/providers/nextui-provider'
 import { TrpcProvider } from '~/components/providers/trpc-provider'
 import { env } from '~/env.mjs'
 import { cn } from '~/helpers/cn'
-import { type LocaleRouteParams } from '~/i18n'
+import { locales, parseLocale, type LocaleRouteParams } from '~/i18n'
 import { getSession } from '~/server/get-server-thing'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
@@ -30,9 +34,9 @@ export const viewport: Viewport = {
 }
 
 export async function generateMetadata({
-  params: { locale },
+  params,
 }: LocaleRouteParams): Promise<Metadata> {
-  const t = await getTranslations({ locale, namespace: 'home' })
+  const t = await getTranslations({ locale: params.locale, namespace: 'home' })
 
   return {
     title: {
@@ -54,12 +58,15 @@ export async function generateMetadata({
   }
 }
 
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }))
+}
+
 type RootLayoutProps = PropsWithChildren<LocaleRouteParams>
 
-const RootLayout: FC<RootLayoutProps> = async ({
-  children,
-  params: { locale },
-}) => {
+const RootLayout: FC<RootLayoutProps> = async ({ children, params }) => {
+  const locale = parseLocale(params.locale)
+  unstable_setRequestLocale(locale)
   const messages = await getMessages({ locale })
   const session = await getSession()
 

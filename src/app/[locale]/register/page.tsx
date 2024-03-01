@@ -1,14 +1,14 @@
 import type { Metadata } from 'next'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import type { FC } from 'react'
-import type { LocaleRouteParams } from '~/i18n'
+import { parseLocale, type LocaleRouteParams } from '~/i18n'
 import { RegisterForm } from './_components/register-form'
 
 export async function generateMetadata({
-  params: { locale },
+  params,
 }: LocaleRouteParams): Promise<Metadata> {
   const t = await getTranslations({
-    locale,
+    locale: params.locale,
     namespace: 'register',
   })
   return {
@@ -17,7 +17,10 @@ export async function generateMetadata({
   }
 }
 
-const RegisterPage: FC<LocaleRouteParams> = () => {
+const RegisterPage: FC<LocaleRouteParams> = ({ params }) => {
+  const locale = parseLocale(params.locale)
+  unstable_setRequestLocale(locale)
+
   return (
     <>
       <RegisterForm />

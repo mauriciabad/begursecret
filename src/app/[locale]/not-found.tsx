@@ -1,14 +1,15 @@
 import { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
+import { FC } from 'react'
 import { LinkButtonCustom } from '~/components/links/link-button-custom'
-import { LocaleRouteParams } from '~/i18n'
+import { LocaleRouteParams, parseLocale } from '~/i18n'
 
 export async function generateMetadata({
-  params: { locale },
+  params,
 }: LocaleRouteParams): Promise<Metadata> {
   const t = await getTranslations({
-    locale,
+    locale: params.locale,
     namespace: 'error-pages.not-found',
   })
   return {
@@ -17,7 +18,10 @@ export async function generateMetadata({
   }
 }
 
-export default function NotFoundPage() {
+const NotFoundPage: FC<LocaleRouteParams> = ({ params }) => {
+  const locale = parseLocale(params.locale)
+  unstable_setRequestLocale(locale)
+
   const t = useTranslations('error-pages.not-found')
 
   return (
@@ -30,3 +34,5 @@ export default function NotFoundPage() {
     </main>
   )
 }
+
+export default NotFoundPage

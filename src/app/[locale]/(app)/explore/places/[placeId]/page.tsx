@@ -1,21 +1,37 @@
 import type { Metadata } from 'next'
+import { unstable_setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { type FC } from 'react'
 import { makeImageUrl } from '~/helpers/images'
-import { LocaleRouteParams, locales, onlyTranslatableLocales } from '~/i18n'
+import {
+  LocaleRouteParams,
+  locales,
+  onlyTranslatableLocales,
+  parseLocale,
+} from '~/i18n'
+import { db } from '~/server/db/db'
 import { getTrpc } from '~/server/get-server-thing'
 import { OverrideMainMap } from '../../_components/override-main-map'
 import { PlaceDetails } from '../../_components/place-details'
 
 type Params = LocaleRouteParams<{ placeId: string }>
 
-export async function generateMetadata({
-  params: { locale, placeId },
-}: Params): Promise<Metadata> {
+export async function generateStaticParams() {
+  const queryResult = await db.query.places.findMany({
+    columns: { id: true },
+  })
+  return queryResult.map((place) => ({
+    placeId: String(place.id),
+  }))
+}
+
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
+  const placeId = Number(params.placeId)
+  const locale = parseLocale(params.locale)
   const trpc = await getTrpc()
   const place = await trpc.metadata.place({
-    locale: onlyTranslatableLocales(locale),
-    id: Number(placeId),
+    locale: onlyTranslatableLocales(params.locale),
+    id: placeId,
   })
   if (!place) return {}
 
@@ -60,7 +76,9 @@ export async function generateMetadata({
   }
 }
 
-const PlacePage: FC<Params> = async ({ params }) => {
+const PlacePage: FC<LocaleRouteParams> = async ({ params }) => {
+  const locale = parseLocale(params.locale)
+  unstable_setRequestLocale(locale)
   const placeId = Number(params.placeId)
 
   const trpc = await getTrpc()

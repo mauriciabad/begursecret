@@ -1,12 +1,16 @@
 import { Navbar, NavbarContent, NavbarItem } from '@nextui-org/navbar'
 import { useTranslations } from 'next-intl'
+import { unstable_setRequestLocale } from 'next-intl/server'
 import type { FC, PropsWithChildren } from 'react'
 import { LinkButton } from '~/components/links/link-button'
-import type { LocaleRouteParams } from '~/i18n'
+import { parseLocale, type LocaleRouteParams } from '~/i18n'
 
 type SupportLayoutProps = PropsWithChildren<LocaleRouteParams>
 
-const SupportLayout: FC<SupportLayoutProps> = ({ children }) => {
+const SupportLayout: FC<SupportLayoutProps> = ({ params, children }) => {
+  const locale = parseLocale(params.locale)
+  unstable_setRequestLocale(locale)
+
   const t = useTranslations('support')
 
   return (

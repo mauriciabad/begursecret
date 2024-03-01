@@ -4,6 +4,7 @@ export const locales = [
   defaultLocale,
   ...translatableLocales,
 ] as const satisfies readonly string[]
+export type Locales = (typeof locales)[number]
 
 function isTranslatableLocale(
   locale: string
@@ -28,3 +29,15 @@ export type LocaleRouteParams<
 }
 
 export const localePrefix = 'always'
+
+export function isLocale<L extends Locales>(locale: L | unknown): locale is L {
+  return (
+    !!locale &&
+    typeof locale === 'string' &&
+    (locales as readonly string[]).includes(locale)
+  )
+}
+
+export function parseLocale<L extends Locales>(locale: L | unknown) {
+  return isLocale(locale) ? locale : defaultLocale
+}

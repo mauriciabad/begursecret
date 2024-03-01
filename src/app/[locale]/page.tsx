@@ -1,17 +1,17 @@
 import type { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import { redirect } from 'next/navigation'
 import type { FC } from 'react'
 import { Logo } from '~/components/icons/logo'
 import { LanguageSwitcher } from '~/components/inputs/language-switcher'
 import { LinkButtonCustom } from '~/components/links/link-button-custom'
-import type { LocaleRouteParams } from '~/i18n'
+import { parseLocale, type LocaleRouteParams } from '~/i18n'
 
 export async function generateMetadata({
-  params: { locale },
+  params,
 }: LocaleRouteParams): Promise<Metadata> {
-  const t = await getTranslations({ locale, namespace: 'home' })
+  const t = await getTranslations({ locale: params.locale, namespace: 'home' })
   return {
     title: {
       default: t('meta.title'),
@@ -21,7 +21,9 @@ export async function generateMetadata({
   }
 }
 
-const HomePage: FC<LocaleRouteParams> = () => {
+const HomePage: FC<LocaleRouteParams> = ({ params }) => {
+  const locale = parseLocale(params.locale)
+  unstable_setRequestLocale(locale)
   redirect('/explore') // TODO: remove this line when the home page is ready
 
   const t = useTranslations('home')
