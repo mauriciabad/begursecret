@@ -5,7 +5,6 @@ import { Checkbox } from '@nextui-org/checkbox'
 import { Input, Textarea } from '@nextui-org/input'
 import { IconDownload, IconExternalLink } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
-import { revalidatePath } from 'next/cache'
 import { FC, useState } from 'react'
 import { Controller } from 'react-hook-form'
 import { FeaturesEditor } from '~/components/admin-only/features-editor'
@@ -18,6 +17,7 @@ import {
 } from '~/components/generic/safe-form'
 import { cn } from '~/helpers/cn'
 import { download } from '~/helpers/download-file'
+import { revalidateAll } from '~/helpers/revalidate-all'
 import { multiLineToGeoJsonString } from '~/helpers/spatial-data/multi-line'
 import { Link, useRouter } from '~/navigation'
 import { createRouteSchema } from '~/schemas/routes'
@@ -38,14 +38,12 @@ export const RouteForm: FC<{
     onSuccess() {
       utils.admin.routes.list.invalidate()
       utils.admin.routes.get.invalidate()
-      revalidatePath('/')
     },
   })
   const editRouteMutation = trpc.admin.routes.editRoute.useMutation({
     onSuccess() {
       utils.admin.routes.list.invalidate()
       utils.admin.routes.get.invalidate()
-      revalidatePath('/')
     },
   })
 
@@ -96,6 +94,8 @@ export const RouteForm: FC<{
           }
 
           form.reset()
+
+          await revalidateAll()
 
           if (!isCreateForm || !stayOnPage) {
             return router.push('/admin/routes/')

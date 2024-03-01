@@ -245,6 +245,8 @@
     "subtitle": "Àrea privada d'administració",
     "places": "Llocs",
     "routes": "Rutes",
+    "publish-changes": "Publicar canvis",
+    "publish-triggered": "Publicació iniciada",
     "more-options": {
       "title": "Més opcions",
       "go-to-app": "Anar a l'app",
