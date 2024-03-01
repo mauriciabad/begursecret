@@ -1,19 +1,22 @@
 import type { Metadata } from 'next'
-import { useLocale } from 'next-intl'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import type { FC } from 'react'
 import { groupByKey } from '~/helpers/utilities'
-import { onlyTranslatableLocales, type LocaleRouteParams } from '~/i18n'
+import {
+  onlyTranslatableLocales,
+  parseLocale,
+  type LocaleRouteParams,
+} from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
 import { CategoriesGrid } from './_components/categories-grid'
 import { ListPlacesOfCategory } from './_components/list-places-of-category'
 import { OverrideMainMap } from './_components/override-main-map'
 
 export async function generateMetadata({
-  params: { locale },
+  params,
 }: LocaleRouteParams): Promise<Metadata> {
   const t = await getTranslations({
-    locale,
+    locale: params.locale,
     namespace: 'explore',
   })
   return {
@@ -22,8 +25,10 @@ export async function generateMetadata({
   }
 }
 
-const ExplorePage: FC<LocaleRouteParams> = async () => {
-  const locale = useLocale()
+const ExplorePage: FC<LocaleRouteParams> = async ({ params }) => {
+  const locale = parseLocale(params.locale)
+  unstable_setRequestLocale(locale)
+
   const trpc = await getTrpc()
   const places = await trpc.places.list({
     locale: onlyTranslatableLocales(locale),

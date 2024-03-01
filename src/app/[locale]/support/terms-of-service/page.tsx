@@ -1,13 +1,16 @@
 import type { Metadata } from 'next'
 import { useFormatter } from 'next-intl'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import type { FC } from 'react'
-import type { LocaleRouteParams } from '~/i18n'
+import { parseLocale, type LocaleRouteParams } from '~/i18n'
 
 export async function generateMetadata({
-  params: { locale },
+  params,
 }: LocaleRouteParams): Promise<Metadata> {
-  const t = await getTranslations({ locale, namespace: 'terms-of-service' })
+  const t = await getTranslations({
+    locale: params.locale,
+    namespace: 'terms-of-service',
+  })
   return {
     title: {
       default: t('meta.title'),
@@ -19,7 +22,10 @@ export async function generateMetadata({
 
 const lastUpdate = new Date('2023-10-20')
 
-const TermsAndServicesPage: FC<LocaleRouteParams> = () => {
+const TermsAndServicesPage: FC<LocaleRouteParams> = ({ params }) => {
+  const locale = parseLocale(params.locale)
+  unstable_setRequestLocale(locale)
+
   const format = useFormatter()
 
   const formatedLastUpdate = format.dateTime(lastUpdate, {

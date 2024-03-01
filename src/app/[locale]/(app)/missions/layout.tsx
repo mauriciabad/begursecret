@@ -1,11 +1,15 @@
 import { Navbar, NavbarContent, NavbarItem } from '@nextui-org/navbar'
 import { useTranslations } from 'next-intl'
+import { unstable_setRequestLocale } from 'next-intl/server'
 import type { FC, PropsWithChildren } from 'react'
-import type { LocaleRouteParams } from '~/i18n'
+import { parseLocale, type LocaleRouteParams } from '~/i18n'
 
 type MissionsLayoutProps = PropsWithChildren<LocaleRouteParams>
 
-const MissionsLayout: FC<MissionsLayoutProps> = ({ children }) => {
+const MissionsLayout: FC<MissionsLayoutProps> = ({ params, children }) => {
+  const locale = parseLocale(params.locale)
+  unstable_setRequestLocale(locale)
+
   const t = useTranslations('missions')
 
   return (

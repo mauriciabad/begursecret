@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import type { FC } from 'react'
-import { type LocaleRouteParams } from '~/i18n'
+import { parseLocale, type LocaleRouteParams } from '~/i18n'
 import { RouteForm } from '../_components/route-form'
 
 export async function generateMetadata({
-  params: { locale },
+  params,
 }: LocaleRouteParams): Promise<Metadata> {
-  const t = await getTranslations({ locale, namespace: 'admin' })
+  const t = await getTranslations({ locale: params.locale, namespace: 'admin' })
   return {
     title: {
       default: t('meta.title'),
@@ -17,7 +17,10 @@ export async function generateMetadata({
   }
 }
 
-const AdminNewRoutePage: FC<LocaleRouteParams> = async () => {
+const AdminNewRoutePage: FC<LocaleRouteParams> = async ({ params }) => {
+  const locale = parseLocale(params.locale)
+  unstable_setRequestLocale(locale)
+
   return (
     <>
       <main className="mx-auto min-h-screen max-w-7xl p-4 sm:py-8 lg:py-12">

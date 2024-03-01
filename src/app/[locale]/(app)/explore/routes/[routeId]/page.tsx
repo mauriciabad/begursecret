@@ -1,21 +1,37 @@
 import type { Metadata } from 'next'
+import { unstable_setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { type FC } from 'react'
 import { makeImageUrl } from '~/helpers/images'
-import { LocaleRouteParams, locales, onlyTranslatableLocales } from '~/i18n'
+import {
+  LocaleRouteParams,
+  locales,
+  onlyTranslatableLocales,
+  parseLocale,
+} from '~/i18n'
+import { db } from '~/server/db/db'
 import { getTrpc } from '~/server/get-server-thing'
 import { OverrideMainMap } from '../../_components/override-main-map'
 import { RouteDetails } from '../../_components/route-details'
 
 type Params = LocaleRouteParams<{ routeId: string }>
 
-export async function generateMetadata({
-  params: { locale, routeId },
-}: Params): Promise<Metadata> {
+export async function generateStaticParams() {
+  const queryResult = await db.query.routes.findMany({
+    columns: { id: true },
+  })
+  return queryResult.map((route) => ({
+    routeId: String(route.id),
+  }))
+}
+
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
+  const locale = parseLocale(params.locale)
+  const routeId = Number(params.routeId)
   const trpc = await getTrpc()
   const route = await trpc.metadata.route({
     locale: onlyTranslatableLocales(locale),
-    id: Number(routeId),
+    id: routeId,
   })
   if (!route) return {}
 
@@ -61,6 +77,9 @@ export async function generateMetadata({
 }
 
 const RoutePage: FC<Params> = async ({ params }) => {
+  const locale = parseLocale(params.locale)
+  unstable_setRequestLocale(locale)
+
   const routeId = Number(params.routeId)
 
   const trpc = await getTrpc()

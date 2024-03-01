@@ -1,14 +1,18 @@
+import { unstable_setRequestLocale } from 'next-intl/server'
 import type { FC, PropsWithChildren } from 'react'
 import { MainMap } from '~/components/map/main-map'
 import { MainMapProvider } from '~/components/providers/main-map-provider'
 import { cn } from '~/helpers/cn'
-import type { LocaleRouteParams } from '~/i18n'
+import { parseLocale, type LocaleRouteParams } from '~/i18n'
 import { ExploreTopbar } from './_components/explore-topbar'
 import { MapDrawer } from './_components/map-drawer'
 
 type ExploreLayoutProps = PropsWithChildren<LocaleRouteParams>
 
-const ExploreLayout: FC<ExploreLayoutProps> = async ({ children }) => {
+const ExploreLayout: FC<ExploreLayoutProps> = async ({ params, children }) => {
+  const locale = parseLocale(params.locale)
+  unstable_setRequestLocale(locale)
+
   return (
     <>
       <ExploreTopbar />
