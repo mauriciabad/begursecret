@@ -1,6 +1,6 @@
 'use client'
 
-import { Spinner } from '@nextui-org/react'
+import { IconLoader } from '@tabler/icons-react'
 import { FC, memo } from 'react'
 import { cn } from '~/helpers/cn'
 import { MapPoint } from '~/helpers/spatial-data/point'
@@ -71,8 +71,8 @@ export const MainMap: FC<{
       )}
 
       {isLoading && (
-        <div className="flex h-full flex-col items-center justify-center">
-          <Spinner />
+        <div className="absolute inset-0 z-10 flex items-center justify-center">
+          <IconLoader className="animate mr-1 h-6 w-6 animate-spin text-stone-800 [animation-duration:2s]" />
         </div>
       )}
 
