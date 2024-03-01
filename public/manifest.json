@@ -1,10 +1,10 @@
 {
-  "id": "begursecret",
+  "id": "/explore",
   "start_url": "/explore",
   "name": "Begur Secret",
   "short_name": "Begur Secret",
   "description": "Descobreix llocs increïbles i explora Begur com mai ho has fet abans.",
-  "scope": "https://begursecret.com",
+  "scope": "/",
   "icons": [
     {
       "src": "/favicon/maskable-icon-x1024.png",
@@ -76,15 +76,18 @@
   "shortcuts": [
     {
       "name": "Mapa",
-      "url": "/explore"
+      "url": "/explore",
+      "icon": "shortcuts/icon-explore.png"
     },
     {
       "name": "Missions",
-      "url": "/missions"
+      "url": "/missions",
+      "icon": "shortcuts/icon-missions.png"
     },
     {
       "name": "Perfil",
-      "url": "/profile"
+      "url": "/profile",
+      "icon": "shortcuts/icon-profile.png"
     }
   ],
   "related_applications": [
