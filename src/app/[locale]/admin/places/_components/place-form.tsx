@@ -3,6 +3,7 @@
 import { Checkbox } from '@nextui-org/checkbox'
 import { Input, Textarea } from '@nextui-org/input'
 import { useTranslations } from 'next-intl'
+import { revalidatePath } from 'next/cache'
 import { FC, useState } from 'react'
 import { Controller } from 'react-hook-form'
 import { FeaturesEditor } from '~/components/admin-only/features-editor'
@@ -35,12 +36,14 @@ export const PlaceForm: FC<{
     onSuccess() {
       utils.admin.places.list.invalidate()
       utils.admin.places.get.invalidate()
+      revalidatePath('/')
     },
   })
   const editPlaceMutation = trpc.admin.places.editPlace.useMutation({
     onSuccess() {
       utils.admin.places.list.invalidate()
       utils.admin.places.get.invalidate()
+      revalidatePath('/')
     },
   })
 

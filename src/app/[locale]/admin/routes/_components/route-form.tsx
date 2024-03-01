@@ -5,6 +5,7 @@ import { Checkbox } from '@nextui-org/checkbox'
 import { Input, Textarea } from '@nextui-org/input'
 import { IconDownload, IconExternalLink } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
+import { revalidatePath } from 'next/cache'
 import { FC, useState } from 'react'
 import { Controller } from 'react-hook-form'
 import { FeaturesEditor } from '~/components/admin-only/features-editor'
@@ -37,12 +38,14 @@ export const RouteForm: FC<{
     onSuccess() {
       utils.admin.routes.list.invalidate()
       utils.admin.routes.get.invalidate()
+      revalidatePath('/')
     },
   })
   const editRouteMutation = trpc.admin.routes.editRoute.useMutation({
     onSuccess() {
       utils.admin.routes.list.invalidate()
       utils.admin.routes.get.invalidate()
+      revalidatePath('/')
     },
   })
 
