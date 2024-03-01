@@ -15,6 +15,7 @@ import {
 } from '~/components/generic/safe-form'
 import { MapPointSelector } from '~/components/map/map-elements/map-point-selector'
 import { cn } from '~/helpers/cn'
+import { revalidateAll } from '~/helpers/revalidate-all'
 import { useRouter } from '~/navigation'
 import { createPlaceSchema } from '~/schemas/places'
 import { ApiRouterOutput } from '~/server/api/router'
@@ -95,6 +96,8 @@ export const PlaceForm: FC<{
           }
 
           form.reset()
+
+          await revalidateAll()
 
           if (!isCreateForm || !stayOnPage) {
             return router.push('/admin/places/')

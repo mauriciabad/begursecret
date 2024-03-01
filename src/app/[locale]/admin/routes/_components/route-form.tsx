@@ -17,6 +17,7 @@ import {
 } from '~/components/generic/safe-form'
 import { cn } from '~/helpers/cn'
 import { download } from '~/helpers/download-file'
+import { revalidateAll } from '~/helpers/revalidate-all'
 import { multiLineToGeoJsonString } from '~/helpers/spatial-data/multi-line'
 import { Link, useRouter } from '~/navigation'
 import { createRouteSchema } from '~/schemas/routes'
@@ -93,6 +94,8 @@ export const RouteForm: FC<{
           }
 
           form.reset()
+
+          await revalidateAll()
 
           if (!isCreateForm || !stayOnPage) {
             return router.push('/admin/routes/')

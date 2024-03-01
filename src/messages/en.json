@@ -246,6 +246,8 @@
     "subtitle": "Private admin area",
     "places": "Places",
     "routes": "Routes",
+    "publish-changes": "Publish changes",
+    "publish-triggered": "Publish triggered",
     "more-options": {
       "title": "More options",
       "go-to-app": "Go to app",

@@ -5,6 +5,7 @@ import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import type { FC } from 'react'
 import { LinkCard } from '~/components/generic/link-card'
 import { parseLocale, type LocaleRouteParams } from '~/i18n'
+import { RevalidateForm } from './_components/revalidate-form'
 
 export async function generateMetadata({
   params,
@@ -53,6 +54,8 @@ const AdminPage: FC<LocaleRouteParams> = ({ params }) => {
             className="w-72"
           />
         </div>
+
+        <RevalidateForm className="mt-4" />
       </main>
     </>
   )
