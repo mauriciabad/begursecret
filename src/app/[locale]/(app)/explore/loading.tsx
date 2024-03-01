@@ -26,7 +26,7 @@ const Loading: FC = () => {
           <div className="space-x-4 overflow-x-hidden whitespace-nowrap pl-4 scrollbar-hide">
             {[...Array(3)].map((_, j) => (
               <div className="inline-block w-[calc(50vw-3rem)] min-w-32 max-w-72 space-y-2">
-                <Skeleton key={j} className="h-28 w-full rounded-xl" />
+                <Skeleton key={j} className="aspect-[4/3] w-full rounded-xl" />
                 <Skeleton className="mx-auto h-4 w-full max-w-28 rounded-full" />
               </div>
             ))}
