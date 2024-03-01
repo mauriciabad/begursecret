@@ -30,9 +30,7 @@ export type LocaleRouteParams<
 
 export const localePrefix = 'always'
 
-export function validateLocale<L extends Locales>(
-  locale: L | unknown
-): locale is L {
+export function isLocale<L extends Locales>(locale: L | unknown): locale is L {
   return (
     !!locale &&
     typeof locale === 'string' &&
@@ -41,5 +39,5 @@ export function validateLocale<L extends Locales>(
 }
 
 export function parseLocale<L extends Locales>(locale: L | unknown) {
-  return validateLocale(locale) ? locale : defaultLocale
+  return isLocale(locale) ? locale : defaultLocale
 }
