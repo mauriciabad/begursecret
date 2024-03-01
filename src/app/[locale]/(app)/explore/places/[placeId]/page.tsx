@@ -29,6 +29,9 @@ export async function generateMetadata({
     locales.map((l) => [l, `/${l}/explore/places/${placeId}`])
   )
 
+  // Wait 4 seconds
+  await new Promise((resolve) => setTimeout(resolve, 4000))
+
   return {
     title,
     description,
