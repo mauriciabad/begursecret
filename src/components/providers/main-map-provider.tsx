@@ -5,9 +5,11 @@ import {
   FC,
   PropsWithChildren,
   createContext,
+  memo,
   useContext,
   useState,
 } from 'react'
+import { trpc } from '~/trpc'
 import { MapLineInvariable } from '../map/map-elements/map-line'
 import { MapMarkerInvariable } from '../map/map-elements/map-marker'
 
@@ -24,8 +26,8 @@ const MainMapCtx = createContext<
     setVeryEmphasizedMarkers: (markers: SetOfMarkers | undefined) => void
     veryEmphasizedLines: SetOfLines | undefined
     setVeryEmphasizedLines: (lines: SetOfLines | undefined) => void
-    markers: readonly MapMarkerInvariable[]
-    lines: readonly MapLineInvariable[]
+    markers: readonly MapMarkerInvariable[] | undefined
+    lines: readonly MapLineInvariable[] | undefined
   }>
 >({
   map: null,
@@ -42,17 +44,32 @@ const MainMapCtx = createContext<
 
 export const useMainMap = () => useContext(MainMapCtx)
 
-export const MainMapProvider: FC<
-  PropsWithChildren<{
-    markers: MapMarkerInvariable[]
-    lines: MapLineInvariable[]
-  }>
-> = ({ markers, children, lines }) => {
+export const MainMapProvider: FC<PropsWithChildren> = memo(({ children }) => {
   const [map, setMap] = useState<LeafletMap | null>(null)
   const [emphasizedMarkers, setEmphasizedMarkers] = useState<SetOfMarkers>()
   const [veryEmphasizedMarkers, setVeryEmphasizedMarkers] =
     useState<SetOfMarkers>()
   const [veryEmphasizedLines, setVeryEmphasizedLines] = useState<SetOfLines>()
+
+  const { data: places } = trpc.map.getAllPlaces.useQuery()
+  const markers = places?.map((place) => ({
+    placeId: place.id,
+    lat: place.location.lat,
+    lng: place.location.lng,
+    icon: place.mainCategory.icon,
+    color: place.mainCategory.color,
+    url: `/explore/places/${place.id}`,
+    name: place.name,
+  }))
+
+  const { data: routes } = trpc.map.getAllRoutes.useQuery()
+  const lines = routes?.map((route) => ({
+    routeId: route.id,
+    color: route.mainCategory.color,
+    path: route.path,
+    url: `/explore/routes/${route.id}`,
+    name: route.name,
+  }))
 
   return (
     <>
@@ -74,4 +91,4 @@ export const MainMapProvider: FC<
       </MainMapCtx.Provider>
     </>
   )
-}
+})

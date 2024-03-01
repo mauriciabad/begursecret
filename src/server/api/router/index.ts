@@ -5,6 +5,7 @@ import { FlattenTranslationsOfDeepestItem } from '~/server/helpers/translations/
 import { router } from '~/server/trpc'
 import { adminRouter } from './admin'
 import { authRouter } from './auth'
+import { mapRouter } from './map'
 import { metadataRouter } from './metadata'
 import { missionsRouter } from './missions'
 import { placeListsRouter } from './placeLists'
@@ -17,6 +18,7 @@ export const apiRouter = router({
   admin: adminRouter,
   metadata: metadataRouter,
 
+  map: mapRouter,
   places: placesRouter,
   routes: routesRouter,
   auth: authRouter,

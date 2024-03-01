@@ -13,7 +13,12 @@ export const LazyMapContainer = dynamic(
     loading: () => {
       const { className } = useContext(LoadingPropsCtx)
       return (
-        <div className={cn(className, 'flex items-center justify-center')}>
+        <div
+          className={cn(
+            className,
+            'flex items-center justify-center bg-[#dddddd]'
+          )}
+        >
           <IconLoader className="animate mr-1 h-6 w-6 animate-spin text-stone-800 [animation-duration:2s]" />
         </div>
       )

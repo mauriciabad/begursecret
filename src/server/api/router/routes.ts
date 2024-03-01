@@ -13,28 +13,6 @@ import {
 } from '~/server/helpers/translations/query/with-translations'
 import { publicProcedure, router } from '~/server/trpc'
 
-const getAllRoutesForMap = db.query.routes
-  .findMany({
-    columns: {
-      id: true,
-      name: true,
-      importance: true,
-    },
-    extras: {
-      path: selectMultiLine('path', routes.path),
-    },
-    with: {
-      mainCategory: {
-        columns: {
-          id: true,
-          icon: true,
-          color: true,
-        },
-      },
-    },
-  })
-  .prepare()
-
 const getRoute = flattenTranslationsOnExecute(
   db.query.routes
     .findFirst(
@@ -81,9 +59,6 @@ const getRoute = flattenTranslationsOnExecute(
 )
 
 export const routesRouter = router({
-  listForMap: publicProcedure.query(async () => {
-    return (await getAllRoutesForMap.execute()).map(calculatePath)
-  }),
   get: publicProcedure.input(getRoutesSchema).query(async ({ input, ctx }) => {
     const result = await getRoute.execute({
       locale: input.locale,
