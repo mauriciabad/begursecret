@@ -12,8 +12,8 @@ type ExploreLayoutProps = PropsWithChildren<LocaleRouteParams>
 const ExploreLayout: FC<ExploreLayoutProps> = async ({ children }) => {
   const trpc = await getTrpc()
 
-  const places = await trpc.places.listForMap()
-  const routes = await trpc.routes.listForMap()
+  const places = await trpc.map.getAllPlaces()
+  const routes = await trpc.map.getAllRoutes()
 
   return (
     <>

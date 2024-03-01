@@ -58,28 +58,6 @@ const getAllPlaces = flattenTranslationsOnExecute(
     .prepare()
 )
 
-const getAllPlacesForMap = db.query.places
-  .findMany({
-    columns: {
-      id: true,
-      name: true,
-      importance: true,
-    },
-    extras: {
-      location: selectPoint('location', places.location),
-    },
-    with: {
-      mainCategory: {
-        columns: {
-          id: true,
-          icon: true,
-          color: true,
-        },
-      },
-    },
-  })
-  .prepare()
-
 const searchPlaces = flattenTranslationsOnExecute(
   db.query.places
     .findMany(
@@ -211,9 +189,6 @@ export const placesRouter = router({
     return (await getAllPlaces.execute({ locale: input.locale })).map(
       calculateLocation
     )
-  }),
-  listForMap: publicProcedure.query(async () => {
-    return (await getAllPlacesForMap.execute()).map(calculateLocation)
   }),
   search: publicProcedure.input(searchPlacesSchema).query(async ({ input }) => {
     return (
