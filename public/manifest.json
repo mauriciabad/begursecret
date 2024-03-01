@@ -77,17 +77,26 @@
     {
       "name": "Mapa",
       "url": "/explore",
-      "icon": "shortcuts/icon-explore.png"
+      "icons": [
+        { "src": "shortcuts/icon-explore-96.png", "sizes": "96x96" },
+        { "src": "shortcuts/icon-explore-192.png", "sizes": "192x192" }
+      ]
     },
     {
       "name": "Missions",
       "url": "/missions",
-      "icon": "shortcuts/icon-missions.png"
+      "icons": [
+        { "src": "shortcuts/icon-missions-96.png", "sizes": "96x96" },
+        { "src": "shortcuts/icon-missions-192.png", "sizes": "192x192" }
+      ]
     },
     {
       "name": "Perfil",
       "url": "/profile",
-      "icon": "shortcuts/icon-profile.png"
+      "icons": [
+        { "src": "shortcuts/icon-profile-96.png", "sizes": "96x96" },
+        { "src": "shortcuts/icon-profile-192.png", "sizes": "192x192" }
+      ]
     }
   ],
   "related_applications": [
