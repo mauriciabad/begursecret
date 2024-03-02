@@ -283,7 +283,8 @@
     "add-new": "Crear nou",
     "edit": "Editar",
     "create": "Crear",
-    "stay-on-page-after-submit": "Fer més",
+    "do-more": "Fer més",
+    "keep-editing": "Seguir editant",
     "nothing-found": "No s'ha trobat res",
     "no-features": "No hi ha característiques",
     "change-image": {
