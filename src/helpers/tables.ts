@@ -20,7 +20,7 @@ export function makeCompareFn<
   K extends string = K1 extends unknown ? never : K1,
 >(
   getSortValue: Record<
-    NoInfer<K>,
+    K,
     (item: T) => string | number | null | undefined | boolean
   >,
   sortDescriptor: SortDescriptor,
