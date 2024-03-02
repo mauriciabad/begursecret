@@ -24,6 +24,7 @@ export function makeCompareFn<
     (item: T) => string | number | null | undefined | boolean
   >,
   sortDescriptor: SortDescriptor,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _columns: C
 ) {
   return (a: T, b: T): -1 | 0 | 1 => {
