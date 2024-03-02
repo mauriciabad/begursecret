@@ -35,12 +35,16 @@ const getAllRoutes = flattenTranslationsOnExecute(
           id: true,
           name: true,
           description: true,
+          content: true,
           importance: true,
         },
-        extras: {
-          path: selectMultiLine('path', routes.path),
-        },
         with: {
+          mainImage: {
+            columns: {
+              id: true,
+            },
+          },
+          features: withTranslations({}),
           categories: {
             columns: {},
             with: {
@@ -132,9 +136,7 @@ const getRoute = flattenTranslationsOnExecute(
 
 export const routesAdminRouter = router({
   list: adminProcedure.input(listRoutesSchema).query(async ({ input }) => {
-    return (await getAllRoutes.execute({ locale: input.locale })).map(
-      calculatePath
-    )
+    return await getAllRoutes.execute({ locale: input.locale })
   }),
   get: adminProcedure.input(getRoutesSchema).query(async ({ input }) => {
     const result = await getRoute.execute({

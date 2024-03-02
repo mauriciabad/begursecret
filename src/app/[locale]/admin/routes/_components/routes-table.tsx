@@ -24,7 +24,10 @@ import { useTranslations } from 'next-intl'
 import { FC, useCallback, useMemo, useState } from 'react'
 import { SelectRouteCategory } from '~/components/admin-only/select-route-category'
 import { CategoryTagList } from '~/components/category-tags/category-tag-list'
+import { MarkdownContent } from '~/components/generic/markdown-content'
+import { PlaceMarker } from '~/components/generic/place-marker'
 import { cn } from '~/helpers/cn'
+import { ColumnsArray, makeCompareFn } from '~/helpers/tables'
 import { Link } from '~/navigation'
 import { ApiRouterOutput } from '~/server/api/router'
 
@@ -37,45 +40,48 @@ const columns = [
     align: 'end',
   },
   {
+    key: 'importance',
+    sortable: true,
+    align: 'end',
+  },
+  {
     key: 'name',
     sortable: true,
     align: 'start',
   },
   {
-    key: 'mainCategory',
+    key: 'categories',
     sortable: true,
     align: 'start',
   },
   {
-    key: 'categories',
-    sortable: false,
+    key: 'images',
+    sortable: true,
+    align: 'center',
+  },
+  {
+    key: 'description',
+    sortable: true,
     align: 'start',
+  },
+  {
+    key: 'content',
+    sortable: true,
+    align: 'start',
+  },
+  {
+    key: 'missingInfo',
+    sortable: true,
+    align: 'center',
   },
   {
     key: 'actions',
     sortable: false,
     align: 'center',
   },
-] as const satisfies {
-  key: keyof Route | 'actions'
-  sortable: boolean
-  align: 'center' | 'start' | 'end' | undefined
-}[]
+] as const satisfies ColumnsArray
 
-type Column = (typeof columns)[number]
-type ColumnKey = Column['key']
-type SortableColumnKey<T = Column> = T extends { sortable: true; key: infer ID }
-  ? ID
-  : never
-
-const getSortValue = (item: Route, columnKey: SortableColumnKey) => {
-  switch (columnKey) {
-    case 'mainCategory':
-      return item.mainCategory.name
-    default:
-      return item[columnKey]
-  }
-}
+type ColumnKey = (typeof columns)[number]['key']
 
 export const RoutesTable: FC<{
   routes: Route[]
@@ -89,7 +95,7 @@ export const RoutesTable: FC<{
     new Set()
   )
   const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
-    column: 'id',
+    column: 'importance',
     direction: 'ascending',
   })
 
@@ -113,32 +119,68 @@ export const RoutesTable: FC<{
   }, [routes, filterValue, mainCategoryFilter])
 
   const sortedItems = useMemo(() => {
-    return [...filteredItems].sort((a: Route, b: Route) => {
-      const columnKey = sortDescriptor.column as SortableColumnKey
-      const first = getSortValue(a, columnKey)
-      const second = getSortValue(b, columnKey)
-      const cmp = first < second ? -1 : first > second ? 1 : 0
-
-      return sortDescriptor.direction === 'descending' ? -cmp : cmp
-    })
+    return [...filteredItems].sort(
+      makeCompareFn(
+        {
+          mainCategory: (item) => item.mainCategory.name,
+        },
+        sortDescriptor,
+        columns
+      )
+    )
   }, [sortDescriptor, filteredItems])
 
   const renderCell = useCallback((route: Route, columnKey: ColumnKey) => {
     switch (columnKey) {
       case 'name':
         return (
-          <>
-            <p className="font-semibold">{route.name}</p>
-            <p className="line-clamp-2 text-xs text-gray-600">
-              {route.description}
-            </p>
-          </>
+          <span className="font-semibold">
+            <PlaceMarker
+              color={route.mainCategory.color}
+              icon={route.mainCategory.icon}
+              className="mr-2 inline-block align-middle"
+              size="md"
+            />
+            {route.name}
+          </span>
         )
-      case 'mainCategory':
-        return <CategoryTagList mainCategory={route.mainCategory} wrap />
+      case 'description':
+        return route.description ? (
+          <Tooltip content={route.description}>
+            <span>✔</span>
+          </Tooltip>
+        ) : (
+          '❌'
+        )
+      case 'content':
+        return route.content ? (
+          <Tooltip content={<MarkdownContent content={route.content} />}>
+            <span>✔</span>
+          </Tooltip>
+        ) : (
+          '❌'
+        )
+      case 'images':
+        return route.mainImage?.id ? null : '❌'
+      case 'missingInfo':
+        return route.features.hasMissingInfoNotes ? (
+          <Tooltip content={route.features.hasMissingInfoNotes}>
+            <span>
+              {route.features.hasMissingInfo === null
+                ? '?'
+                : route.features.hasMissingInfo
+                  ? '❌'
+                  : '✔'}
+            </span>
+          </Tooltip>
+        ) : (
+          route.features.hasMissingInfo !== null &&
+            (route.features.hasMissingInfo ? '❌' : '✔')
+        )
       case 'categories':
         return (
           <CategoryTagList
+            mainCategory={route.mainCategory}
             categories={route.categories.map((c) => c.category)}
             wrap
           />
@@ -222,7 +264,7 @@ export const RoutesTable: FC<{
             <SelectRouteCategory
               onSelectionChange={setMainCategoryFilter}
               selectedKeys={mainCategoryFilter}
-              label={t('columns.categories')}
+              label={t('tableColumns.categories')}
               selectionMode="multiple"
               size="sm"
               className="max-w-64"
@@ -266,7 +308,7 @@ export const RoutesTable: FC<{
             allowsSorting={column.sortable}
             className="uppercase"
           >
-            {t(`columns.${column.key}`)}
+            {t(`tableColumns.${column.key}`)}
           </TableColumn>
         )}
       </TableHeader>

@@ -256,19 +256,28 @@
   "admin-places-and-routes": {
     "search-placeholder": "Cercar per nom...",
     "total": "Total {total}",
-    "columns": {
+    "tableColumns": {
       "id": "ID",
       "name": "Nom",
-      "images": "Imatges",
+      "categories": "Categories",
+      "actions": "Accions",
+      "images": "🖼️",
+      "description": "📝",
+      "content": "📚",
+      "importance": "🔝",
+      "missingInfo": "ℹ️"
+    },
+    "labels": {
+      "id": "ID",
+      "name": "Nom",
       "description": "Descripció",
       "location": "Ubicació",
       "mainCategory": "Categoria principal",
       "categories": "Categories",
       "mainImage": "Imatge principal",
-      "actions": "Accions",
       "content": "Contingut",
       "features": "Característiques",
-      "path": "Recorregut",
+      "path": "Ruta",
       "importance": "Importància"
     },
     "add-new": "Crear nou",

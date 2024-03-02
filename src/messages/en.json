@@ -256,17 +256,25 @@
   },
   "admin-places-and-routes": {
     "search-placeholder": "Search by name...",
-    "total": "Total {total}",
-    "columns": {
+    "tableColumns": {
       "id": "ID",
       "name": "Name",
-      "images": "Images",
+      "categories": "Categories",
+      "actions": "Actions",
+      "images": "🖼️",
+      "description": "📝",
+      "content": "📚",
+      "importance": "🔝",
+      "missingInfo": "ℹ️"
+    },
+    "labels": {
+      "id": "ID",
+      "name": "Name",
       "description": "Description",
       "location": "Location",
       "mainCategory": "Main category",
       "categories": "Categories",
       "mainImage": "Main image",
-      "actions": "Actions",
       "content": "Content",
       "features": "Features",
       "path": "Path",
