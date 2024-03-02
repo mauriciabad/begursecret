@@ -25,6 +25,7 @@ import { FC, useCallback, useMemo, useState } from 'react'
 import { SelectRouteCategory } from '~/components/admin-only/select-route-category'
 import { CategoryTagList } from '~/components/category-tags/category-tag-list'
 import { cn } from '~/helpers/cn'
+import { ColumnsArray, makeCompareFn } from '~/helpers/tables'
 import { Link } from '~/navigation'
 import { ApiRouterOutput } from '~/server/api/router'
 
@@ -56,26 +57,9 @@ const columns = [
     sortable: false,
     align: 'center',
   },
-] as const satisfies {
-  key: keyof Route | 'actions'
-  sortable: boolean
-  align: 'center' | 'start' | 'end' | undefined
-}[]
+] as const satisfies ColumnsArray
 
-type Column = (typeof columns)[number]
-type ColumnKey = Column['key']
-type SortableColumnKey<T = Column> = T extends { sortable: true; key: infer ID }
-  ? ID
-  : never
-
-const getSortValue = (item: Route, columnKey: SortableColumnKey) => {
-  switch (columnKey) {
-    case 'mainCategory':
-      return item.mainCategory.name
-    default:
-      return item[columnKey]
-  }
-}
+type ColumnKey = (typeof columns)[number]['key']
 
 export const RoutesTable: FC<{
   routes: Route[]
@@ -113,14 +97,15 @@ export const RoutesTable: FC<{
   }, [routes, filterValue, mainCategoryFilter])
 
   const sortedItems = useMemo(() => {
-    return [...filteredItems].sort((a: Route, b: Route) => {
-      const columnKey = sortDescriptor.column as SortableColumnKey
-      const first = getSortValue(a, columnKey)
-      const second = getSortValue(b, columnKey)
-      const cmp = first < second ? -1 : first > second ? 1 : 0
-
-      return sortDescriptor.direction === 'descending' ? -cmp : cmp
-    })
+    return [...filteredItems].sort(
+      makeCompareFn(
+        {
+          mainCategory: (item) => item.mainCategory.name,
+        },
+        sortDescriptor,
+        columns
+      )
+    )
   }, [sortDescriptor, filteredItems])
 
   const renderCell = useCallback((route: Route, columnKey: ColumnKey) => {

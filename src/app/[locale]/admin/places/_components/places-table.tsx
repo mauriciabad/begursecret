@@ -29,6 +29,7 @@ import { PlaceMarker } from '~/components/generic/place-marker'
 import { cn } from '~/helpers/cn'
 import { Link } from '~/navigation'
 import { ApiRouterOutput } from '~/server/api/router'
+import { ColumnsArray, makeCompareFn } from '../../../../../helpers/tables'
 
 type Place = ApiRouterOutput['admin']['places']['list'][number]
 
@@ -78,32 +79,9 @@ const columns = [
     sortable: false,
     align: 'center',
   },
-] as const satisfies {
-  key: keyof Place | 'actions' | 'missingInfo' | 'images'
-  sortable: boolean
-  align: 'center' | 'start' | 'end' | undefined
-}[]
+] as const satisfies ColumnsArray
 
-type Column = (typeof columns)[number]
-type ColumnKey = Column['key']
-type SortableColumnKey<T = Column> = T extends { sortable: true; key: infer ID }
-  ? ID
-  : never
-
-const getSortValue = (item: Place, columnKey: SortableColumnKey) => {
-  switch (columnKey) {
-    case 'categories':
-      return item.mainCategory.name
-    case 'missingInfo':
-      return item.features.hasMissingInfo
-    case 'images':
-      return Boolean(item.mainImage?.id)
-    case 'content':
-      return Boolean(item.content)
-    default:
-      return item[columnKey]
-  }
-}
+type ColumnKey = (typeof columns)[number]['key']
 
 export const PlacesTable: FC<{
   places: Place[]
@@ -141,17 +119,18 @@ export const PlacesTable: FC<{
   }, [places, filterValue, mainCategoryFilter])
 
   const sortedItems = useMemo(() => {
-    return [...filteredItems].sort((a: Place, b: Place) => {
-      const columnKey = sortDescriptor.column as SortableColumnKey
-      const first = getSortValue(a, columnKey)
-      const second = getSortValue(b, columnKey)
-      if (first === null || second === null) {
-        return first === null ? +1 : -1
-      }
-      const cmp = first < second ? -1 : first > second ? 1 : 0
-
-      return sortDescriptor.direction === 'descending' ? -cmp : cmp
-    })
+    return [...filteredItems].sort(
+      makeCompareFn(
+        {
+          categories: (item) => item.mainCategory.name,
+          missingInfo: (item) => item.features.hasMissingInfo,
+          images: (item) => Boolean(item.mainImage?.id),
+          content: (item) => Boolean(item.content),
+        },
+        sortDescriptor,
+        columns
+      )
+    )
   }, [sortDescriptor, filteredItems])
 
   const renderCell = useCallback((place: Place, columnKey: ColumnKey) => {
