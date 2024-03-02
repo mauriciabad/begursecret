@@ -117,7 +117,7 @@ export const RouteForm: FC<{
                 onBlur={onBlur}
                 onChange={onChange}
                 value={value}
-                label={t('columns.name')}
+                label={t('labels.name')}
                 className="sm:col-span-3 lg:col-span-4"
               />
             )}
@@ -136,7 +136,7 @@ export const RouteForm: FC<{
                 onBlur={onBlur}
                 onChange={onChange}
                 value={value?.toString()}
-                label={t('columns.importance')}
+                label={t('labels.importance')}
               />
             )}
           />
@@ -154,7 +154,7 @@ export const RouteForm: FC<{
               onBlur={onBlur}
               onChange={onChange}
               value={value ?? undefined}
-              label={t('columns.description')}
+              label={t('labels.description')}
             />
           )}
         />
@@ -173,7 +173,7 @@ export const RouteForm: FC<{
                 onBlur={onBlur}
                 onChange={onChange}
                 selectedKeys={value ? [String(value)] : []}
-                label={t('columns.mainCategory')}
+                label={t('labels.mainCategory')}
               />
             )}
           />
@@ -191,7 +191,7 @@ export const RouteForm: FC<{
                 onBlur={onBlur}
                 onChange={onChange}
                 selectedKeys={value ? value.split(',') : []}
-                label={t('columns.categories')}
+                label={t('labels.categories')}
                 selectionMode="multiple"
                 className="sm:col-span-2 lg:col-span-3"
               />
@@ -213,7 +213,7 @@ export const RouteForm: FC<{
                 onBlur={onBlur}
                 onChange={onChange}
                 value={value}
-                label={t('columns.content')}
+                label={t('labels.content')}
               />
             )}
           />
@@ -232,7 +232,7 @@ export const RouteForm: FC<{
                   onBlur={onBlur}
                   onChange={onChange}
                   value={value}
-                  label={t('columns.path')}
+                  label={t('labels.path')}
                   labelPlacement="outside"
                 />
               )}
@@ -267,7 +267,7 @@ export const RouteForm: FC<{
           </div>
         </div>
 
-        <FeaturesEditor label={t('columns.features')} />
+        <FeaturesEditor label={t('labels.features')} />
 
         <div className="mt-8 flex items-center justify-start gap-4">
           <SafeSubmitButton color="primary" size="lg" />

@@ -25,6 +25,7 @@ import { FC, useCallback, useMemo, useState } from 'react'
 import { SelectPlaceCategory } from '~/components/admin-only/select-place-category'
 import { CategoryTagList } from '~/components/category-tags/category-tag-list'
 import { MarkdownContent } from '~/components/generic/markdown-content'
+import { PlaceMarker } from '~/components/generic/place-marker'
 import { cn } from '~/helpers/cn'
 import { Link } from '~/navigation'
 import { ApiRouterOutput } from '~/server/api/router'
@@ -34,6 +35,11 @@ type Place = ApiRouterOutput['admin']['places']['list'][number]
 const columns = [
   {
     key: 'id',
+    sortable: true,
+    align: 'end',
+  },
+  {
+    key: 'importance',
     sortable: true,
     align: 'end',
   },
@@ -50,6 +56,11 @@ const columns = [
   {
     key: 'images',
     sortable: true,
+    align: 'center',
+  },
+  {
+    key: 'description',
+    sortable: true,
     align: 'start',
   },
   {
@@ -59,11 +70,6 @@ const columns = [
   },
   {
     key: 'missingInfo',
-    sortable: true,
-    align: 'center',
-  },
-  {
-    key: 'importance',
     sortable: true,
     align: 'center',
   },
@@ -111,7 +117,7 @@ export const PlacesTable: FC<{
     new Set()
   )
   const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
-    column: 'id',
+    column: 'importance',
     direction: 'ascending',
   })
 
@@ -139,16 +145,10 @@ export const PlacesTable: FC<{
       const columnKey = sortDescriptor.column as SortableColumnKey
       const first = getSortValue(a, columnKey)
       const second = getSortValue(b, columnKey)
-      const cmp =
-        first !== null && second !== null
-          ? first < second
-            ? -1
-            : first > second
-              ? 1
-              : 0
-          : first === null
-            ? 1
-            : -1
+      if (first === null || second === null) {
+        return first === null ? +1 : -1
+      }
+      const cmp = first < second ? -1 : first > second ? 1 : 0
 
       return sortDescriptor.direction === 'descending' ? -cmp : cmp
     })
@@ -158,12 +158,23 @@ export const PlacesTable: FC<{
     switch (columnKey) {
       case 'name':
         return (
-          <>
-            <p className="font-semibold">{place.name}</p>
-            <p className="line-clamp-2 text-xs text-gray-600">
-              {place.description}
-            </p>
-          </>
+          <span className="font-semibold">
+            <PlaceMarker
+              color={place.mainCategory.color}
+              icon={place.mainCategory.icon}
+              className="mr-2 inline-block align-middle"
+              size="md"
+            />
+            {place.name}
+          </span>
+        )
+      case 'description':
+        return place.description ? (
+          <Tooltip content={place.description}>
+            <span>✔</span>
+          </Tooltip>
+        ) : (
+          '❌'
         )
       case 'content':
         return place.content ? (
@@ -174,7 +185,7 @@ export const PlacesTable: FC<{
           '❌'
         )
       case 'images':
-        return place.mainImage?.id ? '✔' : '❌'
+        return place.mainImage?.id ? null : '❌'
       case 'missingInfo':
         return place.features.hasMissingInfoNotes ? (
           <Tooltip content={place.features.hasMissingInfoNotes}>
@@ -277,7 +288,7 @@ export const PlacesTable: FC<{
             <SelectPlaceCategory
               onSelectionChange={setMainCategoryFilter}
               selectedKeys={mainCategoryFilter}
-              label={t('columns.categories')}
+              label={t('tableColumns.categories')}
               selectionMode="multiple"
               size="sm"
               className="max-w-64"
@@ -321,7 +332,7 @@ export const PlacesTable: FC<{
             allowsSorting={column.sortable}
             className="uppercase"
           >
-            {t(`columns.${column.key}`)}
+            {t(`tableColumns.${column.key}`)}
           </TableColumn>
         )}
       </TableHeader>

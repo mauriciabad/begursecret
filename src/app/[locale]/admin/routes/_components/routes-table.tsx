@@ -222,7 +222,7 @@ export const RoutesTable: FC<{
             <SelectRouteCategory
               onSelectionChange={setMainCategoryFilter}
               selectedKeys={mainCategoryFilter}
-              label={t('columns.categories')}
+              label={t('tableColumns.categories')}
               selectionMode="multiple"
               size="sm"
               className="max-w-64"
@@ -266,7 +266,7 @@ export const RoutesTable: FC<{
             allowsSorting={column.sortable}
             className="uppercase"
           >
-            {t(`columns.${column.key}`)}
+            {t(`tableColumns.${column.key}`)}
           </TableColumn>
         )}
       </TableHeader>
