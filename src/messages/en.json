@@ -283,7 +283,8 @@
     "add-new": "Add new",
     "edit": "Edit",
     "create": "Create",
-    "stay-on-page-after-submit": "Do more",
+    "do-more": "Do more",
+    "keep-editing": "Keep editing",
     "nothing-found": "Nothing found",
     "no-features": "No features",
     "change-image": {

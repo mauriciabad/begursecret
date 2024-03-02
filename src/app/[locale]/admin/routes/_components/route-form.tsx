@@ -93,13 +93,13 @@ export const RouteForm: FC<{
             })
           }
 
-          form.reset()
-
           await revalidateAll()
 
-          if (!isCreateForm || !stayOnPage) {
+          if (!stayOnPage) {
             return router.push('/admin/routes/')
           }
+
+          if (isCreateForm) form.reset()
         }}
         className={cn('space-y-4', className)}
       >
@@ -269,13 +269,12 @@ export const RouteForm: FC<{
 
         <FeaturesEditor label={t('labels.features')} />
 
-        <div className="mt-8 flex items-center justify-start gap-4">
+        <div className="sticky bottom-4 z-10 mt-8 flex items-center justify-start gap-4">
           <SafeSubmitButton color="primary" size="lg" />
-          {isCreateForm && (
-            <Checkbox isSelected={stayOnPage} onValueChange={setStayOnPage}>
-              {t('stay-on-page-after-submit')}
-            </Checkbox>
-          )}
+
+          <Checkbox isSelected={stayOnPage} onValueChange={setStayOnPage}>
+            {isCreateForm ? t('do-more') : t('keep-editing')}
+          </Checkbox>
         </div>
       </SafeForm>
     </>

@@ -1,4 +1,3 @@
-import { Card, CardBody } from '@nextui-org/card'
 import { Input, Select, SelectItem } from '@nextui-org/react'
 import { Icon } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
@@ -10,6 +9,7 @@ import {
   featureDisplayGroups,
   getIconForFeature,
 } from '~/server/db/constants/features-display-data'
+import { CardInputContainer } from '../generic/card-input-container'
 import { MarkdownEditor } from '../generic/markdown-editor'
 import { ThreeStateCheckbox } from '../generic/three-state-checkbox'
 
@@ -23,127 +23,147 @@ export const FeaturesEditor: FC<{
 
   return (
     <div className={cn(className)}>
-      {label && <p className="mb-1">{label}</p>}
+      {label && (
+        <div className="my-4 mt-16 flex items-center gap-2">
+          <div
+            className={cn(
+              'flex-1 border-t border-stone-300',
+              errorSection && 'border-red-900'
+            )}
+            aria-hidden
+          />
+          <h3
+            className={cn(
+              'inline-block font-title text-sm font-medium uppercase text-stone-600',
+              errorSection && 'text-red-500'
+            )}
+          >
+            {label}
+          </h3>
+          <div
+            className={cn(
+              'flex-1 border-t border-stone-300',
+              errorSection && 'border-red-900'
+            )}
+            aria-hidden
+          />
+        </div>
+      )}
       {errorSection?.message && (
-        <p className="text-red-500">{errorSection.message}</p>
+        <p className="text-center text-red-500">{errorSection.message}</p>
       )}
 
-      <Card
-        radius="sm"
-        className={cn(errorSection && 'border-2 border-red-500')}
-      >
-        <CardBody className="gap-4 p-5">
-          {featureDisplayGroups.map((group) => (
-            <FeatureList key={group.key} title={t(`titles.${group.key}`)}>
-              {group.featureDisplays.map((featureDisplay) => {
-                switch (featureDisplay.type) {
-                  case 'number':
-                  case 'text': {
-                    return (
-                      <Controller
-                        key={featureDisplay.key}
-                        name={`features.${featureDisplay.key}`}
-                        control={form.control}
-                        render={({
-                          field: { onChange, onBlur, value },
-                          fieldState: { error },
-                        }) => (
-                          <TextFeatureInput
-                            type={featureDisplay.type}
-                            icon={featureDisplay.icon}
-                            label={t(`labels.${featureDisplay.key}`)}
-                            value={value ?? ''}
-                            onChange={onChange}
-                            onBlur={onBlur}
-                            isInvalid={!!error}
-                            errorMessage={error?.message}
-                          />
-                        )}
-                      />
-                    )
-                  }
-                  case 'markdown': {
-                    return (
-                      <Controller
-                        key={featureDisplay.key}
-                        name={`features.${featureDisplay.key}`}
-                        control={form.control}
-                        render={({
-                          field: { onChange, onBlur, value },
-                          fieldState: { error },
-                        }) => (
-                          <MarkdownFeatureInput
-                            icon={featureDisplay.icon}
-                            label={t(`labels.${featureDisplay.key}`)}
-                            value={value}
-                            onChange={onChange}
-                            onBlur={onBlur}
-                            isInvalid={!!error}
-                            errorMessage={error?.message}
-                          />
-                        )}
-                      />
-                    )
-                  }
-                  case 'enum': {
-                    return (
-                      <Controller
-                        key={featureDisplay.key}
-                        name={`features.${featureDisplay.key}`}
-                        control={form.control}
-                        render={({
-                          field: { onChange, onBlur, value },
-                          fieldState: { error },
-                        }) => (
-                          <SelectFeatureInput
-                            icon={getIconForFeature(featureDisplay, value)}
-                            label={t(`labels.${featureDisplay.key}`)}
-                            options={featureDisplay.options.map((option) => ({
-                              key: option,
-                              value: t(
-                                `values.enum.${`${featureDisplay.key}.${option}` as IntlMessageKeys<'data.features.values.enum'>}`
-                              ),
-                              icon: getIconForFeature(featureDisplay, option),
-                            }))}
-                            value={value}
-                            onChange={onChange}
-                            onBlur={onBlur}
-                            isInvalid={!!error}
-                            errorMessage={error?.message}
-                          />
-                        )}
-                      />
-                    )
-                  }
-                  case 'boolean': {
-                    return (
-                      <Controller
-                        key={featureDisplay.key}
-                        name={`features.${featureDisplay.key}`}
-                        control={form.control}
-                        render={({
-                          field: { onChange, onBlur, value },
-                          fieldState: { error },
-                        }) => (
-                          <BooleanFeatureInput
-                            icon={getIconForFeature(featureDisplay, true)}
-                            label={t(`labels.${featureDisplay.key}`)}
-                            value={value}
-                            onChange={onChange}
-                            onBlur={onBlur}
-                            isInvalid={!!error}
-                            errorMessage={error?.message}
-                          />
-                        )}
-                      />
-                    )
-                  }
+      <div className="space-y-4">
+        {featureDisplayGroups.map((group) => (
+          <FeatureList key={group.key} title={t(`titles.${group.key}`)}>
+            {group.featureDisplays.map((featureDisplay) => {
+              switch (featureDisplay.type) {
+                case 'number':
+                case 'text': {
+                  return (
+                    <Controller
+                      key={featureDisplay.key}
+                      name={`features.${featureDisplay.key}`}
+                      control={form.control}
+                      render={({
+                        field: { onChange, onBlur, value },
+                        fieldState: { error },
+                      }) => (
+                        <TextFeatureInput
+                          type={featureDisplay.type}
+                          icon={featureDisplay.icon}
+                          label={t(`labels.${featureDisplay.key}`)}
+                          value={value ?? ''}
+                          onChange={onChange}
+                          onBlur={onBlur}
+                          isInvalid={!!error}
+                          errorMessage={error?.message}
+                        />
+                      )}
+                    />
+                  )
                 }
-              })}
-            </FeatureList>
-          ))}
-        </CardBody>
-      </Card>
+                case 'markdown': {
+                  return (
+                    <Controller
+                      key={featureDisplay.key}
+                      name={`features.${featureDisplay.key}`}
+                      control={form.control}
+                      render={({
+                        field: { onChange, onBlur, value },
+                        fieldState: { error },
+                      }) => (
+                        <MarkdownFeatureInput
+                          icon={featureDisplay.icon}
+                          label={t(`labels.${featureDisplay.key}`)}
+                          value={value}
+                          onChange={onChange}
+                          onBlur={onBlur}
+                          isInvalid={!!error}
+                          errorMessage={error?.message}
+                        />
+                      )}
+                    />
+                  )
+                }
+                case 'enum': {
+                  return (
+                    <Controller
+                      key={featureDisplay.key}
+                      name={`features.${featureDisplay.key}`}
+                      control={form.control}
+                      render={({
+                        field: { onChange, onBlur, value },
+                        fieldState: { error },
+                      }) => (
+                        <SelectFeatureInput
+                          icon={getIconForFeature(featureDisplay, value)}
+                          label={t(`labels.${featureDisplay.key}`)}
+                          options={featureDisplay.options.map((option) => ({
+                            key: option,
+                            value: t(
+                              `values.enum.${`${featureDisplay.key}.${option}` as IntlMessageKeys<'data.features.values.enum'>}`
+                            ),
+                            icon: getIconForFeature(featureDisplay, option),
+                          }))}
+                          value={value}
+                          onChange={onChange}
+                          onBlur={onBlur}
+                          isInvalid={!!error}
+                          errorMessage={error?.message}
+                        />
+                      )}
+                    />
+                  )
+                }
+                case 'boolean': {
+                  return (
+                    <Controller
+                      key={featureDisplay.key}
+                      name={`features.${featureDisplay.key}`}
+                      control={form.control}
+                      render={({
+                        field: { onChange, onBlur, value },
+                        fieldState: { error },
+                      }) => (
+                        <BooleanFeatureInput
+                          icon={getIconForFeature(featureDisplay, true)}
+                          label={t(`labels.${featureDisplay.key}`)}
+                          value={value}
+                          onChange={onChange}
+                          onBlur={onBlur}
+                          isInvalid={!!error}
+                          errorMessage={error?.message}
+                        />
+                      )}
+                    />
+                  )
+                }
+              }
+            })}
+          </FeatureList>
+        ))}
+      </div>
     </div>
   )
 }
@@ -289,9 +309,8 @@ const FeatureList: FC<PropsWithChildren<{ title: string }>> = ({
   children,
 }) => {
   return (
-    <div>
-      <h4 className="mb-2 font-bold leading-none">{title}</h4>
+    <CardInputContainer label={title}>
       <ul className="grid gap-2 xs2:grid-cols-2">{children}</ul>
-    </div>
+    </CardInputContainer>
   )
 }

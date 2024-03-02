@@ -157,7 +157,11 @@ export const PlacesTable: FC<{
         )
       case 'content':
         return place.content ? (
-          <Tooltip content={<MarkdownContent content={place.content} />}>
+          <Tooltip
+            content={
+              <MarkdownContent content={place.content} className="p-4" />
+            }
+          >
             <span>✔</span>
           </Tooltip>
         ) : (
