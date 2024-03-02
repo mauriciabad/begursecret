@@ -253,6 +253,7 @@ export const PlaceForm: FC<{
                   onChange={onChange}
                   value={value}
                   label={t('labels.location')}
+                  reset={() => form.resetField('location', { keepDirty: true })}
                 />
               )}
             />

@@ -1,5 +1,7 @@
 import { Card } from '@nextui-org/card'
 import { Input } from '@nextui-org/input'
+import { Button } from '@nextui-org/react'
+import { IconArrowBackUp } from '@tabler/icons-react'
 import { FC } from 'react'
 import { Map } from '~/components/map/map'
 import { cn } from '~/helpers/cn'
@@ -11,6 +13,7 @@ export const MapPointSelector: FC<{
   value?: string | undefined
   onChange: (e: { target: { value: string | undefined } }) => void
   onBlur: () => void
+  reset?: () => void
   className?: string
 }> = ({
   isInvalid,
@@ -20,6 +23,7 @@ export const MapPointSelector: FC<{
   onChange,
   onBlur,
   className,
+  reset,
 }) => {
   const valueAsMapPoint = stringToMapPoint(value)
 
@@ -37,15 +41,28 @@ export const MapPointSelector: FC<{
           'relative grow'
         )}
       >
-        <Input
-          isInvalid={isInvalid}
-          onBlur={onBlur}
-          onChange={onChange}
-          value={value}
-          className="absolute inset-x-2 top-2 z-10 w-auto shadow-lg"
-          label={label}
-          placeholder="Lat, Lng"
-        />
+        <div className="absolute inset-x-2 top-2 z-10 flex w-auto items-center gap-2">
+          <Input
+            isInvalid={isInvalid}
+            onBlur={onBlur}
+            onChange={onChange}
+            value={value}
+            label={label}
+            className="shadow-lg"
+            placeholder="Lat, Lng"
+          />
+          {reset && (
+            <Button
+              onPress={reset}
+              size="lg"
+              isIconOnly
+              variant="solid"
+              className="mr-1 bg-white shadow-lg"
+            >
+              <IconArrowBackUp />
+            </Button>
+          )}
+        </div>
         <Map
           className="h-full w-full rounded-md"
           onValueChange={(newValue) => {
