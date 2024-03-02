@@ -296,7 +296,8 @@
       "change-main-image": "Change main image",
       "select-existing-image": "Select existing image",
       "upload-new-image": "Upload new image",
-      "leave-empty-to-remove-main-image": "Leave empty to remove main image"
+      "leave-empty-to-remove-main-image": "Leave empty to remove main image",
+      "show-images": "Show images"
     },
     "actions": {
       "view": "View",

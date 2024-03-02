@@ -296,7 +296,8 @@
       "change-main-image": "Canviar imatge principal",
       "select-existing-image": "Seleccionar imatge existent",
       "upload-new-image": "Pujar nova imatge",
-      "leave-empty-to-remove-main-image": "Deixa-ho buit per eliminar la imatge principal"
+      "leave-empty-to-remove-main-image": "Deixa-ho buit per eliminar la imatge principal",
+      "show-images": "Mostrar imatges"
     },
     "actions": {
       "view": "Veure",
