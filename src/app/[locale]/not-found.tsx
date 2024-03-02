@@ -18,8 +18,8 @@ export async function generateMetadata({
   }
 }
 
-const NotFoundPage: FC<LocaleRouteParams> = ({ params }) => {
-  const locale = parseLocale(params.locale)
+const NotFoundPage: FC<Partial<LocaleRouteParams>> = ({ params }) => {
+  const locale = parseLocale(params?.locale)
   unstable_setRequestLocale(locale)
 
   const t = useTranslations('error-pages.not-found')

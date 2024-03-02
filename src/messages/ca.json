@@ -269,7 +269,8 @@
       "content": "Contingut",
       "features": "Característiques",
       "path": "Recorregut",
-      "importance": "Importància"
+      "importance": "Importància",
+      "missingInfo": "Falta info"
     },
     "add-new": "Crear nou",
     "edit": "Editar",

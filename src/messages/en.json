@@ -270,7 +270,8 @@
       "content": "Content",
       "features": "Features",
       "path": "Path",
-      "importance": "Importance"
+      "importance": "Importance",
+      "missingInfo": "Missing info"
     },
     "add-new": "Add new",
     "edit": "Edit",

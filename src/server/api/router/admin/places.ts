@@ -32,12 +32,16 @@ const getAllPlaces = flattenTranslationsOnExecute(
           id: true,
           name: true,
           description: true,
+          content: true,
           importance: true,
         },
-        extras: {
-          location: selectPoint('location', places.location),
-        },
         with: {
+          mainImage: {
+            columns: {
+              id: true,
+            },
+          },
+          features: withTranslations({}),
           categories: {
             columns: {},
             with: {
@@ -129,9 +133,7 @@ const getPlace = flattenTranslationsOnExecute(
 
 export const placesAdminRouter = router({
   list: adminProcedure.input(listPlacesSchema).query(async ({ input }) => {
-    return (await getAllPlaces.execute({ locale: input.locale })).map(
-      calculateLocation
-    )
+    return await getAllPlaces.execute({ locale: input.locale })
   }),
   get: adminProcedure.input(getPlacesSchema).query(async ({ input }) => {
     const result = await getPlace.execute({

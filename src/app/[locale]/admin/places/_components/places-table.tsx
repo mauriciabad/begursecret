@@ -24,6 +24,7 @@ import { useTranslations } from 'next-intl'
 import { FC, useCallback, useMemo, useState } from 'react'
 import { SelectPlaceCategory } from '~/components/admin-only/select-place-category'
 import { CategoryTagList } from '~/components/category-tags/category-tag-list'
+import { MarkdownContent } from '~/components/generic/markdown-content'
 import { cn } from '~/helpers/cn'
 import { Link } from '~/navigation'
 import { ApiRouterOutput } from '~/server/api/router'
@@ -42,19 +43,29 @@ const columns = [
     align: 'start',
   },
   {
-    key: 'location',
-    sortable: false,
-    align: 'start',
-  },
-  {
-    key: 'mainCategory',
+    key: 'categories',
     sortable: true,
     align: 'start',
   },
   {
-    key: 'categories',
-    sortable: false,
+    key: 'images',
+    sortable: true,
     align: 'start',
+  },
+  {
+    key: 'content',
+    sortable: true,
+    align: 'start',
+  },
+  {
+    key: 'missingInfo',
+    sortable: true,
+    align: 'center',
+  },
+  {
+    key: 'importance',
+    sortable: true,
+    align: 'center',
   },
   {
     key: 'actions',
@@ -62,7 +73,7 @@ const columns = [
     align: 'center',
   },
 ] as const satisfies {
-  key: keyof Place | 'actions'
+  key: keyof Place | 'actions' | 'missingInfo' | 'images'
   sortable: boolean
   align: 'center' | 'start' | 'end' | undefined
 }[]
@@ -75,8 +86,14 @@ type SortableColumnKey<T = Column> = T extends { sortable: true; key: infer ID }
 
 const getSortValue = (item: Place, columnKey: SortableColumnKey) => {
   switch (columnKey) {
-    case 'mainCategory':
+    case 'categories':
       return item.mainCategory.name
+    case 'missingInfo':
+      return item.features.hasMissingInfo
+    case 'images':
+      return Boolean(item.mainImage?.id)
+    case 'content':
+      return Boolean(item.content)
     default:
       return item[columnKey]
   }
@@ -122,7 +139,16 @@ export const PlacesTable: FC<{
       const columnKey = sortDescriptor.column as SortableColumnKey
       const first = getSortValue(a, columnKey)
       const second = getSortValue(b, columnKey)
-      const cmp = first < second ? -1 : first > second ? 1 : 0
+      const cmp =
+        first !== null && second !== null
+          ? first < second
+            ? -1
+            : first > second
+              ? 1
+              : 0
+          : first === null
+            ? 1
+            : -1
 
       return sortDescriptor.direction === 'descending' ? -cmp : cmp
     })
@@ -139,19 +165,35 @@ export const PlacesTable: FC<{
             </p>
           </>
         )
-      case 'location':
-        return (
-          <div className="flex flex-col">
-            <p className="text-bold font-mono text-tiny text-default-400">
-              {`${place.location.lat.toFixed(6)}, ${place.location.lng.toFixed(6)}`}
-            </p>
-          </div>
+      case 'content':
+        return place.content ? (
+          <Tooltip content={<MarkdownContent content={place.content} />}>
+            <span>✔</span>
+          </Tooltip>
+        ) : (
+          '❌'
         )
-      case 'mainCategory':
-        return <CategoryTagList mainCategory={place.mainCategory} wrap />
+      case 'images':
+        return place.mainImage?.id ? '✔' : '❌'
+      case 'missingInfo':
+        return place.features.hasMissingInfoNotes ? (
+          <Tooltip content={place.features.hasMissingInfoNotes}>
+            <span>
+              {place.features.hasMissingInfo === null
+                ? '?'
+                : place.features.hasMissingInfo
+                  ? '❌'
+                  : '✔'}
+            </span>
+          </Tooltip>
+        ) : (
+          place.features.hasMissingInfo !== null &&
+            (place.features.hasMissingInfo ? '❌' : '✔')
+        )
       case 'categories':
         return (
           <CategoryTagList
+            mainCategory={place.mainCategory}
             categories={place.categories.map((c) => c.category)}
             wrap
           />
