@@ -269,7 +269,7 @@ export const RouteForm: FC<{
 
         <FeaturesEditor label={t('labels.features')} />
 
-        <div className="mt-8 flex items-center justify-start gap-4">
+        <div className="sticky bottom-4 z-10 mt-8 flex items-center justify-start gap-4">
           <SafeSubmitButton color="primary" size="lg" />
           {isCreateForm && (
             <Checkbox isSelected={stayOnPage} onValueChange={setStayOnPage}>
