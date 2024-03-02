@@ -95,7 +95,7 @@ export const RoutesTable: FC<{
     new Set()
   )
   const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
-    column: 'id',
+    column: 'importance',
     direction: 'ascending',
   })
 
