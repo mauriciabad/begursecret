@@ -154,7 +154,11 @@ export const RoutesTable: FC<{
         )
       case 'content':
         return route.content ? (
-          <Tooltip content={<MarkdownContent content={route.content} />}>
+          <Tooltip
+            content={
+              <MarkdownContent content={route.content} className="p-4" />
+            }
+          >
             <span>✔</span>
           </Tooltip>
         ) : (
