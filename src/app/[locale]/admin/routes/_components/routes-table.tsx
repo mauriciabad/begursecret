@@ -24,6 +24,8 @@ import { useTranslations } from 'next-intl'
 import { FC, useCallback, useMemo, useState } from 'react'
 import { SelectRouteCategory } from '~/components/admin-only/select-route-category'
 import { CategoryTagList } from '~/components/category-tags/category-tag-list'
+import { MarkdownContent } from '~/components/generic/markdown-content'
+import { PlaceMarker } from '~/components/generic/place-marker'
 import { cn } from '~/helpers/cn'
 import { ColumnsArray, makeCompareFn } from '~/helpers/tables'
 import { Link } from '~/navigation'
@@ -38,19 +40,39 @@ const columns = [
     align: 'end',
   },
   {
+    key: 'importance',
+    sortable: true,
+    align: 'end',
+  },
+  {
     key: 'name',
     sortable: true,
     align: 'start',
   },
   {
-    key: 'mainCategory',
+    key: 'categories',
     sortable: true,
     align: 'start',
   },
   {
-    key: 'categories',
-    sortable: false,
+    key: 'images',
+    sortable: true,
+    align: 'center',
+  },
+  {
+    key: 'description',
+    sortable: true,
     align: 'start',
+  },
+  {
+    key: 'content',
+    sortable: true,
+    align: 'start',
+  },
+  {
+    key: 'missingInfo',
+    sortable: true,
+    align: 'center',
   },
   {
     key: 'actions',
@@ -112,18 +134,53 @@ export const RoutesTable: FC<{
     switch (columnKey) {
       case 'name':
         return (
-          <>
-            <p className="font-semibold">{route.name}</p>
-            <p className="line-clamp-2 text-xs text-gray-600">
-              {route.description}
-            </p>
-          </>
+          <span className="font-semibold">
+            <PlaceMarker
+              color={route.mainCategory.color}
+              icon={route.mainCategory.icon}
+              className="mr-2 inline-block align-middle"
+              size="md"
+            />
+            {route.name}
+          </span>
         )
-      case 'mainCategory':
-        return <CategoryTagList mainCategory={route.mainCategory} wrap />
+      case 'description':
+        return route.description ? (
+          <Tooltip content={route.description}>
+            <span>✔</span>
+          </Tooltip>
+        ) : (
+          '❌'
+        )
+      case 'content':
+        return route.content ? (
+          <Tooltip content={<MarkdownContent content={route.content} />}>
+            <span>✔</span>
+          </Tooltip>
+        ) : (
+          '❌'
+        )
+      case 'images':
+        return route.mainImage?.id ? null : '❌'
+      case 'missingInfo':
+        return route.features.hasMissingInfoNotes ? (
+          <Tooltip content={route.features.hasMissingInfoNotes}>
+            <span>
+              {route.features.hasMissingInfo === null
+                ? '?'
+                : route.features.hasMissingInfo
+                  ? '❌'
+                  : '✔'}
+            </span>
+          </Tooltip>
+        ) : (
+          route.features.hasMissingInfo !== null &&
+            (route.features.hasMissingInfo ? '❌' : '✔')
+        )
       case 'categories':
         return (
           <CategoryTagList
+            mainCategory={route.mainCategory}
             categories={route.categories.map((c) => c.category)}
             wrap
           />
