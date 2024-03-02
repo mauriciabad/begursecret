@@ -100,8 +100,19 @@ export const UploadPlaceImageModal: FC<
     onClose()
   }
 
-  const { data: allImages, isLoading: isLoadingImages } =
-    trpc.admin.images.getAll.useQuery()
+  const {
+    data: allImages,
+    isLoading: isLoadingImages,
+    refetch,
+  } = trpc.admin.images.getAll.useQuery(undefined, {
+    enabled: false,
+  })
+  const { data: image, isLoading: isLoadingImage } =
+    trpc.admin.images.getById.useQuery({
+      id: mainImageId,
+    })
+
+  const [showImages, setShowImages] = useState(false)
   return (
     <>
       <div className="flex flex-col items-center gap-1">
@@ -111,8 +122,8 @@ export const UploadPlaceImageModal: FC<
           className={cn('min-h-32 w-full max-w-64', {
             'border-2 border-red-500': isInvalid,
           })}
-          image={allImages?.find((image) => image.id === mainImageId)}
-          isLoading={isLoadingImages}
+          image={image}
+          isLoading={isLoadingImage}
           full="height"
         />
         <Button onPress={onOpen} variant="bordered" className={className}>
@@ -196,63 +207,74 @@ export const UploadPlaceImageModal: FC<
 
                 <Divider className="my-2" />
 
-                <RadioGroup
-                  label={t('change-image.select-existing-image')}
-                  value={selected}
-                  onValueChange={setSelected}
-                  orientation="horizontal"
-                  isDisabled={isUploading || isLoadingImages}
-                  classNames={{
-                    wrapper: cn(
-                      'grid gap-2 items-start',
-                      'grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5'
-                    ),
-                  }}
-                >
-                  {allImages?.map((image) => (
-                    <Radio
-                      key={image.id}
-                      value={String(image.id)}
-                      classNames={{
-                        base: cn(
-                          'bg-content1 cursor-pointer relative p-1 m-0',
-                          'hover:bg-content2',
-                          'rounded-xl border-2 border-transparent',
-                          'data-[selected=true]:border-primary'
-                        ),
-                        wrapper: cn(
-                          'absolute top-2 right-2 m-0 z-10 bg-content1 rounded-full overflow-visible',
-                          'before:border-content1 before:border-2 before:rounded-full before:absolute before:-inset-1 before:z-0'
-                        ),
-                        label: 'z-0 p-0',
-                        labelWrapper: 'm-0 w-full',
-                      }}
-                    >
-                      <OptimizedImage
-                        className="w-full min-w-0"
-                        image={image}
-                        radius="sm"
-                      />
-                      {image.alt && (
-                        <p className="mt-1 w-full px-2 text-xs text-gray-600">
-                          {image.alt}
-                        </p>
-                      )}
-                      {image.source && (
-                        <p className="w-full truncate px-2 text-xs text-gray-400">
-                          {image.source}
-                        </p>
-                      )}
-                      {image.captureDate && (
-                        <p className="w-full px-2 text-xs text-gray-400">
-                          {format.dateTime(image.captureDate, {
-                            dateStyle: 'short',
-                          })}
-                        </p>
-                      )}
-                    </Radio>
-                  ))}
-                </RadioGroup>
+                {showImages ? (
+                  <RadioGroup
+                    label={t('change-image.select-existing-image')}
+                    value={selected}
+                    onValueChange={setSelected}
+                    orientation="horizontal"
+                    isDisabled={isUploading || isLoadingImages}
+                    classNames={{
+                      wrapper: cn(
+                        'grid gap-2 items-start',
+                        'grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5'
+                      ),
+                    }}
+                  >
+                    {allImages?.map((image) => (
+                      <Radio
+                        key={image.id}
+                        value={String(image.id)}
+                        classNames={{
+                          base: cn(
+                            'bg-content1 cursor-pointer relative p-1 m-0',
+                            'hover:bg-content2',
+                            'rounded-xl border-2 border-transparent',
+                            'data-[selected=true]:border-primary'
+                          ),
+                          wrapper: cn(
+                            'absolute top-2 right-2 m-0 z-10 bg-content1 rounded-full overflow-visible',
+                            'before:border-content1 before:border-2 before:rounded-full before:absolute before:-inset-1 before:z-0'
+                          ),
+                          label: 'z-0 p-0',
+                          labelWrapper: 'm-0 w-full',
+                        }}
+                      >
+                        <OptimizedImage
+                          className="w-full min-w-0"
+                          image={image}
+                          radius="sm"
+                        />
+                        {image.alt && (
+                          <p className="mt-1 w-full px-2 text-xs text-gray-600">
+                            {image.alt}
+                          </p>
+                        )}
+                        {image.source && (
+                          <p className="w-full truncate px-2 text-xs text-gray-400">
+                            {image.source}
+                          </p>
+                        )}
+                        {image.captureDate && (
+                          <p className="w-full px-2 text-xs text-gray-400">
+                            {format.dateTime(image.captureDate, {
+                              dateStyle: 'short',
+                            })}
+                          </p>
+                        )}
+                      </Radio>
+                    ))}
+                  </RadioGroup>
+                ) : (
+                  <Button
+                    onPress={() => {
+                      setShowImages(true)
+                      refetch()
+                    }}
+                  >
+                    {t('change-image.show-images')}
+                  </Button>
+                )}
               </ModalBody>
 
               <ModalFooter>
