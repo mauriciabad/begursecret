@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import type { FC } from 'react'
 import { LocaleRouteParams, parseLocale } from '~/i18n'
+import { redirect } from '~/navigation'
 import { getTrpc } from '~/server/get-server-thing'
 import { RouteForm } from '../_components/route-form'
 
@@ -33,12 +34,12 @@ const AdminEditRoutePage: FC<PageParams> = async ({ params }) => {
     locale: null,
   })
 
+  if (!route) redirect('/admin/routes/new')
+
   return (
-    <>
-      <main className="mx-auto min-h-screen max-w-7xl p-4 sm:py-8 lg:py-12">
-        <RouteForm route={route} />
-      </main>
-    </>
+    <main className="mx-auto min-h-screen max-w-7xl p-4 sm:py-8 lg:py-12">
+      <RouteForm route={route} />
+    </main>
   )
 }
 
