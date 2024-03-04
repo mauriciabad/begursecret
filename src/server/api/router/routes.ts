@@ -31,6 +31,7 @@ const getRoute = flattenTranslationsOnExecute(
         where: (route, { eq }) => eq(route.id, sql.placeholder('id')),
         with: {
           mainImage: true,
+          externalLinks: withTranslations({}),
           categories: {
             columns: {},
             with: {

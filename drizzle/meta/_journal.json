@@ -169,6 +169,13 @@
       "when": 1709578455223,
       "tag": "0023_melodic_dragon_man",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "5",
+      "when": 1709580341555,
+      "tag": "0024_confused_the_liberteens",
+      "breakpoints": true
     }
   ]
 }

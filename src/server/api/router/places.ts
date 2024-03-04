@@ -122,6 +122,7 @@ const getPlace = flattenTranslationsOnExecute(
         where: (place, { eq }) => eq(place.id, sql.placeholder('id')),
         with: {
           mainImage: true,
+          externalLinks: withTranslations({}),
           categories: {
             columns: {},
             with: {
