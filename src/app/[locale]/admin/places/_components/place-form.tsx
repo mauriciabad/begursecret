@@ -5,6 +5,7 @@ import { Input, Textarea } from '@nextui-org/input'
 import { useTranslations } from 'next-intl'
 import { FC, useState } from 'react'
 import { Controller } from 'react-hook-form'
+import { ExternalLinksEditor } from '~/components/admin-only/external-links-editor'
 import { FeaturesEditor } from '~/components/admin-only/features-editor'
 import { SelectPlaceCategory } from '~/components/admin-only/select-place-category'
 import { MarkdownEditor } from '~/components/generic/markdown-editor'
@@ -58,6 +59,7 @@ export const PlaceForm: FC<{
           mainImageId: place.mainImage?.id ?? undefined,
           content: place.content ?? undefined,
           features: place.features,
+          externalLinks: place.externalLinks,
         }
       : {
           name: undefined,
@@ -69,6 +71,7 @@ export const PlaceForm: FC<{
           mainImageId: undefined,
           content: undefined,
           features: {},
+          externalLinks: [],
         },
   })
 
@@ -261,6 +264,8 @@ export const PlaceForm: FC<{
         </div>
 
         <FeaturesEditor label={t('labels.features')} />
+
+        <ExternalLinksEditor label={t('labels.externalLinks')} />
 
         <div className="sticky bottom-4 z-10 mt-8 flex items-center justify-start gap-4">
           <SafeSubmitButton color="primary" size="lg" />

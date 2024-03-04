@@ -2,6 +2,7 @@ import { createInsertSchema } from 'drizzle-zod'
 import { z } from 'zod'
 import { translatableLocales } from '~/i18n'
 import { features } from '~/server/db/schema'
+import { externalLinkSchema } from './externalLink'
 import { numericIdSchema } from './shared'
 
 export const listPlacesSchema = z.object({
@@ -51,6 +52,7 @@ export const createPlaceSchema = z.object({
   mainImageId: z.number().int().optional().nullable(),
   content: z.string().optional().nullable(),
   features: createInsertSchema(features),
+  externalLinks: z.array(externalLinkSchema),
 })
 
 export const editPlaceSchema = createPlaceSchema.extend({

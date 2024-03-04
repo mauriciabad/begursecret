@@ -14,6 +14,7 @@ import {
 } from '~/schemas/routes'
 import { db } from '~/server/db/db'
 import {
+  externalLinks,
   features,
   routeCategories,
   routes,
@@ -107,6 +108,7 @@ const getRoute = flattenTranslationsOnExecute(
         where: (route, { eq }) => eq(route.id, sql.placeholder('id')),
         with: {
           mainImage: true,
+          externalLinks: withTranslations({}),
           categories: {
             columns: {},
             with: {
@@ -181,6 +183,15 @@ export const routesAdminRouter = router({
           )
         }
 
+        if (input.externalLinks.length > 0) {
+          await tx.insert(externalLinks).values(
+            input.externalLinks.map((externalLink) => ({
+              routeId: newRouteId,
+              ...externalLink,
+            }))
+          )
+        }
+
         return newRouteId
       })
     }),
@@ -217,15 +228,25 @@ export const routesAdminRouter = router({
             featuresId: featuresId,
           })
           .where(eq(routes.id, routeId))
+
         await tx
           .delete(routesToRouteCategories)
           .where(eq(routesToRouteCategories.routeId, routeId))
-
         if (input.categories.length > 0) {
           await tx.insert(routesToRouteCategories).values(
             input.categories.map((categoryId) => ({
               routeId: routeId,
               categoryId: categoryId,
+            }))
+          )
+        }
+
+        await tx.delete(externalLinks).where(eq(externalLinks.routeId, routeId))
+        if (input.externalLinks.length > 0) {
+          await tx.insert(externalLinks).values(
+            input.externalLinks.map((externalLink) => ({
+              routeId: routeId,
+              ...externalLink,
             }))
           )
         }

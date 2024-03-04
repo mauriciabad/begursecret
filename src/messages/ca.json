@@ -8,7 +8,8 @@
         "notes": "Notes",
         "other": "Altres",
         "general": "General",
-        "requirements": "Requisits"
+        "requirements": "Requisits",
+        "links": "Enllaços"
       },
       "labels": {
         "amountOfPeople": "Quantitat de gent",
@@ -278,7 +279,14 @@
       "content": "Contingut",
       "features": "Característiques",
       "path": "Ruta",
-      "importance": "Importància"
+      "importance": "Importància",
+      "externalLinks": "Enllaços externs"
+    },
+    "externalLinks": {
+      "url": "URL",
+      "title": "Títol",
+      "isOfficialWebsite": "Pàgina oficial",
+      "addLink": "Afegir enllaç"
     },
     "add-new": "Crear nou",
     "edit": "Editar",

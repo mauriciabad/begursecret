@@ -70,7 +70,11 @@ export const RouteDetails: FC<{
         className="mt-4"
       />
 
-      <FeaturesBlock features={route.features} className="mt-4" />
+      <FeaturesBlock
+        features={route.features}
+        externalLinks={route.externalLinks}
+        className="mt-4"
+      />
 
       <IconTitle icon={IconBooks} title={t('detailed-info')} className="mt-4" />
       {route.content ? (

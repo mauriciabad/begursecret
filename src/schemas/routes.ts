@@ -6,6 +6,7 @@ import {
 } from '~/helpers/spatial-data/multi-line'
 import { translatableLocales } from '~/i18n'
 import { features } from '~/server/db/schema'
+import { externalLinkSchema } from './externalLink'
 import { numericIdSchema } from './shared'
 
 export const listRoutesSchema = z.object({
@@ -41,6 +42,7 @@ export const createRouteSchema = z.object({
   importance: z.coerce.number().gt(0).optional().nullable(),
   content: z.string().optional().nullable(),
   features: createInsertSchema(features),
+  externalLinks: z.array(externalLinkSchema),
 })
 
 export const editRouteSchema = createRouteSchema.extend({

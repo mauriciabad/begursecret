@@ -12,6 +12,7 @@ import { multiLineType } from '~/server/helpers/spatial-data/multi-line'
 import { mysqlTableWithTranslations } from '../../helpers/translations/db-tables'
 import { colorNames, iconNames } from '../constants/shared'
 import { gender } from '../utilities'
+import { externalLinks } from './externalLinks'
 import { features } from './features'
 import { images } from './images'
 import { places } from './places'
@@ -54,6 +55,7 @@ export const routesRelations = relations(routes, (r) => ({
   categories: r.many(routesToRouteCategories, {
     relationName: 'secondaryCategories',
   }),
+  externalLinks: r.many(externalLinks),
   features: r.one(features, {
     fields: [routes.featuresId],
     references: [features.id],

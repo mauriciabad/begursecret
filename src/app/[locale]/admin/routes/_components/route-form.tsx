@@ -7,6 +7,7 @@ import { IconDownload, IconExternalLink } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC, useState } from 'react'
 import { Controller } from 'react-hook-form'
+import { ExternalLinksEditor } from '~/components/admin-only/external-links-editor'
 import { FeaturesEditor } from '~/components/admin-only/features-editor'
 import { SelectRouteCategory } from '~/components/admin-only/select-route-category'
 import { MarkdownEditor } from '~/components/generic/markdown-editor'
@@ -268,6 +269,8 @@ export const RouteForm: FC<{
         </div>
 
         <FeaturesEditor label={t('labels.features')} />
+
+        <ExternalLinksEditor label={t('labels.externalLinks')} />
 
         <div className="sticky bottom-4 z-10 mt-8 flex items-center justify-start gap-4">
           <SafeSubmitButton color="primary" size="lg" />

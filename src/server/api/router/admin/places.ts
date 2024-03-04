@@ -11,6 +11,7 @@ import {
 } from '~/schemas/places'
 import { db } from '~/server/db/db'
 import {
+  externalLinks,
   features,
   placeCategories,
   places,
@@ -104,6 +105,7 @@ const getPlace = flattenTranslationsOnExecute(
         where: (place, { eq }) => eq(place.id, sql.placeholder('id')),
         with: {
           mainImage: true,
+          externalLinks: withTranslations({}),
           categories: {
             columns: {},
             with: {
@@ -179,6 +181,15 @@ export const placesAdminRouter = router({
           )
         }
 
+        if (input.externalLinks.length > 0) {
+          await tx.insert(externalLinks).values(
+            input.externalLinks.map((externalLink) => ({
+              placeId: newPlaceId,
+              ...externalLink,
+            }))
+          )
+        }
+
         return newPlaceId
       })
     }),
@@ -220,12 +231,21 @@ export const placesAdminRouter = router({
         await tx
           .delete(placesToPlaceCategories)
           .where(eq(placesToPlaceCategories.placeId, placeId))
-
         if (input.categories.length > 0) {
           await tx.insert(placesToPlaceCategories).values(
             input.categories.map((categoryId) => ({
               placeId: placeId,
               categoryId: categoryId,
+            }))
+          )
+        }
+
+        await tx.delete(externalLinks).where(eq(externalLinks.placeId, placeId))
+        if (input.externalLinks.length > 0) {
+          await tx.insert(externalLinks).values(
+            input.externalLinks.map((externalLink) => ({
+              placeId: placeId,
+              ...externalLink,
             }))
           )
         }

@@ -12,6 +12,7 @@ import { pointType } from '../../helpers/spatial-data/point'
 import { mysqlTableWithTranslations } from '../../helpers/translations/db-tables'
 import { colorNames, iconNames } from '../constants/shared'
 import { gender } from '../utilities'
+import { externalLinks } from './externalLinks'
 import { features } from './features'
 import { images } from './images'
 import { placeListToPlace } from './placeLists'
@@ -61,6 +62,7 @@ export const placesRelations = relations(places, (r) => ({
     fields: [places.featuresId],
     references: [features.id],
   }),
+  externalLinks: r.many(externalLinks),
   placeLists: r.many(placeListToPlace),
   verificationRequirements: r.one(verificationRequirements, {
     fields: [places.verificationRequirementsId],
