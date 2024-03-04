@@ -279,7 +279,14 @@
       "content": "Content",
       "features": "Features",
       "path": "Path",
-      "importance": "Importance"
+      "importance": "Importance",
+      "externalLinks": "External links"
+    },
+    "externalLinks": {
+      "url": "URL",
+      "title": "Title",
+      "isOfficialWebsite": "Is official website",
+      "addLink": "Add link"
     },
     "add-new": "Add new",
     "edit": "Edit",
