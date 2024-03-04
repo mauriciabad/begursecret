@@ -3,7 +3,7 @@ import { Image } from '@nextui-org/image'
 import { Tooltip } from '@nextui-org/tooltip'
 import { Icon, IconInfoCircle, IconWorld } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
-import { FC, PropsWithChildren } from 'react'
+import { FC, PropsWithChildren, useMemo } from 'react'
 import { MarkdownContent } from '~/components/generic/markdown-content'
 import { cn } from '~/helpers/cn'
 import { IntlMessageKeys } from '~/helpers/types'
@@ -34,6 +34,15 @@ export const FeaturesBlock: FC<{
 
   const thereIsJustOneGroup =
     Object.values(allValuesNullInGroup).filter((v) => !v).length === 1
+
+  const sortedExternalLinks = useMemo(
+    () =>
+      externalLinks?.sort((a, b) => {
+        if (a.isOfficialWebsite === b.isOfficialWebsite) return 0
+        return a.isOfficialWebsite ? -1 : 1
+      }),
+    [externalLinks]
+  )
 
   return (
     <Card className={cn('bg-cream', className)} radius="lg" shadow="none">
@@ -160,9 +169,9 @@ export const FeaturesBlock: FC<{
               </FeatureList>
             )
         )}
-        {externalLinks && externalLinks.length > 0 && (
+        {sortedExternalLinks && sortedExternalLinks.length > 0 && (
           <FeatureList title={t('titles.links')} variant="small-items">
-            {externalLinks.map((link) => (
+            {sortedExternalLinks.map((link) => (
               <LinkFeatureItem key={link.id} link={link} />
             ))}
           </FeatureList>
@@ -333,8 +342,7 @@ const FeatureList: FC<
         className={cn('grid gap-2 pl-1', {
           'xs2:grid-cols-2': variant === 'items',
           'sm:grid-cols-2': variant === 'blocks',
-          'xs2:grid-cols-2 xs:grid-cols-3 sm:grid-cols-4':
-            variant === 'small-items',
+          'xs2:grid-cols-2 xs:grid-cols-3': variant === 'small-items',
         })}
       >
         {children}
