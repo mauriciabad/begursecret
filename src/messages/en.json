@@ -8,7 +8,8 @@
         "notes": "Notes",
         "other": "Other",
         "general": "General",
-        "requirements": "Requirements"
+        "requirements": "Requirements",
+        "links": "Links"
       },
       "labels": {
         "amountOfPeople": "Amount of people",

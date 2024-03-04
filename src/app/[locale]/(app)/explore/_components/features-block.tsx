@@ -1,11 +1,14 @@
 import { Card, CardBody } from '@nextui-org/card'
+import { Image } from '@nextui-org/image'
 import { Tooltip } from '@nextui-org/tooltip'
-import { Icon, IconInfoCircle } from '@tabler/icons-react'
+import { Icon, IconInfoCircle, IconWorld } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC, PropsWithChildren } from 'react'
 import { MarkdownContent } from '~/components/generic/markdown-content'
 import { cn } from '~/helpers/cn'
 import { IntlMessageKeys } from '~/helpers/types'
+import { Link } from '~/navigation'
+import { ExternalLink } from '~/server/db/constants/externalLinks'
 import { Features } from '~/server/db/constants/features'
 import {
   featureDisplayGroups,
@@ -15,11 +18,13 @@ import {
   nestedT,
   useFeatureDisplay,
 } from '~/server/db/constants/features-display-data'
+import { getLinkData } from './named-websites'
 
-export const FeaturesBlock: FC<{ features: Features; className?: string }> = ({
-  features,
-  className,
-}) => {
+export const FeaturesBlock: FC<{
+  features: Features
+  className?: string
+  externalLinks?: ExternalLink[]
+}> = ({ features, className, externalLinks }) => {
   const t = useTranslations('data.features')
 
   const { allValuesNull, allValuesNullInGroup, getMoreInfoContent } =
@@ -155,6 +160,13 @@ export const FeaturesBlock: FC<{ features: Features; className?: string }> = ({
               </FeatureList>
             )
         )}
+        {externalLinks && externalLinks.length > 0 && (
+          <FeatureList title={t('titles.links')} variant="small-items">
+            {externalLinks.map((link) => (
+              <LinkFeatureItem key={link.id} link={link} />
+            ))}
+          </FeatureList>
+        )}
       </CardBody>
     </Card>
   )
@@ -162,12 +174,72 @@ export const FeaturesBlock: FC<{ features: Features; className?: string }> = ({
 
 const FeatureItem: FC<{
   icon: Icon
+  favicon?: string
+  href?: string
   text: string
   moreInfo?: string | null
   as?: 'li' | 'div'
-}> = ({ icon, text, moreInfo, as: htmlAs = 'div' }) => {
+  classNames?: {
+    text?: string
+  }
+}> = ({
+  icon,
+  text,
+  moreInfo,
+  as: htmlAs = 'div',
+  favicon,
+  classNames,
+  href,
+}) => {
   const Icon = icon
   const Component = htmlAs
+
+  const content = (
+    <>
+      {favicon ? (
+        <Image
+          src={favicon}
+          alt=""
+          width={18}
+          height={18}
+          removeWrapper
+          className="aspect-square object-contain"
+          radius="none"
+        />
+      ) : (
+        <Icon size={18} className="shrink-0 text-stone-800" />
+      )}
+
+      <span
+        className={cn(
+          'text-sm font-medium text-stone-800 decoration-stone-400',
+          href && 'underline',
+          classNames?.text
+        )}
+      >
+        {text}
+
+        {moreInfo && (
+          <IconInfoCircle
+            size={16}
+            className="ml-1 box-content inline-block shrink-0 text-stone-400"
+          />
+        )}
+      </span>
+    </>
+  )
+
+  const item = (
+    <Component className="flex items-start gap-2">
+      {href ? (
+        <Link className="contents" href={href}>
+          {content}
+        </Link>
+      ) : (
+        content
+      )}
+    </Component>
+  )
 
   return (
     <>
@@ -177,22 +249,10 @@ const FeatureItem: FC<{
             <MarkdownContent className="text-stone-800" content={moreInfo} />
           }
         >
-          <Component className="flex items-start gap-2">
-            <Icon size={18} className="shrink-0 text-stone-800" />
-            <span className="text-sm font-medium text-stone-800">
-              {text}
-              <IconInfoCircle
-                size={16}
-                className="ml-1 box-content inline-block shrink-0 text-stone-400"
-              />
-            </span>
-          </Component>
+          {item}
         </Tooltip>
       ) : (
-        <Component className="flex items-start gap-2">
-          <Icon size={18} className="shrink-0 text-stone-800" />
-          <span className="text-sm font-medium text-stone-800">{text}</span>
-        </Component>
+        item
       )}
     </>
   )
@@ -241,11 +301,27 @@ const BooleanFeatureItem: FC<{
     </>
   )
 }
+const LinkFeatureItem: FC<{
+  link: ExternalLink
+}> = ({ link }) => {
+  const { name, favicon } = getLinkData(link)
+  return (
+    <FeatureItem
+      href={link.url}
+      icon={IconWorld}
+      text={name}
+      favicon={favicon}
+      classNames={{
+        text: 'truncate',
+      }}
+    />
+  )
+}
 
 const FeatureList: FC<
   PropsWithChildren<{
     title: string
-    variant?: 'items' | 'blocks'
+    variant?: 'items' | 'blocks' | 'small-items'
   }>
 > = ({ title, children, variant }) => {
   return (
@@ -257,6 +333,8 @@ const FeatureList: FC<
         className={cn('grid gap-2 pl-1', {
           'xs2:grid-cols-2': variant === 'items',
           'sm:grid-cols-2': variant === 'blocks',
+          'xs2:grid-cols-2 xs:grid-cols-3 sm:grid-cols-4':
+            variant === 'small-items',
         })}
       >
         {children}

@@ -84,7 +84,11 @@ export const PlaceDetails: FC<{
         className="mt-4"
       />
 
-      <FeaturesBlock features={place.features} className="mt-4" />
+      <FeaturesBlock
+        features={place.features}
+        externalLinks={place.externalLinks}
+        className="mt-4"
+      />
 
       <IconTitle icon={IconBooks} title={t('detailed-info')} className="mt-4" />
       {place.content ? (
