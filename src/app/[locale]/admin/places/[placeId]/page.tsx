@@ -37,9 +37,9 @@ const AdminEditPlacePage: FC<PageParams> = async ({ params }) => {
   if (!place) redirect('/admin/places/new')
 
   return (
-      <main className="mx-auto min-h-screen max-w-7xl p-4 sm:py-8 lg:py-12">
-        <PlaceForm place={place} />
-      </main>
+    <main className="mx-auto min-h-screen max-w-7xl p-4 sm:py-8 lg:py-12">
+      <PlaceForm place={place} />
+    </main>
   )
 }
 
