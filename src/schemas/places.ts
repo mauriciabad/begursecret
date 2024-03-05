@@ -1,6 +1,6 @@
 import { createInsertSchema } from 'drizzle-zod'
 import { z } from 'zod'
-import { googleMapsIdSchema } from '~/app/[locale]/admin/places/_components/googleMapsId'
+import { googleMapsIdSchema } from '~/helpers/data/google-maps-id'
 import { translatableLocales } from '~/i18n'
 import { features } from '~/server/db/schema'
 import { externalLinkSchema } from './externalLink'

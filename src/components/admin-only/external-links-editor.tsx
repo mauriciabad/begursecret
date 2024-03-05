@@ -10,8 +10,8 @@ import {
   useFormContext,
   useWatch,
 } from 'react-hook-form'
-import { makeGoogleMapsUrl } from '~/app/[locale]/admin/places/_components/googleMapsId'
 import { cn } from '~/helpers/cn'
+import { makeGoogleMapsUrl } from '~/helpers/data/google-maps-id'
 import { Link } from '~/navigation'
 import { CardInputContainer } from '../generic/card-input-container'
 

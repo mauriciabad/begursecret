@@ -23,7 +23,10 @@ import { Link, useRouter } from '~/navigation'
 import { createPlaceSchema } from '~/schemas/places'
 import { ApiRouterOutput } from '~/server/api/router'
 import { trpc } from '~/trpc'
-import { getGoogleMapsIdFromUrl, makeGoogleMapsUrl } from './googleMapsId'
+import {
+  getGoogleMapsIdFromUrl,
+  makeGoogleMapsUrl,
+} from '../../../../../helpers/data/google-maps-id'
 import { UploadPlaceImageModal } from './upload-place-image-modal'
 
 type Place = NonNullable<ApiRouterOutput['admin']['places']['get']>
