@@ -8,6 +8,7 @@ import {
 } from 'drizzle-orm/mysql-core'
 import { mysqlTableWithTranslations } from '../../helpers/translations/db-tables'
 import { dbColor, dbGender, dbIcon } from '../utilities'
+import { placeCategoriesToPlaceCategoryGroups } from './placeCategoryGroups'
 import { places } from './places'
 
 export const {
@@ -37,6 +38,7 @@ export const placeCategoriesRelations = relations(placeCategories, (r) => ({
   places: r.many(placesToPlaceCategories, {
     relationName: 'secondaryCategories',
   }),
+  categoryGroups: r.many(placeCategoriesToPlaceCategoryGroups),
 }))
 
 export const placesToPlaceCategories = mysqlTable(

@@ -50,6 +50,7 @@ export const iconNames = [
   'chart-bubble',
   'arrow-fork',
   'map-pin',
+  'badge-wc',
 ] as const
 export type IconName = (typeof iconNames)[number]
 

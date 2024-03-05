@@ -3,6 +3,7 @@ import {
   IconAnchor,
   IconArrowFork,
   IconArrowsDownUp,
+  IconBadgeWc,
   IconBeach,
   IconBuildingBridge2,
   IconBuildingCastle,
@@ -105,6 +106,7 @@ const iconsByIconName = {
   'chart-bubble': IconChartBubble,
   'arrow-fork': IconArrowFork,
   'map-pin': IconMapPin,
+  'badge-wc': IconBadgeWc,
 } as const satisfies Record<IconName, Icon>
 
 export const CategoryIcon: FC<
