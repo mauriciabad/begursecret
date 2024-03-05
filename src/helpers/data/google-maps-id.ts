@@ -14,10 +14,10 @@ export function makeGoogleMapsUrl<T extends string>(
 
 export const getGoogleMapsIdFromUrl = (url?: string | null) => {
   return url?.match(
-    /^\s*(https?:\/\/)?maps.app.goo.gl\/(?<id>[a-zA-Z0-9_\-]+)\s*$/
+    /^\s*(https?:\/\/)?maps.app.goo.gl\/(?<id>[a-zA-Z0-9_-]+)\s*$/
   )?.groups?.id
 }
 
 export const googleMapsIdSchema = z
   .string()
-  .regex(/^[a-zA-Z0-9_\-]+$/, 'Invalid Google Maps ID')
+  .regex(/^[a-zA-Z0-9_-]+$/, 'Invalid Google Maps ID')
