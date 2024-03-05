@@ -1,5 +1,6 @@
 import { createInsertSchema } from 'drizzle-zod'
 import { z } from 'zod'
+import { googleMapsIdSchema } from '~/app/[locale]/admin/places/_components/googleMapsId'
 import { translatableLocales } from '~/i18n'
 import { features } from '~/server/db/schema'
 import { externalLinkSchema } from './externalLink'
@@ -26,6 +27,7 @@ export const listCategoriesSchema = z.object({
 export const createPlaceSchema = z.object({
   name: z.string().min(3),
   description: z.string().optional().nullable(),
+  googleMapsId: googleMapsIdSchema.optional().nullable(),
   mainCategory: z.coerce.number().positive('Required').int(),
   categories: z
     .string()

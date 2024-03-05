@@ -10,6 +10,7 @@ import {
   useFormContext,
   useWatch,
 } from 'react-hook-form'
+import { makeGoogleMapsUrl } from '~/app/[locale]/admin/places/_components/googleMapsId'
 import { cn } from '~/helpers/cn'
 import { Link } from '~/navigation'
 import { CardInputContainer } from '../generic/card-input-container'
@@ -28,6 +29,11 @@ export const ExternalLinksEditor: FC<{
     name: 'externalLinks',
   })
 
+  const googleMapsId = useWatch({
+    name: 'googleMapsId',
+    control: form.control,
+  })
+
   return (
     <CardInputContainer
       className={cn('mx-auto max-w-lg', className)}
@@ -35,6 +41,30 @@ export const ExternalLinksEditor: FC<{
       isInvalid={!!error}
       label={label}
     >
+      {googleMapsId && (
+        <div className="flex items-center gap-4">
+          <Input
+            isInvalid={!!error}
+            errorMessage={error?.message}
+            value={makeGoogleMapsUrl(googleMapsId)}
+            label={t('labels.googleMapsId')}
+            type="url"
+            isDisabled
+          />
+
+          <Button
+            as={Link}
+            href={makeGoogleMapsUrl(googleMapsId)}
+            target="_blank"
+            isIconOnly
+            size="lg"
+            isDisabled={!googleMapsId}
+          >
+            <IconExternalLink />
+          </Button>
+        </div>
+      )}
+
       {fields.map((field, index) => (
         <ExternalLinkItem
           key={field.id}
@@ -42,6 +72,7 @@ export const ExternalLinksEditor: FC<{
           index={index}
           field={field}
           onRemove={() => remove(index)}
+          showDivider={!!googleMapsId || index > 0}
         />
       ))}
       <Button
@@ -59,8 +90,9 @@ const ExternalLinkItem: FC<{
   control: Control
   index: number
   field: FieldValues
+  showDivider?: boolean
   onRemove: () => void
-}> = ({ control, index, field, onRemove }) => {
+}> = ({ control, index, field, onRemove, showDivider }) => {
   const t = useTranslations('admin-places-and-routes')
 
   const value = useWatch({
@@ -70,7 +102,7 @@ const ExternalLinkItem: FC<{
 
   return (
     <div key={field.id} className="space-y-4">
-      {index !== 0 && <Divider />}
+      {showDivider && <Divider />}
 
       <div className="flex gap-4">
         <Controller

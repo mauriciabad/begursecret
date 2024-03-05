@@ -87,6 +87,7 @@ export const PlaceDetails: FC<{
       <FeaturesBlock
         features={place.features}
         externalLinks={place.externalLinks}
+        googleMapsId={place.googleMapsId}
         className="mt-4"
       />
 

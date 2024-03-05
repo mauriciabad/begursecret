@@ -4,6 +4,7 @@ import { Tooltip } from '@nextui-org/tooltip'
 import { Icon, IconInfoCircle, IconWorld } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC, PropsWithChildren, useMemo } from 'react'
+import { makeGoogleMapsUrl } from '~/app/[locale]/admin/places/_components/googleMapsId'
 import { MarkdownContent } from '~/components/generic/markdown-content'
 import { cn } from '~/helpers/cn'
 import { IntlMessageKeys } from '~/helpers/types'
@@ -24,7 +25,8 @@ export const FeaturesBlock: FC<{
   features: Features
   className?: string
   externalLinks?: ExternalLink[]
-}> = ({ features, className, externalLinks }) => {
+  googleMapsId?: string | null
+}> = ({ features, className, externalLinks, googleMapsId }) => {
   const t = useTranslations('data.features')
 
   const { allValuesNull, allValuesNullInGroup, getMoreInfoContent } =
@@ -174,6 +176,14 @@ export const FeaturesBlock: FC<{
             {sortedExternalLinks.map((link) => (
               <LinkFeatureItem key={link.id} link={link} />
             ))}
+            {googleMapsId && (
+              <LinkFeatureItem
+                link={{
+                  url: makeGoogleMapsUrl(googleMapsId),
+                  title: null,
+                }}
+              />
+            )}
           </FeatureList>
         )}
       </CardBody>
@@ -311,7 +321,7 @@ const BooleanFeatureItem: FC<{
   )
 }
 const LinkFeatureItem: FC<{
-  link: ExternalLink
+  link: Pick<ExternalLink, 'title' | 'url'>
 }> = ({ link }) => {
   const { name, favicon } = getLinkData(link)
   return (

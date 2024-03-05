@@ -280,7 +280,8 @@
       "features": "Features",
       "path": "Path",
       "importance": "Importance",
-      "externalLinks": "External links"
+      "externalLinks": "External links",
+      "googleMapsId": "Google Maps ID"
     },
     "externalLinks": {
       "url": "URL",

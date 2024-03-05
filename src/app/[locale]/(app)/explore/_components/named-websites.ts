@@ -1,5 +1,4 @@
 import moize from 'moize'
-import { ExternalLink } from '~/server/db/constants/externalLinks'
 
 const getFaviconFromUrl = (url: string, size: number = 32): string => {
   const favicon = new URL('https://t2.gstatic.com/faviconV2')
@@ -57,26 +56,28 @@ type LinkData = {
   favicon: string
 }
 
-export const getLinkData = moize((link: ExternalLink): LinkData => {
-  const url = new URL(link.url)
-  const hostname = url.hostname.replace(/^www\./, '')
+export const getLinkData = moize(
+  (link: { title?: string | null; url: string }): LinkData => {
+    const url = new URL(link.url)
+    const hostname = url.hostname.replace(/^www\./, '')
 
-  const namedWebsite = namedWebsites.find((nw) =>
-    nw.regex.some((r) => r.test(hostname))
-  )
+    const namedWebsite = namedWebsites.find((nw) =>
+      nw.regex.some((r) => r.test(hostname))
+    )
 
-  if (namedWebsite) {
+    if (namedWebsite) {
+      return {
+        name: link.title || namedWebsite.name,
+        favicon:
+          'favicon' in namedWebsite
+            ? namedWebsite.favicon
+            : getFaviconFromUrl(link.url),
+      }
+    }
+
     return {
-      name: namedWebsite.name,
-      favicon:
-        'favicon' in namedWebsite
-          ? namedWebsite.favicon
-          : getFaviconFromUrl(link.url),
+      name: link.title || hostname,
+      favicon: getFaviconFromUrl(link.url),
     }
   }
-
-  return {
-    name: hostname,
-    favicon: getFaviconFromUrl(link.url),
-  }
-})
+)
