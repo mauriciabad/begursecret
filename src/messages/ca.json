@@ -280,7 +280,8 @@
       "features": "Característiques",
       "path": "Ruta",
       "importance": "Importància",
-      "externalLinks": "Enllaços externs"
+      "externalLinks": "Enllaços externs",
+      "googleMapsId": "Google Maps ID"
     },
     "externalLinks": {
       "url": "URL",
@@ -349,7 +350,8 @@
     "no-more-info": "No hi ha més informació disponible.",
 
     "related-missions": "Missions relacionades",
-    "detailed-info": "Informació detallada"
+    "detailed-info": "Informació detallada",
+    "maps-app": "App de mapes"
   },
   "missions": {
     "meta": {

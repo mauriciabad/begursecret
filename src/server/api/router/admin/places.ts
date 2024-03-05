@@ -98,6 +98,7 @@ const getPlace = flattenTranslationsOnExecute(
           description: true,
           content: true,
           importance: true,
+          googleMapsId: true,
         },
         extras: {
           location: selectPoint('location', places.location),
@@ -162,6 +163,7 @@ export const placesAdminRouter = router({
         const insertPlaceResult = await tx.insert(places).values({
           name: input.name,
           description: input.description,
+          googleMapsId: input.googleMapsId,
           mainCategoryId: input.mainCategory,
           mainImageId: input.mainImageId,
           location: pointToString(input.location),
@@ -219,6 +221,7 @@ export const placesAdminRouter = router({
           .set({
             name: input.name,
             description: input.description,
+            googleMapsId: input.googleMapsId,
             mainCategoryId: input.mainCategory,
             mainImageId: input.mainImageId,
             location: pointToString(input.location),

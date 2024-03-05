@@ -29,6 +29,7 @@ export const {
   name: 'place',
   normalColumns: {
     mainImageId: int('mainImageId'),
+    googleMapsId: text('googleMapsId'),
     location: pointType('location').notNull(),
     mainCategoryId: int('mainCategoryId').notNull(),
     featuresId: int('featuresId').notNull(),

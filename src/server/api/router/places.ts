@@ -115,6 +115,7 @@ const getPlace = flattenTranslationsOnExecute(
           description: true,
           content: true,
           importance: true,
+          googleMapsId: true,
         },
         extras: {
           location: selectPoint('location', places.location),

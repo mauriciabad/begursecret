@@ -280,7 +280,8 @@
       "features": "Features",
       "path": "Path",
       "importance": "Importance",
-      "externalLinks": "External links"
+      "externalLinks": "External links",
+      "googleMapsId": "Google Maps ID"
     },
     "externalLinks": {
       "url": "URL",
@@ -348,7 +349,8 @@
     "categories": "Categories",
     "no-more-info": "No more information avilable.",
     "related-missions": "Related missions",
-    "detailed-info": "Detailed info"
+    "detailed-info": "Detailed info",
+    "maps-app": "Maps app"
   },
   "missions": {
     "meta": {

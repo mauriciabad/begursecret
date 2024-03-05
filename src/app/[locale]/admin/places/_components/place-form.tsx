@@ -2,6 +2,8 @@
 
 import { Checkbox } from '@nextui-org/checkbox'
 import { Input, Textarea } from '@nextui-org/input'
+import { Button } from '@nextui-org/react'
+import { IconExternalLink } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC, useState } from 'react'
 import { Controller } from 'react-hook-form'
@@ -17,10 +19,14 @@ import {
 import { MapPointSelector } from '~/components/map/map-elements/map-point-selector'
 import { cn } from '~/helpers/cn'
 import { revalidateAll } from '~/helpers/revalidate-all'
-import { useRouter } from '~/navigation'
+import { Link, useRouter } from '~/navigation'
 import { createPlaceSchema } from '~/schemas/places'
 import { ApiRouterOutput } from '~/server/api/router'
 import { trpc } from '~/trpc'
+import {
+  getGoogleMapsIdFromUrl,
+  makeGoogleMapsUrl,
+} from '../../../../../helpers/data/google-maps-id'
 import { UploadPlaceImageModal } from './upload-place-image-modal'
 
 type Place = NonNullable<ApiRouterOutput['admin']['places']['get']>
@@ -60,6 +66,7 @@ export const PlaceForm: FC<{
           content: place.content ?? undefined,
           features: place.features,
           externalLinks: place.externalLinks,
+          googleMapsId: place.googleMapsId,
         }
       : {
           name: undefined,
@@ -200,6 +207,43 @@ export const PlaceForm: FC<{
                 selectionMode="multiple"
                 className="sm:col-span-2 lg:col-span-3"
               />
+            )}
+          />
+        </div>
+
+        <div className="flex items-center gap-4">
+          <Controller
+            name="googleMapsId"
+            control={form.control}
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => (
+              <>
+                <Input
+                  isInvalid={!!error}
+                  errorMessage={error?.message}
+                  onBlur={() => {
+                    const idFromUrl = getGoogleMapsIdFromUrl(value)
+                    if (idFromUrl) onChange({ target: { value: idFromUrl } })
+
+                    onBlur()
+                  }}
+                  onChange={onChange}
+                  value={value ?? undefined}
+                  label={t('labels.googleMapsId')}
+                />
+                <Button
+                  as={Link}
+                  href={makeGoogleMapsUrl(value) ?? ''}
+                  target="_blank"
+                  isIconOnly
+                  size="lg"
+                  isDisabled={!value}
+                >
+                  <IconExternalLink />
+                </Button>
+              </>
             )}
           />
         </div>
