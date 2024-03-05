@@ -235,7 +235,7 @@ export const PlaceForm: FC<{
                 />
                 <Button
                   as={Link}
-                  href={makeGoogleMapsUrl(value)}
+                  href={makeGoogleMapsUrl(value) ?? ''}
                   target="_blank"
                   isIconOnly
                   size="lg"

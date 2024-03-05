@@ -1,14 +1,14 @@
 import { z } from 'zod'
 
 export function makeGoogleMapsUrl<T extends string>(googleMapsId: T): T
-export function makeGoogleMapsUrl(googleMapsId: null | undefined): undefined
+export function makeGoogleMapsUrl(googleMapsId: null | undefined): null
 export function makeGoogleMapsUrl<T extends string>(
   googleMapsId: T | null | undefined
-): `https://maps.app.goo.gl/${T}` | undefined
+): `https://maps.app.goo.gl/${T}` | null
 export function makeGoogleMapsUrl<T extends string>(
   googleMapsId: T | null | undefined
-): `https://maps.app.goo.gl/${T}` | undefined {
-  if (googleMapsId === null || googleMapsId === undefined) return undefined
+): `https://maps.app.goo.gl/${T}` | null {
+  if (googleMapsId === null || googleMapsId === undefined) return null
   return `https://maps.app.goo.gl/${googleMapsId}`
 }
 
