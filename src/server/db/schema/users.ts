@@ -1,12 +1,12 @@
 import { relations } from 'drizzle-orm'
 import { int, mysqlTable, timestamp, varchar } from 'drizzle-orm/mysql-core'
 import { userRoles } from '../constants/users'
-import { userIdColumnType } from '../utilities'
+import { dbUserId } from '../utilities'
 import { placeLists } from './placeLists'
 import { verifications } from './verifications'
 
 export const users = mysqlTable('user', {
-  id: userIdColumnType('id').notNull().primaryKey(),
+  id: dbUserId('id').notNull().primaryKey(),
   name: varchar('name', { length: 255 }),
   hashedPassword: varchar('hashedPassword', { length: 255 }),
   email: varchar('email', { length: 255 }).unique().notNull(),

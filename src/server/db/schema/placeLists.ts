@@ -6,13 +6,13 @@ import {
   serial,
   timestamp,
 } from 'drizzle-orm/mysql-core'
-import { userIdColumnType } from '../utilities'
+import { dbUserId } from '../utilities'
 import { places } from './places'
 import { users } from './users'
 
 export const placeLists = mysqlTable('placeList', {
   id: serial('id').primaryKey(),
-  userId: userIdColumnType('userId').notNull(),
+  userId: dbUserId('userId').notNull(),
 })
 
 export const placeListToPlace = mysqlTable(
