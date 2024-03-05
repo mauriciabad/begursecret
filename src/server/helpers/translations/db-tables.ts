@@ -5,7 +5,7 @@ import {
   mysqlTable,
   serial,
 } from 'drizzle-orm/mysql-core'
-import { locale } from '../../db/utilities'
+import { dbLocale } from '../../db/utilities'
 
 /**
  * Creates tables for the translations and it's relations.
@@ -37,7 +37,7 @@ export function mysqlTableWithTranslations<
   const translationsTable = mysqlTable(`${name}_translation`, {
     id: serial('id').primaryKey(),
     ...typeDynamicKey(`${name}Id`, int(`${name}_id`).notNull()),
-    locale: locale('locale').notNull(),
+    locale: dbLocale('locale').notNull(),
     ...translatableColumns,
   })
   const translationsTableRelations = relations(

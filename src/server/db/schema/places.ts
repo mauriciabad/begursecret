@@ -1,20 +1,11 @@
 import { relations } from 'drizzle-orm'
-import {
-  boolean,
-  double,
-  int,
-  mysqlTable,
-  primaryKey,
-  text,
-  tinytext,
-} from 'drizzle-orm/mysql-core'
+import { double, int, text, tinytext } from 'drizzle-orm/mysql-core'
 import { pointType } from '../../helpers/spatial-data/point'
 import { mysqlTableWithTranslations } from '../../helpers/translations/db-tables'
-import { colorNames, iconNames } from '../constants/shared'
-import { gender } from '../utilities'
 import { externalLinks } from './externalLinks'
 import { features } from './features'
 import { images } from './images'
+import { placeCategories, placesToPlaceCategories } from './placeCategories'
 import { placeListToPlace } from './placeLists'
 import { routesToPlaces } from './routes'
 import { verificationRequirements } from './verificationRequirements'
@@ -71,62 +62,3 @@ export const placesRelations = relations(places, (r) => ({
   }),
   verifications: r.many(verifications),
 }))
-
-export const {
-  normalTable: placeCategories,
-  translationsTable: placeCategoriesTranslations,
-  makeRelationsWithTranslations: makePlaceCategoryRelations,
-  translationsTableRelations: placeCategoriesTranslationsRelations,
-} = mysqlTableWithTranslations({
-  name: 'placeCategory',
-  normalColumns: {
-    icon: tinytext('icon', { enum: iconNames }).notNull(),
-    color: tinytext('color', { enum: colorNames }).notNull(),
-    hasVisitMission: boolean('hasVisitMission').notNull().default(true),
-    order: int('order'),
-  },
-  translatableColumns: {
-    name: tinytext('name').notNull(),
-    namePlural: tinytext('namePlural').notNull(),
-    nameGender: gender('nameGender'),
-  },
-})
-
-export const placeCategoriesRelations = relations(placeCategories, (r) => ({
-  ...makePlaceCategoryRelations(r),
-
-  mainPlaces: r.many(places, { relationName: 'mainCategory' }),
-  places: r.many(placesToPlaceCategories, {
-    relationName: 'secondaryCategories',
-  }),
-}))
-
-export const placesToPlaceCategories = mysqlTable(
-  'placeToPlaceCategory',
-  {
-    placeId: int('placeId').notNull(),
-    categoryId: int('categoryId').notNull(),
-  },
-  (table) => {
-    return {
-      pk: primaryKey({
-        columns: [table.categoryId, table.placeId],
-      }),
-    }
-  }
-)
-
-export const placesToPlaceCategoriesRelations = relations(
-  placesToPlaceCategories,
-  ({ one }) => ({
-    place: one(places, {
-      fields: [placesToPlaceCategories.placeId],
-      references: [places.id],
-      relationName: 'secondaryCategories',
-    }),
-    category: one(placeCategories, {
-      fields: [placesToPlaceCategories.categoryId],
-      references: [placeCategories.id],
-    }),
-  })
-)

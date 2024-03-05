@@ -1,14 +1,14 @@
 import { relations, sql } from 'drizzle-orm'
 import { int, mysqlTable, serial, timestamp } from 'drizzle-orm/mysql-core'
 import { pointType } from '~/server/helpers/spatial-data/point'
-import { userIdColumnType } from '../utilities'
+import { dbUserId } from '../utilities'
 import { places } from './places'
 import { users } from './users'
 
 export const verifications = mysqlTable('verification', {
   id: serial('id').primaryKey(),
   placeId: int('placeId').notNull(),
-  userId: userIdColumnType('userId').notNull(),
+  userId: dbUserId('userId').notNull(),
 
   validatedOn: timestamp('validatedOn')
     .notNull()
