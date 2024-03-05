@@ -1,7 +1,12 @@
 import { Card, CardBody } from '@nextui-org/card'
 import { Image } from '@nextui-org/image'
 import { Tooltip } from '@nextui-org/tooltip'
-import { Icon, IconInfoCircle, IconWorld } from '@tabler/icons-react'
+import {
+  Icon,
+  IconExternalLink,
+  IconInfoCircle,
+  IconWorld,
+} from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC, PropsWithChildren, useMemo } from 'react'
 import { MarkdownContent } from '~/components/generic/markdown-content'
@@ -26,16 +31,13 @@ export const FeaturesBlock: FC<{
   className?: string
   externalLinks?: ExternalLink[]
   googleMapsId?: string | null
-}> = ({ features, className, externalLinks, googleMapsId }) => {
+  geoUri?: string | null
+}> = ({ features, className, externalLinks, googleMapsId, geoUri }) => {
   const t = useTranslations('data.features')
+  const t2 = useTranslations('explore')
 
   const { allValuesNull, allValuesNullInGroup, getMoreInfoContent } =
     useFeatureDisplay(features)
-
-  if (allValuesNull) return null
-
-  const thereIsJustOneGroup =
-    Object.values(allValuesNullInGroup).filter((v) => !v).length === 1
 
   const sortedExternalLinks = useMemo(
     () =>
@@ -45,6 +47,19 @@ export const FeaturesBlock: FC<{
       }),
     [externalLinks]
   )
+
+  const hasExternalLinks = useMemo(() => {
+    return (
+      (sortedExternalLinks && sortedExternalLinks.length > 0) ||
+      !!googleMapsId ||
+      !!geoUri
+    )
+  }, [externalLinks, googleMapsId, geoUri])
+
+  if (allValuesNull && !hasExternalLinks) return null
+
+  const thereIsJustOneGroup =
+    Object.values(allValuesNullInGroup).filter((v) => !v).length === 1
 
   return (
     <Card className={cn('bg-cream', className)} radius="lg" shadow="none">
@@ -171,9 +186,10 @@ export const FeaturesBlock: FC<{
               </FeatureList>
             )
         )}
-        {sortedExternalLinks && sortedExternalLinks.length > 0 && (
+
+        {hasExternalLinks && (
           <FeatureList title={t('titles.links')} variant="small-items">
-            {sortedExternalLinks.map((link) => (
+            {sortedExternalLinks?.map((link) => (
               <LinkFeatureItem key={link.id} link={link} />
             ))}
             {googleMapsId && (
@@ -182,6 +198,15 @@ export const FeaturesBlock: FC<{
                   url: makeGoogleMapsUrl(googleMapsId),
                   title: null,
                 }}
+              />
+            )}
+            {geoUri && (
+              <LinkFeatureItem
+                link={{
+                  url: geoUri,
+                  title: t2('maps-app'),
+                }}
+                icon={IconExternalLink}
               />
             )}
           </FeatureList>
@@ -322,12 +347,13 @@ const BooleanFeatureItem: FC<{
 }
 const LinkFeatureItem: FC<{
   link: Pick<ExternalLink, 'title' | 'url'>
-}> = ({ link }) => {
+  icon?: Icon
+}> = ({ link, icon }) => {
   const { name, favicon } = getLinkData(link)
   return (
     <FeatureItem
       href={link.url}
-      icon={IconWorld}
+      icon={icon ?? IconWorld}
       text={name}
       favicon={favicon}
       classNames={{

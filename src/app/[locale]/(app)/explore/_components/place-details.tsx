@@ -88,6 +88,7 @@ export const PlaceDetails: FC<{
         features={place.features}
         externalLinks={place.externalLinks}
         googleMapsId={place.googleMapsId}
+        geoUri={`geo:${place.location.lat},${place.location.lng}`}
         className="mt-4"
       />
 

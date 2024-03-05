@@ -53,12 +53,19 @@ const namedWebsites = [
 
 type LinkData = {
   name: string
-  favicon: string
+  favicon?: string
 }
 
 export const getLinkData = moize(
   (link: { title?: string | null; url: string }): LinkData => {
     const url = new URL(link.url)
+
+    if (url.protocol === 'geo:') {
+      return {
+        name: link.title || 'Map',
+      }
+    }
+
     const hostname = url.hostname.replace(/^www\./, '')
 
     const namedWebsite = namedWebsites.find((nw) =>
