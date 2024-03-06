@@ -8,7 +8,7 @@ import {
 } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
 import { CategoriesGrid } from '../_components/categories-grid'
-import { ListPlacesOfCategory } from '../_components/list-places-of-category'
+import { ListItemsOfCategory } from '../_components/list-items-of-category'
 import { OverrideMainMap } from '../_components/override-main-map'
 
 export async function generateMetadata({
@@ -41,7 +41,7 @@ const BussinessesPage: FC<LocaleRouteParams> = async ({ params }) => {
 
       <div className="space-y-2">
         {placesByCategory.map(({ places, ...category }) => (
-          <ListPlacesOfCategory
+          <ListItemsOfCategory
             key={category.id}
             category={category}
             items={places}
