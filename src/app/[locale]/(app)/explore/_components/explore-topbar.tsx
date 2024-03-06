@@ -1,5 +1,3 @@
-'use client'
-
 import { Navbar, NavbarContent, NavbarItem } from '@nextui-org/navbar'
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'
