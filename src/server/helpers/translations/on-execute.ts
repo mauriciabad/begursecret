@@ -4,7 +4,8 @@ export function doSomethingAfterExecute<
 >(preparedStatement: P, doSomething: F) {
   // For some strage reason, I have to destructure preparedStatement, but
   // when calling `preparedStatement.execute` I have to use the original
-  const { execute, ...rest } = preparedStatement
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { execute: _, ...rest } = preparedStatement
   return {
     ...rest,
     execute: async (...args: Parameters<P['execute']>) =>
