@@ -4,7 +4,10 @@ import { translatableLocales } from '~/i18n'
 import { db } from '~/server/db/db'
 import { placeCategoriesToPlaceCategoryGroups } from '~/server/db/schema'
 import { ascNullsEnd } from '~/server/helpers/order-by'
-import { flattenTranslationsOnExecute } from '~/server/helpers/translations/query/with-translations'
+import {
+  flattenTranslationsOnExecute,
+  withTranslations,
+} from '~/server/helpers/translations/query/with-translations'
 import { publicProcedure, router } from '~/server/trpc'
 
 const getCategoriesWithPlaces = flattenTranslationsOnExecute(
@@ -24,7 +27,7 @@ const getCategoriesWithPlaces = flattenTranslationsOnExecute(
             )
         ),
       with: {
-        mainPlaces: {
+        mainPlaces: withTranslations({
           columns: {
             id: true,
             name: true,
@@ -33,10 +36,10 @@ const getCategoriesWithPlaces = flattenTranslationsOnExecute(
           with: {
             mainImage: true,
           },
-        },
+        }),
         places: {
           with: {
-            place: {
+            place: withTranslations({
               columns: {
                 id: true,
                 name: true,
@@ -45,7 +48,7 @@ const getCategoriesWithPlaces = flattenTranslationsOnExecute(
               with: {
                 mainImage: true,
               },
-            },
+            }),
           },
         },
       },
