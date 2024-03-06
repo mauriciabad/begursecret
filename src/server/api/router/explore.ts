@@ -50,7 +50,7 @@ const makeGetCategoriesWithPlaces = (categoryGroupIds: number[]) =>
                   mainImage: true,
                 },
               }),
-              places: {
+              secondaryPlaces: {
                 with: {
                   place: withTranslations({
                     columns: {
@@ -71,9 +71,9 @@ const makeGetCategoriesWithPlaces = (categoryGroupIds: number[]) =>
         .prepare()
     ),
     (categories) =>
-      categories.map(({ mainPlaces, places, ...category }) => ({
+      categories.map(({ mainPlaces, secondaryPlaces, ...category }) => ({
         ...category,
-        places: [...mainPlaces, ...places.map(({ place }) => place)]
+        places: [...mainPlaces, ...secondaryPlaces.map(({ place }) => place)]
           .filter(isFirstOccurence)
           .sort(sortByImportance),
       }))
@@ -105,7 +105,7 @@ const getCategoriesWithRoutes = doSomethingAfterExecute(
                 mainImage: true,
               },
             }),
-            routes: {
+            secondaryRoutes: {
               with: {
                 route: withTranslations({
                   columns: {
@@ -126,9 +126,9 @@ const getCategoriesWithRoutes = doSomethingAfterExecute(
       .prepare()
   ),
   (categories) =>
-    categories.map(({ mainRoutes, routes, ...category }) => ({
+    categories.map(({ mainRoutes, secondaryRoutes, ...category }) => ({
       ...category,
-      routes: [...mainRoutes, ...routes.map(({ route }) => route)]
+      routes: [...mainRoutes, ...secondaryRoutes.map(({ route }) => route)]
         .filter(isFirstOccurence)
         .sort(sortByImportance),
     }))
