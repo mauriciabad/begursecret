@@ -8,6 +8,7 @@ import {
   isNotNull,
   sql,
 } from 'drizzle-orm'
+import { doSomethingAfterExecute } from '../on-execute'
 import { flattenTranslations } from './flatten'
 
 export function withTranslations<
@@ -39,11 +40,8 @@ export function withTranslations<
 export function flattenTranslationsOnExecute<
   P extends { execute: (...args: any[]) => Promise<any> },
 >(preparedStatement: P) {
-  const result: P = {
-    ...preparedStatement,
-    execute: async (...args) =>
-      flattenTranslations(await preparedStatement.execute(...args)),
-  }
-
-  return result
+  return doSomethingAfterExecute(
+    preparedStatement,
+    flattenTranslations as any
+  ) as P
 }

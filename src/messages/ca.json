@@ -333,11 +333,32 @@
     "provider-button-text": "Inicia sessió amb {name}"
   },
   "explore": {
-    "meta": {
-      "title": "Explorar",
-      "description": "Llista de llocs"
+    "places": {
+      "meta": {
+        "title": "Explorar llocs",
+        "description": "Llista de llocs"
+      }
+    },
+    "routes": {
+      "meta": {
+        "title": "Explorar rutes",
+        "description": "Llista de rutes"
+      }
+    },
+    "bussinesses": {
+      "meta": {
+        "title": "Explorar negocis",
+        "description": "Llista de negocis"
+      }
+    },
+    "search": {
+      "meta": {
+        "title": "Cercar",
+        "description": "Cercar llocs a Begur"
+      }
     },
     "heading": "Explorar",
+    "back-to-map": "Tornar al mapa",
     "list": {
       "loading": "Carregant llocs...",
       "created-date": "Creada el {createdDate, date, ::yyyyMMddHHmmss}"
@@ -348,10 +369,14 @@
     "see-more": "Veure més",
     "categories": "Categories",
     "no-more-info": "No hi ha més informació disponible.",
-
     "related-missions": "Missions relacionades",
     "detailed-info": "Informació detallada",
-    "maps-app": "App de mapes"
+    "maps-app": "App de mapes",
+    "tabs": {
+      "places": "Llocs",
+      "bussinesses": "Negocis",
+      "routes": "Rutes"
+    }
   },
   "missions": {
     "meta": {
