@@ -4,11 +4,13 @@ import { IconArrowLeft } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'
 import { Link, usePathname } from '~/navigation'
+import { getExploreTab } from './explore-tabs'
 
 export const BackLink: FC = () => {
   const t = useTranslations('explore')
   const pathname = usePathname()
-  if (pathname.match(/^\/explore(\/([^/]+)\/?)?$/)) return null
+  const tab = getExploreTab(pathname)
+  if (tab) return null
 
   return (
     <Link href="/explore" className="flex h-full self-stretch">

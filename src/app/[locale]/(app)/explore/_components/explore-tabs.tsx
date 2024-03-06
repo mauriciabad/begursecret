@@ -12,7 +12,7 @@ import { FC } from 'react'
 import { cn } from '~/helpers/cn'
 import { usePathname } from '~/navigation'
 
-const tabs = [
+export const exploreTabsData = [
   {
     key: 'places',
     icon: IconMapPin,
@@ -30,14 +30,20 @@ const tabs = [
   icon: Icon
 }[]
 
+export const getExploreTab = (pathname: string) => {
+  const tab = pathname.match(/^\/explore\/([^/]+)$/)?.[1]
+  if (!tab || !exploreTabsData.some((t) => t.key === tab)) return null
+  return tab as (typeof exploreTabsData)[number]['key']
+}
+
 export const ExploreTabs: FC<{
   className?: string
 }> = ({ className }) => {
   const t = useTranslations('explore')
   const pathname = usePathname()
-  const tab = pathname.match(/^\/explore\/([^/]+)$/)?.[1]
+  const tab = getExploreTab(pathname)
 
-  if (!tab || !tabs.some((t) => t.key === tab)) return null
+  if (!tab) return null
 
   return (
     <Tabs
@@ -50,7 +56,7 @@ export const ExploreTabs: FC<{
         tabContent: 'group-data-[selected=true]:font-semibold',
         panel: 'p-0',
       }}
-      items={tabs}
+      items={exploreTabsData}
     >
       {(item) => {
         const Icon = item.icon
