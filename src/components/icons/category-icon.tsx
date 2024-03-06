@@ -26,6 +26,7 @@ import {
   IconHome,
   IconHomeDollar,
   IconHomeOff,
+  IconIceCream2,
   IconInfoCircle,
   IconLadder,
   IconLeaf,
@@ -117,6 +118,7 @@ const iconsByIconName = {
   coffee: IconCoffee,
   'home-dollar': IconHomeDollar,
   bed: IconBed,
+  'ice-cream-2': IconIceCream2,
 } as const satisfies Record<IconName, Icon>
 
 export const CategoryIcon: FC<

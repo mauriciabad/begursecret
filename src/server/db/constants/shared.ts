@@ -56,6 +56,7 @@ export const iconNames = [
   'coffee',
   'home-dollar',
   'bed',
+  'ice-cream-2',
 ] as const
 export type IconName = (typeof iconNames)[number]
 
