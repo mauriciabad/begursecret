@@ -5,6 +5,7 @@ export function doSomethingAfterExecute<
 >({ execute, ...preparedStatement }: P, doSomething: F) {
   return {
     ...preparedStatement,
-    execute: async (...args: Args) => await doSomething(await execute(...args)),
+    execute: async (...args: Args) =>
+      (await doSomething(await execute(...args))) as ReturnType<F>,
   }
 }

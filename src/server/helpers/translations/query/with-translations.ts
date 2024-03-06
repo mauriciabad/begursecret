@@ -40,5 +40,8 @@ export function withTranslations<
 export function flattenTranslationsOnExecute<
   P extends { execute: (...args: any[]) => Promise<any> },
 >(preparedStatement: P) {
-  return doSomethingAfterExecute(preparedStatement, flattenTranslations) as P
+  return doSomethingAfterExecute(
+    preparedStatement,
+    flattenTranslations as any
+  ) as P
 }
