@@ -55,7 +55,7 @@ export const iconNames = [
   'tools-kitchen-2',
   'coffee',
   'home-dollar',
-  'letter-h',
+  'bed',
 ] as const
 export type IconName = (typeof iconNames)[number]
 

@@ -5,6 +5,7 @@ import {
   IconArrowsDownUp,
   IconBadgeWc,
   IconBeach,
+  IconBed,
   IconBuildingBridge2,
   IconBuildingCastle,
   IconBuildingStore,
@@ -28,7 +29,6 @@ import {
   IconInfoCircle,
   IconLadder,
   IconLeaf,
-  IconLetterH,
   IconMapPin,
   IconMapPinQuestion,
   IconMotorbike,
@@ -116,7 +116,7 @@ const iconsByIconName = {
   'tools-kitchen-2': IconToolsKitchen2,
   coffee: IconCoffee,
   'home-dollar': IconHomeDollar,
-  'letter-h': IconLetterH,
+  bed: IconBed,
 } as const satisfies Record<IconName, Icon>
 
 export const CategoryIcon: FC<
