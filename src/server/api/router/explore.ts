@@ -74,7 +74,9 @@ const makeGetCategoriesWithPlaces = (categoryGroupIds: number[]) =>
       categories.map(({ mainPlaces, places, ...category }) => ({
         ...category,
         places: [...mainPlaces, ...places.map(({ place }) => place)]
-          .filter((place, index, self) => self.indexOf(place) === index)
+          .filter((place, index, self) => {
+            return self.findIndex((p) => p.id === place.id) === index
+          })
           .sort((a, b) => {
             if (a.importance === b.importance) return 0
             if (a.importance === null) return 1
