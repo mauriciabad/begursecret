@@ -12,48 +12,50 @@ import { publicProcedure, router } from '~/server/trpc'
 
 const getCategoriesWithPlaces = flattenTranslationsOnExecute(
   db.query.placeCategories
-    .findMany({
-      where: (category, { inArray }) =>
-        inArray(
-          category.id,
-          db
-            .select({ data: placeCategoriesToPlaceCategoryGroups.categoryId })
-            .from(placeCategoriesToPlaceCategoryGroups)
-            .where(
-              eq(
-                placeCategoriesToPlaceCategoryGroups.categoryGroupId,
-                sql.placeholder('categoryGroupId')
+    .findMany(
+      withTranslations({
+        where: (category, { inArray }) =>
+          inArray(
+            category.id,
+            db
+              .select({ data: placeCategoriesToPlaceCategoryGroups.categoryId })
+              .from(placeCategoriesToPlaceCategoryGroups)
+              .where(
+                eq(
+                  placeCategoriesToPlaceCategoryGroups.categoryGroupId,
+                  sql.placeholder('categoryGroupId')
+                )
               )
-            )
-        ),
-      with: {
-        mainPlaces: withTranslations({
-          columns: {
-            id: true,
-            name: true,
-            importance: true,
-          },
-          with: {
-            mainImage: true,
-          },
-        }),
-        places: {
-          with: {
-            place: withTranslations({
-              columns: {
-                id: true,
-                name: true,
-                importance: true,
-              },
-              with: {
-                mainImage: true,
-              },
-            }),
+          ),
+        with: {
+          mainPlaces: withTranslations({
+            columns: {
+              id: true,
+              name: true,
+              importance: true,
+            },
+            with: {
+              mainImage: true,
+            },
+          }),
+          places: {
+            with: {
+              place: withTranslations({
+                columns: {
+                  id: true,
+                  name: true,
+                  importance: true,
+                },
+                with: {
+                  mainImage: true,
+                },
+              }),
+            },
           },
         },
-      },
-      orderBy: (category) => [ascNullsEnd(category.order)],
-    })
+        orderBy: (category) => [ascNullsEnd(category.order)],
+      })
+    )
     .prepare()
 )
 
