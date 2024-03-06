@@ -25,6 +25,11 @@ export const ListItemsOfCategory: FC<{
 
   if (items.length === 0) return null
 
+  const categoryLink =
+    type === 'place'
+      ? `/explore/search?placeCategory=${category.id}`
+      : `/explore/search?routeCategory=${category.id}`
+
   return (
     <div>
       <div className="flex items-center justify-between px-4">
@@ -36,10 +41,7 @@ export const ListItemsOfCategory: FC<{
           </h3>
         </div>
 
-        <Link
-          href={`/explore/search?category=${category.id}`}
-          className="flex items-center gap-1 pl-2"
-        >
+        <Link href={categoryLink} className="flex items-center gap-1 pl-2">
           <span className="text-right text-sm leading-none text-stone-500">
             {t('see-all', { gender: category.nameGender })}
           </span>
@@ -59,11 +61,7 @@ export const ListItemsOfCategory: FC<{
         ))}
         <li>
           <Link
-            href={
-              type === 'place'
-                ? `/explore/search?placeCategory=${category.id}`
-                : `/explore/search?routeCategory=${category.id}`
-            }
+            href={categoryLink}
             className={cn(
               'flex h-full w-32 flex-col items-center justify-center gap-2 pb-8'
             )}

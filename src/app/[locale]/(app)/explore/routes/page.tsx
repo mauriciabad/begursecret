@@ -37,7 +37,7 @@ const RoutesPage: FC<LocaleRouteParams> = async ({ params }) => {
     <>
       <OverrideMainMap reset />
 
-      <CategoriesGrid categories={routesByCategory} />
+      <CategoriesGrid categories={routesByCategory} type="route" />
 
       <div className="space-y-2">
         {routesByCategory.map((category) => (

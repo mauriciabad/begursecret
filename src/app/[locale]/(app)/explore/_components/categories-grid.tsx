@@ -13,7 +13,8 @@ import { PlaceCategory } from '~/server/db/constants/placeCategories'
 const ITEMS = 6
 export const CategoriesGrid: FC<{
   categories: PlaceCategory[]
-}> = ({ categories }) => {
+  type: 'place' | 'route'
+}> = ({ categories, type }) => {
   const t = useTranslations('explore')
   const [showingAll, setShowingAll] = useState<boolean>(false)
 
@@ -30,7 +31,11 @@ export const CategoriesGrid: FC<{
               shadow="none"
               radius="sm"
               isPressable
-              href={`/explore/search?category=${category.id}`}
+              href={
+                type === 'place'
+                  ? `/explore/search?placeCategory=${category.id}`
+                  : `/explore/search?routeCategory=${category.id}`
+              }
               className={cn(
                 'flex flex-col items-center justify-center gap-1 border border-stone-200 bg-white p-2',
                 { hidden: !showingAll && i >= ITEMS }
