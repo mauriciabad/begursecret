@@ -72,7 +72,7 @@ export const VisitMissionsAcordion: FC<{
                 endContent={
                   <IconChevronRight size={18} className="text-stone-300" />
                 }
-                href={`/explore/search?category=${category.id}`}
+                href={`/explore/search?placeCategory=${category.id}`}
               >
                 <span className="grow text-left">
                   {t('view-places-in-map')}
