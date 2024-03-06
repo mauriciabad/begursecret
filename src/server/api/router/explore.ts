@@ -1,4 +1,3 @@
-import { eq, sql } from 'drizzle-orm'
 import { z } from 'zod'
 import { translatableLocales } from '~/i18n'
 import { db } from '~/server/db/db'
@@ -10,54 +9,75 @@ import {
 } from '~/server/helpers/translations/query/with-translations'
 import { publicProcedure, router } from '~/server/trpc'
 
-const getCategoriesWithPlaces = flattenTranslationsOnExecute(
-  db.query.placeCategories
-    .findMany(
-      withTranslations({
-        where: (category, { inArray }) =>
-          inArray(
-            category.id,
-            db
-              .select({ data: placeCategoriesToPlaceCategoryGroups.categoryId })
-              .from(placeCategoriesToPlaceCategoryGroups)
-              .where(
-                eq(
-                  placeCategoriesToPlaceCategoryGroups.categoryGroupId,
-                  sql.placeholder('categoryGroupId')
+const placeCategoryGroupIdByName = {
+  nature: 1,
+  activities: 2,
+  historyAndCulture: 3,
+  bussinesses: 4,
+  infrastructure: 5,
+} as const satisfies Record<string, number>
+
+const makeGetCategoriesWithPlaces = (categoryGroupIds: number[]) =>
+  flattenTranslationsOnExecute(
+    db.query.placeCategories
+      .findMany(
+        withTranslations({
+          where: (category, { inArray }) =>
+            inArray(
+              category.id,
+              db
+                .select({
+                  data: placeCategoriesToPlaceCategoryGroups.categoryId,
+                })
+                .from(placeCategoriesToPlaceCategoryGroups)
+                .where(
+                  inArray(
+                    placeCategoriesToPlaceCategoryGroups.categoryGroupId,
+                    categoryGroupIds
+                  )
                 )
-              )
-          ),
-        with: {
-          mainPlaces: withTranslations({
-            columns: {
-              id: true,
-              name: true,
-              importance: true,
-            },
-            with: {
-              mainImage: true,
-            },
-          }),
-          places: {
-            with: {
-              place: withTranslations({
-                columns: {
-                  id: true,
-                  name: true,
-                  importance: true,
-                },
-                with: {
-                  mainImage: true,
-                },
-              }),
+            ),
+          with: {
+            mainPlaces: withTranslations({
+              columns: {
+                id: true,
+                name: true,
+                importance: true,
+              },
+              with: {
+                mainImage: true,
+              },
+            }),
+            places: {
+              with: {
+                place: withTranslations({
+                  columns: {
+                    id: true,
+                    name: true,
+                    importance: true,
+                  },
+                  with: {
+                    mainImage: true,
+                  },
+                }),
+              },
             },
           },
-        },
-        orderBy: (category) => [ascNullsEnd(category.order)],
-      })
-    )
-    .prepare()
-)
+          orderBy: (category) => [ascNullsEnd(category.order)],
+        })
+      )
+      .prepare()
+  )
+
+const getCategoriesWithPlacesForBussinesses = makeGetCategoriesWithPlaces([
+  placeCategoryGroupIdByName.bussinesses,
+])
+// const getCategoriesWithPlacesForNotBussinesses = makeGetCategoriesWithPlaces([
+//   placeCategoryGroupIdByName.nature,
+//   placeCategoryGroupIdByName.activities,
+//   placeCategoryGroupIdByName.historyAndCulture,
+//   placeCategoryGroupIdByName.infrastructure,
+// ])
 
 export const exploreRouter = router({
   bussinesses: router({
@@ -68,10 +88,10 @@ export const exploreRouter = router({
         })
       )
       .query(async ({ input }) => {
-        const categoriesWithPlaces = await getCategoriesWithPlaces.execute({
-          locale: input.locale,
-          categoryGroupId: placeCategoryGroupIdByName.bussinesses,
-        })
+        const categoriesWithPlaces =
+          await getCategoriesWithPlacesForBussinesses.execute({
+            locale: input.locale,
+          })
 
         return categoriesWithPlaces.map(
           ({ mainPlaces, places, ...category }) => ({
@@ -89,11 +109,3 @@ export const exploreRouter = router({
       }),
   }),
 })
-
-const placeCategoryGroupIdByName = {
-  nature: 1,
-  activities: 2,
-  historyAndCulture: 3,
-  bussinesses: 4,
-  infrastructure: 5,
-} as const satisfies Record<string, number>
