@@ -32,6 +32,7 @@ import {
   IconLeaf,
   IconMapPin,
   IconMapPinQuestion,
+  IconMoodSmile,
   IconMotorbike,
   IconMountain,
   IconOvalVertical,
@@ -119,6 +120,7 @@ const iconsByIconName = {
   'home-dollar': IconHomeDollar,
   bed: IconBed,
   'ice-cream-2': IconIceCream2,
+  'mood-smile': IconMoodSmile,
 } as const satisfies Record<IconName, Icon>
 
 export const CategoryIcon: FC<
