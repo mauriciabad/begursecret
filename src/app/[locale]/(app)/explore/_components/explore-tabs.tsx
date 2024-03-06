@@ -6,7 +6,6 @@ import {
   IconBuildingStore,
   IconMapPin,
   IconRoute,
-  IconStretching2,
 } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'
@@ -21,10 +20,6 @@ const tabs = [
   {
     key: 'bussinesses',
     icon: IconBuildingStore,
-  },
-  {
-    key: 'activities',
-    icon: IconStretching2,
   },
   {
     key: 'routes',

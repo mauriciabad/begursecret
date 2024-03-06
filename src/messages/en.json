@@ -351,16 +351,10 @@
         "description": "List of bussinesses"
       }
     },
-    "activities": {
-      "meta": {
-        "title": "Explore activities",
-        "description": "List of activities"
-      }
-    },
     "search": {
       "meta": {
         "title": "Search",
-        "description": "Search for places, routes, activities and bussinesses"
+        "description": "Search for places in Begur"
       }
     },
     "heading": "Explore",
@@ -380,7 +374,6 @@
     "maps-app": "Maps app",
     "tabs": {
       "places": "Places",
-      "activities": "Activities",
       "bussinesses": "Bussinesses",
       "routes": "Routes"
     }

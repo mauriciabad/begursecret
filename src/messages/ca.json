@@ -351,16 +351,10 @@
         "description": "Llista de negocis"
       }
     },
-    "activities": {
-      "meta": {
-        "title": "Explorar activitats",
-        "description": "Llista de activitats"
-      }
-    },
     "search": {
       "meta": {
         "title": "Cercar",
-        "description": "Cerca llocs, rutes, negocis i activitats"
+        "description": "Cercar llocs a Begur"
       }
     },
     "heading": "Explorar",
@@ -380,7 +374,6 @@
     "maps-app": "App de mapes",
     "tabs": {
       "places": "Llocs",
-      "activities": "Activitats",
       "bussinesses": "Negocis",
       "routes": "Rutes"
     }
