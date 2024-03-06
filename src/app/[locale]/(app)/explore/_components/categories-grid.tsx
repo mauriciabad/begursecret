@@ -2,6 +2,7 @@
 
 import { Button } from '@nextui-org/button'
 import { Card } from '@nextui-org/card'
+import { Skeleton } from '@nextui-org/react'
 import { useTranslations } from 'next-intl'
 import { FC, useState } from 'react'
 import { CategoryIcon } from '~/components/icons/category-icon'
@@ -69,6 +70,20 @@ export const CategoriesGrid: FC<{
       >
         {t('show-less')}
       </Button>
+    </div>
+  )
+}
+
+export const CategoriesGridSkeleton: FC = () => {
+  return (
+    <div>
+      <Skeleton className="mx-auto mt-4 h-4 w-full max-w-24 rounded-full" />
+      <div className="grid grid-cols-3 gap-2 p-2">
+        {[...Array(3 * 2)].map((_, i) => (
+          <Skeleton key={i} className="h-16 w-full rounded-lg" />
+        ))}
+      </div>
+      <Skeleton className="mx-auto h-8 w-full max-w-32 rounded-full" />
     </div>
   )
 }
