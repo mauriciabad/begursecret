@@ -35,7 +35,7 @@ export const ExploreTabs: FC<{
 }> = ({ className }) => {
   const t = useTranslations('explore')
   const pathname = usePathname()
-  const tab = pathname.match(/^\/explore\/([^/]+)/)?.[1]
+  const tab = pathname.match(/^\/explore\/([^/]+)$/)?.[1]
 
   if (!tab || !tabs.some((t) => t.key === tab)) return null
 
