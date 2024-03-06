@@ -10,12 +10,13 @@ import { PlaceMarker } from '~/components/generic/place-marker'
 import { cn } from '~/helpers/cn'
 import { Link } from '~/navigation'
 import { ApiRouterOutput } from '~/server/api/router'
+import { PlaceCategory } from '~/server/db/constants/placeCategories'
 
-type Category = ApiRouterOutput['places']['listCategories'][number]
-type Places = ApiRouterOutput['places']['list']
+type Places =
+  ApiRouterOutput['explore']['bussinesses']['list'][number]['places']
 
 export const ListPlacesOfCategory: FC<{
-  category: Category
+  category: Omit<PlaceCategory, 'hasVisitMission'>
   places: Places
 }> = ({ category, places }) => {
   const t = useTranslations('explore')
