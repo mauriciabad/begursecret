@@ -89,21 +89,26 @@ const makeGetCategoriesWithPlaces = (categoryGroupIds: number[]) =>
 const getCategoriesWithPlacesForBussinesses = makeGetCategoriesWithPlaces([
   placeCategoryGroupIdByName.bussinesses,
 ])
-// const getCategoriesWithPlacesForNotBussinesses = makeGetCategoriesWithPlaces([
-//   placeCategoryGroupIdByName.nature,
-//   placeCategoryGroupIdByName.activities,
-//   placeCategoryGroupIdByName.historyAndCulture,
-//   placeCategoryGroupIdByName.infrastructure,
-// ])
+const getCategoriesWithPlacesForPlaces = makeGetCategoriesWithPlaces([
+  placeCategoryGroupIdByName.nature,
+  placeCategoryGroupIdByName.activities,
+  placeCategoryGroupIdByName.historyAndCulture,
+  placeCategoryGroupIdByName.infrastructure,
+])
 
 export const exploreRouter = router({
-  bussinesses: router({
-    list: publicProcedure
-      .input(z.object({ locale: z.enum(translatableLocales).nullable() }))
-      .query(async ({ input }) => {
-        return await getCategoriesWithPlacesForBussinesses.execute({
-          locale: input.locale,
-        })
-      }),
-  }),
+  listBussinesses: publicProcedure
+    .input(z.object({ locale: z.enum(translatableLocales).nullable() }))
+    .query(async ({ input }) => {
+      return await getCategoriesWithPlacesForBussinesses.execute({
+        locale: input.locale,
+      })
+    }),
+  listPlaces: publicProcedure
+    .input(z.object({ locale: z.enum(translatableLocales).nullable() }))
+    .query(async ({ input }) => {
+      return await getCategoriesWithPlacesForPlaces.execute({
+        locale: input.locale,
+      })
+    }),
 })

@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import type { FC } from 'react'
-import { groupByKey } from '~/helpers/utilities'
 import {
   onlyTranslatableLocales,
   parseLocale,
@@ -30,38 +29,22 @@ const PlacesPage: FC<LocaleRouteParams> = async ({ params }) => {
   unstable_setRequestLocale(locale)
 
   const trpc = await getTrpc()
-  const places = await trpc.places.list({
+  const placesByCategory = await trpc.explore.listPlaces({
     locale: onlyTranslatableLocales(locale),
   })
-  const categories = await trpc.places.listCategories({
-    locale: onlyTranslatableLocales(locale),
-  })
-  const placesByCategory = groupByKey(
-    places,
-    ['mainCategory.id', 'categories.0.category.id'],
-    {
-      unique: true,
-    }
-  )
-  const placesByCategorySorted = categories.map((category) => ({
-    categoryId: category.id,
-    places: placesByCategory[category.id] ?? [],
-  }))
 
   return (
     <>
       <OverrideMainMap reset />
 
-      <CategoriesGrid categories={categories} />
+      <CategoriesGrid categories={placesByCategory} />
 
       <div className="space-y-2">
-        {placesByCategorySorted.map(({ categoryId, places }) => (
+        {placesByCategory.map((category) => (
           <ListPlacesOfCategory
-            key={categoryId}
-            category={
-              categories.find((category) => category.id === Number(categoryId))!
-            }
-            places={places}
+            key={category.id}
+            category={category}
+            places={category.places}
           />
         ))}
       </div>

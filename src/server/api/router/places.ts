@@ -2,14 +2,9 @@ import 'server-only'
 
 import { sql } from 'drizzle-orm'
 import { calculateLocation } from '~/helpers/spatial-data/point'
-import {
-  getPlacesSchema,
-  listCategoriesSchema,
-  listPlacesSchema,
-  searchPlacesSchema,
-} from '~/schemas/places'
+import { getPlacesSchema, searchPlacesSchema } from '~/schemas/places'
 import { db } from '~/server/db/db'
-import { placeCategories, places } from '~/server/db/schema'
+import { places } from '~/server/db/schema'
 import { getVisitedPlacesIdsByUserId } from '~/server/helpers/db-queries/placeLists'
 import { ascNullsEnd } from '~/server/helpers/order-by'
 import { selectPoint } from '~/server/helpers/spatial-data/point'
@@ -18,45 +13,6 @@ import {
   withTranslations,
 } from '~/server/helpers/translations/query/with-translations'
 import { publicProcedure, router } from '~/server/trpc'
-
-const getAllPlaces = flattenTranslationsOnExecute(
-  db.query.places
-    .findMany(
-      withTranslations({
-        columns: {
-          id: true,
-          name: true,
-          importance: true,
-        },
-        extras: {
-          location: selectPoint('location', places.location),
-        },
-        orderBy: [ascNullsEnd(places.importance)],
-        with: {
-          mainImage: true,
-          categories: {
-            columns: {},
-            with: {
-              category: {
-                columns: {
-                  id: true,
-                  icon: true,
-                },
-              },
-            },
-          },
-          mainCategory: {
-            columns: {
-              id: true,
-              icon: true,
-              color: true,
-            },
-          },
-        },
-      })
-    )
-    .prepare()
-)
 
 const searchPlaces = flattenTranslationsOnExecute(
   db.query.places
@@ -167,31 +123,7 @@ const getPlace = flattenTranslationsOnExecute(
     .prepare()
 )
 
-const listCategories = flattenTranslationsOnExecute(
-  db.query.placeCategories
-    .findMany(
-      withTranslations({
-        columns: {
-          id: true,
-          icon: true,
-          name: true,
-          namePlural: true,
-          nameGender: true,
-          color: true,
-          order: true,
-        },
-        orderBy: [ascNullsEnd(placeCategories.order)],
-      })
-    )
-    .prepare()
-)
-
 export const placesRouter = router({
-  list: publicProcedure.input(listPlacesSchema).query(async ({ input }) => {
-    return (await getAllPlaces.execute({ locale: input.locale })).map(
-      calculateLocation
-    )
-  }),
   search: publicProcedure.input(searchPlacesSchema).query(async ({ input }) => {
     return (
       await searchPlaces.execute({
@@ -218,9 +150,4 @@ export const placesRouter = router({
         })
       : undefined
   }),
-  listCategories: publicProcedure
-    .input(listCategoriesSchema)
-    .query(async ({ input }) => {
-      return await listCategories.execute({ locale: input.locale })
-    }),
 })

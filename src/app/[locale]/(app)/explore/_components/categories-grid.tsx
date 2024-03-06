@@ -8,12 +8,11 @@ import { FC, useState } from 'react'
 import { CategoryIcon } from '~/components/icons/category-icon'
 import { cn } from '~/helpers/cn'
 import { Link } from '~/navigation'
-import { ApiRouterOutput } from '~/server/api/router'
+import { PlaceCategory } from '~/server/db/constants/placeCategories'
 
-type Categories = ApiRouterOutput['places']['listCategories']
-
+const ITEMS = 6
 export const CategoriesGrid: FC<{
-  categories: Categories
+  categories: PlaceCategory[]
 }> = ({ categories }) => {
   const t = useTranslations('explore')
   const [showingAll, setShowingAll] = useState<boolean>(false)
@@ -34,7 +33,7 @@ export const CategoriesGrid: FC<{
               href={`/explore/search?category=${category.id}`}
               className={cn(
                 'flex flex-col items-center justify-center gap-1 border border-stone-200 bg-white p-2',
-                { hidden: !showingAll && i >= 6 }
+                { hidden: !showingAll && i >= ITEMS }
               )}
             >
               <CategoryIcon
@@ -50,26 +49,30 @@ export const CategoriesGrid: FC<{
         ))}
       </ul>
 
-      <Button
-        variant="bordered"
-        radius="full"
-        onClick={() => {
-          setShowingAll(true)
-        }}
-        className={cn('mx-auto flex', { hidden: showingAll })}
-      >
-        {t('show-all', { gender: 'feminine' })}
-      </Button>
-      <Button
-        variant="bordered"
-        radius="full"
-        onClick={() => {
-          setShowingAll(false)
-        }}
-        className={cn('mx-auto flex', { hidden: !showingAll })}
-      >
-        {t('show-less')}
-      </Button>
+      {categories.length > ITEMS && (
+        <>
+          <Button
+            variant="bordered"
+            radius="full"
+            onClick={() => {
+              setShowingAll(true)
+            }}
+            className={cn('mx-auto flex', { hidden: showingAll })}
+          >
+            {t('show-all', { gender: 'feminine' })}
+          </Button>
+          <Button
+            variant="bordered"
+            radius="full"
+            onClick={() => {
+              setShowingAll(false)
+            }}
+            className={cn('mx-auto flex', { hidden: !showingAll })}
+          >
+            {t('show-less')}
+          </Button>
+        </>
+      )}
     </div>
   )
 }

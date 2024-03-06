@@ -12,8 +12,7 @@ import { Link } from '~/navigation'
 import { ApiRouterOutput } from '~/server/api/router'
 import { PlaceCategory } from '~/server/db/constants/placeCategories'
 
-type Places =
-  ApiRouterOutput['explore']['bussinesses']['list'][number]['places']
+type Places = ApiRouterOutput['explore']['listBussinesses'][number]['places']
 
 export const ListPlacesOfCategory: FC<{
   category: Omit<PlaceCategory, 'hasVisitMission'>

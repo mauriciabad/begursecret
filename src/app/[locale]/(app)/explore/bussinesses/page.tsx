@@ -7,6 +7,7 @@ import {
   type LocaleRouteParams,
 } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
+import { CategoriesGrid } from '../_components/categories-grid'
 import { ListPlacesOfCategory } from '../_components/list-places-of-category'
 import { OverrideMainMap } from '../_components/override-main-map'
 
@@ -28,13 +29,15 @@ const BussinessesPage: FC<LocaleRouteParams> = async ({ params }) => {
   unstable_setRequestLocale(locale)
 
   const trpc = await getTrpc()
-  const placesByCategory = await trpc.explore.bussinesses.list({
+  const placesByCategory = await trpc.explore.listBussinesses({
     locale: onlyTranslatableLocales(locale),
   })
 
   return (
     <>
       <OverrideMainMap reset />
+
+      <CategoriesGrid categories={placesByCategory} />
 
       <div className="space-y-2">
         {placesByCategory.map(({ places, ...category }) => (
