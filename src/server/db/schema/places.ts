@@ -48,7 +48,7 @@ export const placesRelations = relations(places, (r) => ({
     relationName: 'mainCategory',
   }),
   categories: r.many(placesToPlaceCategories, {
-    relationName: 'secondaryCategories',
+    relationName: 'secondaryPlaceToCategories',
   }),
   features: r.one(features, {
     fields: [places.featuresId],

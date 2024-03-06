@@ -58,7 +58,7 @@ const getVisitMissions = flattenTranslationsOnExecute(
           ),
         orderBy: [ascNullsEnd(placeCategories.order)],
         with: {
-          places: {
+          secondaryPlaces: {
             with: {
               place: withTranslations({
                 columns: {
@@ -181,13 +181,13 @@ export const missionsRouter = router({
       )
 
       return result
-        .map(({ places, mainPlaces, ...category }) => {
+        .map(({ secondaryPlaces, mainPlaces, ...category }) => {
           const mainPlacesIds = mainPlaces.map((place) => place.id)
           return {
             category,
             places: [
               ...mainPlaces,
-              ...places
+              ...secondaryPlaces
                 .map(({ place }) => place)
                 .filter((place) => !mainPlacesIds.includes(place.id)),
             ].map(({ location, categories, ...place }) => ({

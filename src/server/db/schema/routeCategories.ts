@@ -34,8 +34,8 @@ export const routeCategoriesRelations = relations(routeCategories, (r) => ({
   ...makeRouteCategoryRelations(r),
 
   mainRoutes: r.many(routes, { relationName: 'mainCategory' }),
-  routes: r.many(routesToRouteCategories, {
-    relationName: 'secondaryCategories',
+  secondaryRoutes: r.many(routesToRouteCategories, {
+    relationName: 'secondaryCategoryToRoutes',
   }),
 }))
 
@@ -60,11 +60,12 @@ export const routesToRouteCategoriesRelations = relations(
     route: one(routes, {
       fields: [routesToRouteCategories.routeId],
       references: [routes.id],
-      relationName: 'secondaryCategories',
+      relationName: 'secondaryRouteToCategories',
     }),
     category: one(routeCategories, {
       fields: [routesToRouteCategories.categoryId],
       references: [routeCategories.id],
+      relationName: 'secondaryCategoryToRoutes',
     }),
   })
 )
