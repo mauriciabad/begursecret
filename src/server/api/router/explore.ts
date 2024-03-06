@@ -74,15 +74,8 @@ const makeGetCategoriesWithPlaces = (categoryGroupIds: number[]) =>
       categories.map(({ mainPlaces, places, ...category }) => ({
         ...category,
         places: [...mainPlaces, ...places.map(({ place }) => place)]
-          .filter((place, index, self) => {
-            return self.findIndex((p) => p.id === place.id) === index
-          })
-          .sort((a, b) => {
-            if (a.importance === b.importance) return 0
-            if (a.importance === null) return 1
-            if (b.importance === null) return -1
-            return a.importance > b.importance ? -1 : 1
-          }),
+          .filter(isFirstOccurence)
+          .sort(sortByImportance),
       }))
   )
 
@@ -95,6 +88,51 @@ const getCategoriesWithPlacesForPlaces = makeGetCategoriesWithPlaces([
   placeCategoryGroupIdByName.historyAndCulture,
   placeCategoryGroupIdByName.infrastructure,
 ])
+
+const getCategoriesWithRoutes = doSomethingAfterExecute(
+  flattenTranslationsOnExecute(
+    db.query.routeCategories
+      .findMany(
+        withTranslations({
+          with: {
+            mainRoutes: withTranslations({
+              columns: {
+                id: true,
+                name: true,
+                importance: true,
+              },
+              with: {
+                mainImage: true,
+              },
+            }),
+            routes: {
+              with: {
+                route: withTranslations({
+                  columns: {
+                    id: true,
+                    name: true,
+                    importance: true,
+                  },
+                  with: {
+                    mainImage: true,
+                  },
+                }),
+              },
+            },
+          },
+          orderBy: (category) => [ascNullsEnd(category.order)],
+        })
+      )
+      .prepare()
+  ),
+  (categories) =>
+    categories.map(({ mainRoutes, routes, ...category }) => ({
+      ...category,
+      routes: [...mainRoutes, ...routes.map(({ route }) => route)]
+        .filter(isFirstOccurence)
+        .sort(sortByImportance),
+    }))
+)
 
 export const exploreRouter = router({
   listBussinesses: publicProcedure
@@ -111,4 +149,29 @@ export const exploreRouter = router({
         locale: input.locale,
       })
     }),
+  listRoutes: publicProcedure
+    .input(z.object({ locale: z.enum(translatableLocales).nullable() }))
+    .query(async ({ input }) => {
+      return await getCategoriesWithRoutes.execute({
+        locale: input.locale,
+      })
+    }),
 })
+
+const sortByImportance = <T extends { importance: number | null }>(
+  a: T,
+  b: T
+) => {
+  if (a.importance === b.importance) return 0
+  if (a.importance === null) return 1
+  if (b.importance === null) return -1
+  return a.importance > b.importance ? -1 : 1
+}
+
+const isFirstOccurence = <T extends { id: number }>(
+  place: T,
+  index: number,
+  self: T[]
+) => {
+  return self.findIndex((p) => p.id === place.id) === index
+}

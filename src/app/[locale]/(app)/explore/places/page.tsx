@@ -44,7 +44,8 @@ const PlacesPage: FC<LocaleRouteParams> = async ({ params }) => {
           <ListPlacesOfCategory
             key={category.id}
             category={category}
-            places={category.places}
+            items={category.places}
+            type="place"
           />
         ))}
       </div>

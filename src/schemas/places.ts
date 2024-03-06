@@ -12,7 +12,7 @@ export const listPlacesSchema = z.object({
 
 export const searchPlacesSchema = z.object({
   locale: z.enum(translatableLocales).nullable(),
-  category: numericIdSchema.nullable(),
+  placeCategory: numericIdSchema.nullable(),
 })
 
 export const getPlacesSchema = z.object({

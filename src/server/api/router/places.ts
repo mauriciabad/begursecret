@@ -128,7 +128,7 @@ export const placesRouter = router({
     return (
       await searchPlaces.execute({
         locale: input.locale,
-        category: input.category,
+        category: input.placeCategory,
       })
     ).map(calculateLocation)
   }),

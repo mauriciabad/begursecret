@@ -8,17 +8,26 @@ import { FC } from 'react'
 import { OptimizedImage } from '~/components/generic/optimized-image'
 import { PlaceMarker } from '~/components/generic/place-marker'
 import { cn } from '~/helpers/cn'
+import { ImageType } from '~/helpers/images'
 import { Link } from '~/navigation'
-import { ApiRouterOutput } from '~/server/api/router'
 import { PlaceCategory } from '~/server/db/constants/placeCategories'
 
-type Places = ApiRouterOutput['explore']['listBussinesses'][number]['places']
+type Item = {
+  id: number
+  name: string
+  mainImage: ImageType | null
+  importance: number | null
+}
 
 export const ListPlacesOfCategory: FC<{
   category: Omit<PlaceCategory, 'hasVisitMission'>
-  places: Places
-}> = ({ category, places }) => {
+  items: Item[]
+  type: 'place' | 'route'
+}> = ({ category, items, type }) => {
   const t = useTranslations('explore')
+
+  if (items.length === 0) return null
+
   return (
     <div>
       <div className="flex items-center justify-between px-4">
@@ -46,15 +55,19 @@ export const ListPlacesOfCategory: FC<{
       </div>
 
       <ul className="flex items-stretch overflow-x-auto px-2 scrollbar-hide">
-        {places.map((place) => (
-          <li className="contents" key={place.id}>
+        {items.map((item) => (
+          <li className="contents" key={item.id}>
             <Card
               as={Link}
               role="link"
               shadow="none"
               radius="lg"
               isPressable
-              href={`/explore/places/${place.id}`}
+              href={
+                type === 'place'
+                  ? `/explore/places/${item.id}`
+                  : `/explore/routes/${item.id}`
+              }
               className="shrink-0"
             >
               <CardBody
@@ -67,11 +80,11 @@ export const ListPlacesOfCategory: FC<{
                   radius="lg"
                   shadow="none"
                   className="z-0 aspect-[4/3] h-full border border-stone-100 object-cover"
-                  image={place.mainImage}
-                  alt={place.name}
+                  image={item.mainImage}
+                  alt={item.name}
                 />
                 <span className="line-clamp-3 grow pb-1 text-center font-medium leading-4 text-stone-900">
-                  {place.name}
+                  {item.name}
                 </span>
               </CardBody>
             </Card>
@@ -79,7 +92,11 @@ export const ListPlacesOfCategory: FC<{
         ))}
         <li>
           <Link
-            href={`/explore/search?category=${category.id}`}
+            href={
+              type === 'place'
+                ? `/explore/search?placeCategory=${category.id}`
+                : `/explore/search?routeCategory=${category.id}`
+            }
             className={cn(
               'flex h-full w-32 flex-col items-center justify-center gap-2 pb-8'
             )}
