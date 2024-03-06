@@ -51,6 +51,11 @@ export const iconNames = [
   'arrow-fork',
   'map-pin',
   'badge-wc',
+  'leaf',
+  'tools-kitchen-2',
+  'coffee',
+  'home-dollar',
+  'letter-h',
 ] as const
 export type IconName = (typeof iconNames)[number]
 
