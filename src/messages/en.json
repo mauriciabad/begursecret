@@ -357,6 +357,12 @@
         "description": "List of activities"
       }
     },
+    "search": {
+      "meta": {
+        "title": "Search",
+        "description": "Search for places, routes, activities and bussinesses"
+      }
+    },
     "heading": "Explore",
     "back-to-map": "Back to map",
     "list": {

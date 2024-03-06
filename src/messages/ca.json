@@ -357,6 +357,12 @@
         "description": "Llista de activitats"
       }
     },
+    "search": {
+      "meta": {
+        "title": "Cercar",
+        "description": "Cerca llocs, rutes, negocis i activitats"
+      }
+    },
     "heading": "Explorar",
     "back-to-map": "Tornar al mapa",
     "list": {

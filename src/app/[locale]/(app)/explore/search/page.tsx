@@ -19,7 +19,7 @@ export async function generateMetadata({
 
   const t = await getTranslations({
     locale: params.locale,
-    namespace: 'explore',
+    namespace: 'explore.search',
   })
   return {
     title: t('meta.title'),
