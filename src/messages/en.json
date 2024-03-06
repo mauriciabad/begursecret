@@ -333,11 +333,32 @@
     "provider-button-text": "Sign in with {name}"
   },
   "explore": {
-    "meta": {
-      "title": "Explore",
-      "description": "List of places"
+    "places": {
+      "meta": {
+        "title": "Explore places",
+        "description": "List of places"
+      }
+    },
+    "routes": {
+      "meta": {
+        "title": "Explore routes",
+        "description": "List of routes"
+      }
+    },
+    "bussinesses": {
+      "meta": {
+        "title": "Explore bussinesses",
+        "description": "List of bussinesses"
+      }
+    },
+    "activities": {
+      "meta": {
+        "title": "Explore activities",
+        "description": "List of activities"
+      }
     },
     "heading": "Explore",
+    "back-to-map": "Back to map",
     "list": {
       "loading": "Loading places...",
       "created-date": "Created on {createdDate, date, ::yyyyMMddHHmmss}"
@@ -350,7 +371,13 @@
     "no-more-info": "No more information avilable.",
     "related-missions": "Related missions",
     "detailed-info": "Detailed info",
-    "maps-app": "Maps app"
+    "maps-app": "Maps app",
+    "tabs": {
+      "places": "Places",
+      "activities": "Activities",
+      "bussinesses": "Bussinesses",
+      "routes": "Routes"
+    }
   },
   "missions": {
     "meta": {

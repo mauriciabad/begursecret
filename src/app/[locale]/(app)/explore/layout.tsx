@@ -21,7 +21,7 @@ const ExploreLayout: FC<ExploreLayoutProps> = async ({ params, children }) => {
         <MainMapProvider>
           <MainMap
             className={cn(
-              'min-h-[calc(100dvh_-_192px)]',
+              'min-h-[calc(100dvh_-_65px_-_57px_-_57px)]',
               'sticky top-16 grow',
               '-mb-2 box-content pb-2'
             )}
@@ -32,7 +32,6 @@ const ExploreLayout: FC<ExploreLayoutProps> = async ({ params, children }) => {
 
           <MapDrawer
             classNames={{
-              wrapper: 'rounded-t-lg',
               contents: 'pb-8',
             }}
           >

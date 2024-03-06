@@ -17,7 +17,7 @@ export const RouteDetails: FC<{
   const t = useTranslations('explore')
 
   return (
-    <div className="px-4">
+    <div className="mt-2 px-4">
       <h2 className="font-title text-xl font-semibold">{route.name}</h2>
 
       {route.description && (
