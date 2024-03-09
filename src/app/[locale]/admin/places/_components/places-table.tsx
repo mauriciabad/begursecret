@@ -2,6 +2,7 @@
 
 import { Button } from '@nextui-org/button'
 import { Input } from '@nextui-org/input'
+import { Pagination, Spinner } from '@nextui-org/react'
 import {
   Selection,
   SortDescriptor,
@@ -20,18 +21,20 @@ import {
   IconSearch,
   IconTrash,
 } from '@tabler/icons-react'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { FC, useCallback, useMemo, useState } from 'react'
 import { SelectPlaceCategory } from '~/components/admin-only/select-place-category'
 import { CategoryTagList } from '~/components/category-tags/category-tag-list'
 import { MarkdownContent } from '~/components/generic/markdown-content'
 import { PlaceMarker } from '~/components/generic/place-marker'
 import { cn } from '~/helpers/cn'
+import { onlyTranslatableLocales } from '~/i18n'
 import { Link } from '~/navigation'
 import { ApiRouterOutput } from '~/server/api/router'
+import { trpc } from '~/trpc'
 import { ColumnsArray, makeCompareFn } from '../../../../../helpers/tables'
 
-type Place = ApiRouterOutput['admin']['places']['list'][number]
+type Place = ApiRouterOutput['admin']['places']['list']['data'][number]
 
 const columns = [
   {
@@ -83,43 +86,48 @@ const columns = [
 
 type ColumnKey = (typeof columns)[number]['key']
 
+const rowsPerPage = 100
+
 export const PlacesTable: FC<{
-  places: Place[]
   className?: string
-}> = ({ className, places }) => {
+}> = ({ className }) => {
   const t = useTranslations('admin-places-and-routes')
+  const locale = useLocale()
 
+  const [page, setPage] = useState(1)
   const [filterValue, setFilterValue] = useState('')
-
   const [mainCategoryFilter, setMainCategoryFilter] = useState<Selection>(
     new Set()
   )
+
+  const { data, isLoading } = trpc.admin.places.list.useQuery(
+    {
+      locale: onlyTranslatableLocales(locale),
+      page,
+      pageSize: rowsPerPage,
+      query: filterValue,
+      categoryId:
+        mainCategoryFilter === 'all' || mainCategoryFilter.size === 0
+          ? undefined
+          : [...mainCategoryFilter].map(Number)[0],
+    },
+    {
+      keepPreviousData: true,
+    }
+  )
+
+  const pages = useMemo(() => {
+    return data?.total ? Math.ceil(data.total / rowsPerPage) : 0
+  }, [data, rowsPerPage])
+
   const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
     column: 'importance',
     direction: 'ascending',
   })
 
-  const hasSearchFilter = Boolean(filterValue)
-
-  const filteredItems = useMemo(() => {
-    let filteredUsers = [...places]
-
-    if (hasSearchFilter) {
-      filteredUsers = filteredUsers.filter((place) =>
-        place.name.toLowerCase().includes(filterValue.toLowerCase())
-      )
-    }
-    if (mainCategoryFilter !== 'all' && mainCategoryFilter.size !== 0) {
-      filteredUsers = filteredUsers.filter((place) =>
-        mainCategoryFilter.has(place.mainCategory.id.toString())
-      )
-    }
-
-    return filteredUsers
-  }, [places, filterValue, mainCategoryFilter])
-
   const sortedItems = useMemo(() => {
-    return [...filteredItems].sort(
+    if (!data) return []
+    return [...data.data].sort(
       makeCompareFn(
         {
           categories: (item) => item.mainCategory.name,
@@ -131,7 +139,7 @@ export const PlacesTable: FC<{
         columns
       )
     )
-  }, [sortDescriptor, filteredItems])
+  }, [sortDescriptor, data])
 
   const renderCell = useCallback((place: Place, columnKey: ColumnKey) => {
     switch (columnKey) {
@@ -265,14 +273,15 @@ export const PlacesTable: FC<{
             onValueChange={onSearchChange}
           />
           <div className="flex flex-1 items-center justify-end gap-3">
-            <span className="hidden whitespace-nowrap text-right text-small text-default-400 sm:inline-block">
-              {t('total', { total: sortedItems.length })}
-            </span>
+            {data && (
+              <span className="hidden whitespace-nowrap text-right text-small text-default-400 sm:inline-block">
+                {t('total', { total: data?.total })}
+              </span>
+            )}
             <SelectPlaceCategory
               onSelectionChange={setMainCategoryFilter}
               selectedKeys={mainCategoryFilter}
               label={t('tableColumns.categories')}
-              selectionMode="multiple"
               size="sm"
               className="max-w-64"
             />
@@ -289,13 +298,7 @@ export const PlacesTable: FC<{
         </div>
       </div>
     )
-  }, [
-    filterValue,
-    sortedItems,
-    mainCategoryFilter,
-    onSearchChange,
-    hasSearchFilter,
-  ])
+  }, [filterValue, sortedItems, mainCategoryFilter, onSearchChange])
 
   return (
     <Table
@@ -306,6 +309,20 @@ export const PlacesTable: FC<{
       topContent={topContent}
       topContentPlacement="outside"
       onSortChange={setSortDescriptor}
+      bottomContent={
+        pages > 1 ? (
+          <div className="flex w-full justify-center">
+            <Pagination
+              variant="light"
+              showControls
+              color="primary"
+              page={page}
+              total={pages}
+              onChange={setPage}
+            />
+          </div>
+        ) : null
+      }
     >
       <TableHeader columns={columns}>
         {(column) => (
@@ -319,7 +336,12 @@ export const PlacesTable: FC<{
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={t('nothing-found')} items={sortedItems}>
+      <TableBody
+        emptyContent={t('nothing-found')}
+        items={sortedItems}
+        loadingContent={<Spinner />}
+        loadingState={isLoading ? 'loading' : 'idle'}
+      >
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => (

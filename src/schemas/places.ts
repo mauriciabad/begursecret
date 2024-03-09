@@ -9,6 +9,10 @@ import { numericIdSchema } from './shared'
 
 export const listPlacesSchema = z.object({
   locale: z.enum(translatableLocales).nullable(),
+  page: z.number().int().positive().default(1),
+  pageSize: z.number().int().positive(),
+  query: z.string().optional(),
+  categoryId: numericIdSchema.optional(),
 })
 
 export const searchPlacesSchema = z.object({

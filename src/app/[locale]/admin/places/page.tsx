@@ -1,12 +1,7 @@
 import type { Metadata } from 'next'
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import type { FC } from 'react'
-import {
-  onlyTranslatableLocales,
-  parseLocale,
-  type LocaleRouteParams,
-} from '~/i18n'
-import { getTrpc } from '~/server/get-server-thing'
+import { parseLocale, type LocaleRouteParams } from '~/i18n'
 import { PlacesTable } from './_components/places-table'
 
 export async function generateMetadata({
@@ -26,15 +21,10 @@ const AdminPage: FC<LocaleRouteParams> = async ({ params }) => {
   const locale = parseLocale(params.locale)
   unstable_setRequestLocale(locale)
 
-  const trpc = await getTrpc()
-  const places = await trpc.admin.places.list({
-    locale: onlyTranslatableLocales(locale),
-  })
-
   return (
     <>
       <main className="mx-auto min-h-screen max-w-7xl p-4 sm:py-8 lg:py-12">
-        <PlacesTable places={places} />
+        <PlacesTable />
       </main>
     </>
   )
