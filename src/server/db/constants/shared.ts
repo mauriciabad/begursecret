@@ -80,3 +80,5 @@ export const colorNames = [
   'rose',
 ] as const
 export type ColorName = (typeof colorNames)[number]
+
+export const MAX_IMPORTANCE = 1000
