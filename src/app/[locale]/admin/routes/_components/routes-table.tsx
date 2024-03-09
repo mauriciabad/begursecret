@@ -322,7 +322,7 @@ export const RoutesTable: FC<{
         )}
       </TableHeader>
       <TableBody
-        emptyContent={t('nothing-found')}
+        emptyContent={isLoading ? t('loading') : t('nothing-found')}
         items={data?.data ?? []}
         loadingContent={<Spinner />}
         loadingState={isLoading ? 'loading' : 'idle'}

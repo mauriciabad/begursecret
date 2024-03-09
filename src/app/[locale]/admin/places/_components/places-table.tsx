@@ -337,7 +337,7 @@ export const PlacesTable: FC<{
         )}
       </TableHeader>
       <TableBody
-        emptyContent={t('nothing-found')}
+        emptyContent={isLoading ? t('loading') : t('nothing-found')}
         items={sortedItems}
         loadingContent={<Spinner />}
         loadingState={isLoading ? 'loading' : 'idle'}
