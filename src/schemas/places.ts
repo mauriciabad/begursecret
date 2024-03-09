@@ -2,6 +2,7 @@ import { createInsertSchema } from 'drizzle-zod'
 import { z } from 'zod'
 import { googleMapsIdSchema } from '~/helpers/data/google-maps-id'
 import { translatableLocales } from '~/i18n'
+import { MAX_IMPORTANCE } from '~/server/db/constants/shared'
 import { features } from '~/server/db/schema'
 import { externalLinkSchema } from './externalLink'
 import { numericIdSchema } from './shared'
@@ -50,7 +51,7 @@ export const createPlaceSchema = z.object({
         lng: z.number(),
       })
     ),
-  importance: z.coerce.number().gt(0).optional().nullable(),
+  importance: z.coerce.number().gt(0).lt(MAX_IMPORTANCE).optional().nullable(),
   mainImageId: z.number().int().optional().nullable(),
   content: z.string().optional().nullable(),
   features: createInsertSchema(features),

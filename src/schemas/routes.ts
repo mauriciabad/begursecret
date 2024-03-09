@@ -5,6 +5,7 @@ import {
   multilineFromGeoJsonString,
 } from '~/helpers/spatial-data/multi-line'
 import { translatableLocales } from '~/i18n'
+import { MAX_IMPORTANCE } from '~/server/db/constants/shared'
 import { features } from '~/server/db/schema'
 import { externalLinkSchema } from './externalLink'
 import { numericIdSchema } from './shared'
@@ -39,7 +40,7 @@ export const createRouteSchema = z.object({
     .min(3, 'Required')
     .transform(multilineFromGeoJsonString)
     .pipe(multiLineSchema),
-  importance: z.coerce.number().gt(0).optional().nullable(),
+  importance: z.coerce.number().gt(0).lt(MAX_IMPORTANCE).optional().nullable(),
   content: z.string().optional().nullable(),
   features: createInsertSchema(features),
   externalLinks: z.array(externalLinkSchema),
