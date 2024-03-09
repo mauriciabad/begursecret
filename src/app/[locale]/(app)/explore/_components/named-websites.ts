@@ -34,6 +34,11 @@ const namedWebsites = [
   { id: 'wikiloc', name: 'Wikiloc', regex: [/^([a-z]+\.)?wikiloc\.com\b/] },
   { id: 'perdutsbegur', name: 'Els Perduts', regex: [/^perdutsbegur\.cat\b/] },
   {
+    id: 'geodesicPoint',
+    name: 'Fitxa del punt geodèsic',
+    regex: [/^geofons\.icgc\.cat\/fitxes\/XU\//],
+  },
+  {
     id: 'youtube',
     name: 'YouTube',
     regex: [/^youtu\.be\b/, /^youtube\.[a-z]+\b/],
@@ -58,18 +63,19 @@ type LinkData = {
 
 export const getLinkData = moize(
   (link: { title?: string | null; url: string }): LinkData => {
-    const url = new URL(link.url)
+    const url = parseUrl(link.url)
+    if (!url) return { name: link.title || 'Link' }
 
     if (url.protocol === 'geo:') {
       return {
-        name: link.title || 'Map',
+        name: link.title || 'Mapa',
       }
     }
 
     const hostname = url.hostname.replace(/^www\./, '')
 
     const namedWebsite = namedWebsites.find((nw) =>
-      nw.regex.some((r) => r.test(hostname))
+      nw.regex.some((r) => r.test(`${hostname}${url.pathname}`))
     )
 
     if (namedWebsite) {
@@ -88,3 +94,10 @@ export const getLinkData = moize(
     }
   }
 )
+function parseUrl(url: string) {
+  try {
+    return new URL(url)
+  } catch {
+    return null
+  }
+}

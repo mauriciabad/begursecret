@@ -26,11 +26,13 @@ import {
   IconHome,
   IconHomeDollar,
   IconHomeOff,
+  IconIceCream2,
   IconInfoCircle,
   IconLadder,
   IconLeaf,
   IconMapPin,
   IconMapPinQuestion,
+  IconMoodSmile,
   IconMotorbike,
   IconMountain,
   IconOvalVertical,
@@ -52,6 +54,7 @@ import {
   IconTower,
   IconTrees,
   IconTrekking,
+  IconViewfinder,
   IconWalk,
   IconWall,
   IconWash,
@@ -117,6 +120,9 @@ const iconsByIconName = {
   coffee: IconCoffee,
   'home-dollar': IconHomeDollar,
   bed: IconBed,
+  'ice-cream-2': IconIceCream2,
+  'mood-smile': IconMoodSmile,
+  viewfinder: IconViewfinder,
 } as const satisfies Record<IconName, Icon>
 
 export const CategoryIcon: FC<

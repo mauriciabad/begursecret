@@ -13,16 +13,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     {
-      url: `${env.BASE_URL}/explore`,
+      url: `${env.BASE_URL}/`,
       priority: 1,
+    },
+    {
+      url: `${env.BASE_URL}/explore`,
+      priority: 0.9,
     },
     {
       url: `${env.BASE_URL}/missions`,
-      priority: 1,
+      priority: 0.9,
     },
     {
       url: `${env.BASE_URL}/profile`,
-      priority: 1,
+      priority: 0.9,
     },
 
     ...places.map((place) => ({
