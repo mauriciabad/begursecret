@@ -1,6 +1,6 @@
 import 'server-only'
 
-import { eq, sql } from 'drizzle-orm'
+import { and, asc, eq, isNull, like, or, sql } from 'drizzle-orm'
 import {
   calculatePath,
   multiLineToString,
@@ -28,49 +28,87 @@ import {
 } from '~/server/helpers/translations/query/with-translations'
 import { adminProcedure, router } from '~/server/trpc'
 
-const getAllRoutes = flattenTranslationsOnExecute(
-  db.query.routes
-    .findMany(
-      withTranslations({
-        columns: {
-          id: true,
-          name: true,
-          description: true,
-          content: true,
-          importance: true,
-        },
-        with: {
-          mainImage: {
-            columns: {
-              id: true,
-            },
+const getAllRoutes = ({
+  limit,
+  offset,
+  ids,
+  locale,
+}: {
+  limit: number
+  offset: number
+  ids: number[]
+  locale: string | null
+}) =>
+  flattenTranslationsOnExecute(
+    db.query.routes
+      .findMany(
+        withTranslations({
+          columns: {
+            id: true,
+            name: true,
+            description: true,
+            content: true,
+            importance: true,
           },
-          features: withTranslations({}),
-          categories: {
-            columns: {},
-            with: {
-              category: {
-                columns: {
-                  id: true,
-                  icon: true,
-                  name: true,
+          limit: limit,
+          offset: offset,
+          orderBy: asc(routes.id),
+          where: (route, { inArray }) => inArray(route.id, ids),
+          with: {
+            mainImage: {
+              columns: {
+                id: true,
+              },
+            },
+            features: withTranslations({}),
+            categories: {
+              columns: {},
+              with: {
+                category: {
+                  columns: {
+                    id: true,
+                    icon: true,
+                    name: true,
+                  },
                 },
               },
             },
-          },
-          mainCategory: {
-            columns: {
-              id: true,
-              icon: true,
-              color: true,
-              name: true,
+            mainCategory: {
+              columns: {
+                id: true,
+                icon: true,
+                color: true,
+                name: true,
+              },
             },
           },
-        },
-      })
+        })
+      )
+      .prepare()
+  ).execute({ locale })
+
+const getAllRouteIds = db
+  .selectDistinct({ id: routes.id, importance: routes.importance })
+  .from(routes)
+  .leftJoin(
+    routesToRouteCategories,
+    eq(routes.id, routesToRouteCategories.routeId)
+  )
+  .where(
+    and(
+      or(
+        isNull(sql.placeholder('categoryId')),
+        eq(routes.mainCategoryId, sql.placeholder('categoryId')),
+        eq(routesToRouteCategories.categoryId, sql.placeholder('categoryId'))
+      ),
+      or(
+        isNull(sql.placeholder('query')),
+        like(routes.name, sql.placeholder('query'))
+      )
     )
-    .prepare()
-)
+  )
+  .orderBy(ascNullsEnd(routes.importance), asc(routes.id))
+  .prepare()
 
 const listCategories = flattenTranslationsOnExecute(
   db.query.routeCategories
@@ -138,7 +176,26 @@ const getRoute = flattenTranslationsOnExecute(
 
 export const routesAdminRouter = router({
   list: adminProcedure.input(listRoutesSchema).query(async ({ input }) => {
-    return await getAllRoutes.execute({ locale: input.locale })
+    const preparedQuery = input.query
+      ? `%${input.query.toLocaleLowerCase().replaceAll(/\s+/g, '%')}%`
+      : null
+
+    const ids = (
+      await getAllRouteIds.execute({
+        query: preparedQuery,
+        categoryId: input.categoryId,
+      })
+    ).map(({ id }) => id)
+
+    return {
+      data: await getAllRoutes({
+        locale: input.locale,
+        offset: (input.page - 1) * input.pageSize,
+        limit: input.pageSize,
+        ids: ids,
+      }),
+      total: ids.length,
+    }
   }),
   get: adminProcedure.input(getRoutesSchema).query(async ({ input }) => {
     const result = await getRoute.execute({

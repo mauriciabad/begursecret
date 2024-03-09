@@ -28,12 +28,12 @@ import { adminProcedure, router } from '~/server/trpc'
 const getAllPlaces = ({
   limit,
   offset,
-  placeIds,
+  ids: placeIds,
   locale,
 }: {
   limit: number
   offset: number
-  placeIds: number[]
+  ids: number[]
   locale: string | null
 }) =>
   flattenTranslationsOnExecute(
@@ -84,7 +84,7 @@ const getAllPlaces = ({
       .prepare()
   ).execute({ locale })
 
-const getAllPlacesId = db
+const getAllPlaceIds = db
   .selectDistinct({ id: places.id, importance: places.importance })
   .from(places)
   .leftJoin(
@@ -178,8 +178,8 @@ export const placesAdminRouter = router({
       ? `%${input.query.toLocaleLowerCase().replaceAll(/\s+/g, '%')}%`
       : null
 
-    const placeIds = (
-      await getAllPlacesId.execute({
+    const ids = (
+      await getAllPlaceIds.execute({
         query: preparedQuery,
         categoryId: input.categoryId,
       })
@@ -190,9 +190,9 @@ export const placesAdminRouter = router({
         locale: input.locale,
         offset: (input.page - 1) * input.pageSize,
         limit: input.pageSize,
-        placeIds: placeIds,
+        ids: ids,
       }),
-      total: placeIds.length,
+      total: ids.length,
     }
   }),
   get: adminProcedure.input(getPlacesSchema).query(async ({ input }) => {
