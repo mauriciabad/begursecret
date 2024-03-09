@@ -1,3 +1,4 @@
+import { Image } from '@nextui-org/image'
 import { Button, Checkbox, Divider, Input } from '@nextui-org/react'
 import { IconExternalLink, IconPlus, IconTrash } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
@@ -10,6 +11,7 @@ import {
   useFormContext,
   useWatch,
 } from 'react-hook-form'
+import { getLinkData } from '~/app/[locale]/(app)/explore/_components/named-websites'
 import { cn } from '~/helpers/cn'
 import { makeGoogleMapsUrl } from '~/helpers/data/google-maps-id'
 import { Link } from '~/navigation'
@@ -95,9 +97,14 @@ const ExternalLinkItem: FC<{
 }> = ({ control, index, field, onRemove, showDivider }) => {
   const t = useTranslations('admin-places-and-routes')
 
-  const value = useWatch({
+  const values = useWatch({
     name: 'externalLinks',
     control,
+  })
+  const currentValue = values[index]
+
+  const { name, favicon } = getLinkData({
+    url: currentValue.url ? String(currentValue.url) : '',
   })
 
   return (
@@ -119,6 +126,20 @@ const ExternalLinkItem: FC<{
               onChange={onChange}
               value={value}
               label={t('externalLinks.title')}
+              placeholder={name}
+              startContent={
+                favicon && (
+                  <Image
+                    src={favicon}
+                    alt=""
+                    width={18}
+                    height={18}
+                    removeWrapper
+                    className="aspect-square object-contain"
+                    radius="none"
+                  />
+                )
+              }
             />
           )}
         />
@@ -164,11 +185,11 @@ const ExternalLinkItem: FC<{
 
         <Button
           as={Link}
-          href={value[index].url}
+          href={currentValue.url}
           target="_blank"
           isIconOnly
           size="lg"
-          isDisabled={!value[index].url}
+          isDisabled={!currentValue.url}
         >
           <IconExternalLink />
         </Button>
