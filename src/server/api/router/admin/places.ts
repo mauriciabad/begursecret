@@ -1,6 +1,6 @@
 import 'server-only'
 
-import { eq, sql } from 'drizzle-orm'
+import { and, asc, eq, isNull, like, or, sql } from 'drizzle-orm'
 import { calculateLocation, pointToString } from '~/helpers/spatial-data/point'
 import {
   createPlaceSchema,
@@ -25,49 +25,87 @@ import {
 } from '~/server/helpers/translations/query/with-translations'
 import { adminProcedure, router } from '~/server/trpc'
 
-const getAllPlaces = flattenTranslationsOnExecute(
-  db.query.places
-    .findMany(
-      withTranslations({
-        columns: {
-          id: true,
-          name: true,
-          description: true,
-          content: true,
-          importance: true,
-        },
-        with: {
-          mainImage: {
-            columns: {
-              id: true,
-            },
+const getAllPlaces = ({
+  limit,
+  offset,
+  ids: placeIds,
+  locale,
+}: {
+  limit: number
+  offset: number
+  ids: number[]
+  locale: string | null
+}) =>
+  flattenTranslationsOnExecute(
+    db.query.places
+      .findMany(
+        withTranslations({
+          columns: {
+            id: true,
+            name: true,
+            description: true,
+            content: true,
+            importance: true,
           },
-          features: withTranslations({}),
-          categories: {
-            columns: {},
-            with: {
-              category: {
-                columns: {
-                  id: true,
-                  icon: true,
-                  name: true,
+          limit: limit,
+          offset: offset,
+          orderBy: asc(places.id),
+          where: (place, { inArray }) => inArray(place.id, placeIds),
+          with: {
+            mainImage: {
+              columns: {
+                id: true,
+              },
+            },
+            features: withTranslations({}),
+            categories: {
+              columns: {},
+              with: {
+                category: {
+                  columns: {
+                    id: true,
+                    icon: true,
+                    name: true,
+                  },
                 },
               },
             },
-          },
-          mainCategory: {
-            columns: {
-              id: true,
-              icon: true,
-              color: true,
-              name: true,
+            mainCategory: {
+              columns: {
+                id: true,
+                icon: true,
+                color: true,
+                name: true,
+              },
             },
           },
-        },
-      })
+        })
+      )
+      .prepare()
+  ).execute({ locale })
+
+const getAllPlaceIds = db
+  .selectDistinct({ id: places.id, importance: places.importance })
+  .from(places)
+  .leftJoin(
+    placesToPlaceCategories,
+    eq(places.id, placesToPlaceCategories.placeId)
+  )
+  .where(
+    and(
+      or(
+        isNull(sql.placeholder('categoryId')),
+        eq(places.mainCategoryId, sql.placeholder('categoryId')),
+        eq(placesToPlaceCategories.categoryId, sql.placeholder('categoryId'))
+      ),
+      or(
+        isNull(sql.placeholder('query')),
+        like(places.name, sql.placeholder('query'))
+      )
     )
-    .prepare()
-)
+  )
+  .orderBy(ascNullsEnd(places.importance), asc(places.id))
+  .prepare()
 
 const listCategories = flattenTranslationsOnExecute(
   db.query.placeCategories
@@ -136,7 +174,26 @@ const getPlace = flattenTranslationsOnExecute(
 
 export const placesAdminRouter = router({
   list: adminProcedure.input(listPlacesSchema).query(async ({ input }) => {
-    return await getAllPlaces.execute({ locale: input.locale })
+    const preparedQuery = input.query
+      ? `%${input.query.toLocaleLowerCase().replaceAll(/\s+/g, '%')}%`
+      : null
+
+    const ids = (
+      await getAllPlaceIds.execute({
+        query: preparedQuery,
+        categoryId: input.categoryId,
+      })
+    ).map(({ id }) => id)
+
+    return {
+      data: await getAllPlaces({
+        locale: input.locale,
+        offset: (input.page - 1) * input.pageSize,
+        limit: input.pageSize,
+        ids: ids,
+      }),
+      total: ids.length,
+    }
   }),
   get: adminProcedure.input(getPlacesSchema).query(async ({ input }) => {
     const result = await getPlace.execute({

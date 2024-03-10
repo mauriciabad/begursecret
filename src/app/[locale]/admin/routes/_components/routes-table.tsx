@@ -2,6 +2,7 @@
 
 import { Button } from '@nextui-org/button'
 import { Input } from '@nextui-org/input'
+import { Pagination, Spinner } from '@nextui-org/react'
 import {
   Selection,
   SortDescriptor,
@@ -20,18 +21,20 @@ import {
   IconSearch,
   IconTrash,
 } from '@tabler/icons-react'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { FC, useCallback, useMemo, useState } from 'react'
 import { SelectRouteCategory } from '~/components/admin-only/select-route-category'
 import { CategoryTagList } from '~/components/category-tags/category-tag-list'
 import { MarkdownContent } from '~/components/generic/markdown-content'
 import { PlaceMarker } from '~/components/generic/place-marker'
 import { cn } from '~/helpers/cn'
-import { ColumnsArray, makeCompareFn } from '~/helpers/tables'
+import { ColumnsArray } from '~/helpers/tables'
+import { onlyTranslatableLocales } from '~/i18n'
 import { Link } from '~/navigation'
 import { ApiRouterOutput } from '~/server/api/router'
+import { trpc } from '~/trpc'
 
-type Route = ApiRouterOutput['admin']['routes']['list'][number]
+type Route = ApiRouterOutput['admin']['routes']['list']['data'][number]
 
 const columns = [
   {
@@ -83,52 +86,45 @@ const columns = [
 
 type ColumnKey = (typeof columns)[number]['key']
 
-export const RoutesTable: FC<{
-  routes: Route[]
-  className?: string
-}> = ({ className, routes }) => {
-  const t = useTranslations('admin-places-and-routes')
+const rowsPerPage = 100
 
+export const RoutesTable: FC<{
+  className?: string
+}> = ({ className }) => {
+  const t = useTranslations('admin-places-and-routes')
+  const locale = useLocale()
+
+  const [page, setPage] = useState(1)
   const [filterValue, setFilterValue] = useState('')
 
   const [mainCategoryFilter, setMainCategoryFilter] = useState<Selection>(
     new Set()
   )
+
+  const { data, isLoading } = trpc.admin.routes.list.useQuery(
+    {
+      locale: onlyTranslatableLocales(locale),
+      page,
+      pageSize: rowsPerPage,
+      query: filterValue,
+      categoryId:
+        mainCategoryFilter === 'all' || mainCategoryFilter.size === 0
+          ? undefined
+          : [...mainCategoryFilter].map(Number)[0],
+    },
+    {
+      keepPreviousData: true,
+    }
+  )
+
+  const pages = useMemo(() => {
+    return data?.total ? Math.ceil(data.total / rowsPerPage) : 0
+  }, [data, rowsPerPage])
+
   const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
     column: 'importance',
     direction: 'ascending',
   })
-
-  const hasSearchFilter = Boolean(filterValue)
-
-  const filteredItems = useMemo(() => {
-    let filteredUsers = [...routes]
-
-    if (hasSearchFilter) {
-      filteredUsers = filteredUsers.filter((route) =>
-        route.name.toLowerCase().includes(filterValue.toLowerCase())
-      )
-    }
-    if (mainCategoryFilter !== 'all' && mainCategoryFilter.size !== 0) {
-      filteredUsers = filteredUsers.filter((route) =>
-        mainCategoryFilter.has(route.mainCategory.id.toString())
-      )
-    }
-
-    return filteredUsers
-  }, [routes, filterValue, mainCategoryFilter])
-
-  const sortedItems = useMemo(() => {
-    return [...filteredItems].sort(
-      makeCompareFn(
-        {
-          mainCategory: (item) => item.mainCategory.name,
-        },
-        sortDescriptor,
-        columns
-      )
-    )
-  }, [sortDescriptor, filteredItems])
 
   const renderCell = useCallback((route: Route, columnKey: ColumnKey) => {
     switch (columnKey) {
@@ -262,14 +258,15 @@ export const RoutesTable: FC<{
             onValueChange={onSearchChange}
           />
           <div className="flex flex-1 items-center justify-end gap-3">
-            <span className="hidden whitespace-nowrap text-right text-small text-default-400 sm:inline-block">
-              {t('total', { total: sortedItems.length })}
-            </span>
+            {data && (
+              <span className="hidden whitespace-nowrap text-right text-small text-default-400 sm:inline-block">
+                {t('total', { total: data?.total })}
+              </span>
+            )}
             <SelectRouteCategory
               onSelectionChange={setMainCategoryFilter}
               selectedKeys={mainCategoryFilter}
               label={t('tableColumns.categories')}
-              selectionMode="multiple"
               size="sm"
               className="max-w-64"
             />
@@ -286,13 +283,7 @@ export const RoutesTable: FC<{
         </div>
       </div>
     )
-  }, [
-    filterValue,
-    sortedItems,
-    mainCategoryFilter,
-    onSearchChange,
-    hasSearchFilter,
-  ])
+  }, [filterValue, data, mainCategoryFilter, onSearchChange])
 
   return (
     <Table
@@ -303,6 +294,20 @@ export const RoutesTable: FC<{
       topContent={topContent}
       topContentPlacement="outside"
       onSortChange={setSortDescriptor}
+      bottomContent={
+        pages > 1 ? (
+          <div className="flex w-full justify-center">
+            <Pagination
+              variant="light"
+              showControls
+              color="primary"
+              page={page}
+              total={pages}
+              onChange={setPage}
+            />
+          </div>
+        ) : null
+      }
     >
       <TableHeader columns={columns}>
         {(column) => (
@@ -316,7 +321,12 @@ export const RoutesTable: FC<{
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={t('nothing-found')} items={sortedItems}>
+      <TableBody
+        emptyContent={isLoading ? t('loading') : t('nothing-found')}
+        items={data?.data ?? []}
+        loadingContent={<Spinner />}
+        loadingState={isLoading ? 'loading' : 'idle'}
+      >
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => (
