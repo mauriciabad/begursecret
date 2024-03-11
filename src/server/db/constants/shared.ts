@@ -57,8 +57,11 @@ export const iconNames = [
   'home-dollar',
   'bed',
   'ice-cream-2',
-  'mood-smile',
+  'basket',
   'viewfinder',
+  'stars',
+  'shopping-bag',
+  'shopping-cart',
 ] as const
 export type IconName = (typeof iconNames)[number]
 
