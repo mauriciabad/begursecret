@@ -97,6 +97,7 @@ export const iconNames = [
   'tent',
   'golf',
   'plane-departure',
+  'circles',
 ] as const
 export type IconName = (typeof iconNames)[number]
 

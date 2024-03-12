@@ -24,6 +24,7 @@ import {
   IconChargingPile,
   IconChartBubble,
   IconChevronsRight,
+  IconCircles,
   IconClover,
   IconCoffee,
   IconCornerRightDown,
@@ -200,6 +201,7 @@ const iconsByIconName = {
   tent: IconTent,
   golf: IconGolf,
   'plane-departure': IconPlaneDeparture,
+  circles: IconCircles,
 } as const satisfies Record<IconName, Icon>
 
 export const CategoryIcon: FC<
