@@ -14,8 +14,13 @@ const placeCategoryGroupIdByName = {
   nature: 1,
   activities: 2,
   historyAndCulture: 3,
-  bussinesses: 4,
-  infrastructure: 5,
+  infrastructure: 4,
+  shops: 5,
+  restaurants: 6,
+  leisureAndSports: 7,
+  services: 8,
+  foodAndSupermarkets: 9,
+  accommodation: 10,
 } as const satisfies Record<string, number>
 
 const makeGetCategoriesWithPlaces = (categoryGroupIds: number[]) =>
@@ -80,7 +85,12 @@ const makeGetCategoriesWithPlaces = (categoryGroupIds: number[]) =>
   )
 
 const getCategoriesWithPlacesForBussinesses = makeGetCategoriesWithPlaces([
-  placeCategoryGroupIdByName.bussinesses,
+  placeCategoryGroupIdByName.shops,
+  placeCategoryGroupIdByName.restaurants,
+  placeCategoryGroupIdByName.leisureAndSports,
+  placeCategoryGroupIdByName.services,
+  placeCategoryGroupIdByName.foodAndSupermarkets,
+  placeCategoryGroupIdByName.accommodation,
 ])
 const getCategoriesWithPlacesForPlaces = makeGetCategoriesWithPlaces([
   placeCategoryGroupIdByName.nature,
