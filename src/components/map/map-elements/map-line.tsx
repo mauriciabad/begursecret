@@ -170,8 +170,7 @@ const calcKey = moize(
     type: 'border' | 'stroke' | 'outline' = 'stroke',
     size: StrokeWidthName
   ) => {
-    return `${line
-      .map(([lat, lng]) => `${lat}-${lng}`)
-      .join(',')}-${type}-${size}`
+    const lineString = line.map(([lat, lng]) => `${lat}-${lng}`).join(',')
+    return `${lineString}-${type}-${size}`
   }
 )
