@@ -53,6 +53,7 @@ export const OptimizedImage: FC<
       : image
     : { ...fallbackImage, alt: FALLBACK_IMG_ALT }
 
+  return null // TODO: quick fix to not load images all the time
   return (
     <Image
       as={NextImage}
