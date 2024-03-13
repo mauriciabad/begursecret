@@ -52,7 +52,8 @@ export const OptimizedImage: FC<
       ? imageToStatic(image)
       : image
     : { ...fallbackImage, alt: FALLBACK_IMG_ALT }
-return (
+
+  return (
     <Image
       as={NextImage}
       src={actualImage.src}
