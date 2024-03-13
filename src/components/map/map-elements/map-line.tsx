@@ -110,6 +110,7 @@ export const MapLine: FC<MapLine> = memo(
 type MapLineSize = 'normal' | 'emphasized'
 
 const MAX_IMPORTANCE = 10
+
 const calcSize = moize(
   (status: MapLineSize, rawImportance: number | null, rawZoom: number) => {
     if (status === 'emphasized') return 'lg'
@@ -169,6 +170,8 @@ const calcKey = moize(
     type: 'border' | 'stroke' | 'outline' = 'stroke',
     size: StrokeWidthName
   ) => {
-    return `${line.map(([lat, lng]) => `${lat}-${lng}`).join(',')}-${type}-${size}`
+    return `${line
+      .map(([lat, lng]) => `${lat}-${lng}`)
+      .join(',')}-${type}-${size}`
   }
 )
