@@ -69,6 +69,7 @@ export const MainMapProvider: FC<PropsWithChildren> = memo(({ children }) => {
     path: route.path,
     url: `/explore/routes/${route.id}`,
     name: route.name,
+    importance: route.importance,
   }))
 
   return (
