@@ -21,7 +21,7 @@ const ExploreLayout: FC<ExploreLayoutProps> = async ({ params, children }) => {
         <MainMapProvider>
           <MainMap
             className={cn(
-              'min-h-[calc(100dvh_-_65px_-_57px_-_57px)]',
+              'min-h-[calc(100dvh_-_65px_-_128px_-_57px)]',
               'sticky top-16 grow',
               '-mb-2 box-content pb-2'
             )}
