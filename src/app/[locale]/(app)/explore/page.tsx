@@ -1,8 +1,15 @@
 import type { Metadata } from 'next'
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import type { FC } from 'react'
-import { parseLocale, type LocaleRouteParams } from '~/i18n'
-import { redirect } from '~/navigation'
+import {
+  onlyTranslatableLocales,
+  parseLocale,
+  type LocaleRouteParams,
+} from '~/i18n'
+import { getTrpc } from '~/server/get-server-thing'
+import { CategoriesGrid } from './_components/categories-grid'
+import { ListItemsOfCategory } from './_components/list-items-of-category'
+import { OverrideMainMap } from './_components/override-main-map'
 
 export async function generateMetadata({
   params,
@@ -21,9 +28,29 @@ const ExplorePage: FC<LocaleRouteParams> = async ({ params }) => {
   const locale = parseLocale(params.locale)
   unstable_setRequestLocale(locale)
 
-  redirect('/explore/places')
+  const trpc = await getTrpc()
+  const placesByCategory = await trpc.explore.listPlaces({
+    locale: onlyTranslatableLocales(locale),
+  })
 
-  return null
+  return (
+    <>
+      <OverrideMainMap reset />
+
+      <CategoriesGrid categories={placesByCategory} type="place" />
+
+      <div className="space-y-2">
+        {placesByCategory.map((category) => (
+          <ListItemsOfCategory
+            key={category.id}
+            category={category}
+            items={category.places}
+            type="place"
+          />
+        ))}
+      </div>
+    </>
+  )
 }
 
 export default ExplorePage
