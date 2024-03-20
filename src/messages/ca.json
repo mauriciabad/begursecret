@@ -359,7 +359,7 @@
       }
     },
     "heading": "Explorar",
-    "back-to-map": "Tornar al mapa",
+    "back": "Tornar",
     "list": {
       "loading": "Carregant llocs...",
       "created-date": "Creada el {createdDate, date, ::yyyyMMddHHmmss}"

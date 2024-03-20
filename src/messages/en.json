@@ -359,7 +359,7 @@
       }
     },
     "heading": "Explore",
-    "back-to-map": "Back to map",
+    "back": "Back",
     "list": {
       "loading": "Loading places...",
       "created-date": "Created on {createdDate, date, ::yyyyMMddHHmmss}"
