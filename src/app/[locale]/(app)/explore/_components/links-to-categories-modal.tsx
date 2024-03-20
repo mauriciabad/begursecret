@@ -74,12 +74,7 @@ export const LinksToCategoriesModal: FC<{
                 </ScrollShadow>
               </ModalBody>
               <ModalFooter>
-                <Button
-                  fullWidth
-                  color="primary"
-                  variant="light"
-                  onPress={onClose}
-                >
+                <Button fullWidth color="primary" onPress={onClose}>
                   {t('close')}
                 </Button>
               </ModalFooter>
