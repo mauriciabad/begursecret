@@ -21,8 +21,6 @@ const DEFAULT_CENTER = {
   lng: 3.2137,
 } as const satisfies MapPoint
 
-const INITIAL_ZOOM = 14
-
 export const MainMap: FC<{
   className?: string
   classNames?: {
@@ -46,7 +44,7 @@ export const MainMap: FC<{
   return (
     <NextMapContainer
       center={DEFAULT_CENTER}
-      zoom={INITIAL_ZOOM}
+      zoom={14}
       zoomControl={false}
       scrollWheelZoom
       doubleClickZoom

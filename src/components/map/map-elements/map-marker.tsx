@@ -1,6 +1,6 @@
 import moize from 'moize'
 import { FC, memo, useMemo, useState } from 'react'
-import { useMapEvent } from 'react-leaflet'
+import { useMap, useMapEvent } from 'react-leaflet'
 import { MapPoint } from '~/helpers/spatial-data/point'
 import { useRouter } from '~/navigation'
 import { NextMarker } from '../leaflet-components/next-js-ready/marker'
@@ -41,11 +41,12 @@ export const MapMarker: FC<MapMarker> = memo(
   }) => {
     const router = useRouter()
 
+    const map = useMap()
     const [actualSize, setActualSize] = useState<
       PlaceMarkerLeafletIconProps['size']
-    >(calcSize(size, 14))
+    >(calcSize(size, map.getZoom()))
 
-    const map = useMapEvent('zoomend', () => {
+    useMapEvent('zoomend', () => {
       const zoom = map.getZoom()
       const newSize = calcSize(size, zoom)
       if (newSize !== actualSize) {
