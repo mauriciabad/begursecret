@@ -377,7 +377,8 @@
     "close": "Close",
     "category-groups": {
       "routes": "Routes"
-    }
+    },
+    "no-places": "No places found"
   },
   "missions": {
     "meta": {

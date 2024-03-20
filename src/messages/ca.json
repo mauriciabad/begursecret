@@ -377,7 +377,8 @@
     "close": "Tancar",
     "category-groups": {
       "routes": "Rutes"
-    }
+    },
+    "no-places": "No s'han trobat llocs"
   },
   "missions": {
     "meta": {
