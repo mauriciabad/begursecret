@@ -22,6 +22,10 @@ export const LinksToCategoriesModal: FC<{
   const t = useTranslations('explore')
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
+  const sortedCategories = group.categories.sort((a, b) =>
+    a.category.namePlural.localeCompare(b.category.namePlural)
+  )
+
   return (
     <>
       <Button
@@ -47,7 +51,7 @@ export const LinksToCategoriesModal: FC<{
               <ModalBody>
                 <ScrollShadow>
                   <ul>
-                    {group.categories.map(({ category }) => {
+                    {sortedCategories.map(({ category }) => {
                       const categoryLink =
                         group.type === 'place'
                           ? (`/explore/search?placeCategory=${category.id}` as const)
