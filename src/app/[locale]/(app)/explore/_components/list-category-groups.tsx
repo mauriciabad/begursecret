@@ -75,7 +75,7 @@ export const ListCategoryGroups: FC<{
         })}
       </ul>
 
-      <LinksToCategoriesModal group={group} />
+      <LinksToCategoriesModal group={group} className="mb-8" />
     </>
   )
 }
