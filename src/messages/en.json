@@ -374,7 +374,10 @@
     "related-missions": "Related missions",
     "detailed-info": "Detailed info",
     "maps-app": "Maps app",
-    "close": "Close"
+    "close": "Close",
+    "category-groups": {
+      "routes": "Routes"
+    }
   },
   "missions": {
     "meta": {

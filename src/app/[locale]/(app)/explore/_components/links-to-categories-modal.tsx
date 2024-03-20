@@ -14,14 +14,10 @@ import { useTranslations } from 'next-intl'
 import { FC } from 'react'
 import { PlaceMarker } from '~/components/generic/place-marker'
 import { Link } from '~/navigation'
-import { ApiRouterOutput } from '~/server/api/router'
-
-type PlaceCategoryGroup = NonNullable<
-  ApiRouterOutput['explore']['listCategoryGroups']
->[number]
+import { CategoryGroupListItem } from './list-category-groups'
 
 export const LinksToCategoriesModal: FC<{
-  group: PlaceCategoryGroup
+  group: CategoryGroupListItem
 }> = ({ group }) => {
   const t = useTranslations('explore')
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
@@ -51,25 +47,33 @@ export const LinksToCategoriesModal: FC<{
               <ModalBody>
                 <ScrollShadow>
                   <ul>
-                    {group.placeCategories.map(({ category }) => (
-                      <Button
-                        as={Link}
-                        key={category.id}
-                        href={`/explore/search?placeCategory=${category.id}`}
-                        variant="light"
-                        fullWidth
-                        className="flex items-center justify-start px-2"
-                        startContent={
-                          <PlaceMarker
-                            icon={category.icon}
-                            color={category.color}
-                            size="md"
-                          />
-                        }
-                      >
-                        {category.namePlural}
-                      </Button>
-                    ))}
+                    {group.categories.map(({ category }) => {
+                      const categoryLink =
+                        group.type === 'place'
+                          ? (`/explore/search?placeCategory=${category.id}` as const)
+                          : (`/explore/search?routeCategory=${category.id}` as const)
+
+                      return (
+                        <Button
+                          as={Link}
+                          role="link"
+                          key={category.id}
+                          href={categoryLink}
+                          variant="light"
+                          fullWidth
+                          className="flex items-center justify-start px-2"
+                          startContent={
+                            <PlaceMarker
+                              icon={category.icon}
+                              color={category.color}
+                              size="md"
+                            />
+                          }
+                        >
+                          {category.namePlural}
+                        </Button>
+                      )
+                    })}
                   </ul>
                 </ScrollShadow>
               </ModalBody>

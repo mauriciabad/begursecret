@@ -374,7 +374,10 @@
     "related-missions": "Missions relacionades",
     "detailed-info": "Informació detallada",
     "maps-app": "App de mapes",
-    "close": "Tancar"
+    "close": "Tancar",
+    "category-groups": {
+      "routes": "Rutes"
+    }
   },
   "missions": {
     "meta": {

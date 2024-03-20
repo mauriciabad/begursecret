@@ -8,8 +8,8 @@ import { PlaceList } from './_components/place-list'
 
 type PageParams = LocaleRouteParams & {
   searchParams: {
-    placeCategory: string
-    routeCategory: string // TODO: use this to search
+    placeCategory?: string
+    routeCategory?: string // TODO: use this to search
   }
 }
 export async function generateMetadata({
@@ -35,7 +35,9 @@ const ExplorePage: FC<PageParams> = async ({ params, searchParams }) => {
   const trpc = await getTrpc()
   const places = await trpc.places.search({
     locale: onlyTranslatableLocales(locale),
-    placeCategory: Number(searchParams.placeCategory),
+    placeCategory: searchParams.placeCategory
+      ? Number(searchParams.placeCategory)
+      : null,
   })
 
   const placeIds = new Set(places.map((place) => place.id))
