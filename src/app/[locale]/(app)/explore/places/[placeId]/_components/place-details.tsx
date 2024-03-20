@@ -38,44 +38,45 @@ export const PlaceDetails: FC<{
         className="mt-4"
       />
 
-      {place.images && place.images.length >= 1 ? (
-        <div className="mt-4 grid grid-cols-[2fr_1fr] grid-rows-2 gap-2">
+      {place.mainImage &&
+        (place.images && place.images.length >= 1 ? (
+          <div className="mt-4 grid grid-cols-[2fr_1fr] grid-rows-2 gap-2">
+            <OptimizedImage
+              radius="lg"
+              shadow="sm"
+              className="aspect-[4/3]"
+              classNames={{
+                wrapper: 'row-span-2',
+              }}
+              image={place.mainImage}
+              alt={place.name}
+            />
+            <OptimizedImage
+              radius="lg"
+              shadow="sm"
+              alt={place.name}
+              full="both"
+              image={place.images[0]}
+            />
+            <ViewMoreImagesButtonAndDialog
+              images={
+                place.mainImage
+                  ? [place.mainImage, ...place.images]
+                  : place.images
+              }
+              buttonText={t('see-more')}
+              className="h-full"
+            />
+          </div>
+        ) : (
           <OptimizedImage
             radius="lg"
             shadow="sm"
-            className="aspect-[4/3]"
-            classNames={{
-              wrapper: 'row-span-2',
-            }}
+            alt={place.name}
+            className="mt-4 aspect-[4/3] object-cover"
             image={place.mainImage}
-            alt={place.name}
           />
-          <OptimizedImage
-            radius="lg"
-            shadow="sm"
-            alt={place.name}
-            full="both"
-            image={place.images[0]}
-          />
-          <ViewMoreImagesButtonAndDialog
-            images={
-              place.mainImage
-                ? [place.mainImage, ...place.images]
-                : place.images
-            }
-            buttonText={t('see-more')}
-            className="h-full"
-          />
-        </div>
-      ) : (
-        <OptimizedImage
-          radius="lg"
-          shadow="sm"
-          alt={place.name}
-          className="mt-4 aspect-[4/3] object-cover"
-          image={place.mainImage}
-        />
-      )}
+        ))}
 
       <CategoryTagList
         mainCategory={place.mainCategory}

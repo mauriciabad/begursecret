@@ -1,6 +1,8 @@
 'use client'
 
 import { Card, CardBody } from '@nextui-org/card'
+import { IconMapPinOff } from '@tabler/icons-react'
+import { useTranslations } from 'next-intl'
 import { FC } from 'react'
 import { CategoryTagList } from '~/components/category-tags/category-tag-list'
 import { OptimizedImage } from '~/components/generic/optimized-image'
@@ -14,9 +16,24 @@ type Places =
 export const PlaceList: FC<{
   places: Places
 }> = ({ places }) => {
+  const t = useTranslations('explore')
+
+  if (!places || places.length === 0) {
+    return (
+      <div className="space-y-1 pt-8">
+        <IconMapPinOff
+          size={48}
+          stroke={1}
+          className="mx-auto text-stone-500"
+        />
+        <p className="text-center">{t('no-places')}</p>
+      </div>
+    )
+  }
+
   return (
     <ul className="py-2">
-      {places?.map((place) => (
+      {places.map((place) => (
         <li key={place.id}>
           <Card
             as={Link}
@@ -41,12 +58,14 @@ export const PlaceList: FC<{
                   <p className="text-stone-800">{place.description}</p>
                 )}
               </div>
-              <OptimizedImage
-                radius="md"
-                alt={place.name}
-                className="z-0 aspect-[4/3] h-16 w-auto object-cover"
-                image={place.mainImage}
-              />
+              {place.mainImage && (
+                <OptimizedImage
+                  radius="md"
+                  alt={place.name}
+                  className="z-0 aspect-[4/3] h-16 w-auto object-cover"
+                  image={place.mainImage}
+                />
+              )}
             </CardBody>
           </Card>
         </li>

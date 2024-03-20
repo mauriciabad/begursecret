@@ -359,7 +359,7 @@
       }
     },
     "heading": "Explore",
-    "back-to-map": "Back to map",
+    "back": "Back",
     "list": {
       "loading": "Loading places...",
       "created-date": "Created on {createdDate, date, ::yyyyMMddHHmmss}"
@@ -377,7 +377,8 @@
     "close": "Close",
     "category-groups": {
       "routes": "Routes"
-    }
+    },
+    "no-places": "No places found"
   },
   "missions": {
     "meta": {

@@ -79,12 +79,14 @@ export const PlacePreviewModal: FC<
                         ]}
                       />
                     </Link>
-                    <OptimizedImage
-                      radius="md"
-                      full="height"
-                      image={place.mainImage}
-                      alt={place.name}
-                    />
+                    {place.mainImage && (
+                      <OptimizedImage
+                        radius="md"
+                        full="height"
+                        image={place.mainImage}
+                        alt={place.name}
+                      />
+                    )}
                     {place.images?.map((image) => (
                       <OptimizedImage
                         radius="lg"

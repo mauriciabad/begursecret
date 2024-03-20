@@ -13,12 +13,14 @@ import {
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'
 import { PlaceMarker } from '~/components/generic/place-marker'
+import { cn } from '~/helpers/cn'
 import { Link } from '~/navigation'
 import { CategoryGroupListItem } from './list-category-groups'
 
 export const LinksToCategoriesModal: FC<{
   group: CategoryGroupListItem
-}> = ({ group }) => {
+  className?: string
+}> = ({ group, className }) => {
   const t = useTranslations('explore')
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
@@ -32,7 +34,7 @@ export const LinksToCategoriesModal: FC<{
         variant="bordered"
         radius="full"
         onClick={onOpen}
-        className="mx-auto flex"
+        className={cn('mx-auto flex', className)}
       >
         {t('see-all-categories')}
       </Button>

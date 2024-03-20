@@ -359,7 +359,7 @@
       }
     },
     "heading": "Explorar",
-    "back-to-map": "Tornar al mapa",
+    "back": "Tornar",
     "list": {
       "loading": "Carregant llocs...",
       "created-date": "Creada el {createdDate, date, ::yyyyMMddHHmmss}"
@@ -377,7 +377,8 @@
     "close": "Tancar",
     "category-groups": {
       "routes": "Rutes"
-    }
+    },
+    "no-places": "No s'han trobat llocs"
   },
   "missions": {
     "meta": {
