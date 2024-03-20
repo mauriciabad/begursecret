@@ -4,7 +4,7 @@ import type { FC } from 'react'
 import { LocaleRouteParams, onlyTranslatableLocales, parseLocale } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
 import { OverrideMainMap } from '../_components/override-main-map'
-import { PlaceList } from '../_components/place-list'
+import { PlaceList } from './_components/place-list'
 
 type PageParams = LocaleRouteParams & {
   searchParams: {

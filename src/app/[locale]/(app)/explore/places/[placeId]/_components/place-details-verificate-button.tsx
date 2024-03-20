@@ -5,7 +5,7 @@ import { shotConfettiStars } from '~/helpers/confetti'
 import {
   VerificateButton,
   VerificateButtonProps,
-} from '../../missions/_components/verificate-button'
+} from '../../../../missions/_components/verificate-button'
 
 export const PlaceDetailsVerificateButton: FC<VerificateButtonProps> = (
   props

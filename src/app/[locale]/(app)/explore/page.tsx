@@ -7,8 +7,7 @@ import {
   type LocaleRouteParams,
 } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
-import { CategoriesGrid } from './_components/categories-grid'
-import { ListItemsOfCategory } from './_components/list-items-of-category'
+import { ListCategoryGroups } from './_components/list-category-groups'
 import { OverrideMainMap } from './_components/override-main-map'
 
 export async function generateMetadata({
@@ -29,27 +28,18 @@ const ExplorePage: FC<LocaleRouteParams> = async ({ params }) => {
   unstable_setRequestLocale(locale)
 
   const trpc = await getTrpc()
-  const placesByCategory = await trpc.explore.listPlaces({
+  const categoryGroups = await trpc.explore.listCategoryGroups({
     locale: onlyTranslatableLocales(locale),
   })
 
   return (
-    <>
+    <div className="pt-6">
       <OverrideMainMap reset />
 
-      <CategoriesGrid categories={placesByCategory} type="place" />
-
-      <div className="space-y-2">
-        {placesByCategory.map((category) => (
-          <ListItemsOfCategory
-            key={category.id}
-            category={category}
-            items={category.places}
-            type="place"
-          />
-        ))}
-      </div>
-    </>
+      {categoryGroups.map((group) => (
+        <ListCategoryGroups key={group.id} group={group} />
+      ))}
+    </div>
   )
 }
 

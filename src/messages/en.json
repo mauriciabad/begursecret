@@ -366,6 +366,7 @@
     },
     "see-all": "See all",
     "show-all": "Show all",
+    "see-all-categories": "See all categories",
     "show-less": "Show less",
     "see-more": "See more",
     "categories": "Categories",
@@ -373,11 +374,7 @@
     "related-missions": "Related missions",
     "detailed-info": "Detailed info",
     "maps-app": "Maps app",
-    "tabs": {
-      "places": "Places",
-      "bussinesses": "Bussinesses",
-      "routes": "Routes"
-    }
+    "close": "Close"
   },
   "missions": {
     "meta": {

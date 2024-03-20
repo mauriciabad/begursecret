@@ -1,16 +1,13 @@
 import { FC } from 'react'
-import { CategoriesGridSkeleton } from './_components/categories-grid'
-import { ListPlacesOfCategorySkeleton } from './_components/list-items-of-category'
+import { ListCategoryGroupsSkeleton } from './_components/list-category-groups'
 
 const Loading: FC = () => {
   return (
-    <>
-      <CategoriesGridSkeleton />
-
+    <div className="pt-6">
       {[...Array(5)].map((_, i) => (
-        <ListPlacesOfCategorySkeleton key={i} />
+        <ListCategoryGroupsSkeleton key={i} />
       ))}
-    </>
+    </div>
   )
 }
 
