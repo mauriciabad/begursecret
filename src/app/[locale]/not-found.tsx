@@ -1,7 +1,9 @@
+import { Image } from '@nextui-org/react'
 import { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import { FC } from 'react'
+import image404Map from '~/../public/images/404-map.png'
 import { LinkButtonCustom } from '~/components/links/link-button-custom'
 import { LocaleRouteParams, parseLocale } from '~/i18n'
 
@@ -25,8 +27,9 @@ const NotFoundPage: FC<Partial<LocaleRouteParams>> = ({ params }) => {
   const t = useTranslations('error-pages.not-found')
 
   return (
-    <main className="flex flex-col items-center justify-center py-32">
-      <h1 className="mb-8 mt-4 text-center font-title text-6xl font-extrabold uppercase text-stone-800">
+    <main className="flex min-h-screen flex-col items-center justify-center py-32">
+      <Image {...image404Map} alt="" className="w-full max-w-[16rem]" />
+      <h1 className="mb-8 text-center font-title text-3xl font-bold uppercase text-stone-800 lg:text-6xl lg:font-extrabold">
         {t('title')}
       </h1>
 
