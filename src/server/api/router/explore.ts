@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { defaultLocale, translatableLocales } from '~/i18n'
+import { translatableLocales } from '~/i18n'
 import { db } from '~/server/db/db'
 import { ascNullsEnd } from '~/server/helpers/order-by'
 import {
@@ -29,6 +29,7 @@ const getCategoryGroups = flattenTranslationsOnExecute(
                   namePlural: true,
                   icon: true,
                   color: true,
+                  order: true,
                 },
               }),
             },
@@ -49,7 +50,9 @@ const getRouteCategories = flattenTranslationsOnExecute(
           namePlural: true,
           icon: true,
           color: true,
+          order: true,
         },
+        orderBy: (group) => [ascNullsEnd(group.order)],
       })
     )
     .prepare()
@@ -65,11 +68,8 @@ export const exploreRouter = router({
 
       return groups.map((group) => ({
         ...group,
-        placeCategories: group.placeCategories.sort((a, b) =>
-          a.category.namePlural.localeCompare(
-            b.category.namePlural,
-            input.locale ?? defaultLocale
-          )
+        placeCategories: group.placeCategories.sort(
+          ({ category: a }, { category: b }) => sortByOrder(a, b)
         ),
       }))
     }),
@@ -81,3 +81,10 @@ export const exploreRouter = router({
       })
     }),
 })
+
+const sortByOrder = <T extends { order: number | null }>(a: T, b: T) => {
+  if (a.order === b.order) return 0
+  if (a.order === null) return 1
+  if (b.order === null) return -1
+  return a.order < b.order ? -1 : 1
+}
