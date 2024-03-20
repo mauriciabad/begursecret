@@ -58,12 +58,14 @@ export const PlaceList: FC<{
                   <p className="text-stone-800">{place.description}</p>
                 )}
               </div>
-              <OptimizedImage
-                radius="md"
-                alt={place.name}
-                className="z-0 aspect-[4/3] h-16 w-auto object-cover"
-                image={place.mainImage}
-              />
+              {place.mainImage && (
+                <OptimizedImage
+                  radius="md"
+                  alt={place.name}
+                  className="z-0 aspect-[4/3] h-16 w-auto object-cover"
+                  image={place.mainImage}
+                />
+              )}
             </CardBody>
           </Card>
         </li>
