@@ -42,7 +42,7 @@ export const MapLine: FC<MapLine> = memo(
       calcSize(status, routeMarkerProps.importance, 14)
     )
 
-    const map = useMapEvent('zoom', () => {
+    const map = useMapEvent('zoomend', () => {
       const zoom = map.getZoom()
       const newSize = calcSize(status, routeMarkerProps.importance, zoom)
       if (newSize !== actualSize) {
