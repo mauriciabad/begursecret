@@ -40,10 +40,9 @@ export const ListCategoryGroups: FC<{
               : (`/explore/search?routeCategory=${category.id}` as const)
 
           return (
-            <li className="contents">
+            <li key={category.id} className="contents">
               <Link href={categoryLink} className="contents">
                 <Card
-                  key={category.id}
                   shadow="md"
                   className={cn(
                     'shadow-md',
