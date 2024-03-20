@@ -190,6 +190,13 @@
       "when": 1709681591503,
       "tag": "0026_thick_ben_parker",
       "breakpoints": true
+    },
+    {
+      "idx": 27,
+      "version": "5",
+      "when": 1710885080731,
+      "tag": "0027_lonely_goliath",
+      "breakpoints": true
     }
   ]
 }

@@ -23,7 +23,7 @@ const ExploreLayout: FC<ExploreLayoutProps> = async ({ params, children }) => {
             classNames={{
               controls: 'bottom-6',
               expanded: [
-                'min-h-[calc(100dvh_-_65px_-_57px_-_57px)]',
+                'min-h-[calc(100dvh_-_65px_-_140px_-_57px)]',
                 'sticky top-16 grow',
               ],
               collapsed: 'h-48',

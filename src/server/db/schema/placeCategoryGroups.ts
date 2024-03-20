@@ -1,5 +1,11 @@
 import { relations } from 'drizzle-orm'
-import { int, mysqlTable, primaryKey, tinytext } from 'drizzle-orm/mysql-core'
+import {
+  boolean,
+  int,
+  mysqlTable,
+  primaryKey,
+  tinytext,
+} from 'drizzle-orm/mysql-core'
 import { mysqlTableWithTranslations } from '../../helpers/translations/db-tables'
 import { dbColor, dbGender, dbIcon } from '../utilities'
 import { placeCategories } from './placeCategories'
@@ -36,6 +42,7 @@ export const placeCategoriesToPlaceCategoryGroups = mysqlTable(
   {
     categoryGroupId: int('categoryGroupId').notNull(),
     categoryId: int('categoryId').notNull(),
+    highlight: boolean('highlight'),
   },
   (table) => {
     return {

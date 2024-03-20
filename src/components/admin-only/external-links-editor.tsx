@@ -11,7 +11,7 @@ import {
   useFormContext,
   useWatch,
 } from 'react-hook-form'
-import { getLinkData } from '~/app/[locale]/(app)/explore/_components/named-websites'
+import { getLinkData } from '~/components/features/named-websites'
 import { cn } from '~/helpers/cn'
 import { makeGoogleMapsUrl } from '~/helpers/data/google-maps-id'
 import { Link } from '~/navigation'

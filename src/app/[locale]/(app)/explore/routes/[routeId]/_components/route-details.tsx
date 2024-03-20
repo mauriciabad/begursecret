@@ -6,8 +6,8 @@ import { IconTitle } from '~/components/generic/icon-title'
 import { MarkdownContent } from '~/components/generic/markdown-content'
 import { OptimizedImage } from '~/components/generic/optimized-image'
 import { ApiRouterOutput } from '~/server/api/router'
-import { FeaturesBlock } from './features-block'
-import { ViewMoreImagesButtonAndDialog } from './view-more-images-button-and-dialog'
+import { FeaturesBlock } from '../../../../../../../components/features/features-block'
+import { ViewMoreImagesButtonAndDialog } from '../../../places/[placeId]/_components/view-more-images-button-and-dialog'
 
 type Route = NonNullable<ApiRouterOutput['routes']['get']>
 

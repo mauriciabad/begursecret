@@ -12,7 +12,7 @@ import {
 import { db } from '~/server/db/db'
 import { getTrpc } from '~/server/get-server-thing'
 import { OverrideMainMap } from '../../_components/override-main-map'
-import { RouteDetails } from '../../_components/route-details'
+import { RouteDetails } from './_components/route-details'
 
 type Params = LocaleRouteParams<{ routeId: string }>
 
