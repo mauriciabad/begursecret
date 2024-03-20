@@ -38,23 +38,19 @@ export const ListCategoryGroups: FC<{
           >
             <CardBody
               className={cn(
-                'relative flex min-h-16 flex-row gap-2',
+                'relative flex min-h-16 flex-row gap-2 pl-2 pr-0',
                 'overflow-hidden'
               )}
             >
-              <CategoryIcon
-                icon={category.icon}
-                size={24}
-                className="shrink-0"
-              />
-              <span className="flex-1 font-semibold uppercase leading-5 tracking-wide">
+              <CategoryIcon icon={category.icon} size={24} />
+              <span className="flex-1 overflow-auto break-words font-semibold uppercase leading-5 tracking-wide">
                 {category.namePlural}
               </span>
               <CategoryIcon
                 icon={category.icon}
                 strokeWidth={2}
                 size={64}
-                className="absolute bottom-0 right-1 z-0 shrink-0 opacity-10"
+                className="pointer-events-none absolute bottom-0 right-1 z-0 shrink-0 opacity-10"
               />
             </CardBody>
           </Card>
