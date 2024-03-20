@@ -4,12 +4,12 @@ import type { FC } from 'react'
 import { LocaleRouteParams, onlyTranslatableLocales, parseLocale } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
 import { OverrideMainMap } from '../_components/override-main-map'
-import { PlaceList } from '../_components/place-list'
+import { PlaceList } from './_components/place-list'
 
 type PageParams = LocaleRouteParams & {
   searchParams: {
-    placeCategory: string
-    routeCategory: string // TODO: use this to search
+    placeCategory?: string
+    routeCategory?: string // TODO: use this to search
   }
 }
 export async function generateMetadata({
@@ -35,7 +35,9 @@ const ExplorePage: FC<PageParams> = async ({ params, searchParams }) => {
   const trpc = await getTrpc()
   const places = await trpc.places.search({
     locale: onlyTranslatableLocales(locale),
-    placeCategory: Number(searchParams.placeCategory),
+    placeCategory: searchParams.placeCategory
+      ? Number(searchParams.placeCategory)
+      : null,
   })
 
   const placeIds = new Set(places.map((place) => place.id))

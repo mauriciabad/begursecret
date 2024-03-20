@@ -366,6 +366,7 @@
     },
     "see-all": "Veure {gender, select, masculine {tots} feminine {totes} other {tots}}",
     "show-all": "Mostrar {gender, select, masculine {tots} feminine {totes} other {tots}}",
+    "see-all-categories": "Veure totes les categories",
     "show-less": "Mostrar menys",
     "see-more": "Veure més",
     "categories": "Categories",
@@ -373,9 +374,8 @@
     "related-missions": "Missions relacionades",
     "detailed-info": "Informació detallada",
     "maps-app": "App de mapes",
-    "tabs": {
-      "places": "Llocs",
-      "bussinesses": "Negocis",
+    "close": "Tancar",
+    "category-groups": {
       "routes": "Rutes"
     }
   },

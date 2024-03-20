@@ -2,7 +2,7 @@ import { useLocale, useTranslations } from 'next-intl'
 import { FC } from 'react'
 import { onlyTranslatableLocales } from '~/i18n'
 import { trpc } from '~/trpc'
-import { PlaceList } from '../../../explore/_components/place-list'
+import { PlaceList } from '../../../explore/search/_components/place-list'
 
 export const VisitedTab: FC = () => {
   const t = useTranslations('profile.tabs.visited')
