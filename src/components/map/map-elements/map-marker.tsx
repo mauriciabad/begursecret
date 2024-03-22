@@ -46,7 +46,7 @@ export const MapMarker: FC<MapMarker> = memo(
       PlaceMarkerLeafletIconProps['size']
     >(calcSize(size, map.getZoom()))
 
-    useMapEvent('zoomend', () => {
+    useMapEvent('zoom', () => {
       const zoom = map.getZoom()
       const newSize = calcSize(size, zoom)
       if (newSize !== actualSize) {
