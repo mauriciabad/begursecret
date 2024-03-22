@@ -189,7 +189,7 @@ export const missionsRouter = router({
               ...mainPlaces,
               ...secondaryPlaces
                 .map(({ place }) => place)
-                .filter((place) => !mainPlacesIds.includes(place.id)),
+                .filter((place) => place && !mainPlacesIds.includes(place.id)),
             ].map(({ location, categories, ...place }) => ({
               ...place,
               location: getPoint(location),
