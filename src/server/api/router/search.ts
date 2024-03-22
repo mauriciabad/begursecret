@@ -2,18 +2,20 @@ import 'server-only'
 
 import { sql } from 'drizzle-orm'
 import { z } from 'zod'
+import { sortByImportance } from '~/helpers/sortBy'
 import { translatableLocales } from '~/i18n'
 import { numericIdSchema } from '~/schemas/shared'
 import { db } from '~/server/db/db'
-import { places, routes } from '~/server/db/schema'
+import { routes } from '~/server/db/schema'
 import { ascNullsEnd } from '~/server/helpers/order-by'
+import { doSomethingAfterExecute } from '~/server/helpers/translations/on-execute'
 import {
   flattenTranslationsOnExecute,
   withTranslations,
 } from '~/server/helpers/translations/query/with-translations'
 import { publicProcedure, router } from '~/server/trpc'
 
-const searchPlaces = flattenTranslationsOnExecute(
+const searchPlacesByMainCategory = flattenTranslationsOnExecute(
   db.query.places
     .findMany(
       withTranslations({
@@ -23,7 +25,6 @@ const searchPlaces = flattenTranslationsOnExecute(
           description: true,
           importance: true,
         },
-        orderBy: [ascNullsEnd(places.importance)],
         where: (place, { eq, and, isNotNull }) =>
           and(
             isNotNull(place.mainCategoryId),
@@ -56,7 +57,58 @@ const searchPlaces = flattenTranslationsOnExecute(
     )
     .prepare()
 )
-const searchRoutes = flattenTranslationsOnExecute(
+
+const searchPlacesBySecondaryCategory = doSomethingAfterExecute(
+  flattenTranslationsOnExecute(
+    db.query.placesToPlaceCategories
+      .findMany({
+        where: (placeToCategory, { eq, and, isNotNull }) =>
+          and(
+            isNotNull(placeToCategory.categoryId),
+            eq(placeToCategory.categoryId, sql.placeholder('category'))
+          ),
+        with: {
+          place: withTranslations({
+            columns: {
+              id: true,
+              name: true,
+              description: true,
+              importance: true,
+            },
+            with: {
+              mainImage: true,
+              categories: {
+                columns: {},
+                with: {
+                  category: withTranslations({
+                    columns: {
+                      id: true,
+                      icon: true,
+                      name: true,
+                    },
+                  }),
+                },
+              },
+              mainCategory: withTranslations({
+                columns: {
+                  id: true,
+                  icon: true,
+                  color: true,
+                  name: true,
+                },
+              }),
+            },
+          }),
+        },
+      })
+      .prepare()
+  ),
+  (results) => {
+    return results.map((r) => r.place)
+  }
+)
+
+const searchRoutesByMainCategory = flattenTranslationsOnExecute(
   db.query.routes
     .findMany(
       withTranslations({
@@ -99,6 +151,55 @@ const searchRoutes = flattenTranslationsOnExecute(
     )
     .prepare()
 )
+const searchRoutesBySecondaryCategory = doSomethingAfterExecute(
+  flattenTranslationsOnExecute(
+    db.query.routesToRouteCategories
+      .findMany({
+        where: (routeToCategory, { eq, and, isNotNull }) =>
+          and(
+            isNotNull(routeToCategory.categoryId),
+            eq(routeToCategory.categoryId, sql.placeholder('category'))
+          ),
+        with: {
+          route: withTranslations({
+            columns: {
+              id: true,
+              name: true,
+              description: true,
+              importance: true,
+            },
+            with: {
+              mainImage: true,
+              categories: {
+                columns: {},
+                with: {
+                  category: withTranslations({
+                    columns: {
+                      id: true,
+                      icon: true,
+                      name: true,
+                    },
+                  }),
+                },
+              },
+              mainCategory: withTranslations({
+                columns: {
+                  id: true,
+                  icon: true,
+                  color: true,
+                  name: true,
+                },
+              }),
+            },
+          }),
+        },
+      })
+      .prepare()
+  ),
+  (results) => {
+    return results.map((r) => r.route)
+  }
+)
 
 export const searchRouter = router({
   places: publicProcedure
@@ -109,10 +210,20 @@ export const searchRouter = router({
       })
     )
     .query(async ({ input }) => {
-      return await searchPlaces.execute({
+      const mainCategoryResults = await searchPlacesByMainCategory.execute({
         locale: input.locale,
         category: input.placeCategory,
       })
+      const secondaryCategoryResults =
+        await searchPlacesBySecondaryCategory.execute({
+          locale: input.locale,
+          category: input.placeCategory,
+        })
+
+      const result = [...mainCategoryResults, ...secondaryCategoryResults]
+      result.sort(sortByImportance)
+
+      return result
     }),
   routes: publicProcedure
     .input(
@@ -122,9 +233,19 @@ export const searchRouter = router({
       })
     )
     .query(async ({ input }) => {
-      return await searchRoutes.execute({
+      const mainCategoryResults = await searchRoutesByMainCategory.execute({
         locale: input.locale,
         category: input.routeCategory,
       })
+      const secondaryCategoryResults =
+        await searchRoutesBySecondaryCategory.execute({
+          locale: input.locale,
+          category: input.routeCategory,
+        })
+
+      const result = [...mainCategoryResults, ...secondaryCategoryResults]
+      result.sort(sortByImportance)
+
+      return result
     }),
 })
