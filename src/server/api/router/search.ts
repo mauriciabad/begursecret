@@ -223,6 +223,10 @@ export const searchRouter = router({
         ])
       )
         .flat()
+        .filter(
+          (place, index, self) =>
+            self.findIndex((p) => p.id === place.id) === index
+        )
         .sort(sortByImportance)
     }),
   routes: publicProcedure
@@ -246,6 +250,10 @@ export const searchRouter = router({
         ])
       )
         .flat()
+        .filter(
+          (place, index, self) =>
+            self.findIndex((p) => p.id === place.id) === index
+        )
         .sort(sortByImportance)
     }),
 })
