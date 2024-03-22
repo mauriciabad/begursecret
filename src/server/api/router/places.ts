@@ -2,64 +2,16 @@ import 'server-only'
 
 import { sql } from 'drizzle-orm'
 import { calculateLocation } from '~/helpers/spatial-data/point'
-import { getPlacesSchema, searchPlacesSchema } from '~/schemas/places'
+import { getPlacesSchema } from '~/schemas/places'
 import { db } from '~/server/db/db'
 import { places } from '~/server/db/schema'
 import { getVisitedPlacesIdsByUserId } from '~/server/helpers/db-queries/placeLists'
-import { ascNullsEnd } from '~/server/helpers/order-by'
 import { selectPoint } from '~/server/helpers/spatial-data/point'
 import {
   flattenTranslationsOnExecute,
   withTranslations,
 } from '~/server/helpers/translations/query/with-translations'
 import { publicProcedure, router } from '~/server/trpc'
-
-const searchPlaces = flattenTranslationsOnExecute(
-  db.query.places
-    .findMany(
-      withTranslations({
-        columns: {
-          id: true,
-          name: true,
-          description: true,
-          importance: true,
-        },
-        extras: {
-          location: selectPoint('location', places.location),
-        },
-        orderBy: [ascNullsEnd(places.importance)],
-        where: (place, { eq, and, isNotNull }) =>
-          and(
-            isNotNull(place.mainCategoryId),
-            eq(place.mainCategoryId, sql.placeholder('category'))
-          ),
-        with: {
-          mainImage: true,
-          categories: {
-            columns: {},
-            with: {
-              category: withTranslations({
-                columns: {
-                  id: true,
-                  icon: true,
-                  name: true,
-                },
-              }),
-            },
-          },
-          mainCategory: withTranslations({
-            columns: {
-              id: true,
-              icon: true,
-              color: true,
-              name: true,
-            },
-          }),
-        },
-      })
-    )
-    .prepare()
-)
 
 const getPlace = flattenTranslationsOnExecute(
   db.query.places
@@ -124,14 +76,6 @@ const getPlace = flattenTranslationsOnExecute(
 )
 
 export const placesRouter = router({
-  search: publicProcedure.input(searchPlacesSchema).query(async ({ input }) => {
-    return (
-      await searchPlaces.execute({
-        locale: input.locale,
-        category: input.placeCategory,
-      })
-    ).map(calculateLocation)
-  }),
   get: publicProcedure.input(getPlacesSchema).query(async ({ input, ctx }) => {
     const visitedPlacesIds = await getVisitedPlacesIdsByUserId(
       ctx.session?.user.id

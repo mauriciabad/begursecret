@@ -13,6 +13,7 @@ import { placeListsRouter } from './placeLists'
 import { placesRouter } from './places'
 import { profileRouter } from './profile'
 import { routesRouter } from './routes'
+import { searchRouter } from './search'
 import { verificationsRouter } from './verifications'
 
 export const apiRouter = router({
@@ -28,6 +29,7 @@ export const apiRouter = router({
   missions: missionsRouter,
   placeLists: placeListsRouter,
   verifications: verificationsRouter,
+  search: searchRouter,
 })
 
 export type ApiRouter = typeof apiRouter

@@ -15,11 +15,6 @@ export const listPlacesSchema = z.object({
   categoryId: numericIdSchema.optional(),
 })
 
-export const searchPlacesSchema = z.object({
-  locale: z.enum(translatableLocales).nullable(),
-  placeCategory: numericIdSchema.nullable(),
-})
-
 export const getPlacesSchema = z.object({
   locale: z.enum(translatableLocales).nullable(),
   id: numericIdSchema,
@@ -68,7 +63,6 @@ export const editPlaceSchema = createPlaceSchema.extend({
 
 export type ListPlacesInputData = z.infer<typeof listPlacesSchema>
 export type GetPlacesInputData = z.infer<typeof getPlacesSchema>
-export type SearchPlacesInputData = z.infer<typeof searchPlacesSchema>
 export type ListCategoriesInputData = z.infer<typeof listCategoriesSchema>
 export type CreatePlaceInputData = z.infer<typeof createPlaceSchema>
 export type EditPlaceInputData = z.infer<typeof editPlaceSchema>
