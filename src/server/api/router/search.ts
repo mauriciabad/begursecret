@@ -210,20 +210,20 @@ export const searchRouter = router({
       })
     )
     .query(async ({ input }) => {
-      const mainCategoryResults = await searchPlacesByMainCategory.execute({
-        locale: input.locale,
-        category: input.placeCategory,
-      })
-      const secondaryCategoryResults =
-        await searchPlacesBySecondaryCategory.execute({
-          locale: input.locale,
-          category: input.placeCategory,
-        })
-
-      const result = [...mainCategoryResults, ...secondaryCategoryResults]
-      result.sort(sortByImportance)
-
-      return result
+      return (
+        await Promise.all([
+          searchPlacesByMainCategory.execute({
+            locale: input.locale,
+            category: input.placeCategory,
+          }),
+          searchPlacesBySecondaryCategory.execute({
+            locale: input.locale,
+            category: input.placeCategory,
+          }),
+        ])
+      )
+        .flat()
+        .sort(sortByImportance)
     }),
   routes: publicProcedure
     .input(
@@ -233,19 +233,19 @@ export const searchRouter = router({
       })
     )
     .query(async ({ input }) => {
-      const mainCategoryResults = await searchRoutesByMainCategory.execute({
-        locale: input.locale,
-        category: input.routeCategory,
-      })
-      const secondaryCategoryResults =
-        await searchRoutesBySecondaryCategory.execute({
-          locale: input.locale,
-          category: input.routeCategory,
-        })
-
-      const result = [...mainCategoryResults, ...secondaryCategoryResults]
-      result.sort(sortByImportance)
-
-      return result
+      return (
+        await Promise.all([
+          searchRoutesByMainCategory.execute({
+            locale: input.locale,
+            category: input.routeCategory,
+          }),
+          searchRoutesBySecondaryCategory.execute({
+            locale: input.locale,
+            category: input.routeCategory,
+          }),
+        ])
+      )
+        .flat()
+        .sort(sortByImportance)
     }),
 })
