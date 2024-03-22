@@ -22,7 +22,7 @@ export const VisitedTab: FC = () => {
       ) : places.length === 0 ? (
         <p className="mt-2 text-center text-gray-400">{t('no-places')}</p>
       ) : (
-        <PlaceList places={places} />
+        <PlaceList items={places} />
       )}
     </>
   )
