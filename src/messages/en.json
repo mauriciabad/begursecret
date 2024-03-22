@@ -227,7 +227,8 @@
   },
   "common": {
     "save": "Save",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "share": "Share"
   },
   "home": {
     "meta": {

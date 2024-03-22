@@ -5,6 +5,7 @@ import { CategoryTagList } from '~/components/category-tags/category-tag-list'
 import { IconTitle } from '~/components/generic/icon-title'
 import { MarkdownContent } from '~/components/generic/markdown-content'
 import { OptimizedImage } from '~/components/generic/optimized-image'
+import { ShareButton } from '~/components/generic/share-button'
 import { ApiRouterOutput } from '~/server/api/router'
 import { FeaturesBlock } from '../../../../../../../components/features/features-block'
 import { ViewMoreImagesButtonAndDialog } from '../../../places/[placeId]/_components/view-more-images-button-and-dialog'
@@ -18,7 +19,16 @@ export const RouteDetails: FC<{
 
   return (
     <div className="mt-4 px-4">
-      <h2 className="font-title text-xl font-semibold">{route.name}</h2>
+      <div className="mb-2 flex">
+        <h2 className="grow font-title text-xl font-semibold">{route.name}</h2>
+        <ShareButton
+          data={{
+            title: `${route.name} | Begur Secret`,
+            url: `/explore/routes/${route.id}`,
+            text: route.description ?? undefined,
+          }}
+        />
+      </div>
 
       {route.description && (
         <p className="text-stone-800">{route.description}</p>

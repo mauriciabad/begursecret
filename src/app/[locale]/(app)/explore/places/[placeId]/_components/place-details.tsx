@@ -5,6 +5,7 @@ import { CategoryTagList } from '~/components/category-tags/category-tag-list'
 import { IconTitle } from '~/components/generic/icon-title'
 import { MarkdownContent } from '~/components/generic/markdown-content'
 import { OptimizedImage } from '~/components/generic/optimized-image'
+import { ShareButton } from '~/components/generic/share-button'
 import { ApiRouterOutput } from '~/server/api/router'
 import { FeaturesBlock } from '../../../../../../../components/features/features-block'
 import { VisitMissionsAcordion } from '../../../../missions/_components/visit-missions-acordion'
@@ -22,7 +23,16 @@ export const PlaceDetails: FC<{
 
   return (
     <div className="mt-4 px-4">
-      <h2 className="font-title text-xl font-semibold">{place.name}</h2>
+      <div className="mb-2 flex">
+        <h2 className="grow font-title text-xl font-semibold">{place.name}</h2>
+        <ShareButton
+          data={{
+            title: `${place.name} | Begur Secret`,
+            url: `/explore/places/${place.id}`,
+            text: place.description ?? undefined,
+          }}
+        />
+      </div>
 
       {place.description && (
         <p className="text-stone-800">{place.description}</p>
