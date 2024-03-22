@@ -226,7 +226,8 @@
   },
   "common": {
     "save": "Guardar",
-    "loading": "Carregant..."
+    "loading": "Carregant...",
+    "share": "Compartir"
   },
   "home": {
     "meta": {
