@@ -4,7 +4,7 @@ import { Button } from '@nextui-org/button'
 import { Card, CardBody } from '@nextui-org/card'
 import { Image } from '@nextui-org/image'
 import { Popover, PopoverContent, PopoverTrigger } from '@nextui-org/popover'
-import { IconStack2 } from '@tabler/icons-react'
+import { IconStack2, IconStars, IconStarsFilled } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { FC, useState } from 'react'
 import { cn } from '~/helpers/cn'
@@ -110,9 +110,9 @@ export const CustomLayersControl: FC<{
                 {t('layout-types.standard')}
               </h3>
               <div className="grid grid-cols-3 gap-2">
+                {makeLayerButton('bg-standard-osm')}
                 {makeLayerButton('bg-standard-icgc')}
                 {makeLayerButton('bg-standard-ign')}
-                {makeLayerButton('bg-standard-osm')}
               </div>
             </div>
 
@@ -121,8 +121,8 @@ export const CustomLayersControl: FC<{
                 {t('layout-types.satellite')}
               </h3>
               <div className="grid grid-cols-3 gap-2">
-                {makeLayerButton('bg-satelite-icgc')}
                 {makeLayerButton('bg-satelite-ign')}
+                {makeLayerButton('bg-satelite-icgc')}
                 {makeLayerButton('bg-satelite-esri')}
               </div>
             </div>
@@ -158,6 +158,23 @@ const LayerButton: FC<{
         src={layer.sampleImage}
         radius="none"
       />
+      {layer.isGoodMap && (
+        <span
+          className={cn(
+            'absolute inset-0 bottom-2 z-10 mx-auto flex items-center justify-center',
+            { 'opacity-60': !active }
+          )}
+        >
+          <div className="relative">
+            <IconStarsFilled size={40} className="text-yellow-300" />
+            <IconStars
+              size={40}
+              stroke={1}
+              className="absolute inset-0 text-stone-800"
+            />
+          </div>
+        </span>
+      )}
       <CardBody className="absolute inset-0 top-auto z-10 p-1">
         <span className="text-center font-title text-xs font-bold leading-none text-black opacity-70 txt-stroke-white">
           {layer.attribution.name}
@@ -200,6 +217,7 @@ const layersData = [
       'https://geoserveis.icgc.cat/icc_mapesmultibase/noutm/wmts/topo/GRID3857/{z}/{x}/{y}.png',
     sampleImage:
       'https://geoserveis.icgc.cat/icc_mapesmultibase/noutm/wmts/topo/GRID3857/14/8338/6085.png',
+    isGoodMap: true,
   },
   {
     id: 'bg-classic-ign',
@@ -213,6 +231,19 @@ const layersData = [
       'https://ign.es/wmts/mapa-raster?service=WMTS&request=GetTile&version=1.0.0&Format=image/jpeg&layer=MTN&style=default&style=default&tilematrixset=GoogleMapsCompatible&TileMatrix={z}&TileRow={y}&TileCol={x}',
     sampleImage:
       'https://ign.es/wmts/mapa-raster?service=WMTS&request=GetTile&version=1.0.0&Format=image/jpeg&layer=MTN&style=default&style=default&tilematrixset=GoogleMapsCompatible&TileMatrix=14&TileRow=6085&TileCol=8338',
+    isGoodMap: false,
+  },
+  {
+    id: 'bg-standard-osm',
+    type: 'standard',
+    maxZoom: 21,
+    attribution: {
+      name: 'OSM',
+      url: 'http://openstreetmap.org',
+    },
+    tileUrlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    sampleImage: 'https://c.tile.openstreetmap.org/14/8338/6085.png',
+    isGoodMap: true,
   },
   {
     id: 'bg-standard-ign',
@@ -226,6 +257,7 @@ const layersData = [
       'https://www.ign.es/wmts/ign-base?service=WMTS&request=GetTile&version=1.0.0&Format=image/png&layer=IGNBaseTodo&style=default&tilematrixset=GoogleMapsCompatible&TileMatrix={z}&TileRow={y}&TileCol={x}',
     sampleImage:
       'https://www.ign.es/wmts/ign-base?service=WMTS&request=GetTile&version=1.0.0&Format=image/png&layer=IGNBaseTodo&style=default&tilematrixset=GoogleMapsCompatible&TileMatrix=14&TileRow=6085&TileCol=8338',
+    isGoodMap: false,
   },
   {
     id: 'bg-standard-icgc',
@@ -239,17 +271,7 @@ const layersData = [
       'https://geoserveis.icgc.cat/servei/catalunya/contextmaps/wmts/contextmaps-mapa-estandard/{z}/{x}/{y}.png',
     sampleImage:
       'https://geoserveis.icgc.cat/servei/catalunya/contextmaps/wmts/contextmaps-mapa-estandard/14/8338/6085.png',
-  },
-  {
-    id: 'bg-standard-osm',
-    type: 'standard',
-    maxZoom: 21,
-    attribution: {
-      name: 'OSM',
-      url: 'http://openstreetmap.org',
-    },
-    tileUrlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    sampleImage: 'https://c.tile.openstreetmap.org/14/8338/6085.png',
+    isGoodMap: false,
   },
   {
     id: 'bg-satelite-and-standard-icgc',
@@ -263,32 +285,7 @@ const layersData = [
       'https://geoserveis.icgc.cat/servei/catalunya/contextmaps/wmts/contextmaps-orto-estandard/MON3857NW/{z}/{x}/{y}.png',
     sampleImage:
       'https://geoserveis.icgc.cat/servei/catalunya/contextmaps/wmts/contextmaps-orto-estandard/MON3857NW/14/8338/6085.png',
-  },
-  {
-    id: 'bg-satelite-icgc',
-    type: 'satelite',
-    maxZoom: 20,
-    attribution: {
-      name: 'ICGC',
-      url: 'http://icgc.cat/',
-    },
-    tileUrlTemplate:
-      'https://geoserveis.icgc.cat/icc_mapesmultibase/noutm/wmts/orto/GRID3857/{z}/{x}/{y}.png',
-    sampleImage:
-      'https://geoserveis.icgc.cat/icc_mapesmultibase/noutm/wmts/orto/GRID3857/14/8338/6085.png',
-  },
-  {
-    id: 'bg-satelite-esri',
-    type: 'satelite',
-    maxZoom: 20,
-    attribution: {
-      name: 'Esri',
-      url: 'http://www.esri.com/',
-    },
-    tileUrlTemplate:
-      'https://clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-    sampleImage:
-      'https://clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/14/6085/8338',
+    isGoodMap: false,
   },
   {
     id: 'bg-satelite-ign',
@@ -302,6 +299,35 @@ const layersData = [
       'https://www.ign.es/wmts/pnoa-ma?service=WMTS&request=GetTile&version=1.0.0&Format=image/png&layer=OI.OrthoimageCoverage&style=default&tilematrixset=GoogleMapsCompatible&TileMatrix={z}&TileRow={y}&TileCol={x}',
     sampleImage:
       'https://www.ign.es/wmts/pnoa-ma?service=WMTS&request=GetTile&version=1.0.0&Format=image/png&layer=OI.OrthoimageCoverage&style=default&tilematrixset=GoogleMapsCompatible&TileMatrix=14&TileRow=6085&TileCol=8338',
+    isGoodMap: true,
+  },
+  {
+    id: 'bg-satelite-icgc',
+    type: 'satelite',
+    maxZoom: 20,
+    attribution: {
+      name: 'ICGC',
+      url: 'http://icgc.cat/',
+    },
+    tileUrlTemplate:
+      'https://geoserveis.icgc.cat/icc_mapesmultibase/noutm/wmts/orto/GRID3857/{z}/{x}/{y}.png',
+    sampleImage:
+      'https://geoserveis.icgc.cat/icc_mapesmultibase/noutm/wmts/orto/GRID3857/14/8338/6085.png',
+    isGoodMap: false,
+  },
+  {
+    id: 'bg-satelite-esri',
+    type: 'satelite',
+    maxZoom: 20,
+    attribution: {
+      name: 'Esri',
+      url: 'http://www.esri.com/',
+    },
+    tileUrlTemplate:
+      'https://clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    sampleImage:
+      'https://clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/14/6085/8338',
+    isGoodMap: false,
   },
 ] as const satisfies ReadonlyArray<{
   id: `bg-${string}`
@@ -313,6 +339,7 @@ const layersData = [
   }
   tileUrlTemplate: string
   sampleImage: string
+  isGoodMap: boolean
 }>
 
 export type LayerId = (typeof layersData)[number]['id']

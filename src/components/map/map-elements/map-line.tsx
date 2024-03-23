@@ -1,6 +1,6 @@
 import moize from 'moize'
 import { FC, memo, useState } from 'react'
-import { useMapEvent } from 'react-leaflet'
+import { useMap, useMapEvent } from 'react-leaflet'
 import { colorValues } from '~/helpers/color-classes'
 import { MapMultiLine } from '~/helpers/spatial-data/multi-line'
 import { useRouter } from '~/navigation'
@@ -38,11 +38,12 @@ export const MapLine: FC<MapLine> = memo(
 
     const status = veryEmphasized ? 'emphasized' : 'normal'
 
+    const map = useMap()
     const [actualSize, setActualSize] = useState<StrokeWidthName | 'none'>(
-      calcSize(status, routeMarkerProps.importance, 14)
+      calcSize(status, routeMarkerProps.importance, map.getZoom())
     )
 
-    const map = useMapEvent('zoom', () => {
+    useMapEvent('zoomend', () => {
       const zoom = map.getZoom()
       const newSize = calcSize(status, routeMarkerProps.importance, zoom)
       if (newSize !== actualSize) {

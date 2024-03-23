@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { sortByOrder } from '~/helpers/sortBy'
 import { translatableLocales } from '~/i18n'
 import { db } from '~/server/db/db'
 import { ascNullsEnd } from '~/server/helpers/order-by'
@@ -81,10 +82,3 @@ export const exploreRouter = router({
       })
     }),
 })
-
-const sortByOrder = <T extends { order: number | null }>(a: T, b: T) => {
-  if (a.order === b.order) return 0
-  if (a.order === null) return 1
-  if (b.order === null) return -1
-  return a.order < b.order ? -1 : 1
-}

@@ -8,12 +8,12 @@ import { Link, usePathname } from '~/navigation'
 export const BackLink: FC = () => {
   const t = useTranslations('explore')
   const pathname = usePathname()
-  if (pathname !== '/explore/') return null
+  if (pathname === '/explore') return null
 
   return (
     <Link href="/explore" className="flex h-full self-stretch">
       <IconArrowLeft size={24} />
-      <span className="ml-2">{t('back-to-map')}</span>
+      <span className="ml-2">{t('back')}</span>
     </Link>
   )
 }

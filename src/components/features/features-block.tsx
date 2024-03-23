@@ -12,6 +12,7 @@ import { FC, PropsWithChildren, useMemo } from 'react'
 import { MarkdownContent } from '~/components/generic/markdown-content'
 import { cn } from '~/helpers/cn'
 import { makeGoogleMapsUrl } from '~/helpers/data/google-maps-id'
+import { sortByIsOfficialWebsite } from '~/helpers/sortBy'
 import { IntlMessageKeys } from '~/helpers/types'
 import { Link } from '~/navigation'
 import { ExternalLink } from '~/server/db/constants/externalLinks'
@@ -40,11 +41,7 @@ export const FeaturesBlock: FC<{
     useFeatureDisplay(features)
 
   const sortedExternalLinks = useMemo(
-    () =>
-      externalLinks?.sort((a, b) => {
-        if (a.isOfficialWebsite === b.isOfficialWebsite) return 0
-        return a.isOfficialWebsite ? -1 : 1
-      }),
+    () => externalLinks?.sort(sortByIsOfficialWebsite),
     [externalLinks]
   )
 

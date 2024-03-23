@@ -5,6 +5,7 @@ import { CategoryTagList } from '~/components/category-tags/category-tag-list'
 import { IconTitle } from '~/components/generic/icon-title'
 import { MarkdownContent } from '~/components/generic/markdown-content'
 import { OptimizedImage } from '~/components/generic/optimized-image'
+import { ShareButton } from '~/components/generic/share-button'
 import { ApiRouterOutput } from '~/server/api/router'
 import { FeaturesBlock } from '../../../../../../../components/features/features-block'
 import { ViewMoreImagesButtonAndDialog } from '../../../places/[placeId]/_components/view-more-images-button-and-dialog'
@@ -17,51 +18,61 @@ export const RouteDetails: FC<{
   const t = useTranslations('explore')
 
   return (
-    <div className="mt-2 px-4">
-      <h2 className="font-title text-xl font-semibold">{route.name}</h2>
+    <div className="mt-4 px-4">
+      <div className="mb-2 flex">
+        <h2 className="grow font-title text-xl font-semibold">{route.name}</h2>
+        <ShareButton
+          data={{
+            title: `${route.name} | Begur Secret`,
+            url: `/explore/routes/${route.id}`,
+            text: route.description ?? undefined,
+          }}
+        />
+      </div>
 
       {route.description && (
         <p className="text-stone-800">{route.description}</p>
       )}
 
-      {route.images && route.images.length >= 1 ? (
-        <div className="mt-4 grid grid-cols-[2fr_1fr] grid-rows-2 gap-2">
+      {route.mainImage &&
+        (route.images && route.images.length >= 1 ? (
+          <div className="mt-4 grid grid-cols-[2fr_1fr] grid-rows-2 gap-2">
+            <OptimizedImage
+              radius="lg"
+              shadow="sm"
+              className="aspect-[4/3]"
+              classNames={{
+                wrapper: 'row-span-2',
+              }}
+              image={route.mainImage}
+              alt={route.name}
+            />
+            <OptimizedImage
+              radius="lg"
+              shadow="sm"
+              alt={route.name}
+              full="both"
+              image={route.images[0]}
+            />
+            <ViewMoreImagesButtonAndDialog
+              images={
+                route.mainImage
+                  ? [route.mainImage, ...route.images]
+                  : route.images
+              }
+              buttonText={t('see-more')}
+              className="h-full"
+            />
+          </div>
+        ) : (
           <OptimizedImage
             radius="lg"
             shadow="sm"
-            className="aspect-[4/3]"
-            classNames={{
-              wrapper: 'row-span-2',
-            }}
+            alt={route.name}
+            className="mt-4 aspect-[4/3] object-cover"
             image={route.mainImage}
-            alt={route.name}
           />
-          <OptimizedImage
-            radius="lg"
-            shadow="sm"
-            alt={route.name}
-            full="both"
-            image={route.images[0]}
-          />
-          <ViewMoreImagesButtonAndDialog
-            images={
-              route.mainImage
-                ? [route.mainImage, ...route.images]
-                : route.images
-            }
-            buttonText={t('see-more')}
-            className="h-full"
-          />
-        </div>
-      ) : (
-        <OptimizedImage
-          radius="lg"
-          shadow="sm"
-          alt={route.name}
-          className="mt-4 aspect-[4/3] object-cover"
-          image={route.mainImage}
-        />
-      )}
+        ))}
 
       <CategoryTagList
         mainCategory={route.mainCategory}
