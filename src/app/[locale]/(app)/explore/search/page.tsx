@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import type { FC } from 'react'
+import { sortByImportanceRanzomIfEqual } from '~/helpers/sortBy'
 import { LocaleRouteParams, onlyTranslatableLocales, parseLocale } from '~/i18n'
 import { getTrpc } from '~/server/get-server-thing'
 import { OverrideMainMap } from '../_components/override-main-map'
@@ -57,8 +58,12 @@ const ExplorePage: FC<PageParams> = async ({ params, searchParams }) => {
       />
       <PlaceList
         items={[
-          ...places.map((place) => ({ type: 'place' as const, ...place })),
-          ...routes.map((route) => ({ type: 'route' as const, ...route })),
+          ...places
+            .map((place) => ({ type: 'place' as const, ...place }))
+            .sort(sortByImportanceRanzomIfEqual),
+          ...routes
+            .map((route) => ({ type: 'route' as const, ...route }))
+            .sort(sortByImportanceRanzomIfEqual),
         ]}
       />
     </>
