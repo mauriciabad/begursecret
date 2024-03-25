@@ -102,6 +102,8 @@ import {
 } from '@tabler/icons-react'
 import { FC } from 'react'
 import { IconName } from '~/server/db/constants/shared'
+import { IconCustomRouteGr } from './custom/IconCustomRouteGr'
+import { IconCustomRouteSl } from './custom/IconCustomRouteSl'
 
 const iconsByIconName = {
   beach: IconBeach,
@@ -202,6 +204,8 @@ const iconsByIconName = {
   golf: IconGolf,
   'plane-departure': IconPlaneDeparture,
   circles: IconCircles,
+  'custom-route-gr': IconCustomRouteGr,
+  'custom-route-sl': IconCustomRouteSl,
 } as const satisfies Record<IconName, Icon>
 
 export const CategoryIcon: FC<

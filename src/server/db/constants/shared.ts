@@ -98,6 +98,8 @@ export const iconNames = [
   'golf',
   'plane-departure',
   'circles',
+  'custom-route-gr',
+  'custom-route-sl',
 ] as const
 export type IconName = (typeof iconNames)[number]
 
