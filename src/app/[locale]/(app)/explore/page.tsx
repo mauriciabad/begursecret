@@ -47,17 +47,17 @@ const ExplorePage: FC<LocaleRouteParams> = async ({ params }) => {
   }))
 
   groups
-  .filter((group) => group.id !== 2) // TODO: Temporarily disabled "Punts d'oci i esport naturals"
-  .splice(1, 0, {
-    name: t('category-groups.routes'),
-    id: 9999999,
-    order: null,
-    categories: routeCategories.map((category) => ({
-      category,
-      highlight: [1, 2, 3, 5].includes(category.id),
-    })),
-    type: 'route',
-  })
+    .filter((group) => group.id !== 2) // TODO: Temporarily disabled "Punts d'oci i esport naturals"
+    .splice(1, 0, {
+      name: t('category-groups.routes'),
+      id: 9999999,
+      order: null,
+      categories: routeCategories.map((category) => ({
+        category,
+        highlight: [1, 2, 3, 5].includes(category.id),
+      })),
+      type: 'route',
+    })
 
   return (
     <div className="pt-6">
