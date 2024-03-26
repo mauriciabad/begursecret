@@ -44,10 +44,9 @@ const ExplorePage: FC<LocaleRouteParams> = async ({ params }) => {
     ...group,
     categories: group.placeCategories,
     type: 'place',
-  }))
+  })).filter((group) => group.id !== 2) // TODO: Temporarily disabled "Punts d'oci i esport naturals".  Enable it later.
 
   groups
-    .filter((group) => group.id !== 2) // TODO: Temporarily disabled "Punts d'oci i esport naturals". Enable it later.
     .splice(1, 0, {
       name: t('category-groups.routes'),
       id: 9999999,
