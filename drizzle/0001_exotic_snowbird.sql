@@ -1,0 +1,1 @@
+ALTER TABLE "image" ALTER COLUMN "captureDate" SET DATA TYPE timestamp;

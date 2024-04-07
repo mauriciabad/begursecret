@@ -8,6 +8,13 @@
       "when": 1712506726785,
       "tag": "0000_last_xorn",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1712511827143,
+      "tag": "0001_exotic_snowbird",
+      "breakpoints": true
     }
   ]
 }
