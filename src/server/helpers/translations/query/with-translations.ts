@@ -27,8 +27,8 @@ export function withTranslations<
         columns: config.columns,
         where: (translations: TranslationsTableColumns) =>
           and(
-            isNotNull(sql.placeholder('locale')),
-            eq(translations.locale, sql.placeholder('locale'))
+            isNotNull(sql`${sql.placeholder('locale')}::text`),
+            eq(translations.locale, sql`${sql.placeholder('locale')}::text`)
           ),
       },
 
