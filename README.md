@@ -94,10 +94,15 @@ By default, the app will connect to stage database in Neon, but you can run it l
 1. Right before merging the PR, go to PlanetScale dashboard and create a deploy preview and deploy it.
 1. Merge the PR in GitHub.
 
-##### new procedure random thoughts
+##### New procedure random thoughts
 
 1. Run `pnpm db:generate`, to generate the new sql file.
 2. DON'T run `pnpm db:push`, because it won't work. Instead, go to the Neon website, and in a SQL console paste the generated SQL.
+
+Besides that. These are the manual changes I did to the migration files:
+
+1. Add `CREATE EXTENSION IF NOT EXISTS postgis;` to the top
+2. Remove the double quotes (`"`) from `Geometry(Point, 25831)` and `Geometry(MultiLineString, 25831)`.
 
 #### Access to other services
 
