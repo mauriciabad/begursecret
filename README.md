@@ -104,6 +104,10 @@ Besides that. These are the manual changes I did to the migration files:
 1. Add `CREATE EXTENSION IF NOT EXISTS postgis;` to the top
 2. Remove the double quotes (`"`) from `Geometry(Point, 25831)` and `Geometry(MultiLineString, 25831)`.
 
+Something else:
+
+The script `db:local:run-db` is not done, it is commented out.
+
 #### Access to other services
 
 Ask @mauriciabad for access.
