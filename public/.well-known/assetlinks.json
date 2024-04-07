@@ -5,7 +5,8 @@
       "namespace": "android_app",
       "package_name": "com.begursecret.twa2",
       "sha256_cert_fingerprints": [
-        "53:67:BF:A9:4F:C3:41:BD:6F:22:E9:04:41:4C:1F:CC:5A:87:E4:7B:16:B5:A2:0C:E3:96:48:A8:D7:AE:69:C7"
+        "53:67:BF:A9:4F:C3:41:BD:6F:22:E9:04:41:4C:1F:CC:5A:87:E4:7B:16:B5:A2:0C:E3:96:48:A8:D7:AE:69:C7",
+        "A8:87:C0:9E:53:83:79:D7:D6:48:44:6F:A7:36:2F:FF:40:51:4D:01:3E:5C:9C:CD:8C:89:5E:EB:BB:79:F7:4C"
       ]
     }
   }
