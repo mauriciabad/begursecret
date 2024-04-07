@@ -94,6 +94,11 @@ By default, the app will connect to stage database in Neon, but you can run it l
 1. Right before merging the PR, go to PlanetScale dashboard and create a deploy preview and deploy it.
 1. Merge the PR in GitHub.
 
+##### new procedure random thoughts
+
+1. Run `pnpm db:generate`, to generate the new sql file.
+2. DON'T run `pnpm db:push`, because it won't work. Instead, go to the Neon website, and in a SQL console paste the generated SQL.
+
 #### Access to other services
 
 Ask @mauriciabad for access.
