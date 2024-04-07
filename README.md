@@ -42,6 +42,9 @@ Discover incredible places and explore Begur like never before.
 
 #### Using local database
 
+> [!CAUTION]  
+> This guide is outdated! The migration to Neon was very fast and I didn't have time to standarize the procedure.
+
 By default, the app will connect to stage database in Neon, but you can run it locally too.
 
 1. Install [docker](https://www.docker.com/products/docker-desktop/).
