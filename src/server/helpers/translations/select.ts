@@ -47,7 +47,7 @@ export function flattenTranslationsFromSelect<
  *  .leftJoin(translationsTable, eq(normalTable.id, translationsTable.normalTableItemId))
  *  .where(
  *    or(
- *      eq(translationsTable.locale, sql.placeholder('locale')),
+ *      eq(translationsTable.locale, sql`${sql.placeholder('locale')}::text`),
  *      isNull(translationsTable.locale)
  *    )
  *  )

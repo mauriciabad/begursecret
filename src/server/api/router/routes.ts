@@ -1,6 +1,6 @@
-import { sql } from 'drizzle-orm'
 import 'server-only'
 
+import { sql } from 'drizzle-orm'
 import { calculatePath } from '~/helpers/spatial-data/multi-line'
 import { getRoutesSchema } from '~/schemas/routes'
 import { db } from '~/server/db/db'
@@ -28,7 +28,8 @@ const getRoute = flattenTranslationsOnExecute(
           path: selectMultiLine('path', routes.path),
         },
         orderBy: [ascNullsEnd(routes.importance)],
-        where: (route, { eq }) => eq(route.id, sql.placeholder('id')),
+        where: (route, { eq }) =>
+          eq(route.id, sql`${sql.placeholder('id')}::integer`),
         with: {
           mainImage: true,
           externalLinks: withTranslations({}),

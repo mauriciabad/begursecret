@@ -94,13 +94,19 @@ const getAllPlaceIds = db
   .where(
     and(
       or(
-        isNull(sql.placeholder('categoryId')),
-        eq(places.mainCategoryId, sql.placeholder('categoryId')),
-        eq(placesToPlaceCategories.categoryId, sql.placeholder('categoryId'))
+        isNull(sql`${sql.placeholder('categoryId')}::integer`),
+        eq(
+          places.mainCategoryId,
+          sql`${sql.placeholder('categoryId')}::integer`
+        ),
+        eq(
+          placesToPlaceCategories.categoryId,
+          sql`${sql.placeholder('categoryId')}::integer`
+        )
       ),
       or(
-        isNull(sql.placeholder('query')),
-        like(places.name, sql.placeholder('query'))
+        isNull(sql`${sql.placeholder('query')}::text`),
+        like(places.name, sql`${sql.placeholder('query')}::text`)
       )
     )
   )
@@ -141,7 +147,8 @@ const getPlace = flattenTranslationsOnExecute(
         extras: {
           location: selectPoint('location', places.location),
         },
-        where: (place, { eq }) => eq(place.id, sql.placeholder('id')),
+        where: (place, { eq }) =>
+          eq(place.id, sql`${sql.placeholder('id')}::integer`),
         with: {
           mainImage: true,
           externalLinks: withTranslations({}),

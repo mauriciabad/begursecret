@@ -28,7 +28,10 @@ const searchPlacesByMainCategory = flattenTranslationsOnExecute(
         where: (place, { eq, and, isNotNull }) =>
           and(
             isNotNull(place.mainCategoryId),
-            eq(place.mainCategoryId, sql.placeholder('category'))
+            eq(
+              place.mainCategoryId,
+              sql`${sql.placeholder('category')}::integer`
+            )
           ),
         with: {
           mainImage: true,
@@ -65,7 +68,10 @@ const searchPlacesBySecondaryCategory = doSomethingAfterExecute(
         where: (placeToCategory, { eq, and, isNotNull }) =>
           and(
             isNotNull(placeToCategory.categoryId),
-            eq(placeToCategory.categoryId, sql.placeholder('category'))
+            eq(
+              placeToCategory.categoryId,
+              sql`${sql.placeholder('category')}::integer`
+            )
           ),
         with: {
           place: withTranslations({
@@ -122,7 +128,10 @@ const searchRoutesByMainCategory = flattenTranslationsOnExecute(
         where: (route, { eq, and, isNotNull }) =>
           and(
             isNotNull(route.mainCategoryId),
-            eq(route.mainCategoryId, sql.placeholder('category'))
+            eq(
+              route.mainCategoryId,
+              sql`${sql.placeholder('category')}::integer`
+            )
           ),
         with: {
           mainImage: true,
@@ -158,7 +167,10 @@ const searchRoutesBySecondaryCategory = doSomethingAfterExecute(
         where: (routeToCategory, { eq, and, isNotNull }) =>
           and(
             isNotNull(routeToCategory.categoryId),
-            eq(routeToCategory.categoryId, sql.placeholder('category'))
+            eq(
+              routeToCategory.categoryId,
+              sql`${sql.placeholder('category')}::integer`
+            )
           ),
         with: {
           route: withTranslations({

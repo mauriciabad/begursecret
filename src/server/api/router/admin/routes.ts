@@ -97,13 +97,19 @@ const getAllRouteIds = db
   .where(
     and(
       or(
-        isNull(sql.placeholder('categoryId')),
-        eq(routes.mainCategoryId, sql.placeholder('categoryId')),
-        eq(routesToRouteCategories.categoryId, sql.placeholder('categoryId'))
+        isNull(sql`${sql.placeholder('categoryId')}::integer`),
+        eq(
+          routes.mainCategoryId,
+          sql`${sql.placeholder('categoryId')}::integer`
+        ),
+        eq(
+          routesToRouteCategories.categoryId,
+          sql`${sql.placeholder('categoryId')}::integer`
+        )
       ),
       or(
-        isNull(sql.placeholder('query')),
-        like(routes.name, sql.placeholder('query'))
+        isNull(sql`${sql.placeholder('query')}::text`),
+        like(routes.name, sql`${sql.placeholder('query')}::text`)
       )
     )
   )
@@ -143,7 +149,8 @@ const getRoute = flattenTranslationsOnExecute(
         extras: {
           path: selectMultiLine('path', routes.path),
         },
-        where: (route, { eq }) => eq(route.id, sql.placeholder('id')),
+        where: (route, { eq }) =>
+          eq(route.id, sql`${sql.placeholder('id')}::integer`),
         with: {
           mainImage: true,
           externalLinks: withTranslations({}),

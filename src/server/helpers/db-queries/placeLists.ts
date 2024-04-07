@@ -17,7 +17,8 @@ const getVisitedPlaceListId = db.query.users
     columns: {
       visitedPlaceListId: true,
     },
-    where: (users, { eq }) => eq(users.id, sql.placeholder('userId')),
+    where: (users, { eq }) =>
+      eq(users.id, sql`${sql.placeholder('userId')}::text`),
   })
   .prepare('helpers/placeLists/getVisitedPlaceListId')
 
@@ -27,7 +28,10 @@ const getPlacesInList = db.query.placeListToPlace
       placeId: true,
     },
     where: (placeListToPlace, { eq }) =>
-      eq(placeListToPlace.placeListId, sql.placeholder('placeListId')),
+      eq(
+        placeListToPlace.placeListId,
+        sql`${sql.placeholder('placeListId')}::integer`
+      ),
   })
   .prepare('helpers/placeLists/getPlacesInList')
 

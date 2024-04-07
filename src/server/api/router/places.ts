@@ -28,7 +28,8 @@ const getPlace = flattenTranslationsOnExecute(
         extras: {
           location: selectPoint('location', places.location),
         },
-        where: (place, { eq }) => eq(place.id, sql.placeholder('id')),
+        where: (place, { eq }) =>
+          eq(place.id, sql`${sql.placeholder('id')}::integer`),
         with: {
           mainImage: true,
           externalLinks: withTranslations({}),
@@ -63,8 +64,8 @@ const getPlace = flattenTranslationsOnExecute(
             ],
             where: (verification, { or, isNull, eq }) =>
               or(
-                isNull(sql.placeholder('userId')),
-                eq(verification.userId, sql.placeholder('userId'))
+                isNull(sql`${sql.placeholder('userId')}::text`),
+                eq(verification.userId, sql`${sql.placeholder('userId')}::text`)
               ),
             limit: 1,
           },
