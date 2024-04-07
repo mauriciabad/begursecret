@@ -1,7 +1,7 @@
 import { relations } from 'drizzle-orm'
-import { double, int, text, tinytext } from 'drizzle-orm/mysql-core'
+import { doublePrecision, integer, text } from 'drizzle-orm/pg-core'
 import { pointType } from '../../helpers/spatial-data/point'
-import { mysqlTableWithTranslations } from '../../helpers/translations/db-tables'
+import { pgTableWithTranslations } from '../../helpers/translations/db-tables'
 import { externalLinks } from './externalLinks'
 import { features } from './features'
 import { images } from './images'
@@ -16,20 +16,20 @@ export const {
   translationsTable: placesTranslations,
   makeRelationsWithTranslations: makePlaceRelations,
   translationsTableRelations: placesTranslationsRelations,
-} = mysqlTableWithTranslations({
+} = pgTableWithTranslations({
   name: 'place',
   normalColumns: {
-    mainImageId: int('mainImageId'),
+    mainImageId: integer('mainImageId'),
     googleMapsId: text('googleMapsId'),
     location: pointType('location').notNull(),
-    mainCategoryId: int('mainCategoryId').notNull(),
-    featuresId: int('featuresId').notNull(),
-    verificationRequirementsId: int('verificationRequirementsId'),
-    importance: double('importance'),
+    mainCategoryId: integer('mainCategoryId').notNull(),
+    featuresId: integer('featuresId').notNull(),
+    verificationRequirementsId: integer('verificationRequirementsId'),
+    importance: doublePrecision('importance'),
   },
   translatableColumns: {
     name: text('name').notNull(),
-    description: tinytext('description'),
+    description: text('description'),
     content: text('content'), // Markdown
   },
 })

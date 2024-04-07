@@ -60,9 +60,8 @@ import { useMemo } from 'react'
 import { Join } from 'ts-toolbelt/out/String/Join'
 import { Leaves } from '~/helpers/types'
 import { pick } from '~/helpers/utilities'
+import { FeaturesInsert, FeaturesSelect } from '~/server/db/constants/features'
 import {
-  FeaturesInsert,
-  FeaturesSelect,
   PriceUnit,
   allowedAccess,
   amountOfPeople,
@@ -73,7 +72,7 @@ import {
   priceUnit,
   scubaDivingLevel,
   trainingLevel,
-} from '~/server/db/constants/features'
+} from '../schema'
 
 const typeFeatureDisplay = <F extends AnyFeature<K>, K extends FeatureKey>(
   feature: F

@@ -1,5 +1,5 @@
 import { DriverValueMapper, sql } from 'drizzle-orm'
-import { customType } from 'drizzle-orm/mysql-core'
+import { customType } from 'drizzle-orm/pg-core'
 import {
   PointString,
   getPoint,
@@ -16,12 +16,12 @@ export const pointType = customType<{
   driverData: string
 }>({
   dataType() {
-    return `POINT SRID ${SRID_CODE}`
+    return `Geometry(Point,${SRID_CODE})`
   },
   toDriver(value: WrongPointType | string) {
     const point = getPoint(value)
     if (!point) throw new Error(`Invalid point value: ${JSON.stringify(value)}`)
-    return sql`ST_PointFromText(${pointToString(point)}, ${SRID_CODE})`
+    return sql`ST_GeomFromText('${pointToString(point)}',${SRID_CODE})`
   },
   fromDriver(value: string): WrongPointType {
     const point = getPoint(value)

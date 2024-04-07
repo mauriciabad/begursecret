@@ -1,8 +1,8 @@
-import { boolean, int, mysqlTable, serial } from 'drizzle-orm/mysql-core'
+import { boolean, integer, pgTable, serial } from 'drizzle-orm/pg-core'
 
-export const verificationRequirements = mysqlTable('verificationRequirement', {
+export const verificationRequirements = pgTable('verificationRequirement', {
   id: serial('id').primaryKey(),
 
   isLocationRequired: boolean('isLocationRequired').notNull().default(true),
-  maxLocationDistance: int('maxLocationDistance'),
+  maxLocationDistance: integer('maxLocationDistance'),
 })

@@ -1,1 +1,0 @@
-ALTER TABLE `place` ADD `location` POINT SRID 25831 NOT NULL;

@@ -1,1 +1,0 @@
-ALTER TABLE `placeCategoryToPlaceCategoryGroup` ADD `highlight` boolean;

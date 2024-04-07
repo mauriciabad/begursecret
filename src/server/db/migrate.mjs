@@ -1,8 +1,8 @@
 /* eslint-env node */
 // @ts-check
-import { drizzle as drizzleMysql } from 'drizzle-orm/mysql2'
-import { migrate } from 'drizzle-orm/mysql2/migrator'
-import { createConnection } from 'mysql2'
+import { drizzle as drizzlePg } from 'drizzle-orm/postgres-js'
+import { migrate } from 'drizzle-orm/postgres-js/migrator'
+import postgres from 'postgres'
 
 if (process.env.USE_LOCAL_DB !== 'true') {
   throw new Error(
@@ -10,14 +10,10 @@ if (process.env.USE_LOCAL_DB !== 'true') {
   )
 }
 
-const db = drizzleMysql(
-  createConnection({
-    host: '127.0.0.1',
-    user: 'root',
-    password: 'unsafePaswordOnlyForLocalhost',
-    database: 'descobreix-begur-app',
-  })
-)
+if (!process.env.DATABASE_URL)
+  throw new Error('Missing environment variable DATABASE_URL')
+
+const db = drizzlePg(postgres(process.env.DATABASE_URL))
 
 const main = async () => {
   await migrate(db, { migrationsFolder: 'drizzle' })

@@ -1,1 +1,0 @@
-ALTER TABLE `place` MODIFY COLUMN `featuresId` int NOT NULL;

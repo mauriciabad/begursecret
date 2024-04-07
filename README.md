@@ -42,7 +42,7 @@ Discover incredible places and explore Begur like never before.
 
 #### Using local database
 
-By default, the app will connect to stage database in PlanetScale, but you can run it locally too.
+By default, the app will connect to stage database in Neon, but you can run it locally too.
 
 1. Install [docker](https://www.docker.com/products/docker-desktop/).
 1. Run the database **in another console**:
@@ -81,11 +81,11 @@ By default, the app will connect to stage database in PlanetScale, but you can r
 
 1. Make the changes in your code, testing them with the local database.
 1. Run `pnpm db:generate` to generate the migrations.
-1. Run `pnpm db:push` to upload the migrations to PlanetScale stage branch.
-   - Only 1 branch can be pushed to PlanetScale at a time, if there were contents from another change they will be overridden. This is because we use the PlanetScale free tier.
+1. Run `pnpm db:push` to upload the migrations to Neon stage branch.
+   - Only 1 branch can be pushed to Neon at a time, if there were contents from another change they will be overridden. This is because we use the Neon free tier.
 1. Run the GitHub's CI after the stage database is updated, by pushing a commit or running it manually.
    - GitHub's CI is configured to run on stage database, so it will catch any error.
-1. Right before merging the PR, go to PlanetScale dashboard and create a deploy preview and deploy it.
+1. Right before merging the PR, go to Neon dashboard and create a deploy preview and deploy it.
 1. Merge the PR in GitHub.
 
 #### Access to other services
@@ -94,7 +94,7 @@ Ask @mauriciabad for access.
 
 These are the services we use related to the code:
 
-- [PlanetScale](https://app.planetscale.com/begursecret/descobreix-begur-app)
+- [Neon](https://console.neon.tech/app/projects/spring-brook-65910694)
 - [AWS S3](https://aws.amazon.com/s3)
 - [Vercel](https://vercel.com/mauriciabad/begursecret)
 - [GitHub](https://github.com/mauriciabad/begursecret)
