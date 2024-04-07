@@ -8,5 +8,3 @@ export const adminRouter = router({
   routes: routesAdminRouter,
   images: imagesAdminRouter,
 })
-
-hola
