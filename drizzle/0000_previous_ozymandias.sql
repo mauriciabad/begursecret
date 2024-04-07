@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS "feature_translation" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "image" (
-    "id" serial PRIMARY KEY NOT NULL, "key" varchar(1024) NOT NULL, "width" integer NOT NULL, "height" integer NOT NULL, "source" text, "captureDate" date, "alt" text, "blurDataURL" text
+    "id" serial PRIMARY KEY NOT NULL, "key" varchar(1024) NOT NULL, "width" integer NOT NULL, "height" integer NOT NULL, "source" text, "captureDate" timestamp, "alt" text, "blurDataURL" text
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "placeCategory" (
@@ -189,7 +189,7 @@ CREATE TABLE IF NOT EXISTS "route_translation" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "user" (
-    "id" varchar(255) PRIMARY KEY NOT NULL, "name" text, "email" text NOT NULL, "emailVerified" timestamp, "image" text, "role" text DEFAULT 'user' NOT NULL, "visitedPlaceListId" integer NOT NULL
+    "id" varchar(255) PRIMARY KEY NOT NULL, "name" text, "hashedPassword" varchar(255), "email" text NOT NULL, "emailVerified" timestamp, "image" text, "role" text DEFAULT 'user' NOT NULL, "visitedPlaceListId" integer NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "verificationRequirement" (

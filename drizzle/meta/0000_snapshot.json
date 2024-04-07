@@ -1,5 +1,5 @@
 {
-  "id": "c7c5a5dd-fcf9-46c7-b98c-d80a74f60a15",
+  "id": "74278d02-12c6-451a-82b2-277c98466d64",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -652,7 +652,7 @@
         },
         "captureDate": {
           "name": "captureDate",
-          "type": "date",
+          "type": "timestamp",
           "primaryKey": false,
           "notNull": false
         },
@@ -1406,6 +1406,12 @@
         "name": {
           "name": "name",
           "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hashedPassword": {
+          "name": "hashedPassword",
+          "type": "varchar(255)",
           "primaryKey": false,
           "notNull": false
         },
