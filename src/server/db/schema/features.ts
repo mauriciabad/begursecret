@@ -107,7 +107,7 @@ export const {
 } = pgTableWithTranslations({
   name: 'feature',
   normalColumns: {
-    amountOfPeople: amountOfPeopleEnum('amountOfPeopleEnum'),
+    amountOfPeople: amountOfPeopleEnum('amountOfPeople'),
     difficulty: difficultyEnum('difficulty'),
     groundType: groundTypeEnum('groundType'),
 

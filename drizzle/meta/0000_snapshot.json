@@ -276,8 +276,8 @@
           "primaryKey": true,
           "notNull": true
         },
-        "amountOfPeopleEnum": {
-          "name": "amountOfPeopleEnum",
+        "amountOfPeople": {
+          "name": "amountOfPeople",
           "type": "amountOfPeople",
           "primaryKey": false,
           "notNull": false
