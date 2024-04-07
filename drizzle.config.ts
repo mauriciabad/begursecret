@@ -5,14 +5,16 @@ import path from 'node:path'
 dotenv.config({ path: path.resolve(process.cwd(), '.env.local') })
 dotenv.config({ path: path.resolve(process.cwd(), '.env') })
 
-if (!process.env.DATABASE_URL)
-  throw new Error('Missing environment variable DATABASE_URL')
+if (process.env.SKIP_ENV_VALIDATION !== 'true') {
+  if (!process.env.DATABASE_URL)
+    throw new Error('Missing environment variable DATABASE_URL')
+}
 
 export default {
   schema: './src/server/db/schema/*',
   out: './drizzle',
   driver: 'pg',
   dbCredentials: {
-    connectionString: process.env.DATABASE_URL,
+    connectionString: process.env.DATABASE_URL!,
   },
 } satisfies Config
