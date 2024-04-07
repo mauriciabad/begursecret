@@ -30,20 +30,22 @@ export const POST = withAxiom(async (request) => {
   })
 
   const rawDate = formData.get('captureDate')?.toString()
-  const insertImageResult = await db
-    .insert(images)
-    .values({
-      ...image,
-      alt: formData.get('alt')?.toString(),
-      source: formData.get('source')?.toString(),
-      captureDate: rawDate ? new Date(rawDate) : null,
-    })
-    .execute()
-  const imageId = Number(insertImageResult.insertId)
+  const newImage = (
+    await db
+      .insert(images)
+      .values({
+        ...image,
+        alt: formData.get('alt')?.toString(),
+        source: formData.get('source')?.toString(),
+        captureDate: rawDate ? new Date(rawDate) : null,
+      })
+      .returning()
+      .execute()
+  )[0]
 
   return NextResponse.json({
     image: {
-      id: imageId,
+      id: newImage.id,
       ...image,
     },
   } satisfies UploadPlaceImageResponse)

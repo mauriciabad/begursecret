@@ -213,28 +213,33 @@ export const routesAdminRouter = router({
     .input(createRouteSchema)
     .mutation(async ({ input }) => {
       await db.transaction(async (tx) => {
-        const insertFeaturesResult = await tx
-          .insert(features)
-          .values({ ...input.features })
+        const newFeatures = (
+          await tx
+            .insert(features)
+            .values({ ...input.features })
+            .returning()
+        )[0]
 
-        const featuresId = Number(insertFeaturesResult.insertId)
-
-        const insertRouteResult = await tx.insert(routes).values({
-          name: input.name,
-          description: input.description,
-          mainCategoryId: input.mainCategory,
-          path: multiLineToString(input.path),
-          importance: input.importance,
-          content: input.content,
-          verificationRequirementsId: 1,
-          featuresId,
-        })
-        const newRouteId = Number(insertRouteResult.insertId)
+        const newRoute = (
+          await tx
+            .insert(routes)
+            .values({
+              name: input.name,
+              description: input.description,
+              mainCategoryId: input.mainCategory,
+              path: multiLineToString(input.path),
+              importance: input.importance,
+              content: input.content,
+              verificationRequirementsId: 1,
+              featuresId: newFeatures.id,
+            })
+            .returning()
+        )[0]
 
         if (input.categories.length > 0) {
           await tx.insert(routesToRouteCategories).values(
             input.categories.map((categoryId) => ({
-              routeId: newRouteId,
+              routeId: newRoute.id,
               categoryId: categoryId,
             }))
           )
@@ -243,13 +248,13 @@ export const routesAdminRouter = router({
         if (input.externalLinks.length > 0) {
           await tx.insert(externalLinks).values(
             input.externalLinks.map((externalLink) => ({
-              routeId: newRouteId,
+              routeId: newRoute.id,
               ...externalLink,
             }))
           )
         }
 
-        return newRouteId
+        return newRoute.id
       })
     }),
   editRoute: adminProcedure
