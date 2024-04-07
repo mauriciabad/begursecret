@@ -1,28 +1,20 @@
 import { relations } from 'drizzle-orm'
-import { int, mysqlTable, timestamp, varchar } from 'drizzle-orm/mysql-core'
+import { integer, pgTable, text, timestamp, varchar } from 'drizzle-orm/pg-core'
 import { userRoles } from '../constants/users'
 import { dbUserId } from '../utilities'
 import { placeLists } from './placeLists'
 import { verifications } from './verifications'
 
-export const users = mysqlTable('user', {
+export const users = pgTable('user', {
   id: dbUserId('id').notNull().primaryKey(),
-  name: varchar('name', { length: 255 }),
+  name: text('name'),
   hashedPassword: varchar('hashedPassword', { length: 255 }),
-  email: varchar('email', { length: 255 }).unique().notNull(),
-  emailVerified: timestamp('emailVerified', {
-    mode: 'date',
-    fsp: 3,
-  }),
-  image: varchar('image', { length: 255 }),
-  role: varchar('role', {
-    length: 255,
-    enum: userRoles,
-  })
-    .default('user')
-    .notNull(),
+  email: text('email').notNull(),
+  emailVerified: timestamp('emailVerified', { mode: 'date' }),
+  image: text('image'),
+  role: text('role', { enum: userRoles }).default('user').notNull(),
 
-  visitedPlaceListId: int('visitedPlaceListId').notNull(),
+  visitedPlaceListId: integer('visitedPlaceListId').notNull(),
 })
 
 export const usersRelations = relations(users, ({ one, many }) => ({

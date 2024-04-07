@@ -20,10 +20,10 @@ import { protectedProcedure, router } from '~/server/trpc'
 const addToPlaceList = db
   .insert(placeListToPlace)
   .values({
-    placeListId: sql.placeholder('placeListId'),
-    placeId: sql.placeholder('placeId'),
+    placeListId: sql`${sql.placeholder('placeListId')}::integer`,
+    placeId: sql`${sql.placeholder('placeId')}::integer`,
   })
-  .prepare()
+  .prepare('placeLists/addToPlaceList')
 
 const getPlacesFromPlaceListQuery = flattenTranslationsOnExecute(
   db.query.placeListToPlace
@@ -32,7 +32,10 @@ const getPlacesFromPlaceListQuery = flattenTranslationsOnExecute(
         addedAt: true,
       },
       where: (placeList, { eq }) =>
-        eq(placeList.placeListId, sql.placeholder('placeListId')),
+        eq(
+          placeList.placeListId,
+          sql`${sql.placeholder('placeListId')}::integer`
+        ),
 
       with: {
         place: withTranslations({
@@ -71,7 +74,7 @@ const getPlacesFromPlaceListQuery = flattenTranslationsOnExecute(
         }),
       },
     })
-    .prepare()
+    .prepare('placeLists/getPlacesFromPlaceList')
 )
 
 const getPlacesFromPlaceListCountQuery = db.query.placeListToPlace
@@ -80,9 +83,12 @@ const getPlacesFromPlaceListCountQuery = db.query.placeListToPlace
       placeId: true,
     },
     where: (placeList, { eq }) =>
-      eq(placeList.placeListId, sql.placeholder('placeListId')),
+      eq(
+        placeList.placeListId,
+        sql`${sql.placeholder('placeListId')}::integer`
+      ),
   })
-  .prepare()
+  .prepare('placeLists/getPlacesFromPlaceListCount')
 
 export const placeListsRouter = router({
   addToVisitedPlacesList: protectedProcedure

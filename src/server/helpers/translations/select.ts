@@ -47,11 +47,11 @@ export function flattenTranslationsFromSelect<
  *  .leftJoin(translationsTable, eq(normalTable.id, translationsTable.normalTableItemId))
  *  .where(
  *    or(
- *      eq(translationsTable.locale, sql.placeholder('locale')),
+ *      eq(translationsTable.locale, sql`${sql.placeholder('locale')}::text`),
  *      isNull(translationsTable.locale)
  *    )
  *  )
- *  .prepare()
+ *  .prepare('statement_name')
  */
 export function selectTranslations<
   K extends Exclude<keyof DT & keyof TT, 'getSQL' | '_'>,

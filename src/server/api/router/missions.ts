@@ -34,13 +34,15 @@ const getVisitMissions = flattenTranslationsOnExecute(
           and(
             eq(placeCategories.hasVisitMission, true),
             or(
-              isNull(sql.placeholder('placeId')),
+              isNull(sql`${sql.placeholder('placeId')}::integer`),
               eq(
                 placeCategories.id,
                 db
                   .selectDistinct({ data: places.mainCategoryId })
                   .from(places)
-                  .where(eq(places.id, sql.placeholder('placeId')))
+                  .where(
+                    eq(places.id, sql`${sql.placeholder('placeId')}::integer`)
+                  )
               ),
               inArray(
                 placeCategories.id,
@@ -50,7 +52,7 @@ const getVisitMissions = flattenTranslationsOnExecute(
                   .where(
                     eq(
                       placesToPlaceCategories.placeId,
-                      sql.placeholder('placeId')
+                      sql`${sql.placeholder('placeId')}::integer`
                     )
                   )
               )
@@ -101,8 +103,11 @@ const getVisitMissions = flattenTranslationsOnExecute(
                     ],
                     where: (verification, { or, isNull, eq }) =>
                       or(
-                        isNull(sql.placeholder('userId')),
-                        eq(verification.userId, sql.placeholder('userId'))
+                        isNull(sql`${sql.placeholder('userId')}::text`),
+                        eq(
+                          verification.userId,
+                          sql`${sql.placeholder('userId')}::text`
+                        )
                       ),
                     limit: 1,
                   },
@@ -152,8 +157,11 @@ const getVisitMissions = flattenTranslationsOnExecute(
                 ],
                 where: (verification, { or, isNull, eq }) =>
                   or(
-                    isNull(sql.placeholder('userId')),
-                    eq(verification.userId, sql.placeholder('userId'))
+                    isNull(sql`${sql.placeholder('userId')}::text`),
+                    eq(
+                      verification.userId,
+                      sql`${sql.placeholder('userId')}::text`
+                    )
                   ),
                 limit: 1,
               },
@@ -163,7 +171,7 @@ const getVisitMissions = flattenTranslationsOnExecute(
         },
       })
     )
-    .prepare()
+    .prepare('missions/getVisitMissions')
 )
 
 export const missionsRouter = router({

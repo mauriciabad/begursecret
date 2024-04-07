@@ -1,12 +1,12 @@
 import { relations } from 'drizzle-orm'
 import {
   boolean,
-  int,
-  mysqlTable,
+  integer,
+  pgTable,
   primaryKey,
-  tinytext,
-} from 'drizzle-orm/mysql-core'
-import { mysqlTableWithTranslations } from '~/server/helpers/translations/db-tables'
+  text,
+} from 'drizzle-orm/pg-core'
+import { pgTableWithTranslations } from '~/server/helpers/translations/db-tables'
 import { dbColor, dbGender, dbIcon } from '../utilities'
 import { routes } from './routes'
 
@@ -15,17 +15,17 @@ export const {
   translationsTable: routeCategoriesTranslations,
   makeRelationsWithTranslations: makeRouteCategoryRelations,
   translationsTableRelations: routeCategoriesTranslationsRelations,
-} = mysqlTableWithTranslations({
+} = pgTableWithTranslations({
   name: 'routeCategory',
   normalColumns: {
     icon: dbIcon('icon').notNull(),
     color: dbColor('color').notNull(),
     hasVisitMission: boolean('hasVisitMission').notNull().default(true),
-    order: int('order'),
+    order: integer('order'),
   },
   translatableColumns: {
-    name: tinytext('name').notNull(),
-    namePlural: tinytext('namePlural').notNull(),
+    name: text('name').notNull(),
+    namePlural: text('namePlural').notNull(),
     nameGender: dbGender('nameGender'),
   },
 })
@@ -39,11 +39,11 @@ export const routeCategoriesRelations = relations(routeCategories, (r) => ({
   }),
 }))
 
-export const routesToRouteCategories = mysqlTable(
+export const routesToRouteCategories = pgTable(
   'routeToRouteCategory',
   {
-    routeId: int('routeId').notNull(),
-    categoryId: int('categoryId').notNull(),
+    routeId: integer('routeId').notNull(),
+    categoryId: integer('categoryId').notNull(),
   },
   (table) => {
     return {

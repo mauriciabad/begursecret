@@ -81,7 +81,7 @@ const getAllPlaces = ({
           },
         })
       )
-      .prepare()
+      .prepare('admin/places/getAllPlaces')
   ).execute({ locale })
 
 const getAllPlaceIds = db
@@ -94,18 +94,24 @@ const getAllPlaceIds = db
   .where(
     and(
       or(
-        isNull(sql.placeholder('categoryId')),
-        eq(places.mainCategoryId, sql.placeholder('categoryId')),
-        eq(placesToPlaceCategories.categoryId, sql.placeholder('categoryId'))
+        isNull(sql`${sql.placeholder('categoryId')}::integer`),
+        eq(
+          places.mainCategoryId,
+          sql`${sql.placeholder('categoryId')}::integer`
+        ),
+        eq(
+          placesToPlaceCategories.categoryId,
+          sql`${sql.placeholder('categoryId')}::integer`
+        )
       ),
       or(
-        isNull(sql.placeholder('query')),
-        like(places.name, sql.placeholder('query'))
+        isNull(sql`${sql.placeholder('query')}::text`),
+        like(places.name, sql`${sql.placeholder('query')}::text`)
       )
     )
   )
   .orderBy(ascNullsEnd(places.importance), asc(places.id))
-  .prepare()
+  .prepare('admin/places/getAllPlaceIds')
 
 const listCategories = flattenTranslationsOnExecute(
   db.query.placeCategories
@@ -123,7 +129,7 @@ const listCategories = flattenTranslationsOnExecute(
         orderBy: [ascNullsEnd(placeCategories.order)],
       })
     )
-    .prepare()
+    .prepare('admin/places/listCategories')
 )
 
 const getPlace = flattenTranslationsOnExecute(
@@ -141,7 +147,8 @@ const getPlace = flattenTranslationsOnExecute(
         extras: {
           location: selectPoint('location', places.location),
         },
-        where: (place, { eq }) => eq(place.id, sql.placeholder('id')),
+        where: (place, { eq }) =>
+          eq(place.id, sql`${sql.placeholder('id')}::integer`),
         with: {
           mainImage: true,
           externalLinks: withTranslations({}),
@@ -169,7 +176,7 @@ const getPlace = flattenTranslationsOnExecute(
         },
       })
     )
-    .prepare()
+    .prepare('admin/places/getPlace')
 )
 
 export const placesAdminRouter = router({
@@ -211,30 +218,35 @@ export const placesAdminRouter = router({
     .input(createPlaceSchema)
     .mutation(async ({ input }) => {
       await db.transaction(async (tx) => {
-        const insertFeaturesResult = await tx
-          .insert(features)
-          .values({ ...input.features })
+        const newFeatures = (
+          await tx
+            .insert(features)
+            .values({ ...input.features })
+            .returning()
+        )[0]
 
-        const featuresId = Number(insertFeaturesResult.insertId)
-
-        const insertPlaceResult = await tx.insert(places).values({
-          name: input.name,
-          description: input.description,
-          googleMapsId: input.googleMapsId,
-          mainCategoryId: input.mainCategory,
-          mainImageId: input.mainImageId,
-          location: pointToString(input.location),
-          importance: input.importance,
-          content: input.content,
-          verificationRequirementsId: 1,
-          featuresId,
-        })
-        const newPlaceId = Number(insertPlaceResult.insertId)
+        const newPlace = (
+          await tx
+            .insert(places)
+            .values({
+              name: input.name,
+              description: input.description,
+              googleMapsId: input.googleMapsId,
+              mainCategoryId: input.mainCategory,
+              mainImageId: input.mainImageId,
+              location: pointToString(input.location),
+              importance: input.importance,
+              content: input.content,
+              verificationRequirementsId: 1,
+              featuresId: newFeatures.id,
+            })
+            .returning()
+        )[0]
 
         if (input.categories.length > 0) {
           await tx.insert(placesToPlaceCategories).values(
             input.categories.map((categoryId) => ({
-              placeId: newPlaceId,
+              placeId: newPlace.id,
               categoryId: categoryId,
             }))
           )
@@ -243,13 +255,13 @@ export const placesAdminRouter = router({
         if (input.externalLinks.length > 0) {
           await tx.insert(externalLinks).values(
             input.externalLinks.map((externalLink) => ({
-              placeId: newPlaceId,
+              placeId: newPlace.id,
               ...externalLink,
             }))
           )
         }
 
-        return newPlaceId
+        return newPlace.id
       })
     }),
   editPlace: adminProcedure

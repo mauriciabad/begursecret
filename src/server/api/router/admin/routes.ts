@@ -84,7 +84,7 @@ const getAllRoutes = ({
           },
         })
       )
-      .prepare()
+      .prepare('admin/routes/getAllRoutes')
   ).execute({ locale })
 
 const getAllRouteIds = db
@@ -97,18 +97,24 @@ const getAllRouteIds = db
   .where(
     and(
       or(
-        isNull(sql.placeholder('categoryId')),
-        eq(routes.mainCategoryId, sql.placeholder('categoryId')),
-        eq(routesToRouteCategories.categoryId, sql.placeholder('categoryId'))
+        isNull(sql`${sql.placeholder('categoryId')}::integer`),
+        eq(
+          routes.mainCategoryId,
+          sql`${sql.placeholder('categoryId')}::integer`
+        ),
+        eq(
+          routesToRouteCategories.categoryId,
+          sql`${sql.placeholder('categoryId')}::integer`
+        )
       ),
       or(
-        isNull(sql.placeholder('query')),
-        like(routes.name, sql.placeholder('query'))
+        isNull(sql`${sql.placeholder('query')}::text`),
+        like(routes.name, sql`${sql.placeholder('query')}::text`)
       )
     )
   )
   .orderBy(ascNullsEnd(routes.importance), asc(routes.id))
-  .prepare()
+  .prepare('admin/routes/getAllRouteIds')
 
 const listCategories = flattenTranslationsOnExecute(
   db.query.routeCategories
@@ -126,7 +132,7 @@ const listCategories = flattenTranslationsOnExecute(
         orderBy: [ascNullsEnd(routeCategories.order)],
       })
     )
-    .prepare()
+    .prepare('admin/routes/listCategories')
 )
 
 const getRoute = flattenTranslationsOnExecute(
@@ -143,7 +149,8 @@ const getRoute = flattenTranslationsOnExecute(
         extras: {
           path: selectMultiLine('path', routes.path),
         },
-        where: (route, { eq }) => eq(route.id, sql.placeholder('id')),
+        where: (route, { eq }) =>
+          eq(route.id, sql`${sql.placeholder('id')}::integer`),
         with: {
           mainImage: true,
           externalLinks: withTranslations({}),
@@ -171,7 +178,7 @@ const getRoute = flattenTranslationsOnExecute(
         },
       })
     )
-    .prepare()
+    .prepare('admin/routes/getRoute')
 )
 
 export const routesAdminRouter = router({
@@ -213,28 +220,33 @@ export const routesAdminRouter = router({
     .input(createRouteSchema)
     .mutation(async ({ input }) => {
       await db.transaction(async (tx) => {
-        const insertFeaturesResult = await tx
-          .insert(features)
-          .values({ ...input.features })
+        const newFeatures = (
+          await tx
+            .insert(features)
+            .values({ ...input.features })
+            .returning()
+        )[0]
 
-        const featuresId = Number(insertFeaturesResult.insertId)
-
-        const insertRouteResult = await tx.insert(routes).values({
-          name: input.name,
-          description: input.description,
-          mainCategoryId: input.mainCategory,
-          path: multiLineToString(input.path),
-          importance: input.importance,
-          content: input.content,
-          verificationRequirementsId: 1,
-          featuresId,
-        })
-        const newRouteId = Number(insertRouteResult.insertId)
+        const newRoute = (
+          await tx
+            .insert(routes)
+            .values({
+              name: input.name,
+              description: input.description,
+              mainCategoryId: input.mainCategory,
+              path: multiLineToString(input.path),
+              importance: input.importance,
+              content: input.content,
+              verificationRequirementsId: 1,
+              featuresId: newFeatures.id,
+            })
+            .returning()
+        )[0]
 
         if (input.categories.length > 0) {
           await tx.insert(routesToRouteCategories).values(
             input.categories.map((categoryId) => ({
-              routeId: newRouteId,
+              routeId: newRoute.id,
               categoryId: categoryId,
             }))
           )
@@ -243,13 +255,13 @@ export const routesAdminRouter = router({
         if (input.externalLinks.length > 0) {
           await tx.insert(externalLinks).values(
             input.externalLinks.map((externalLink) => ({
-              routeId: newRouteId,
+              routeId: newRoute.id,
               ...externalLink,
             }))
           )
         }
 
-        return newRouteId
+        return newRoute.id
       })
     }),
   editRoute: adminProcedure

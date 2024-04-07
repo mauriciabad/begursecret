@@ -26,41 +26,43 @@ export async function initializeUserInDatabase(newUser: {
 
     const userId = uuidv4()
 
-    const visitedPlaceListId = Number(
-      (
-        await tx.insert(placeLists).values({
+    const newVisitedPlaceList = (
+      await tx
+        .insert(placeLists)
+        .values({
           userId,
         })
-      ).insertId
-    )
+        .returning()
+    )[0]
 
     if (
       !(
         await tx.query.placeLists.findFirst({
           columns: { id: true },
-          where: eq(placeLists.id, visitedPlaceListId),
+          where: eq(placeLists.id, newVisitedPlaceList.id),
         })
       )?.id
     ) {
       throw new Error('Error creating visitedPlaceList')
     }
 
-    await tx.insert(users).values({
-      id: userId,
-      email: newUser.email,
-      emailVerified: newUser.emailVerified,
-      name: newUser.name,
-      image: newUser.image,
-      hashedPassword: newUser.password
-        ? bcrypt.hashSync(newUser.password, 10)
-        : null,
-      visitedPlaceListId: visitedPlaceListId,
-    })
+    const createdUser = (
+      await tx
+        .insert(users)
+        .values({
+          id: userId,
+          email: newUser.email,
+          emailVerified: newUser.emailVerified,
+          name: newUser.name,
+          image: newUser.image,
+          hashedPassword: newUser.password
+            ? bcrypt.hashSync(newUser.password, 10)
+            : null,
+          visitedPlaceListId: newVisitedPlaceList.id,
+        })
+        .returning()
+    )[0]
 
-    return await tx
-      .select()
-      .from(users)
-      .where(eq(users.id, userId))
-      .then((res) => res[0])
+    return createdUser
   })
 }

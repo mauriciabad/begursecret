@@ -1,40 +1,119 @@
 import { relations } from 'drizzle-orm'
 import {
   boolean,
-  double,
-  int,
-  mysqlEnum,
+  doublePrecision,
+  integer,
+  pgEnum,
   text,
-  tinytext,
-} from 'drizzle-orm/mysql-core'
-import { mysqlTableWithTranslations } from '../../helpers/translations/db-tables'
-import {
-  allowedAccess,
-  amountOfPeople,
-  difficulty,
-  groundType,
-  howNarrow,
-  placeToArriveFrom,
-  priceUnit,
-  scubaDivingLevel,
-  trainingLevel,
-} from '../constants/features'
+} from 'drizzle-orm/pg-core'
+import { pgTableWithTranslations } from '../../helpers/translations/db-tables'
+
+export const amountOfPeopleEnum = pgEnum('amountOfPeople', [
+  'none',
+  'few',
+  'some',
+  'many',
+  'crowded',
+])
+export const amountOfPeople = amountOfPeopleEnum.enumValues
+export type AmountOfPeople = (typeof amountOfPeople)[number]
+
+export const difficultyEnum = pgEnum('difficulty', [
+  'accessible',
+  'normal',
+  'smallEffort',
+  'hard',
+  'dangerous',
+])
+export const difficulty = difficultyEnum.enumValues
+export type Difficulty = (typeof difficulty)[number]
+
+export const howNarrowEnum = pgEnum('howNarrow', [
+  'extremlyNarrow',
+  'narrow',
+  'extraSpace',
+  'wide',
+  'veryWide',
+])
+export const howNarrow = howNarrowEnum.enumValues
+export type HowNarrow = (typeof howNarrow)[number]
+
+export const groundTypeEnum = pgEnum('groundType', [
+  'sand',
+  'pebbles',
+  'rocks',
+  'concrete',
+  'dirt',
+  'pavimented',
+])
+export const groundType = groundTypeEnum.enumValues
+export type GroundType = (typeof groundType)[number]
+
+export const allowedAccessEnum = pgEnum('allowedAccess', [
+  'public',
+  'permissive',
+  'customers',
+  'permit',
+  'private',
+  'mixed',
+])
+export const allowedAccess = allowedAccessEnum.enumValues
+export type AllowedAccess = (typeof allowedAccess)[number]
+
+export const trainingLevelEnum = pgEnum('trainingLevel', [
+  'noTraining',
+  'amateur',
+  'entryLevel',
+  'advanced',
+  'professional',
+  'elite',
+])
+export const trainingLevel = trainingLevelEnum.enumValues
+export type TrainingLevel = (typeof trainingLevel)[number]
+
+export const scubaDivingLevelEnum = pgEnum('scubaDivingLevel', [
+  'discoverScubaDiving',
+  'openWater',
+  'advancedOpenWater',
+  'specialtyDiver',
+  'technicalDiver',
+])
+export const scubaDivingLevel = scubaDivingLevelEnum.enumValues
+export type ScubaDivingLevel = (typeof scubaDivingLevel)[number]
+
+export const priceUnitEnum = pgEnum('priceUnit', [
+  'eur',
+  'eur/minute',
+  'eur/hour',
+  'eur/day',
+])
+export const priceUnit = priceUnitEnum.enumValues
+export type PriceUnit = (typeof priceUnit)[number]
+
+export const placeToArriveFromEnum = pgEnum('placeToArriveFrom', [
+  'townCenter',
+  'parking',
+  'beach',
+  'road',
+])
+export const placeToArriveFrom = placeToArriveFromEnum.enumValues
+export type PlaceToArriveFrom = (typeof placeToArriveFrom)[number]
 
 export const {
   normalTable: features,
   translationsTable: featuresTranslations,
   makeRelationsWithTranslations: makeFeatureRelations,
   translationsTableRelations: featuresTranslationsRelations,
-} = mysqlTableWithTranslations({
+} = pgTableWithTranslations({
   name: 'feature',
   normalColumns: {
-    amountOfPeople: mysqlEnum('amountOfPeople', amountOfPeople),
-    difficulty: mysqlEnum('difficulty', difficulty),
-    groundType: mysqlEnum('groundType', groundType),
+    amountOfPeople: amountOfPeopleEnum('amountOfPeople'),
+    difficulty: difficultyEnum('difficulty'),
+    groundType: groundTypeEnum('groundType'),
 
     hasBus: boolean('hasBus'),
     hasParking: boolean('hasParking'),
-    parkingSpaces: int('parkingSpaces'),
+    parkingSpaces: integer('parkingSpaces'),
     hasToilet: boolean('hasToilet'),
     hasRestaurant: boolean('hasRestaurant'),
     hasDrinkingWater: boolean('hasDrinkingWater'),
@@ -44,30 +123,30 @@ export const {
     isNudist: boolean('isNudist'),
     hasUnofficialName: boolean('hasUnofficialName'),
     hasInacurateLocation: boolean('hasInacurateLocation'),
-    date: tinytext('date'),
+    date: text('date'),
     isBoatOnly: boolean('isBoatOnly'),
-    trainingLevel: mysqlEnum('trainingLevel', trainingLevel),
+    trainingLevel: trainingLevelEnum('trainingLevel'),
     hasMissingInfo: boolean('hasMissingInfo'),
-    height: int('height'), // In meters
-    depth: int('depth'), // In meters
-    depthMin: int('depthMin'), // In meters
-    depthMax: int('depthMax'), // In meters
-    scubaDivingLevel: mysqlEnum('scubaDivingLevel', scubaDivingLevel),
+    height: integer('height'), // In meters
+    depth: integer('depth'), // In meters
+    depthMin: integer('depthMin'), // In meters
+    depthMax: integer('depthMax'), // In meters
+    scubaDivingLevel: scubaDivingLevelEnum('scubaDivingLevel'),
     notThereAnymore: boolean('notThereAnymore'),
     isOutOfTheMunicipality: boolean('isOutOfTheMunicipality'),
     hasBench: boolean('hasBench'),
-    allowedAccess: mysqlEnum('allowedAccess', allowedAccess),
-    dimensions: tinytext('dimensions'),
-    price: double('price'),
-    priceUnit: mysqlEnum('priceUnit', priceUnit),
+    allowedAccess: allowedAccessEnum('allowedAccess'),
+    dimensions: text('dimensions'),
+    price: doublePrecision('price'),
+    priceUnit: priceUnitEnum('priceUnit'),
     isCovered: boolean('isCovered'),
-    duration: int('duration'), // In minutes
-    distance: int('distance'), // In meters
-    slope: int('slope'), // In meters
-    timeToArrive: int('timeToArrive'), // In minutes
-    placeToArriveFrom: mysqlEnum('placeToArriveFrom', placeToArriveFrom),
+    duration: integer('duration'), // In minutes
+    distance: integer('distance'), // In meters
+    slope: integer('slope'), // In meters
+    timeToArrive: integer('timeToArrive'), // In minutes
+    placeToArriveFrom: placeToArriveFromEnum('placeToArriveFrom'),
     isFreeWithLocalStamp: boolean('isFreeWithLocalStamp'),
-    howNarrow: mysqlEnum('howNarrow', howNarrow),
+    howNarrow: howNarrowEnum('howNarrow'),
   },
   translatableColumns: {
     difficultyNotes: text('difficultyNotes'), // Markdown

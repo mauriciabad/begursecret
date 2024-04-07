@@ -1,1 +1,0 @@
-ALTER TABLE `place` ADD `mainImage` varchar(1024);

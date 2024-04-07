@@ -42,7 +42,10 @@ Discover incredible places and explore Begur like never before.
 
 #### Using local database
 
-By default, the app will connect to stage database in PlanetScale, but you can run it locally too.
+> [!CAUTION]  
+> This guide is outdated! The migration to Neon was very fast and I didn't have time to standarize the procedure.
+
+By default, the app will connect to stage database in Neon, but you can run it locally too.
 
 1. Install [docker](https://www.docker.com/products/docker-desktop/).
 1. Run the database **in another console**:
@@ -79,6 +82,9 @@ By default, the app will connect to stage database in PlanetScale, but you can r
 
 #### How to deploy changes in the database
 
+> [!CAUTION]  
+> This guide is outdated! The migration to Neon was very fast and I didn't have time to standarize the procedure.
+
 1. Make the changes in your code, testing them with the local database.
 1. Run `pnpm db:generate` to generate the migrations.
 1. Run `pnpm db:push` to upload the migrations to PlanetScale stage branch.
@@ -88,13 +94,27 @@ By default, the app will connect to stage database in PlanetScale, but you can r
 1. Right before merging the PR, go to PlanetScale dashboard and create a deploy preview and deploy it.
 1. Merge the PR in GitHub.
 
+##### New procedure random thoughts
+
+1. Run `pnpm db:generate`, to generate the new sql file.
+2. DON'T run `pnpm db:push`, because it won't work. Instead, go to the Neon website, and in a SQL console paste the generated SQL.
+
+Besides that. These are the manual changes I did to the migration files:
+
+1. Add `CREATE EXTENSION IF NOT EXISTS postgis;` to the top
+2. Remove the double quotes (`"`) from `Geometry(Point, 25831)` and `Geometry(MultiLineString, 25831)`.
+
+Something else:
+
+The script `db:local:run-db` is not done, it is commented out.
+
 #### Access to other services
 
 Ask @mauriciabad for access.
 
 These are the services we use related to the code:
 
-- [PlanetScale](https://app.planetscale.com/begursecret/descobreix-begur-app)
+- [Neon](https://console.neon.tech/app/projects/spring-brook-65910694)
 - [AWS S3](https://aws.amazon.com/s3)
 - [Vercel](https://vercel.com/mauriciabad/begursecret)
 - [GitHub](https://github.com/mauriciabad/begursecret)

@@ -1,10 +1,10 @@
 import { relations, TableRelationsHelpers } from 'drizzle-orm'
 import {
-  int,
-  MySqlColumnBuilderBase,
-  mysqlTable,
+  integer,
+  PgColumnBuilderBase,
+  pgTable,
   serial,
-} from 'drizzle-orm/mysql-core'
+} from 'drizzle-orm/pg-core'
 import { dbLocale } from '../../db/utilities'
 
 /**
@@ -12,14 +12,13 @@ import { dbLocale } from '../../db/utilities'
  * The id columns is added automatically.
  *
  * The normalTable contains normal and translatable columns
- * The translationsTable contains just translatable columns
  *
+ * The translationsTable contains just translatable columns
  */
-
-export function mysqlTableWithTranslations<
+export function pgTableWithTranslations<
   Name extends string,
-  NC extends Record<string, MySqlColumnBuilderBase>,
-  TC extends Record<string, MySqlColumnBuilderBase>,
+  NC extends Record<string, PgColumnBuilderBase>,
+  TC extends Record<string, PgColumnBuilderBase>,
 >({
   name,
   normalColumns,
@@ -29,14 +28,14 @@ export function mysqlTableWithTranslations<
   normalColumns: NC
   translatableColumns: TC
 }) {
-  const normalTable = mysqlTable(name, {
+  const normalTable = pgTable(name, {
     id: serial('id').primaryKey(),
     ...normalColumns,
     ...translatableColumns,
   })
-  const translationsTable = mysqlTable(`${name}_translation`, {
+  const translationsTable = pgTable(`${name}_translation`, {
     id: serial('id').primaryKey(),
-    ...typeDynamicKey(`${name}Id`, int(`${name}_id`).notNull()),
+    ...typeDynamicKey(`${name}Id`, integer(`${name}_id`).notNull()),
     locale: dbLocale('locale').notNull(),
     ...translatableColumns,
   })

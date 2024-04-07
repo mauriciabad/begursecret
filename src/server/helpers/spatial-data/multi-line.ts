@@ -1,5 +1,5 @@
 import { DriverValueMapper, sql } from 'drizzle-orm'
-import { customType } from 'drizzle-orm/mysql-core'
+import { customType } from 'drizzle-orm/pg-core'
 import {
   MultiLineString,
   getMultiLine,
@@ -15,13 +15,13 @@ export const multiLineType = customType<{
   driverData: string
 }>({
   dataType() {
-    return `MULTILINESTRING SRID ${SRID_CODE}`
+    return `Geometry(MultiLineString,${SRID_CODE})`
   },
   toDriver(value: WrongMultiLineType | string) {
     const multiLine = getMultiLine(value)
     if (!multiLine)
       throw new Error(`Invalid multiLine value: ${JSON.stringify(value)}`)
-    return sql`ST_MultiLineStringFromText(${multiLineToString(multiLine)}, ${SRID_CODE})`
+    return sql`ST_GeomFromText('${multiLineToString(multiLine)}',${SRID_CODE})`
   },
   fromDriver(value: string): WrongMultiLineType {
     const multiLine = getMultiLine(value)

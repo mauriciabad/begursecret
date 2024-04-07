@@ -1,25 +1,25 @@
 import { relations, sql } from 'drizzle-orm'
 import {
-  int,
-  mysqlTable,
+  integer,
+  pgTable,
   primaryKey,
   serial,
   timestamp,
-} from 'drizzle-orm/mysql-core'
+} from 'drizzle-orm/pg-core'
 import { dbUserId } from '../utilities'
 import { places } from './places'
 import { users } from './users'
 
-export const placeLists = mysqlTable('placeList', {
+export const placeLists = pgTable('placeList', {
   id: serial('id').primaryKey(),
   userId: dbUserId('userId').notNull(),
 })
 
-export const placeListToPlace = mysqlTable(
+export const placeListToPlace = pgTable(
   'placeListToPlace',
   {
-    placeListId: int('placeListId').notNull(),
-    placeId: int('placeId').notNull(),
+    placeListId: integer('placeListId').notNull(),
+    placeId: integer('placeId').notNull(),
     addedAt: timestamp('addedAt')
       .notNull()
       .default(sql`CURRENT_TIMESTAMP`),

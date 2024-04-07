@@ -1,14 +1,13 @@
 import { relations } from 'drizzle-orm'
 import {
-  double,
-  int,
-  mysqlTable,
+  doublePrecision,
+  integer,
+  pgTable,
   primaryKey,
   text,
-  tinytext,
-} from 'drizzle-orm/mysql-core'
+} from 'drizzle-orm/pg-core'
 import { multiLineType } from '~/server/helpers/spatial-data/multi-line'
-import { mysqlTableWithTranslations } from '../../helpers/translations/db-tables'
+import { pgTableWithTranslations } from '../../helpers/translations/db-tables'
 import { externalLinks } from './externalLinks'
 import { features } from './features'
 import { images } from './images'
@@ -20,19 +19,19 @@ export const {
   translationsTable: routesTranslations,
   makeRelationsWithTranslations: makeRouteRelations,
   translationsTableRelations: routesTranslationsRelations,
-} = mysqlTableWithTranslations({
+} = pgTableWithTranslations({
   name: 'route',
   normalColumns: {
-    mainImageId: int('mainImageId'),
+    mainImageId: integer('mainImageId'),
     path: multiLineType('path').notNull(),
-    mainCategoryId: int('mainCategoryId').notNull(),
-    featuresId: int('featuresId').notNull(),
-    verificationRequirementsId: int('verificationRequirementsId'),
-    importance: double('importance'),
+    mainCategoryId: integer('mainCategoryId').notNull(),
+    featuresId: integer('featuresId').notNull(),
+    verificationRequirementsId: integer('verificationRequirementsId'),
+    importance: doublePrecision('importance'),
   },
   translatableColumns: {
     name: text('name').notNull(),
-    description: tinytext('description'),
+    description: text('description'),
     content: text('content'), // Markdown
   },
 })
@@ -60,11 +59,11 @@ export const routesRelations = relations(routes, (r) => ({
   }),
 }))
 
-export const routesToPlaces = mysqlTable(
+export const routesToPlaces = pgTable(
   'routeToPlace',
   {
-    routeId: int('routeId').notNull(),
-    placeId: int('placeId').notNull(),
+    routeId: integer('routeId').notNull(),
+    placeId: integer('placeId').notNull(),
   },
   (table) => {
     return {

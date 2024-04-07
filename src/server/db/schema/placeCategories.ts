@@ -1,12 +1,12 @@
 import { relations } from 'drizzle-orm'
 import {
   boolean,
-  int,
-  mysqlTable,
+  integer,
+  pgTable,
   primaryKey,
-  tinytext,
-} from 'drizzle-orm/mysql-core'
-import { mysqlTableWithTranslations } from '../../helpers/translations/db-tables'
+  text,
+} from 'drizzle-orm/pg-core'
+import { pgTableWithTranslations } from '../../helpers/translations/db-tables'
 import { dbColor, dbGender, dbIcon } from '../utilities'
 import { placeCategoriesToPlaceCategoryGroups } from './placeCategoryGroups'
 import { places } from './places'
@@ -16,17 +16,17 @@ export const {
   translationsTable: placeCategoriesTranslations,
   makeRelationsWithTranslations: makePlaceCategoryRelations,
   translationsTableRelations: placeCategoriesTranslationsRelations,
-} = mysqlTableWithTranslations({
+} = pgTableWithTranslations({
   name: 'placeCategory',
   normalColumns: {
     icon: dbIcon('icon').notNull(),
     color: dbColor('color').notNull(),
     hasVisitMission: boolean('hasVisitMission').notNull().default(true),
-    order: int('order'),
+    order: integer('order'),
   },
   translatableColumns: {
-    name: tinytext('name').notNull(),
-    namePlural: tinytext('namePlural').notNull(),
+    name: text('name').notNull(),
+    namePlural: text('namePlural').notNull(),
     nameGender: dbGender('nameGender'),
   },
 })
@@ -41,11 +41,11 @@ export const placeCategoriesRelations = relations(placeCategories, (r) => ({
   categoryGroups: r.many(placeCategoriesToPlaceCategoryGroups),
 }))
 
-export const placesToPlaceCategories = mysqlTable(
+export const placesToPlaceCategories = pgTable(
   'placeToPlaceCategory',
   {
-    placeId: int('placeId').notNull(),
-    categoryId: int('categoryId').notNull(),
+    placeId: integer('placeId').notNull(),
+    categoryId: integer('categoryId').notNull(),
   },
   (table) => {
     return {

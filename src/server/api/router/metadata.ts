@@ -19,7 +19,8 @@ const getPlace = flattenTranslationsOnExecute(
           name: true,
           description: true,
         },
-        where: (place, { eq }) => eq(place.id, sql.placeholder('id')),
+        where: (place, { eq }) =>
+          eq(place.id, sql`${sql.placeholder('id')}::integer`),
         with: {
           mainImage: {
             columns: {
@@ -47,7 +48,7 @@ const getPlace = flattenTranslationsOnExecute(
         },
       })
     )
-    .prepare()
+    .prepare('metadata/getPlace')
 )
 
 const getRoute = flattenTranslationsOnExecute(
@@ -59,7 +60,8 @@ const getRoute = flattenTranslationsOnExecute(
           name: true,
           description: true,
         },
-        where: (route, { eq }) => eq(route.id, sql.placeholder('id')),
+        where: (route, { eq }) =>
+          eq(route.id, sql`${sql.placeholder('id')}::integer`),
         with: {
           mainImage: {
             columns: {
@@ -87,7 +89,7 @@ const getRoute = flattenTranslationsOnExecute(
         },
       })
     )
-    .prepare()
+    .prepare('metadata/getRoute')
 )
 
 export const metadataRouter = router({
