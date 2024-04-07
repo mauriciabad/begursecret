@@ -87,11 +87,11 @@ By default, the app will connect to stage database in Neon, but you can run it l
 
 1. Make the changes in your code, testing them with the local database.
 1. Run `pnpm db:generate` to generate the migrations.
-1. Run `pnpm db:push` to upload the migrations to Planetscale stage branch.
-   - Only 1 branch can be pushed to Planetscale at a time, if there were contents from another change they will be overridden. This is because we use the Planetscale free tier.
+1. Run `pnpm db:push` to upload the migrations to PlanetScale stage branch.
+   - Only 1 branch can be pushed to PlanetScale at a time, if there were contents from another change they will be overridden. This is because we use the PlanetScale free tier.
 1. Run the GitHub's CI after the stage database is updated, by pushing a commit or running it manually.
    - GitHub's CI is configured to run on stage database, so it will catch any error.
-1. Right before merging the PR, go to Planetscale dashboard and create a deploy preview and deploy it.
+1. Right before merging the PR, go to PlanetScale dashboard and create a deploy preview and deploy it.
 1. Merge the PR in GitHub.
 
 #### Access to other services
