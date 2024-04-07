@@ -116,11 +116,11 @@ if (!!process.env.SKIP_ENV_VALIDATION == false) {
   )
 
   if (parsed.success === false) {
-    console.error(
-      '❌ Invalid environment variables:',
-      parsed.error.flatten().fieldErrors
+    const errors = parsed.error.flatten().fieldErrors
+    console.error('❌ Invalid environment variables:', errors)
+    throw new Error(
+      `Invalid environment variables: \n${JSON.stringify(errors, null, 2)}`
     )
-    throw new Error('Invalid environment variables')
   }
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
