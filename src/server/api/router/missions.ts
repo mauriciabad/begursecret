@@ -163,7 +163,7 @@ const getVisitMissions = flattenTranslationsOnExecute(
         },
       })
     )
-    .prepare()
+    .prepare('missions/getVisitMissions')
 )
 
 export const missionsRouter = router({

@@ -39,7 +39,7 @@ const getCategoryGroups = flattenTranslationsOnExecute(
         orderBy: (group) => [ascNullsEnd(group.order)],
       })
     )
-    .prepare()
+    .prepare('explore/getCategoryGroups')
 )
 
 const getRouteCategories = flattenTranslationsOnExecute(
@@ -56,7 +56,7 @@ const getRouteCategories = flattenTranslationsOnExecute(
         orderBy: (group) => [ascNullsEnd(group.order)],
       })
     )
-    .prepare()
+    .prepare('explore/getRouteCategories')
 )
 
 export const exploreRouter = router({

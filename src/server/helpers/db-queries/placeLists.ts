@@ -19,7 +19,7 @@ const getVisitedPlaceListId = db.query.users
     },
     where: (users, { eq }) => eq(users.id, sql.placeholder('userId')),
   })
-  .prepare()
+  .prepare('helpers/placeLists/getVisitedPlaceListId')
 
 const getPlacesInList = db.query.placeListToPlace
   .findMany({
@@ -29,7 +29,7 @@ const getPlacesInList = db.query.placeListToPlace
     where: (placeListToPlace, { eq }) =>
       eq(placeListToPlace.placeListId, sql.placeholder('placeListId')),
   })
-  .prepare()
+  .prepare('helpers/placeLists/getPlacesInList')
 
 export async function getVisitedPlacesIdsByUserId(userId?: string) {
   if (!userId) return new Set<number>()

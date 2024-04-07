@@ -10,12 +10,12 @@ const getByIdSchema = z.object({
   id: numericIdSchema.nullable().optional(),
 })
 
-const getAllImages = db.query.images.findMany().prepare()
+const getAllImages = db.query.images.findMany().prepare('images/getAll')
 const getById = db.query.images
   .findFirst({
     where: (image, { eq }) => eq(image.id, sql.placeholder('id')),
   })
-  .prepare()
+  .prepare('images/getById')
 
 export const imagesAdminRouter = router({
   getAll: adminProcedure.query(async () => {

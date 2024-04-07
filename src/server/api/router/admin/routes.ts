@@ -84,7 +84,7 @@ const getAllRoutes = ({
           },
         })
       )
-      .prepare()
+      .prepare('admin/routes/getAllRoutes')
   ).execute({ locale })
 
 const getAllRouteIds = db
@@ -108,7 +108,7 @@ const getAllRouteIds = db
     )
   )
   .orderBy(ascNullsEnd(routes.importance), asc(routes.id))
-  .prepare()
+  .prepare('admin/routes/getAllRouteIds')
 
 const listCategories = flattenTranslationsOnExecute(
   db.query.routeCategories
@@ -126,7 +126,7 @@ const listCategories = flattenTranslationsOnExecute(
         orderBy: [ascNullsEnd(routeCategories.order)],
       })
     )
-    .prepare()
+    .prepare('admin/routes/listCategories')
 )
 
 const getRoute = flattenTranslationsOnExecute(
@@ -171,7 +171,7 @@ const getRoute = flattenTranslationsOnExecute(
         },
       })
     )
-    .prepare()
+    .prepare('admin/routes/getRoute')
 )
 
 export const routesAdminRouter = router({

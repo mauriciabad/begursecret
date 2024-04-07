@@ -55,7 +55,7 @@ const searchPlacesByMainCategory = flattenTranslationsOnExecute(
         },
       })
     )
-    .prepare()
+    .prepare('search/searchPlacesByMainCategory')
 )
 
 const searchPlacesBySecondaryCategory = doSomethingAfterExecute(
@@ -101,7 +101,7 @@ const searchPlacesBySecondaryCategory = doSomethingAfterExecute(
           }),
         },
       })
-      .prepare()
+      .prepare('search/searchPlacesBySecondaryCategory')
   ),
   (results) => {
     return results.map((r) => r.place)
@@ -149,7 +149,7 @@ const searchRoutesByMainCategory = flattenTranslationsOnExecute(
         },
       })
     )
-    .prepare()
+    .prepare('search/searchRoutesByMainCategory')
 )
 const searchRoutesBySecondaryCategory = doSomethingAfterExecute(
   flattenTranslationsOnExecute(
@@ -194,7 +194,7 @@ const searchRoutesBySecondaryCategory = doSomethingAfterExecute(
           }),
         },
       })
-      .prepare()
+      .prepare('search/searchRoutesBySecondaryCategory')
   ),
   (results) => {
     return results.map((r) => r.route)

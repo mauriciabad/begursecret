@@ -51,7 +51,7 @@ export function flattenTranslationsFromSelect<
  *      isNull(translationsTable.locale)
  *    )
  *  )
- *  .prepare()
+ *  .prepare('statement_name')
  */
 export function selectTranslations<
   K extends Exclude<keyof DT & keyof TT, 'getSQL' | '_'>,

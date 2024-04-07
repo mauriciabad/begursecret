@@ -28,7 +28,7 @@ const getAllPlacesForMap = db.query.places
       },
     },
   })
-  .prepare()
+  .prepare('map/getAllPlacesForMap')
 
 const getAllRoutesForMap = db.query.routes
   .findMany({
@@ -50,7 +50,7 @@ const getAllRoutesForMap = db.query.routes
       },
     },
   })
-  .prepare()
+  .prepare('map/getAllRoutesForMap')
 
 export const mapRouter = router({
   getAllPlaces: publicProcedure.query(async () => {

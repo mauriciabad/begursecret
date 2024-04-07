@@ -56,7 +56,7 @@ const getRoute = flattenTranslationsOnExecute(
         },
       })
     )
-    .prepare()
+    .prepare('routes/getRoute')
 )
 
 export const routesRouter = router({

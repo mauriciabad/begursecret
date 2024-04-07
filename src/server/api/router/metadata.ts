@@ -47,7 +47,7 @@ const getPlace = flattenTranslationsOnExecute(
         },
       })
     )
-    .prepare()
+    .prepare('metadata/getPlace')
 )
 
 const getRoute = flattenTranslationsOnExecute(
@@ -87,7 +87,7 @@ const getRoute = flattenTranslationsOnExecute(
         },
       })
     )
-    .prepare()
+    .prepare('metadata/getRoute')
 )
 
 export const metadataRouter = router({

@@ -72,7 +72,7 @@ const getPlace = flattenTranslationsOnExecute(
         },
       })
     )
-    .prepare()
+    .prepare('places/getPlace')
 )
 
 export const placesRouter = router({

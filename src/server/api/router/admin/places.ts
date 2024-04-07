@@ -81,7 +81,7 @@ const getAllPlaces = ({
           },
         })
       )
-      .prepare()
+      .prepare('admin/places/getAllPlaces')
   ).execute({ locale })
 
 const getAllPlaceIds = db
@@ -105,7 +105,7 @@ const getAllPlaceIds = db
     )
   )
   .orderBy(ascNullsEnd(places.importance), asc(places.id))
-  .prepare()
+  .prepare('admin/places/getAllPlaceIds')
 
 const listCategories = flattenTranslationsOnExecute(
   db.query.placeCategories
@@ -123,7 +123,7 @@ const listCategories = flattenTranslationsOnExecute(
         orderBy: [ascNullsEnd(placeCategories.order)],
       })
     )
-    .prepare()
+    .prepare('admin/places/listCategories')
 )
 
 const getPlace = flattenTranslationsOnExecute(
@@ -169,7 +169,7 @@ const getPlace = flattenTranslationsOnExecute(
         },
       })
     )
-    .prepare()
+    .prepare('admin/places/getPlace')
 )
 
 export const placesAdminRouter = router({

@@ -23,7 +23,7 @@ const addToPlaceList = db
     placeListId: sql.placeholder('placeListId'),
     placeId: sql.placeholder('placeId'),
   })
-  .prepare()
+  .prepare('placeLists/addToPlaceList')
 
 const getPlacesFromPlaceListQuery = flattenTranslationsOnExecute(
   db.query.placeListToPlace
@@ -71,7 +71,7 @@ const getPlacesFromPlaceListQuery = flattenTranslationsOnExecute(
         }),
       },
     })
-    .prepare()
+    .prepare('placeLists/getPlacesFromPlaceList')
 )
 
 const getPlacesFromPlaceListCountQuery = db.query.placeListToPlace
@@ -82,7 +82,7 @@ const getPlacesFromPlaceListCountQuery = db.query.placeListToPlace
     where: (placeList, { eq }) =>
       eq(placeList.placeListId, sql.placeholder('placeListId')),
   })
-  .prepare()
+  .prepare('placeLists/getPlacesFromPlaceListCount')
 
 export const placeListsRouter = router({
   addToVisitedPlacesList: protectedProcedure
