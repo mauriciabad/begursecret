@@ -40,13 +40,11 @@ const ExplorePage: FC<LocaleRouteParams> = async ({ params }) => {
     locale: onlyTranslatableLocales(locale),
   })
 
-  const groups: CategoryGroupListItem[] = categoryGroups
-    .filter((group) => group.id !== 2) // TODO: Temporarily disabled "Punts d'oci i esport naturals". Enable it later.
-    .map((group) => ({
-      ...group,
-      categories: group.placeCategories,
-      type: 'place',
-    }))
+  const groups: CategoryGroupListItem[] = categoryGroups.map((group) => ({
+    ...group,
+    categories: group.placeCategories,
+    type: 'place',
+  }))
 
   groups.splice(1, 0, {
     name: t('category-groups.routes'),
