@@ -23,8 +23,10 @@ export const imagesAdminRouter = router({
     return await getAllImages.execute()
   }),
   getById: adminProcedure.input(getByIdSchema).query(async ({ input }) => {
-    return await getById.execute({
-      id: input.id,
-    })
+    return (
+      (await getById.execute({
+        id: input.id,
+      })) ?? null
+    )
   }),
 })
