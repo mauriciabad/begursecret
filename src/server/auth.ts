@@ -66,7 +66,16 @@ export const authOptions: AuthOptions = {
         return { ...token, ...validatedSession }
       }
       if (trigger === 'signIn' || trigger === 'signUp') {
-        return { ...token, id: user.id, role: user.role }
+        const role =
+          user.role ??
+          (
+            await db.query.users.findFirst({
+              where: eq(users.id, user.id),
+              columns: { role: true },
+            })
+          )?.role
+
+        return { ...token, id: user.id, role }
       }
       return token
     },
