@@ -67,6 +67,7 @@ export const PlaceList: FC<{
                 <OptimizedImage
                   radius="md"
                   alt={item.name}
+                  sizes="96px"
                   className="z-0 aspect-[4/3] h-16 w-auto object-cover"
                   image={item.mainImage}
                 />

@@ -27,6 +27,7 @@ export const POST = withAxiom(async (request) => {
   const image = await procsessAndUploadToS3(imageFile, `contents/${uuidv4()}`, {
     generateBlurDataURL: true,
     appendFileTypeToKey: true,
+    immutable: true,
   })
 
   const rawDate = formData.get('captureDate')?.toString()

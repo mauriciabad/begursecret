@@ -41,6 +41,7 @@ export const RouteDetails: FC<{
               radius="lg"
               shadow="sm"
               className="aspect-[4/3]"
+              sizes="(max-width: 672px) 66vw, 448px"
               classNames={{
                 wrapper: 'row-span-2',
               }}
@@ -52,6 +53,7 @@ export const RouteDetails: FC<{
               shadow="sm"
               alt={route.name}
               full="both"
+              sizes="(max-width: 672px) 33vw, 224px"
               image={route.images[0]}
             />
             <ViewMoreImagesButtonAndDialog

@@ -34,6 +34,13 @@ function imageToStatic(image: S3Image): StaticImage {
 
 const FALLBACK_IMG_ALT = 'Imatge de mostra'
 
+/**
+ * Without `sizes`, Next.js only generates a 1x/2x srcset based on the source
+ * image width (up to 3840px). Content is at most max-w-2xl (672px) wide, so
+ * default to that and let callers pass a smaller value for thumbnails.
+ */
+const DEFAULT_SIZES = '(max-width: 672px) 100vw, 672px'
+
 const fullClassNames = {
   height: 'h-full w-auto',
   width: 'h-auto w-full',
@@ -46,7 +53,15 @@ export const OptimizedImage: FC<
     alt?: string
     full?: keyof typeof fullClassNames
   }
-> = ({ image, alt, className, full = 'width', classNames, ...imageProps }) => {
+> = ({
+  image,
+  alt,
+  className,
+  full = 'width',
+  classNames,
+  sizes = DEFAULT_SIZES,
+  ...imageProps
+}) => {
   const actualImage: StaticImage = image
     ? imageIsFromS3(image)
       ? imageToStatic(image)
@@ -62,6 +77,7 @@ export const OptimizedImage: FC<
       blurDataURL={actualImage.blurDataURL}
       alt={alt ?? actualImage.alt}
       placeholder={actualImage.blurDataURL ? 'blur' : 'empty'}
+      sizes={sizes}
       className={cn('object-cover', fullClassNames[full], className)}
       classNames={{
         ...classNames,
