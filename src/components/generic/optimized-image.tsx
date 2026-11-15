@@ -1,4 +1,3 @@
-import { Image, type ImageProps } from '@nextui-org/image'
 import NextImage, {
   StaticImageData,
   type ImageProps as NextImageProps,
@@ -47,18 +46,47 @@ const fullClassNames = {
   both: 'h-full w-full',
 } as const satisfies Record<string, string>
 
+// Same classes NextUI's <Image> used, so the look doesn't change.
+const radiusClassNames = {
+  none: 'rounded-none',
+  sm: 'rounded-small',
+  md: 'rounded-md',
+  lg: 'rounded-large',
+  full: 'rounded-full',
+} as const satisfies Record<string, string>
+
+const shadowClassNames = {
+  none: 'shadow-none',
+  sm: 'shadow-small',
+  md: 'shadow-medium',
+  lg: 'shadow-large',
+} as const satisfies Record<string, string>
+
+/**
+ * Renders `next/image` directly. We used to wrap it in NextUI's `<Image>`, but
+ * that component preloads the raw `src` with `new Image()` to track loading
+ * state, which downloaded every original image from S3 (eagerly, ignoring
+ * `loading="lazy"`) on top of the optimized one.
+ */
 export const OptimizedImage: FC<
-  Omit<ImageProps & NextImageProps, 'src' | 'width' | 'height' | 'alt'> & {
+  Omit<NextImageProps, 'src' | 'width' | 'height' | 'alt'> & {
     image?: S3Image | StaticImageData | null
     alt?: string
     full?: keyof typeof fullClassNames
+    radius?: keyof typeof radiusClassNames
+    shadow?: keyof typeof shadowClassNames
+    classNames?: { wrapper?: string }
+    isLoading?: boolean
   }
 > = ({
   image,
   alt,
   className,
   full = 'width',
+  radius = 'lg',
+  shadow = 'none',
   classNames,
+  isLoading,
   sizes = DEFAULT_SIZES,
   ...imageProps
 }) => {
@@ -69,21 +97,34 @@ export const OptimizedImage: FC<
     : { ...fallbackImage, alt: FALLBACK_IMG_ALT }
 
   return (
-    <Image
-      as={NextImage}
-      src={actualImage.src}
-      width={actualImage.width}
-      height={actualImage.height}
-      blurDataURL={actualImage.blurDataURL}
-      alt={alt ?? actualImage.alt}
-      placeholder={actualImage.blurDataURL ? 'blur' : 'empty'}
-      sizes={sizes}
-      className={cn('object-cover', fullClassNames[full], className)}
-      classNames={{
-        ...classNames,
-        wrapper: cn(fullClassNames[full], classNames?.wrapper),
-      }}
-      {...imageProps}
-    />
+    <div
+      className={cn(
+        'relative shadow-black/5',
+        radiusClassNames[radius],
+        shadowClassNames[shadow],
+        fullClassNames[full],
+        isLoading && 'animate-pulse bg-content3',
+        classNames?.wrapper
+      )}
+    >
+      <NextImage
+        src={actualImage.src}
+        width={actualImage.width}
+        height={actualImage.height}
+        blurDataURL={actualImage.blurDataURL}
+        alt={alt ?? actualImage.alt ?? ''}
+        placeholder={actualImage.blurDataURL ? 'blur' : 'empty'}
+        sizes={sizes}
+        className={cn(
+          'relative z-10 object-cover shadow-black/5',
+          radiusClassNames[radius],
+          shadowClassNames[shadow],
+          fullClassNames[full],
+          isLoading && 'opacity-0',
+          className
+        )}
+        {...imageProps}
+      />
+    </div>
   )
 }
