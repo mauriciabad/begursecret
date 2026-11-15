@@ -55,6 +55,7 @@ export const PlaceDetails: FC<{
               radius="lg"
               shadow="sm"
               className="aspect-[4/3]"
+              sizes="(max-width: 672px) 66vw, 448px"
               classNames={{
                 wrapper: 'row-span-2',
               }}
@@ -66,6 +67,7 @@ export const PlaceDetails: FC<{
               shadow="sm"
               alt={place.name}
               full="both"
+              sizes="(max-width: 672px) 33vw, 224px"
               image={place.images[0]}
             />
             <ViewMoreImagesButtonAndDialog

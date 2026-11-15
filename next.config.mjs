@@ -33,6 +33,13 @@ const nextBaseConfig = {
       },
     ],
     unoptimized: process.env.VERCEL_ENV !== 'production',
+    // Content images in S3 are stored under unique keys (contents/<uuid>.<ext>)
+    // and never change, so cache optimized versions for 31 days instead of the
+    // 1h default (S3 objects have no Cache-Control). Cuts cache writes and
+    // transformations. See https://vercel.com/docs/image-optimization/managing-image-optimization-costs
+    minimumCacheTTL: 2678400,
+    // Content is at most max-w-2xl (672px) wide, so drop the 2048/3840 widths.
+    deviceSizes: [640, 828, 1080, 1200, 1920],
   },
 }
 

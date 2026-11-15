@@ -13,6 +13,8 @@ type UploadOptions = {
   process?: (sharpImg: Sharp) => Sharp
   generateBlurDataURL?: boolean
   appendFileTypeToKey?: boolean
+  /** Set when the key is unique and the object will never be overwritten. */
+  immutable?: boolean
 }
 export async function procsessAndUploadToS3<K extends string>(
   file: File,
@@ -48,6 +50,9 @@ export async function procsessAndUploadToS3<K extends string>(
     buffer: editedImageBuffer,
     key: keyWithFileType,
     contentType: format,
+    cacheControl: options?.immutable
+      ? 'public, max-age=31536000, immutable'
+      : undefined,
   })
 
   return {

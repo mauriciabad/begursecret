@@ -33,6 +33,7 @@ export const ListItemsOfCategoryItem: FC<{
         <OptimizedImage
           radius="lg"
           shadow="none"
+          sizes="(max-width: 640px) 50vw, 288px"
           className="z-0 aspect-[4/3] h-full border border-stone-100 object-cover"
           image={item.mainImage}
           alt={item.name}

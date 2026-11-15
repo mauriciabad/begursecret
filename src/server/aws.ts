@@ -22,10 +22,12 @@ export async function uploadToS3<K extends string>({
   buffer,
   key,
   contentType,
+  cacheControl,
 }: {
   buffer: Buffer
   key: K
   contentType: string
+  cacheControl?: string
 }) {
   await s3.send(
     new PutObjectCommand({
@@ -33,6 +35,7 @@ export async function uploadToS3<K extends string>({
       Key: key,
       Body: buffer,
       ContentType: contentType,
+      CacheControl: cacheControl,
     })
   )
   return `https://${BUCKET_NAME}.s3.${BUCKET_REGION}.amazonaws.com/${key}` as const
