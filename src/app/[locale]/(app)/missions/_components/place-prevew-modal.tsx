@@ -83,6 +83,7 @@ export const PlacePreviewModal: FC<
                       <OptimizedImage
                         radius="md"
                         full="height"
+                        sizes="256px"
                         image={place.mainImage}
                         alt={place.name}
                       />
@@ -92,6 +93,7 @@ export const PlacePreviewModal: FC<
                         radius="lg"
                         shadow="sm"
                         full="height"
+                        sizes="256px"
                         image={image}
                         alt={place.name}
                       />
